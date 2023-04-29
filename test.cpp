@@ -14,6 +14,5 @@ int main() {
     while (scripter.forward()) {
         scripter.report_all();
     }
-    cout << "good";
     return 0;
 }

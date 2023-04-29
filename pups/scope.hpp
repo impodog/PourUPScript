@@ -20,11 +20,23 @@ namespace PUPS {
         Compound() = default;
 
         Compound(Token beg, std::queue<Token> &args) {
-            tokens.push_back(beg);
+            if (!beg.eof() && !beg.empty())
+                tokens.push_back(beg);
             while (!args.empty()) {
                 tokens.push_back(args.front());
                 args.pop();
             }
+        }
+
+        explicit Compound(std::queue<Token> &args) {
+            while (!args.empty()) {
+                tokens.push_back(args.front());
+                args.pop();
+            }
+        }
+
+        [[nodiscard]] bool empty() const noexcept {
+            return tokens.empty();
         }
 
         void put(const Token &token, Report &report) override {
@@ -59,15 +71,12 @@ namespace PUPS {
         std::queue<Token> imme_names;
 
         void _exit() {
-            std::cout << "call" << std::endl;
             for (auto &pair: objects) {
-                std::cout << pair.first << std::endl;
                 if (pair.second == nullptr)
                     _report.report(Report_Uninitialized, "When exiting Scope, name \"" + std::string(pair.first) +
                                                          "\" is a declared, uninitialized object(nullptr). Item skipped.");
                 else if (!pair.first.str().starts_with(TAG) && pair.second.use_count())
                     exit_object(pair.first);
-                std::cout << pair.first << std::endl;
             }
             objects.clear();
         }
@@ -81,6 +90,15 @@ namespace PUPS {
 
 
     public:
+        struct Flags {
+            bool find_no_null_warn = false, found_null = false;
+            bool cst = false;
+
+            void reset() {
+                find_no_null_warn = found_null = cst = false;
+            }
+        } flags;
+
         Token add_imme(const ObjectPtr &object) {
             Token token = next_tag();
             objects.insert({token, object});
@@ -92,16 +110,11 @@ namespace PUPS {
             Scope *scope = this;
             while (true) {
                 try {
-                    auto &object = scope->objects.at(name);
-                    if (object) return object;
-                    else
-                        throw PUPS_FatalError(
-                                "when finding, name \"" + std::string(name) +
-                                "\" is a declared, uninitialized object(nullptr)",
-                                _report);
+                    return scope->objects.at(name);
                 } catch (const std::out_of_range &) {
                     if (scope->parent == nullptr) {
-                        throw PUPS_FatalError("Cannot find name \"" + std::string(name) + "\".", _report);
+                        _report.report(Report_UnknownName, "Cannot find name \"" + std::string(name) + "\".");
+                        return null_obj;
                     }
                     scope = scope->parent;
                 }
@@ -109,6 +122,7 @@ namespace PUPS {
         }
 
         ObjectPtr run_compound(Compound &compound) {
+            if (compound.empty()) return null_obj;
             size_t status = 0;
             ObjectPtr acceptor;
             compound.filter();
@@ -138,16 +152,16 @@ namespace PUPS {
         }
 
         void set_object(const Token &token, const ObjectPtr &object) {
-            try {
-                auto &f = find(token);
-                f = object;
-            } catch (const PUPS_FatalError &) {
+            flags.find_no_null_warn = true;
+            auto &f = find(token);
+            if (!flags.found_null && f == null_obj) {
                 _report.report(Report_Undeclared,
                                "Setting name \"" + std::string(token) +
                                "\", which is not declared. Unexpected things may happen.");
                 try_exit_erase_object(token);
                 objects.insert({token, object});
-            }
+            } else f = object;
+            flags.found_null = false;
         }
 
         void declare_object(const Token &token) {
@@ -195,6 +209,7 @@ namespace PUPS {
                 erase_object(imme_names.front());
                 imme_names.pop();
             }
+            flags.reset();
             return null_obj;
         }
 

@@ -20,39 +20,41 @@
 #define Report_OperatorErr "OperatorErr"
 #define Report_Undeclared "Undeclared"
 #define Report_TypeErr "TypeErr"
+#define Report_UnConstInit "UnConstInit"
 
 namespace PUPS {
     class ObjectBase;
 
     class Report {
-        const size_t &line, &column;
-        const std::string &file;
+        const size_t &line;
+        const std::string &file, &cur_line;
         struct ReportMsg {
-            size_t line, column;
+            size_t line;
             std::string head, body;
-            const std::string &file;
+            const std::string &file, &cur_line;
         };
         std::queue<ReportMsg> reports;
 
         static void show_msg(const ReportMsg &msg) {
-            *output << "[" << msg.head << " in " << msg.file << " " << msg.line << ":" << msg.column
-                    << "] " << msg.body << "\n";
+            *output << "[" << msg.head << " in " << msg.file << " line " << msg.line
+                    << "]\n\tat \"" << msg.cur_line << "\"\n\t" << msg.body << "\n";
         }
 
     public:
         static std::ostream *output;
 
-        Report(const size_t &line, const size_t &column, const std::string &file) : line(line), column(column),
-                                                                                    file(file) {}
+        Report(const size_t &line, const std::string &file, const std::string &cur_line) : line(line),
+                                                                                           file(file),
+                                                                                           cur_line(cur_line) {}
 
-        explicit Report(const TokenInput &input) : Report{input.line_num(), input.column_num(), input.file()} {}
+        explicit Report(const TokenInput &input) : Report{input.line_num(), input.file(), input.cur_line()} {}
 
         [[nodiscard]] std::string where() const {
-            return "in " + file + " " + std::to_string(line) + ":" + std::to_string(column);
+            return "in " + file + " line " + std::to_string(line) + "\n\tat \"" + cur_line + "\"";
         }
 
         void report(std::string head, std::string body) {
-            reports.push({line, column, std::move(head), std::move(body), file});
+            reports.push({line, std::move(head), std::move(body), file, cur_line});
         }
 
         [[nodiscard]] bool no_report() const noexcept {

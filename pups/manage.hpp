@@ -21,7 +21,6 @@ namespace PUPS {
 
         ~Scripter() {
             script_scope.exit(_report);
-            _report.append(script_scope.reports());
             if (!_report.no_report()) {
                 *Report::output << "Scripter hit the end with reports:\n";
                 report_all();
@@ -33,11 +32,15 @@ namespace PUPS {
             bool end = false;
             while (!end) {
                 auto token = tokenInput.next();
+                bool is_symbol = token.is_symbol();
                 if (token.eof()) return false;
+                else if (is_symbol && token.linefeed()) return true;
+
                 script_scope.put(token, _report);
-                end = token.is_symbol() && token.semicolon();
+                end = is_symbol && token.semicolon();
             }
             script_scope.ends(&script_scope, _report);
+            _report.append(script_scope.reports());
             return true;
         }
 

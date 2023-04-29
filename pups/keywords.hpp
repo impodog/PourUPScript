@@ -108,6 +108,27 @@ namespace PUPS {
         }
     };
 
+    class KW_Cst final : public KeywordBase {
+        std::queue<Token> stmt;
+    public:
+        KW_Cst() = default;
+
+        void put(const Token &token, Report &report) override {
+            stmt.push(token);
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            scope->flags.cst = true;
+            if (stmt.empty())
+                report.report(Report_IncorrectArguments, "No statement after \"cst\" qualifier.");
+            else {
+                Compound compound(stmt);
+                scope->run_compound(compound);
+            }
+            return null_obj;
+        }
+    };
+
     class Keywords {
         std::unordered_map<Token, ObjectPtr> keywords, types;
     public:
@@ -115,7 +136,8 @@ namespace PUPS {
                 {Token{NULL_OBJ, false}, null_obj},
                 {Token{DECL, false},     ObjectPtr{new KW_Decl}},
                 {Token{PRINT, false},    ObjectPtr{new KW_Print}},
-                {Token{SET, false},      ObjectPtr{new KW_Set}}
+                {Token{SET, false},      ObjectPtr{new KW_Set}},
+                {Token{CST, false},      ObjectPtr{new KW_Cst}}
         },
                      types{
                              {Token{INT, false},   ObjectPtr{new TP_Int}},

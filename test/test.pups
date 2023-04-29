@@ -1,3 +1,6 @@
-decl a;
-int a = 0;
-print a;
+decl a b q hello;
+cst int a = -6;
+cst int q = 7;
+cst int hello = 8;
+set b = (a * q + hello);
+print b;

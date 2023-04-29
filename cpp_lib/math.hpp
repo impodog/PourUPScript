@@ -193,6 +193,27 @@ namespace PUPS {
     sub_ok(NumType a, NumType b) noexcept {
         return add_ok(a, -b);
     }
+
+#define EVAL_WHEN(fn, t...)template<typename Arith>\
+typename std::enable_if<std::is_same<Arith, t>::value, Arith>::type eval(const std::string &s){\
+    return std::fn(s);\
+}
+
+    EVAL_WHEN(stoi, int)
+
+    EVAL_WHEN(stol, long)
+
+    EVAL_WHEN(stoll, long long)
+
+    EVAL_WHEN(stoul, unsigned long)
+
+    EVAL_WHEN(stoull, unsigned long long)
+
+    EVAL_WHEN(stod, double)
+
+    EVAL_WHEN(stold, long double)
+
+#undef EVAL_WHEN
 }
 
 #undef SIGNED

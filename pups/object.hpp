@@ -42,7 +42,7 @@ namespace PUPS {
         virtual ~ObjectBase() = default;
 
         [[nodiscard]] virtual std::string to_string() const noexcept {
-            return "<Object" + std::to_string(PtrToUlong(this)) + "=" + std::to_string(cnt) + ">";
+            return "<&Object=" + std::to_string(PtrToUlong(this)) + " Code=" + std::to_string(cnt) + ">";
         }
 
         bool operator==(const ObjectBase &object) const noexcept {
@@ -73,6 +73,10 @@ namespace PUPS {
 
         [[nodiscard]] bool can_delete() const noexcept override {
             return false;
+        }
+
+        [[nodiscard]] std::string to_string() const noexcept override {
+            return "NULL";
         }
     };
 

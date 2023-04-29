@@ -9,6 +9,7 @@
 
 #define INT "int"
 #define FLOAT "flo"
+#define CST "cst"
 
 #define INST_OP(op_name) virtual ObjectPtr op_name(Token nxt, Scope *scope, Report &report) {\
     report.report(Report_WrongToken, "op_name is not supported");                       \
@@ -29,11 +30,13 @@ namespace PUPS {
 
         INST_OP(op_div)
 
-        void chk_type(const ObjectPtr &object, Report &report) {
+        void chk_type(const ObjectPtr &object, Report &report) const {
             if (object->type() != type())
                 report.report(Report_TypeErr,
-                              "Type of " + object->to_string() + "is not the same as " + to_string() + ".");
+                              "Type of " + object->to_string() + " is not the same as " + to_string() + ".");
         }
+
+        virtual ObjectPtr copy() const noexcept = 0;
 
     public:
         Cnt _type;
@@ -44,6 +47,11 @@ namespace PUPS {
 
         [[nodiscard]] Cnt type() const noexcept override {
             return _type;
+        }
+
+        [[nodiscard]] std::string to_string() const noexcept override {
+            return "<Instance" + std::to_string(PtrToUlong(this)) + " Code" + std::to_string(cnt) + " WithType" +
+                   std::to_string(_type) + ">";
         }
 
         void put(const Token &token, Report &report) final {
@@ -77,17 +85,22 @@ namespace PUPS {
                     }
                     if (object) {
                         imme = scope->add_imme(object);
+                        args.pop(); // required to pop the operator rvalue
                         break;
                     }
                 } else if (arg.is_symbol())
                     symbol = arg.front();
                 else
                     report.report(Report_WrongToken,
-                                  "Cannot put a name \"" + std::string(arg) + "\"without any operator . Item skipped.");
+                                  "Cannot put a name \"" + std::string(arg) +
+                                  "\" without any operator . Item skipped.");
                 args.pop();
             }
-            Compound compound(imme, args);
-            return scope->run_compound(compound);
+            if (!imme.eof()) {
+                Compound compound(imme, args);
+                return scope->run_compound(compound);
+            }
+            return copy();
         }
 
         void exit(PUPS::Report &report) override {
@@ -110,13 +123,8 @@ namespace PUPS {
         std::queue<Token> names, args;
     public:
         void put(const Token &token, Report &report) override {
-            if (token.is_symbol()) {
-                if (token.front() == '=') {
-                    next_is_value = 1;
-                } else
-                    report.report(Report_WrongToken,
-                                  R"(Types should only get "=" as assign parameter. Item ")" + std::string(token) +
-                                  "\" skipped.");
+            if (token.is_symbol() && token.front() == '=') {
+                next_is_value = 1;
             } else {
                 if (next_is_value) {
                     args.push(token);
@@ -146,42 +154,20 @@ namespace PUPS {
         }
     };
 
-#define EVAL_WHEN(t...)template<typename Arith>\
-typename std::enable_if<std::is_same<Arith, t>::value, Arith>::type eval(const Token &token)
+    class StdTypeBase : public TypeBase {
+    protected:
+        static void chk_cst(Scope *scope, Report &report) {
+            if (!scope->flags.cst)
+                report.report(Report_UnConstInit, "Std type initialization with \"" CST
+                                                  "\" qualifier is suggested. Statement continued in spite of warnings.");
+        }
 
-    EVAL_WHEN(int) {
-        return std::stoi(token.str());
-    }
+        ObjectPtr ends(PUPS::Scope *scope, PUPS::Report &report) override {
+            chk_cst(scope, report);
+            return TypeBase::ends(scope, report);
+        }
+    };
 
-    EVAL_WHEN(long) {
-        return std::stol(token.str());
-    }
-
-    EVAL_WHEN(long long) {
-        return std::stoll(token.str());
-    }
-
-    EVAL_WHEN(float) {
-        return std::stof(token.str());
-    }
-
-    EVAL_WHEN(double) {
-        return std::stod(token.str());
-    }
-
-    EVAL_WHEN(long double) {
-        return std::stold(token.str());
-    }
-
-    EVAL_WHEN(unsigned long) {
-        return std::stoul(token.str());
-    }
-
-    EVAL_WHEN(unsigned long long) {
-        return std::stoull(token.str());
-    }
-
-#undef EVAL_WHEN
 #define OVERRIDE_OP(op_name, op) ObjectPtr op_name(Token nxt, Scope *scope, Report &report) override {\
     auto &object = scope->find(nxt);\
     chk_type(object, report);\
@@ -207,23 +193,31 @@ typename std::enable_if<std::is_same<Arith, t>::value, Arith>::type eval(const T
         OVERRIDE_OP(op_mul, *)
 
         OVERRIDE_OP(op_div, /)
+
+        [[nodiscard]] ObjectPtr copy() const noexcept override {
+            return ObjectPtr{new INST_Arith{*this}};
+        }
     };
 
     template<typename Arith>
-    class TP_Arith final : public TypeBase {
+    class TP_Arith final : public StdTypeBase {
     protected:
         ObjectPtr construct(Scope *scope, Report &report) override {
-            if (args.size() != 1) {
+            ObjectPtr new_obj;
+            std::string args_s = join_tokens(args);
+            try {
+                new_obj = ObjectPtr{
+                        new INST_Arith<Arith>(cnt, eval<Arith>(args_s))};
+            } catch (const std::invalid_argument &) {
                 report.report(Report_IncorrectArguments,
-                              "Only one assign argument is allowed in Arith initialization. Statement skipped.");
-                return nullptr;
+                              "Cannot evaluate arguments \"" + args_s +
+                              "\" to arithmetic type. Statement skipped.");
+                return null_obj;
             }
-            auto new_obj = ObjectPtr{new INST_Arith<Arith>(cnt, eval<Arith>(args.front()))};
             while (!names.empty()) {
                 scope->set_object(names.front(), new_obj);
                 names.pop();
             }
-            args.pop();
             return new_obj;
         }
     };

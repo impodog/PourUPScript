@@ -78,6 +78,10 @@ namespace PUPS {
             return token->front() == ';';
         }
 
+        [[nodiscard]] bool linefeed() const noexcept {
+            return token->front() == '\n';
+        }
+
         bool operator==(const Token &cmp) const noexcept {
             return _is_symbol == cmp._is_symbol && *token == *cmp.token;
         }
@@ -97,8 +101,8 @@ namespace PUPS {
     static size_t tag_count = 0;
 
 
-    Token next_tag() {
-        tags.push(TAG + std::to_string(tag_count));
+    inline Token next_tag() {
+        tags.push(TAG + std::to_string(tag_count++));
         return Token{tags.top(), false};
     }
 
@@ -111,7 +115,24 @@ namespace PUPS {
     }
 
     inline constexpr bool is_empty(char c) noexcept {
-        return c == ' ' || c == '\t' || c == '\n' || c == '\b';
+        return c == ' ' || c == '\t'  || c == '\b';
+    }
+
+    template<typename ArrT>
+    inline std::string join_tokens(const ArrT &tokens) {
+        std::string result;
+        for (auto &token: tokens)
+            result.append(token);
+        return result;
+    }
+
+    inline std::string join_tokens(std::queue<Token> &tokens) {
+        std::string result;
+        while (!tokens.empty()) {
+            result.append(tokens.front());
+            tokens.pop();
+        }
+        return result;
     }
 
     UNTIL_FN(until_squote, '\'')
@@ -120,9 +141,9 @@ namespace PUPS {
 
     class TokenInput final {
         std::ifstream input;
-        std::string _file;
+        std::string _file, _cur_line;
         std::vector<TokenStruct> token_str;
-        size_t line = 1, column = 0, index = 0;
+        size_t line = 1, index = 0;
         char cur = ' ', peek = ' ';
 
         friend std::ostream &operator<<(std::ostream &out, const TokenInput &input);
@@ -131,18 +152,6 @@ namespace PUPS {
             cur = peek;
             input.get(peek);
             peek = to_lower(peek);
-            column++;
-            if (column > USHRT_MAX) {
-                throw std::runtime_error(
-                        "Probable semicolon(;) loss at the end of file [" + std::to_string(line) + ":" +
-                        std::to_string(column) + "]");
-            }
-            if (cur == '\n') {
-                if (!input.eof()) {
-                    line++;
-                    column = 0;
-                }
-            }
             return peek;
         }
 
@@ -182,10 +191,10 @@ namespace PUPS {
             } catch (const std::out_of_range &) {
                 return eofToken;
             }
-            column += token->token.size();
+            _cur_line.append(token->token).push_back(' ');
             if (token->_is_symbol && token->token.front() == '\n') {
                 line++;
-                column = 0;
+                _cur_line.clear();
             }
             return *token;
         }
@@ -194,8 +203,8 @@ namespace PUPS {
             return line;
         }
 
-        const size_t &column_num() const noexcept {
-            return column;
+        const std::string &cur_line() const noexcept {
+            return _cur_line;
         }
 
         const std::string &file() const noexcept {
