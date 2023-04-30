@@ -24,12 +24,8 @@ namespace PUPS {
         return file + "." + TMP + to_unique_str(file_count++);
     }
 
-    inline constexpr char to_lower(char c) noexcept {
-        return ('A' <= c && c <= 'Z') ? (char) (c + lower_diff) : c;
-    }
-
     inline constexpr bool is_alpha(char c) noexcept {
-        return ('a' <= c && c <= 'z') || ('0' <= c && c <= '9') || c == '_';
+        return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') || c == '_';
     }
 
     inline constexpr bool is_empty(char c) noexcept {
@@ -102,6 +98,30 @@ namespace PUPS {
         // If is long, return the cut string without spaces, otherwise the whole str
         [[nodiscard]] std::string str_dependent_no_space() const noexcept {
             return is_long() ? long_cut_no_space() : str();
+        }
+
+        [[nodiscard]] std::queue<std::string> split_by(char sep) const noexcept {
+            std::queue<std::string> result;
+            result.emplace();
+            for (auto c: str_dependent()) {
+                if (c == sep) result.emplace();
+                else result.back().push_back(c);
+            }
+            return result;
+        }
+
+        [[nodiscard]] std::queue<std::string> split_by_no_space(char sep) const noexcept {
+            std::queue<std::string> result;
+            result.emplace();
+            for (auto c: str_dependent_no_space()) {
+                if (c == sep) result.emplace();
+                else result.back().push_back(c);
+            }
+            return result;
+        }
+
+        [[nodiscard]] std::queue<std::string> split_stages() const noexcept {
+            return split_by_no_space(':');
         }
 
         [[nodiscard]] const std::string *ptr() const noexcept {
@@ -224,7 +244,6 @@ namespace PUPS {
                 if (braced_mode)
                     buf.push_back(cur);
                 else {
-                    peek = to_lower(peek);
                     if (is_alpha(cur))
                         buf.push_back(cur);
                     else if (buf.empty() && !is_empty(cur)) {

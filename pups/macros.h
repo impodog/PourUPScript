@@ -49,7 +49,7 @@ namespace PUPS {
     using cstr = const char *;
     using fpath = std::filesystem::path;
 
-    constexpr const cstr version = "0.0.1";
+    constexpr const cstr version = "0.0.2";
 
     constexpr const cstr std_path = "std",
             DECL = "decl",

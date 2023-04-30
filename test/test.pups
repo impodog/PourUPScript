@@ -5,6 +5,6 @@ loc scope myScope {
     loc cst int x = 10;
     print hello;
 };
-loc set tmp = (myScope:hello);
-print tmp (const:space) (myScope:x);
+loc set tmp = {myScope:hello};
+print tmp {const:space} {myScope:x};
 

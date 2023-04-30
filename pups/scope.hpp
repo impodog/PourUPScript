@@ -19,7 +19,7 @@ namespace PUPS {
     public:
         Compound() = default;
 
-        Compound(const Token& beg, std::queue<Token> &args) {
+        Compound(const Token &beg, std::queue<Token> &args) {
             if (!beg.eof() && !beg.empty())
                 tokens.push_back(beg);
             while (!args.empty()) {
@@ -88,6 +88,23 @@ namespace PUPS {
         Report &_report;
         Scope *parent = nullptr;
 
+        ObjectPtr &find_no_stage(const Token &name, bool &is_local) {
+            Scope *scope = this;
+            is_local = true;
+            while (true) {
+                try {
+                    return scope->objects.at(name);
+                } catch (const std::out_of_range &) {
+                    if (scope->parent == nullptr) {
+                        if (!flags.find_no_err)
+                            _report.report(Report_UnknownName, "Cannot find name \"" + std::string(name) + "\".");
+                        return null_obj;
+                    }
+                    is_local = false;
+                    scope = scope->parent;
+                }
+            }
+        }
 
     public:
         struct Flags {
@@ -142,20 +159,19 @@ namespace PUPS {
         }
 
         ObjectPtr &find(const Token &name, bool &is_local) {
-            Scope *scope = this;
-            is_local = true;
-            while (true) {
-                try {
-                    return scope->objects.at(name);
-                } catch (const std::out_of_range &) {
-                    if (scope->parent == nullptr) {
-                        if (!flags.find_no_err)
-                            _report.report(Report_UnknownName, "Cannot find name \"" + std::string(name) + "\".");
-                        return null_obj;
-                    }
-                    is_local = false;
-                    scope = scope->parent;
+            auto stages = name.split_stages();
+            if (stages.size() == 1)
+                return find_no_stage(name, is_local);
+            else {
+                Scope *ptr = this;
+                while (stages.size() != 1) {
+                    auto p = ptr->find_no_stage(Token{stages.front()}, is_local).get();
+                    if (p == nullptr || !p->is_scope())
+                        _report.report(Report_TypeErr, "Colon shortcuts must prefix with scopes.");
+                    else ptr = dynamic_cast<Scope *>(p);
+                    stages.pop();
                 }
+                return ptr->find_no_stage(Token{stages.front()}, is_local);
             }
         }
 
@@ -177,19 +193,11 @@ namespace PUPS {
             size_t status = 0;
             ObjectPtr acceptor;
             compound.filter();
-            bool colon_mode = false;
             for (auto &token: compound.tokens) {
-                if (status++) {
-                    if (colon_mode)
-                        return find(token);// fixme it doesnt work and returns null_obj
-                    else
-                        acceptor->put(token, _report);
-                } else {
-                    if (token.is_symbol() && token.colon())
-                        colon_mode = true;
-                    else
-                        acceptor = find(token);
-                }
+                if (status++)
+                    acceptor->put(token, _report);
+                else
+                    acceptor = find(token);
             }
             return acceptor->ends(this, _report);
         }

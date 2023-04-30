@@ -1,5 +1,0 @@
-
-    loc cst str hello = {Hello, world!};
-    loc cst int x = 10;
-    print hello;
-
