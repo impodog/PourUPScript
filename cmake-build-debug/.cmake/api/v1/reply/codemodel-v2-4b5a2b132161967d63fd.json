@@ -16,7 +16,8 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -28,11 +29,12 @@
 					[
 						0
 					],
-					"name" : "PourUPScriptTest",
+					"name" : "PourUPScriptInterp",
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -43,6 +45,13 @@
 					"id" : "PourUPScript::@6890427a1f51a3e7e1df",
 					"jsonFile" : "target-PourUPScript-Debug-2e4ebade4ea02993013c.json",
 					"name" : "PourUPScript",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "PourUPScriptInterp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PourUPScriptInterp-Debug-d2660a2e7e0a8c491b66.json",
+					"name" : "PourUPScriptInterp",
 					"projectIndex" : 0
 				},
 				{

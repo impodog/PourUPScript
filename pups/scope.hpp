@@ -19,7 +19,7 @@ namespace PUPS {
     public:
         Compound() = default;
 
-        Compound(Token beg, std::queue<Token> &args) {
+        Compound(const Token& beg, std::queue<Token> &args) {
             if (!beg.eof() && !beg.empty())
                 tokens.push_back(beg);
             while (!args.empty()) {
@@ -85,19 +85,35 @@ namespace PUPS {
 
     protected:
         std::unordered_map<Token, ObjectPtr> objects;
-        Report _report;
+        Report &_report;
         Scope *parent = nullptr;
 
 
     public:
         struct Flags {
-            bool find_no_null_warn = false, found_null = false;
-            bool cst = false;
+        private:
+            bool colon = false;
+            bool find_no_err = false;
 
             void reset() {
-                find_no_null_warn = found_null = cst = false;
+                colon = find_no_err = cst = loc = false;
             }
+
+            friend class Scope;
+
+        public:
+            bool cst = false, loc = false;
+
         } flags;
+
+        explicit Scope(Scope *parent, Report &report) :
+                _report(report), parent(parent) {
+            nests.emplace();
+        }
+
+        ~Scope() override {
+            _exit();
+        }
 
         Token add_imme(const ObjectPtr &object) {
             Token token = next_tag();
@@ -107,18 +123,53 @@ namespace PUPS {
         }
 
         ObjectPtr &find(const Token &name) {
+            bool _tmp;
+            return find(name, _tmp);
+        }
+
+        template<bool cancel_warn>
+        typename std::enable_if<cancel_warn, ObjectPtr &>::type find(const Token &name) {
+            bool _tmp;
+            flags.find_no_err = true;
+            auto &result = find(name, _tmp);
+            flags.find_no_err = false;
+            return result;
+        }
+
+        template<bool cancel_warn>
+        typename std::enable_if<!cancel_warn, ObjectPtr &>::type find(const Token &name) {
+            return find(name);
+        }
+
+        ObjectPtr &find(const Token &name, bool &is_local) {
             Scope *scope = this;
+            is_local = true;
             while (true) {
                 try {
                     return scope->objects.at(name);
                 } catch (const std::out_of_range &) {
                     if (scope->parent == nullptr) {
-                        _report.report(Report_UnknownName, "Cannot find name \"" + std::string(name) + "\".");
+                        if (!flags.find_no_err)
+                            _report.report(Report_UnknownName, "Cannot find name \"" + std::string(name) + "\".");
                         return null_obj;
                     }
+                    is_local = false;
                     scope = scope->parent;
                 }
             }
+        }
+
+        template<bool cancel_warn>
+        typename std::enable_if<cancel_warn, ObjectPtr &>::type find(const Token &name, bool &is_local) {
+            flags.find_no_err = true;
+            auto &result = find(name, is_local);
+            flags.find_no_err = false;
+            return result;
+        }
+
+        template<bool cancel_warn>
+        typename std::enable_if<!cancel_warn, ObjectPtr &>::type find(const Token &name, bool &is_local) {
+            return find(name, is_local);
         }
 
         ObjectPtr run_compound(Compound &compound) {
@@ -126,11 +177,19 @@ namespace PUPS {
             size_t status = 0;
             ObjectPtr acceptor;
             compound.filter();
+            bool colon_mode = false;
             for (auto &token: compound.tokens) {
-                if (status++)
-                    acceptor->put(token, _report);
-                else
-                    acceptor = find(token);
+                if (status++) {
+                    if (colon_mode)
+                        return find(token);// fixme it doesnt work and returns null_obj
+                    else
+                        acceptor->put(token, _report);
+                } else {
+                    if (token.is_symbol() && token.colon())
+                        colon_mode = true;
+                    else
+                        acceptor = find(token);
+                }
             }
             return acceptor->ends(this, _report);
         }
@@ -152,30 +211,21 @@ namespace PUPS {
         }
 
         void set_object(const Token &token, const ObjectPtr &object) {
-            flags.find_no_null_warn = true;
-            auto &f = find(token);
-            if (!flags.found_null && f == null_obj) {
-                _report.report(Report_Undeclared,
-                               "Setting name \"" + std::string(token) +
-                               "\", which is not declared. Unexpected things may happen.");
+            bool is_loc;
+            auto &f = find<true>(token, is_loc);
+            if (f == null_obj || !is_loc && flags.loc) {
+                if (!flags.loc)
+                    _report.report(Report_Undeclared,
+                                   "Setting name \"" + std::string(token) +
+                                   "\", which is not declared. Unexpected things may happen.");
                 try_exit_erase_object(token);
                 objects.insert({token, object});
             } else f = object;
-            flags.found_null = false;
         }
 
         void declare_object(const Token &token) {
             if (objects.find(token) == objects.end())
                 objects.insert({token, nullptr});
-        }
-
-        explicit Scope(const TokenInput &tokenInput, Scope *parent) :
-                _report(tokenInput), parent(parent) {
-            nests.emplace();
-        }
-
-        ~Scope() override {
-            _exit();
         }
 
         void put(const Token &token, Report &report) override {
@@ -203,8 +253,12 @@ namespace PUPS {
         ObjectPtr ends(PUPS::Scope *scope, PUPS::Report &report) override {
             if (nests.size() != 1)
                 report.report(Report_AbnormalStack, "Statement ending with stacks unclosed.");
-            add_imme(run_compound(nests.top()));
-            nests.top().exit(_report);
+            while (!nests.empty()) {
+                add_imme(run_compound(nests.top()));
+                nests.top().exit(_report);
+                nests.pop();
+            }
+            nests.emplace();
             while (!imme_names.empty()) {
                 erase_object(imme_names.front());
                 imme_names.pop();
@@ -217,10 +271,18 @@ namespace PUPS {
             _exit();
         }
 
-        Report &reports() noexcept {
+        [[nodiscard]] bool is_scope() const noexcept final {
+            return true;
+        }
+
+        Report &get_report() noexcept {
             return _report;
         }
     };
+
+    ObjectPtr make_scope(const Token &name, const fpath &path, Scope *parent, Report &report);
+
+    ObjectPtr make_scope(const Token &name, const Token &block, Scope *parent, Report &report);
 }
 
 #endif //POURUPSCRIPT_SCOPE_HPP

@@ -5,11 +5,9 @@
 #ifndef POURUPSCRIPTTEST_STDTYPE_HPP
 #define POURUPSCRIPTTEST_STDTYPE_HPP
 
-#include "scope.hpp"
+#include <utility>
 
-#define INT "int"
-#define FLOAT "flo"
-#define CST "cst"
+#include "scope.hpp"
 
 #define INST_OP(op_name) virtual ObjectPtr op_name(Token nxt, Scope *scope, Report &report) {\
     report.report(Report_WrongToken, "op_name is not supported");                       \
@@ -36,7 +34,7 @@ namespace PUPS {
                               "Type of " + object->to_string() + " is not the same as " + to_string() + ".");
         }
 
-        virtual ObjectPtr copy() const noexcept = 0;
+        [[nodiscard]] virtual ObjectPtr copy() const noexcept = 0;
 
     public:
         Cnt _type;
@@ -158,7 +156,7 @@ namespace PUPS {
     protected:
         static void chk_cst(Scope *scope, Report &report) {
             if (!scope->flags.cst)
-                report.report(Report_UnConstInit, "Std type initialization with \"" CST
+                report.report(Report_UnConstInit, std::string("Std type initialization with \"") + CST +
                                                   "\" qualifier is suggested. Statement continued in spite of warnings.");
         }
 
@@ -177,7 +175,6 @@ namespace PUPS {
     template<typename Arith>
     class INST_Arith final : public InstanceBase {
         Arith value;
-        std::queue<Token> args;
 
     public:
         INST_Arith(Cnt type, Arith value) : InstanceBase(type), value(value) {}
@@ -220,6 +217,58 @@ namespace PUPS {
             }
             return new_obj;
         }
+
+    public:
+        TP_Arith() = default;
+    };
+
+    class INST_Str final : public InstanceBase {
+        std::string value;
+    protected:
+        ObjectPtr op_add(Token nxt, Scope *scope, Report &report) override {
+            auto &object = scope->find(nxt);
+            chk_type(object, report);
+            return ObjectPtr{new INST_Str(_type, value + std::static_pointer_cast<INST_Str>(object)->value)};
+        }
+
+        [[nodiscard]] ObjectPtr copy() const noexcept override {
+            return ObjectPtr{new INST_Str{*this}};
+        }
+
+    public:
+        INST_Str(Cnt type, std::string value) : InstanceBase(type), value(std::move(value)) {}
+
+        [[nodiscard]] std::string to_string() const noexcept override {
+            return "\"" + value + "\"";
+        }
+
+        [[nodiscard]] std::string to_repr() const noexcept override {
+            return value;
+        }
+    };
+
+    class TP_Str : public StdTypeBase {
+    protected:
+        ObjectPtr construct(Scope *scope, Report &report) override {
+            ObjectPtr new_obj;
+            if (args.size() != 1 || !args.front().is_long()) {
+                report.report(Report_IncorrectArguments,
+                              "Str initialization requires one single long token. Statement skipped.");
+                return null_obj;
+            }
+            const std::string &arg = args.front().long_cut();
+            args.pop();
+            new_obj = ObjectPtr{
+                    new INST_Str(cnt, arg)};
+            while (!names.empty()) {
+                scope->set_object(names.front(), new_obj);
+                names.pop();
+            }
+            return new_obj;
+        }
+
+    public:
+        TP_Str() = default;
     };
 
     using INST_Int = INST_Arith<long long>;

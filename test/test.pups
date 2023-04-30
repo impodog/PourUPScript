@@ -1,6 +1,10 @@
-decl a b q hello;
-cst int a = -6;
-cst int q = 7;
-cst int hello = 8;
-set b = (a * q + hello);
-print b;
+loc incl {const.pups -> const};
+loc set scope = sco;
+loc scope myScope {
+    loc cst str hello = {Hello, world!};
+    loc cst int x = 10;
+    print hello;
+};
+loc set tmp = (myScope:hello);
+print tmp (const:space) (myScope:x);
+

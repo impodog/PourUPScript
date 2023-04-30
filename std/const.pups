@@ -1,0 +1,8 @@
+comm {
+    PourUPScript standard library.
+    This defines common constants.
+};
+
+decl SPACE;
+
+cst str SPACE = { };

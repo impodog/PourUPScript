@@ -875,7 +875,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "PourUPScriptTest"
+			"value" : "PourUPScriptInterp"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1252,6 +1252,42 @@
 			],
 			"type" : "BOOL",
 			"value" : "FALSE"
+		},
+		{
+			"name" : "PourUPScriptInterp_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "D:/workspace/Cpp/Tool/PourUPScript/cmake-build-debug"
+		},
+		{
+			"name" : "PourUPScriptInterp_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "PourUPScriptInterp_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "D:/workspace/Cpp/Tool/PourUPScript"
 		},
 		{
 			"name" : "PourUPScriptTest_BINARY_DIR",

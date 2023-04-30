@@ -45,6 +45,14 @@ namespace PUPS {
             return "<&Object=" + std::to_string(PtrToUlong(this)) + " Code=" + std::to_string(cnt) + ">";
         }
 
+        [[nodiscard]] virtual std::string to_repr() const noexcept {
+            return this->to_string();
+        }
+
+        [[nodiscard]] virtual bool is_scope() const noexcept {
+            return false;
+        }
+
         bool operator==(const ObjectBase &object) const noexcept {
             return cnt == object.cnt;
         }
@@ -54,17 +62,19 @@ namespace PUPS {
 
     size_t ObjectBase::count = 1;
 
+    extern ObjectPtr null_obj;
+
     class Null : public ObjectBase {
     public:
         Null() = default;
 
         void put(const Token &token, Report &report) override {
             report.report(Report_NullErr,
-                          "Cannot put token \"" + std::string(token) + "\"(or anything else) into Null.");
+                          "Cannot put token \"" + std::string(token) + "\" (or anything else) into null.");
         }
 
         ObjectPtr ends(PUPS::Scope *scope, PUPS::Report &report) override {
-            return ObjectPtr{this};
+            return null_obj;
         }
 
         void exit(Report &report) override {

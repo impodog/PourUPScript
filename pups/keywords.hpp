@@ -7,11 +7,6 @@
 
 #include "stdtype.hpp"
 
-#define DECL "decl"
-#define REF "ref"
-#define PRINT "print"
-#define SET "set"
-
 namespace PUPS {
     class KeywordBase : public ObjectBase {
     public:
@@ -32,7 +27,9 @@ namespace PUPS {
         void put(const Token &token, Report &report) override {
             if (token.is_symbol())
                 report.report(Report_WrongToken,
-                              DECL " should only get alphabetic names. Item \"" + std::string(token) + "\" skipped.");
+                              std::string("\"") + DECL + "\" should only get alphabetic names. Item \"" +
+                              std::string(token) +
+                              "\" skipped.");
             else
                 declares.push(token);
         }
@@ -55,7 +52,7 @@ namespace PUPS {
 
         ObjectPtr ends(PUPS::Scope *scope, PUPS::Report &report) override {
             while (!args.empty()) {
-                *Report::output << scope->find(args.front())->to_string();
+                *Report::output << scope->find(args.front())->to_repr();
                 args.pop();
             }
             *Report::output << std::endl;
@@ -76,14 +73,16 @@ namespace PUPS {
                     next_is_value = 1;
                 } else
                     report.report(Report_WrongToken,
-                                  SET "should only get \"=\" as assign parameter. Item \"" + std::string(token) +
+                                  std::string("\"") + SET + R"(" should only get "=" as assign parameter. Item ")" +
+                                  std::string(token) +
                                   "\" skipped.");
             } else {
                 if (next_is_value) {
                     if (next_is_value < 0)
                         report.report(Report_WrongToken,
-                                      SET "should only make one assignment once. Item \"" + std::string(token) +
-                                      "skipped.");
+                                      std::string("\"") + SET + "\" should only make one assignment once. Item \"" +
+                                      std::string(token) +
+                                      "\" skipped.");
                     else {
                         value = token;
                         next_is_value = -1;
@@ -108,40 +107,183 @@ namespace PUPS {
         }
     };
 
-    class KW_Cst final : public KeywordBase {
-        std::queue<Token> stmt;
+    class KW_Sco final : public KeywordBase {
+        Token name, block;
+        signed char status = -1;
     public:
-        KW_Cst() = default;
+        KW_Sco() = default;
 
         void put(const Token &token, Report &report) override {
-            stmt.push(token);
+            switch (status) {
+                case -1:
+                    name = token;
+                    break;
+                case 0:
+                    block = token;
+                    break;
+                default:
+                    report.report(Report_IncorrectArguments,
+                                  "An extra argument \"" + std::string(token) +
+                                  "\" for keyword \"" + SCO + "\". Token skipped.");
+                    break;
+            }
+            status++;
         }
 
         ObjectPtr ends(Scope *scope, Report &report) override {
-            scope->flags.cst = true;
-            if (stmt.empty())
-                report.report(Report_IncorrectArguments, "No statement after \"cst\" qualifier.");
+            make_scope(name, block, scope, report);
+            status = -1;
+            return null_obj;
+        }
+    };
+
+    class KW_Incl final : public KeywordBase {
+        std::map<Token, Token> names;
+    public:
+        static constexpr const char *const incl_rename = "->";
+
+        KW_Incl() = default;
+
+        void put(const Token &token, Report &report) override {
+            if (token.is_symbol())
+                report.report(Report_IncorrectArguments,
+                              std::string("\"") + INCL + "\" should get long or normal tokens as parameter. Item \"" +
+                              std::string(token) + "\" skipped.");
             else {
-                Compound compound(stmt);
-                scope->run_compound(compound);
+                std::string argument = token.str_dependent_no_space();
+                auto assign = argument.find(incl_rename);
+                if (assign == std::string::npos)
+                    names.insert({token, token});
+                else
+                    names.insert({Token{argument.substr(0, assign)},
+                                  Token{argument.substr(assign + strlen(incl_rename))}});
+            }
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            for (auto &pair: names) {
+                fpath path = report.find_file(pair.first.str());
+                if (path.empty())
+                    report.report(Report_FileNotFound, "Include file \"" + pair.first.str() + "\" is not found.");
+                else
+                    make_scope(pair.second, path, scope, report);
+            }
+            names.clear();
+            return null_obj;
+        }
+    };
+
+    class KW_Comm : public KeywordBase {
+        size_t token_count = 0;
+    public:
+        KW_Comm() = default;
+
+        void put(const Token &token, Report &report) override {
+            if (token_count || token.is_long()) {
+                if (++token_count > 1)
+                    report.report(Report_SuspectLine,
+                                  "Possible missing colon after comments line. Causes the desired statement to be skipped.");
+            }
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            token_count = 0;
+            return null_obj;
+        }
+    };
+
+
+    class KeywordQualifier : public KeywordBase {
+        std::queue<Token> stmt;
+
+    protected:
+        virtual void set_v(Scope *scope) = 0;
+
+        virtual const char *get_name() = 0;
+
+        virtual bool check(Scope *scope, Report &report) {
+            return true;
+        }
+
+    public:
+        explicit KeywordQualifier() = default;
+
+        void put(const Token &token, Report &report) final {
+            stmt.push(token);
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) final {
+            if (check(scope, report)) {
+                set_v(scope);
+                if (stmt.empty())
+                    report.report(Report_IncorrectArguments,
+                                  std::string("No statement after \"") + get_name() + "\" qualifier.");
+                else {
+                    Compound compound(stmt);
+                    scope->run_compound(compound);
+                }
             }
             return null_obj;
         }
+    };
+
+    class KW_Cst final : public KeywordQualifier {
+        void set_v(Scope *scope) override {
+            scope->flags.cst = true;
+        }
+
+        const char *get_name() override {
+            return CST;
+        }
+
+    public:
+        KW_Cst() = default;
+    };
+
+    class KW_Loc : public KeywordQualifier {
+        void set_v(Scope *scope) override {
+            scope->flags.loc = true;
+        }
+
+        const char *get_name() override {
+            return LOC;
+        }
+
+    public:
+        KW_Loc() = default;
+    };
+
+    class KW_Nothing final : public KeywordQualifier {
+        void set_v(Scope *scope) override {}
+
+        const char *get_name() override {
+            return NOTHING;
+        }
+
+    public:
+        KW_Nothing() = default;
     };
 
     class Keywords {
         std::unordered_map<Token, ObjectPtr> keywords, types;
     public:
         Keywords() : keywords{
-                {Token{NULL_OBJ, false}, null_obj},
-                {Token{DECL, false},     ObjectPtr{new KW_Decl}},
-                {Token{PRINT, false},    ObjectPtr{new KW_Print}},
-                {Token{SET, false},      ObjectPtr{new KW_Set}},
-                {Token{CST, false},      ObjectPtr{new KW_Cst}}
+                {Token{NULL_OBJ}, null_obj},
+                {Token{DECL},     ObjectPtr{new KW_Decl}},
+                {Token{PRINT},    ObjectPtr{new KW_Print}},
+                {Token{SET},      ObjectPtr{new KW_Set}},
+                {Token{CST},      ObjectPtr{new KW_Cst}},
+                {Token{LOC},      ObjectPtr{new KW_Loc}},
+                {Token{SCO},      ObjectPtr{new KW_Sco}},
+                {Token{NOTHING},  ObjectPtr{new KW_Nothing}},
+                {Token{INCL},     ObjectPtr{new KW_Incl}},
+                {Token{COMM},     ObjectPtr{new KW_Comm}}
+
         },
                      types{
-                             {Token{INT, false},   ObjectPtr{new TP_Int}},
-                             {Token{FLOAT, false}, ObjectPtr{new TP_Float}}
+                             {Token{INT},   ObjectPtr{new TP_Int}},
+                             {Token{FLOAT}, ObjectPtr{new TP_Float}},
+                             {Token{STR},   ObjectPtr{new TP_Str}}
                      } {}
 
         ~Keywords() = default;

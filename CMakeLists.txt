@@ -10,3 +10,9 @@ project(PourUPScriptTest)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(PourUPScriptTest test.cpp)
+
+project(PourUPScriptInterp)
+
+set(CMAKE_CXX_STANDARD 20)
+
+add_executable(PourUPScriptInterp interp.cpp)

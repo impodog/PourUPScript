@@ -8,8 +8,10 @@
 #include "../cpp_lib/cpp_lib.h"
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 #include <ranges>
 #include <unordered_map>
+#include <unordered_set>
 #include <map>
 #include <stack>
 #include <list>
@@ -21,8 +23,6 @@
 #include <queue>
 #include <utility>
 #include <memory>
-
-#define NULL_OBJ "null"
 
 #define FN_ALIAS_SPEC(SPECS, NEW_NAME, ...)                                     \
   template <typename... Args>                                                   \
@@ -47,6 +47,30 @@
 namespace PUPS {
     using cppstr = const std::string &;
     using cstr = const char *;
+    using fpath = std::filesystem::path;
+
+    constexpr const cstr version = "0.0.1";
+
+    constexpr const cstr std_path = "std",
+            DECL = "decl",
+            REF = "ref",
+            PRINT = "print",
+            SET = "set",
+            LOC = "loc",
+            SCO = "sco",
+            NOTHING = "nothing",
+            INCL = "incl",
+            COMM = "comm",
+            NULL_OBJ = "null",
+            CST = "cst",
+
+
+            INT = "int",
+            FLOAT = "flo",
+            STR = "str";
+
+    bool keepTemporary = false;
+
 }
 
 #endif //POURUPSCRIPT_MACROS_H

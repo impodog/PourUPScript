@@ -7,6 +7,9 @@
 
 #include <algorithm>
 #include <cmath>
+#include <string>
+#include <cstring>
+#include <iostream>
 
 #define max_of(x) std::numeric_limits<x>::max()
 #define min_of(x) std::numeric_limits<x>::min()
@@ -66,6 +69,12 @@ namespace PUPS {
         for (int i = 1; i < p; i++)
             result *= x;
         return result;
+    }
+
+    template<typename NumType>
+    constexpr typename std::enable_if<std::is_arithmetic<NumType>::value, NumType>::type
+    log(NumType base, NumType power) {
+        return log2(power) / log2(base);
     }
 
     SIGNED(Arith, constexpr) sign_of(Arith arith) {
@@ -214,6 +223,32 @@ typename std::enable_if<std::is_same<Arith, t>::value, Arith>::type eval(const s
     EVAL_WHEN(stold, long double)
 
 #undef EVAL_WHEN
+
+    template<typename NumType>
+    typename std::enable_if<std::is_arithmetic<NumType>::value, std::string &>::type
+    to_unique_str(NumType num, std::string &output) {
+        constexpr static const char *const chars = "abcdefghijklmnop";
+        constexpr NumType mask = 0xf;
+        output.clear();
+        do {
+            output.push_back(chars[num & mask]);
+            num >>= 4;
+        } while (num != 0);
+        return output;
+    }
+
+    template<typename NumType>
+    typename std::enable_if<std::is_arithmetic<NumType>::value, std::string>::type
+    to_unique_str(NumType num) {
+        constexpr static const char *const chars = "abcdefghijklmnop";
+        constexpr NumType mask = 0xf;
+        std::string result;
+        do {
+            result.push_back(chars[num & mask]);
+            num >>= 4;
+        } while (num != 0);
+        return result;
+    }
 }
 
 #undef SIGNED

@@ -9,52 +9,69 @@
 
 #include "token.hpp"
 
-#define Report_NullErr "NullErr"
-#define Report_UnknownName "UnknownName"
-#define Report_EmptyCompound "EmptyCompound"
-#define Report_AbnormalStack "AbnormalStack"
-#define Report_WrongToken "WrongToken"
-#define Report_ReDeclaring "Re-declaring"
-#define Report_Uninitialized "Uninitialized"
-#define Report_IncorrectArguments "IncorrectArguments"
-#define Report_OperatorErr "OperatorErr"
-#define Report_Undeclared "Undeclared"
-#define Report_TypeErr "TypeErr"
-#define Report_UnConstInit "UnConstInit"
 
 namespace PUPS {
+    constexpr const cstr
+            Report_NullErr = "NullErr",
+            Report_UnknownName = "UnknownName",
+            Report_EmptyCompound = "EmptyCompound",
+            Report_AbnormalStack = "AbnormalStack",
+            Report_WrongToken = "WrongToken",
+            Report_ReDeclaring = "Re-declaring",
+            Report_Uninitialized = "Uninitialized",
+            Report_IncorrectArguments = "IncorrectArguments",
+            Report_OperatorErr = "OperatorErr",
+            Report_Undeclared = "Undeclared",
+            Report_TypeErr = "TypeErr",
+            Report_UnConstInit = "UnConstInit",
+            Report_LocalityErr = "LocalityErr",
+            Report_FileNotFound = "FileNotFound",
+            Report_SuspectLine = "SuspectLine";
+
     class ObjectBase;
 
     class Report {
         const size_t &line;
-        const std::string &file, &cur_line;
+        fpath _file;
+        const std::string &cur_line;
         struct ReportMsg {
             size_t line;
             std::string head, body;
-            const std::string &file, &cur_line;
+            const fpath &file;
+            const std::string &cur_line;
         };
         std::queue<ReportMsg> reports;
 
         static void show_msg(const ReportMsg &msg) {
             *output << "[" << msg.head << " in " << msg.file << " line " << msg.line
-                    << "]\n\tat \"" << msg.cur_line << "\"\n\t" << msg.body << "\n";
+                    << "]\nEXECUTING:\n" << msg.cur_line << "\nREPORT:\n" << msg.body << "\n";
         }
 
     public:
+        std::list<fpath> paths;
         static std::ostream *output;
 
-        Report(const size_t &line, const std::string &file, const std::string &cur_line) : line(line),
-                                                                                           file(file),
-                                                                                           cur_line(cur_line) {}
+        Report(const size_t &line, fpath file, const std::string &cur_line) : line(line),
+                                                                              _file(std::move(file)),
+                                                                              cur_line(cur_line) {
+            paths.push_back(_file.parent_path());
+            paths.emplace_back(std_path);
+        }
 
         explicit Report(const TokenInput &input) : Report{input.line_num(), input.file(), input.cur_line()} {}
 
+        Report(const Report &report) : Report{report.line, report._file, report.cur_line} {}
+
         [[nodiscard]] std::string where() const {
-            return "in " + file + " line " + std::to_string(line) + "\n\tat \"" + cur_line + "\"";
+            return "in " + _file.string() + " line " + std::to_string(line) + "\nEXECUTING:\n" + cur_line;
+        }
+
+        [[nodiscard]] std::string file() const noexcept {
+            return _file.string();
         }
 
         void report(std::string head, std::string body) {
-            reports.push({line, std::move(head), std::move(body), file, cur_line});
+            reports.push({line, std::move(head), std::move(body), _file, cur_line});
         }
 
         [[nodiscard]] bool no_report() const noexcept {
@@ -76,6 +93,14 @@ namespace PUPS {
                 reports.push(report.reports.front());
                 report.reports.pop();
             }
+        }
+
+        fpath find_file(const std::string &file) {
+            for (auto path: paths) {
+                path.append(file);
+                if (std::filesystem::exists(path)) return path;
+            }
+            return {};
         }
     };
 
