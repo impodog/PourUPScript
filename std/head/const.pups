@@ -3,6 +3,7 @@ comm {
     This defines common constants.
 };
 
-decl SPACE;
+decl space;
 
-cst str SPACE = { };
+loc cst str space = { };
+

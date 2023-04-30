@@ -26,7 +26,10 @@ namespace PUPS {
             Report_UnConstInit = "UnConstInit",
             Report_LocalityErr = "LocalityErr",
             Report_FileNotFound = "FileNotFound",
-            Report_SuspectLine = "SuspectLine";
+            Report_SuspiciousLine = "SuspiciousLine",
+            Report_AgainWarning = "AgainWarning",
+            Report_NewWarning = "NewWarning",
+            Report_Redundant = "Redundant";
 
     class ObjectBase;
 

@@ -1,10 +1,10 @@
-loc incl {const.pups -> const};
-loc set scope = sco;
-loc scope myScope {
+loc incl const;
+loc sco myScope {
     loc cst str hello = {Hello, world!};
     loc cst int x = 10;
     print hello;
 };
+again decl {const:space};
 loc set tmp = {myScope:hello};
 print tmp {const:space} {myScope:x};
 

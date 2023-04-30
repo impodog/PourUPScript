@@ -108,18 +108,23 @@ namespace PUPS {
     };
 
     class KW_Sco final : public KeywordBase {
-        Token name, block;
+        struct ScopeInit {
+            Token name, block;
+        };
+        std::stack<ScopeInit> inits;
         signed char status = -1;
     public:
-        KW_Sco() = default;
+        KW_Sco() {
+            inits.emplace();
+        }
 
         void put(const Token &token, Report &report) override {
             switch (status) {
                 case -1:
-                    name = token;
+                    inits.top().name = token;
                     break;
                 case 0:
-                    block = token;
+                    inits.top().block = token;
                     break;
                 default:
                     report.report(Report_IncorrectArguments,
@@ -131,18 +136,23 @@ namespace PUPS {
         }
 
         ObjectPtr ends(Scope *scope, Report &report) override {
-            make_scope(name, block, scope, report);
+            auto &top = inits.top();
+            inits.emplace();
+            make_scope(top.name, top.block, scope, report);
+            inits.pop();
             status = -1;
             return null_obj;
         }
     };
 
     class KW_Incl final : public KeywordBase {
-        std::map<Token, Token> names;
+        std::stack<std::list<std::pair<Token, Token>>> names;
     public:
-        static constexpr const char *const incl_rename = "->";
+        static constexpr const char *const incl_as = "->";
 
-        KW_Incl() = default;
+        KW_Incl() {
+            names.emplace();
+        }
 
         void put(const Token &token, Report &report) override {
             if (token.is_symbol())
@@ -151,24 +161,25 @@ namespace PUPS {
                               std::string(token) + "\" skipped.");
             else {
                 std::string argument = token.str_dependent_no_space();
-                auto assign = argument.find(incl_rename);
+                auto assign = argument.find(incl_as);
                 if (assign == std::string::npos)
-                    names.insert({token, token});
+                    names.top().emplace_back(token, token);
                 else
-                    names.insert({Token{argument.substr(0, assign)},
-                                  Token{argument.substr(assign + strlen(incl_rename))}});
+                    names.top().emplace_back(Token{argument.substr(0, assign)},
+                                             Token{argument.substr(assign + strlen(incl_as))});
             }
         }
 
         ObjectPtr ends(Scope *scope, Report &report) override {
-            for (auto &pair: names) {
+            for (auto &pair: names.top()) {
+                names.emplace();
                 fpath path = report.find_file(pair.first.str());
                 if (path.empty())
                     report.report(Report_FileNotFound, "Include file \"" + pair.first.str() + "\" is not found.");
                 else
                     make_scope(pair.second, path, scope, report);
+                names.pop();
             }
-            names.clear();
             return null_obj;
         }
     };
@@ -181,13 +192,31 @@ namespace PUPS {
         void put(const Token &token, Report &report) override {
             if (token_count || token.is_long()) {
                 if (++token_count > 1)
-                    report.report(Report_SuspectLine,
+                    report.report(Report_SuspiciousLine,
                                   "Possible missing colon after comments line. Causes the desired statement to be skipped.");
             }
         }
 
         ObjectPtr ends(Scope *scope, Report &report) override {
             token_count = 0;
+            return null_obj;
+        }
+    };
+
+    class KW_Add_Path final : public KeywordBase {
+        std::queue<Token> paths;
+    public:
+        KW_Add_Path() = default;
+
+        void put(const Token &token, Report &report) override {
+            paths.push(token);
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            while (!paths.empty()) {
+                scope->get_report().paths.emplace_back(paths.front().str_dependent());
+                paths.pop();
+            }
             return null_obj;
         }
     };
@@ -264,6 +293,32 @@ namespace PUPS {
         KW_Nothing() = default;
     };
 
+    class KW_Again final : public KeywordQualifier {
+        void set_v(Scope *scope) override {
+            scope->flags.again = true;
+        }
+
+        const char *get_name() override {
+            return AGAIN;
+        }
+
+    public:
+        KW_Again() = default;
+    };
+
+    class KW_New final : public KeywordQualifier {
+        void set_v(Scope *scope) override {
+            scope->flags.new_decl = true;
+        }
+
+        const char *get_name() override {
+            return NEW;
+        }
+
+    public:
+        KW_New() = default;
+    };
+
     class Keywords {
         std::unordered_map<Token, ObjectPtr> keywords, types;
     public:
@@ -277,8 +332,10 @@ namespace PUPS {
                 {Token{SCO},      ObjectPtr{new KW_Sco}},
                 {Token{NOTHING},  ObjectPtr{new KW_Nothing}},
                 {Token{INCL},     ObjectPtr{new KW_Incl}},
-                {Token{COMM},     ObjectPtr{new KW_Comm}}
-
+                {Token{COMM},     ObjectPtr{new KW_Comm}},
+                {Token{AGAIN},    ObjectPtr{new KW_Again}},
+                {Token{ADD_PATH}, ObjectPtr{new KW_Add_Path}},
+                {Token{NEW},      ObjectPtr{new KW_New}},
         },
                      types{
                              {Token{INT},   ObjectPtr{new TP_Int}},

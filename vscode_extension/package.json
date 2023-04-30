@@ -1,0 +1,25 @@
+{
+  "name": "pourupscript",
+  "displayName": "PourUPScript",
+  "description": "Simple PUPS functionalities",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "pups",
+      "aliases": ["PourUPScript", "pups"],
+      "extensions": [".pups"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "pups",
+      "scopeName": "source.pups",
+      "path": "./syntaxes/pups.tmLanguage.json"
+    }]
+  }
+}

@@ -99,7 +99,10 @@ namespace PUPS {
         }
         Scripter scripter(path, report, scope);
         while (scripter.forward()) {}
-        parent->set_object(name, scope);
+        if (name.empty())
+            parent->copy_objects_from(scope.get());
+        else
+            parent->set_object(name, scope);
         return scope;
     }
 

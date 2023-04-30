@@ -74,7 +74,7 @@ namespace PUPS {
             for (auto &pair: objects) {
                 if (pair.second == nullptr)
                     _report.report(Report_Uninitialized, "When exiting Scope, name \"" + std::string(pair.first) +
-                                                         "\" is a declared, uninitialized object(nullptr). Item skipped.");
+                                                         "\" is a declared, uninitialized object(nullptr). Item skipped."); // fixme why did it throw out long tokens???
                 else if (!pair.first.str().starts_with(TAG) && pair.second.use_count())
                     exit_object(pair.first);
             }
@@ -110,16 +110,16 @@ namespace PUPS {
         struct Flags {
         private:
             bool colon = false;
-            bool find_no_err = false;
+            bool find_no_err = false, set_no_err = false;
 
             void reset() {
-                colon = find_no_err = cst = loc = false;
+                colon = find_no_err = set_no_err = cst = loc = again = new_decl = false;
             }
 
             friend class Scope;
 
         public:
-            bool cst = false, loc = false;
+            bool cst = false, loc = false, again = false, new_decl = false;
 
         } flags;
 
@@ -222,7 +222,7 @@ namespace PUPS {
             bool is_loc;
             auto &f = find<true>(token, is_loc);
             if (f == null_obj || !is_loc && flags.loc) {
-                if (!flags.loc)
+                if (!flags.set_no_err && !flags.loc)
                     _report.report(Report_Undeclared,
                                    "Setting name \"" + std::string(token) +
                                    "\", which is not declared. Unexpected things may happen.");
@@ -231,9 +231,43 @@ namespace PUPS {
             } else f = object;
         }
 
+        template<bool cancel_warn>
+        typename std::enable_if<cancel_warn, void>::type set_object(const Token &token, const ObjectPtr &object) {
+            flags.set_no_err = true;
+            set_object(token, object);
+            flags.set_no_err = false;
+        }
+
+        template<bool cancel_warn>
+        typename std::enable_if<!cancel_warn, void>::type set_object(const Token &token, const ObjectPtr &object) {
+            set_object(token, object);
+        }
+
         void declare_object(const Token &token) {
-            if (objects.find(token) == objects.end())
-                objects.insert({token, nullptr});
+            bool is_local;
+            auto result = find<true>(token, is_local);
+            if (flags.loc)
+                _report.report(Report_Redundant,
+                               wrap_quotes(LOC) + " on " + wrap_quotes(DECL) + " has no effect. Remove it.");
+            if (!result || result == null_obj) {
+                if (flags.again) {
+                    _report.report(Report_AgainWarning,
+                                   wrap_quotes(DECL) + " statement qualified with " + wrap_quotes(AGAIN) +
+                                   " should be initialized. Statement skipped.");
+                    return;
+                }
+            } else if (flags.new_decl && is_local) {
+                _report.report(Report_NewWarning,
+                               wrap_quotes(DECL) + " statement qualified with " + wrap_quotes(NEW) +
+                               " should NOT be initialized. Statement skipped.");
+                return;
+            }
+            objects.insert({token, nullptr});
+        }
+
+        void copy_objects_from(Scope *scope) {
+            for (auto &object: scope->objects)
+                set_object<true>(object.first, object.second);
         }
 
         void put(const Token &token, Report &report) override {
@@ -291,6 +325,8 @@ namespace PUPS {
     ObjectPtr make_scope(const Token &name, const fpath &path, Scope *parent, Report &report);
 
     ObjectPtr make_scope(const Token &name, const Token &block, Scope *parent, Report &report);
+
+    ObjectPtr make_free_scope(const fpath &path, Scope *parent, Report &report);
 }
 
 #endif //POURUPSCRIPT_SCOPE_HPP

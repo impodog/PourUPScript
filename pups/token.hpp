@@ -13,7 +13,7 @@
     return peek == ch && cur != '\\' ? 2 : 0;                    \
 }
 #define TAG "_t"
-#define TMP "_tmp"
+#define TMP "pups_tmp"
 namespace PUPS {
     static std::stack<std::string> tags;
     static constexpr const int lower_diff = 'a' - 'A';
@@ -21,7 +21,11 @@ namespace PUPS {
 
     inline std::string next_file_s(const std::string &file) {
         static size_t file_count = 0;
-        return file + "." + TMP + to_unique_str(file_count++);
+        return file + "." + to_unique_str(file_count++) + "." TMP;
+    }
+
+    inline std::string wrap_quotes(const char *s) noexcept {
+        return std::string("\"") + s + "\"";
     }
 
     inline constexpr bool is_alpha(char c) noexcept {
