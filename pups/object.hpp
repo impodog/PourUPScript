@@ -14,6 +14,7 @@ namespace PUPS {
 
     struct EvalResult {
         enum ResultType {
+            type_default,
             type_int,
             type_float,
             type_str,
@@ -30,8 +31,9 @@ namespace PUPS {
     };
 
     class ObjectBase {
-    protected:
+    public:
         using Cnt = size_t;
+    protected:
         static Cnt count;
         using CountSearch = std::vector<Cnt>;
 
@@ -40,6 +42,7 @@ namespace PUPS {
         };
     public:
         using ObjectPtr = std::shared_ptr<ObjectBase>;
+        static constexpr const Cnt AnyT_cnt = 0, TypeT_Cnt = 1, NullT_Cnt = 2;
         const Cnt cnt = count++;
 
         virtual void put(const Token &token, Report &report) = 0;
@@ -48,7 +51,7 @@ namespace PUPS {
 
         virtual void exit(Report &report) = 0;
 
-        [[nodiscard]] virtual bool can_delete() const noexcept {
+        [[nodiscard]] virtual constexpr bool can_delete() const noexcept {
             return true;
         }
 
@@ -78,7 +81,11 @@ namespace PUPS {
             return false;
         }
 
-        virtual EvalResult getv() const {
+        [[nodiscard]] virtual constexpr bool to_condition() const noexcept {
+            return true;
+        }
+
+        [[nodiscard]] virtual EvalResult get_ev() const {
             throw std::runtime_error("cannot evaluate object " + to_string());
         }
 
@@ -89,9 +96,10 @@ namespace PUPS {
 
     using ObjectPtr = ObjectBase::ObjectPtr;
 
-    size_t ObjectBase::count = 1;
+    size_t ObjectBase::count = 3;
 
     extern ObjectPtr null_obj;
+    ObjectPtr true_obj, false_obj;
 
     class Null : public ObjectBase {
     public:
@@ -110,12 +118,20 @@ namespace PUPS {
             //intended to do nothing
         }
 
-        [[nodiscard]] bool can_delete() const noexcept override {
+        [[nodiscard]] Cnt type() const noexcept override {
+            return NullT_Cnt;
+        }
+
+        [[nodiscard]] constexpr bool can_delete() const noexcept override {
             return false;
         }
 
         [[nodiscard]] std::string to_string() const noexcept override {
             return "NULL";
+        }
+
+        [[nodiscard]] constexpr bool to_condition() const noexcept override {
+            return false;
         }
     };
 

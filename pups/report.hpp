@@ -29,7 +29,8 @@ namespace PUPS {
             Report_SuspiciousLine = "SuspiciousLine",
             Report_AgainWarning = "AgainWarning",
             Report_NewWarning = "NewWarning",
-            Report_Redundant = "Redundant";
+            Report_Redundant = "Redundant",
+            Report_AnyTErr = "AnyTErr";
 
     class ObjectBase;
 

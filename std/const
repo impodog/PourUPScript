@@ -1,4 +1,4 @@
-comm {
+comment {
     PourUPScript standard library.
     Defines common constants.
 };

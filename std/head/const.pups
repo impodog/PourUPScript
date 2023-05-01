@@ -1,9 +1,9 @@
 new decl space;
-cst str space = { };
+make str space = { };
 
 new decl pi;
-cst flo pi = 3.14159265358979323846;
+make flo pi = 3.14159265358979323846;
 
 new decl e;
-cst flo e = 2.7182818284590452354;
+make flo e = 2.7182818284590452354;
 

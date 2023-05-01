@@ -3,16 +3,10 @@ project(PourUPScriptLib)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(PourUPScriptLib pups.cpp cpp_lib/math.hpp pups/macros.h cpp_lib/cpp_lib.h pups/object.hpp pups/token.hpp pups/scope.hpp pups/report.hpp pups/manage.hpp pups/keywords.hpp pups/stdtype.hpp pups/function.hpp cpp_lib/util.hpp)
-
-project(PourUPScriptTest)
-
-set(CMAKE_CXX_STANDARD 20)
-
-add_executable(PourUPScriptTest test.cpp)
+add_library(PourUPScriptLib pups.cpp cpp_lib/math.hpp pups/macros.h cpp_lib/cpp_lib.h pups/object.hpp pups/token.hpp pups/scope.hpp pups/report.hpp pups/manage.hpp pups/keywords.hpp pups/stdtype.hpp pups/function.hpp cpp_lib/util.hpp std_lib/lib_math.hpp std_lib/include.hpp)
 
 project(PourUPScriptInterp)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(PourUPScriptInterp interp.cpp)
+add_executable(PourUPScriptInterp interp.cpp std_lib/lib_math.hpp std_lib/lib_util.hpp std_lib/include.hpp)

@@ -63,15 +63,6 @@ namespace PUPS {
     }
 
     template<typename NumType>
-    inline constexpr typename std::enable_if<std::is_integral<NumType>::value, NumType>::type
-    pow(NumType x, typename std::make_unsigned<NumType>::type p) {
-        NumType result = x;
-        for (int i = 1; i < p; i++)
-            result *= x;
-        return result;
-    }
-
-    template<typename NumType>
     constexpr typename std::enable_if<std::is_arithmetic<NumType>::value, NumType>::type
     log(NumType base, NumType power) {
         return log2(power) / log2(base);

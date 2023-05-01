@@ -28,7 +28,6 @@ namespace PUPS {
         return std::string("\"") + s + "\"";
     }
 
-
     inline constexpr bool is_alpha(char c) noexcept {
         return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') || c == '_';
     }
@@ -158,7 +157,9 @@ namespace PUPS {
             return !token.empty() && token.front() == '_';
         }
 
-        FN_ALIAS(null, eof)
+        [[nodiscard]] bool null() const noexcept {
+            return _is_eof || token.empty();
+        }
 
         [[nodiscard]] bool is_symbol() const noexcept {
             return _is_symbol;
@@ -215,6 +216,10 @@ namespace PUPS {
 
     std::ostream &operator<<(std::ostream &o, const Token &token) {
         return o << std::string(token);
+    }
+
+    inline Token add_builtin_mark(const std::string &s) {
+        return Token{builtin_mark + s};
     }
 
     inline Token next_tag() {

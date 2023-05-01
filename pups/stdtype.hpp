@@ -40,6 +40,8 @@ namespace PUPS {
 
         INST_OP(op_dot)
 
+        INST_OP(op_eq)
+
         void chk_type_same(const ObjectPtr &object, Report &report) const {
             if (object->type() != type())
                 report.report(Report_TypeErr,
@@ -55,8 +57,8 @@ namespace PUPS {
                           "This instance does not allow keyword-like calling. \"" + std::string(token) + "\" skipped.");
         }
 
-        virtual void inst_ends(Scope *scope, Report &report) {
-
+        virtual ObjectPtr inst_ends(Scope *scope, Report &report) {
+            return copy();
         }
 
         [[nodiscard]] virtual ObjectPtr copy() const noexcept = 0;
@@ -124,6 +126,9 @@ namespace PUPS {
                         case '.':
                             CALL_OP(op_dot)
                             break;
+                        case '=':
+                            CALL_OP(op_eq)
+                            break;
                         default:
                             report.report(Report_WrongToken,
                                           "Unknown operator \"" + std::string(top.front()) + "\". Item skipped.");
@@ -144,7 +149,7 @@ namespace PUPS {
             }
             args.pop();
             if (symbol == call_symbol)
-                inst_ends(scope, report);
+                return inst_ends(scope, report);
             if (!imme.eof()) {
                 Compound compound(imme, args.top());
                 return scope->run_compound(compound);
@@ -156,7 +161,7 @@ namespace PUPS {
 
         }
 
-        [[nodiscard]] bool can_delete() const noexcept override {
+        [[nodiscard]] constexpr bool can_delete() const noexcept override {
             return true;
         }
     };
@@ -230,7 +235,11 @@ namespace PUPS {
 
         }
 
-        [[nodiscard]] Cnt get_type() const noexcept {
+        [[nodiscard]] Cnt type() const noexcept final {
+            return TypeT_Cnt;
+        }
+
+        [[nodiscard]] virtual Cnt get_type() const noexcept {
             return cnt;
         }
 
@@ -238,7 +247,7 @@ namespace PUPS {
             return true;
         }
 
-        [[nodiscard]] bool can_delete() const noexcept override {
+        [[nodiscard]] constexpr bool can_delete() const noexcept override {
             return false;
         }
     };
@@ -246,11 +255,56 @@ namespace PUPS {
     using InstancePtr = std::shared_ptr<InstanceBase>;
     using TypePtr = std::shared_ptr<TypeBase>;
 
+    class TP_AnyT final : public TypeBase {
+    public:
+        TP_AnyT() = default;
+
+        ObjectPtr construct(Scope *scope, Report &report, std::queue<Token> &names,
+                            std::queue<Token> &args) override {
+            report.report(Report_AnyTErr, "Cannot use anyt to construct anything.");
+            return null_obj;
+        }
+
+        [[nodiscard]] Cnt get_type() const noexcept override {
+            return AnyT_cnt;
+        }
+    };
+
+    class TP_TypeT final : public TypeBase {
+    public:
+        TP_TypeT() = default;
+
+        ObjectPtr construct(Scope *scope, Report &report, std::queue<Token> &names,
+                            std::queue<Token> &args) override {
+            report.report(Report_AnyTErr, "Cannot use typet to construct anything(even types).");
+            return null_obj;
+        }
+
+        [[nodiscard]] Cnt get_type() const noexcept override {
+            return TypeT_Cnt;
+        }
+    };
+
+    class TP_NullT final : public TypeBase {
+    public:
+        TP_NullT() = default;
+
+        ObjectPtr construct(Scope *scope, Report &report, std::queue<Token> &names,
+                            std::queue<Token> &args) override {
+            report.report(Report_AnyTErr, "Cannot use nullt to construct anything(even null itself).");
+            return null_obj;
+        }
+
+        [[nodiscard]] Cnt get_type() const noexcept override {
+            return NullT_Cnt;
+        }
+    };
+
     class StdTypeBase : public TypeBase {
     protected:
         static void chk_cst(Scope *scope, Report &report) {
-            if (!scope->flags.cst)
-                report.report(Report_UnConstInit, std::string("Std type initialization with \"") + CST +
+            if (!scope->flags.make)
+                report.report(Report_UnConstInit, std::string("Std type initialization with \"") + MAKE +
                                                   "\" qualifier is suggested. Statement continued in spite of warnings.");
         }
 
@@ -262,8 +316,16 @@ namespace PUPS {
 #define OVERRIDE_OP(op_name, op, typeof_this) ObjectPtr op_name(const Token &nxt, Scope *scope, Report &report) override { \
     auto &object = scope->find(nxt);\
     this->chk_type_same(object, report);\
-    return ObjectPtr{new typeof_this{this->type(), static_cast<typeof this->value>(this->value op std::static_pointer_cast<typeof_this>(object)->value)}};\
+    return ObjectPtr{new typeof_this{this->type(), static_cast<Arith>(this->value op std::static_pointer_cast<typeof_this>(object)->value)}};\
 }
+
+#define BASIC_OP(typeof_this) \
+OVERRIDE_OP(op_sub, -, typeof_this)\
+OVERRIDE_OP(op_mul, *, typeof_this)\
+OVERRIDE_OP(op_div, /, typeof_this)\
+OVERRIDE_OP(op_lt, <, typeof_this)\
+OVERRIDE_OP(op_gt, >, typeof_this)\
+OVERRIDE_OP(op_eq, ==, typeof_this)
 
     template<typename Arith>
     class INST_Arith_Base : public InstanceBase {
@@ -277,19 +339,11 @@ namespace PUPS {
             return std::to_string(value);
         }
 
-        OVERRIDE_OP(op_add, +, INST_Arith_Base)
+        [[nodiscard]] constexpr bool to_condition() const noexcept override {
+            return value != 0;
+        }
 
-        OVERRIDE_OP(op_sub, -, INST_Arith_Base)
-
-        OVERRIDE_OP(op_mul, *, INST_Arith_Base)
-
-        OVERRIDE_OP(op_div, /, INST_Arith_Base)
-
-        OVERRIDE_OP(op_lt, <, INST_Arith_Base)
-
-        OVERRIDE_OP(op_gt, >, INST_Arith_Base)
-
-        [[nodiscard]]ObjectPtr copy() const noexcept override {
+        [[nodiscard]] ObjectPtr copy() const noexcept override {
             return ObjectPtr{new INST_Arith_Base{*this}};
         }
     };
@@ -316,9 +370,25 @@ namespace PUPS {
             return EvalResult::type_schar;
         }
 
-
     public:
         INST_Arith_Int(Cnt type, Arith value) : INST_Arith_Base<Arith>(type, value) {}
+
+        ObjectPtr op_add(const Token &nxt, Scope *scope, Report &report)
+        override {
+            auto &object = scope->find(nxt);
+            this->
+                    chk_type_same(object, report
+            );
+            return ObjectPtr{
+                    new INST_Arith_Int{
+                            this->
+                                    type(),
+                            static_cast<Arith>(this->value +
+                                               std::static_pointer_cast<INST_Arith_Int>(object)
+                                                       ->value)}};
+        }
+
+        BASIC_OP(INST_Arith_Int)
 
         OVERRIDE_OP(op_and, &, INST_Arith_Int)
 
@@ -326,7 +396,7 @@ namespace PUPS {
 
         OVERRIDE_OP(op_xor, ^, INST_Arith_Int)
 
-        [[nodiscard]] EvalResult getv() const final {
+        [[nodiscard]] EvalResult get_ev() const final {
             switch (get_type()) {
                 case EvalResult::type_int:
                     return {EvalResult::type_int, {.r_int = static_cast<int>(this->value)}};
@@ -334,8 +404,14 @@ namespace PUPS {
                     return {EvalResult::type_byte, {.r_byte = static_cast<unsigned char>(this->value)}};
                 case EvalResult::type_schar:
                     return {EvalResult::type_schar, {.r_schar = static_cast<signed char>(this->value)}};
+                default:
+                    break;
             }
-            return ObjectBase::getv();
+            return ObjectBase::get_ev();
+        }
+
+        [[nodiscard]]ObjectPtr copy() const noexcept override {
+            return ObjectPtr{new INST_Arith_Int{*this}};
         }
     };
 
@@ -345,8 +421,14 @@ namespace PUPS {
     public:
         INST_Arith_Float(Cnt type, Arith value) : INST_Arith_Base<Arith>(type, value) {}
 
-        [[nodiscard]] EvalResult getv() const final {
+        BASIC_OP(INST_Arith_Float)
+
+        [[nodiscard]] EvalResult get_ev() const final {
             return {EvalResult::type_float, {.r_float = this->value}};
+        }
+
+        [[nodiscard]]ObjectPtr copy() const noexcept override {
+            return ObjectPtr{new INST_Arith_Float{*this}};
         }
     };
 
@@ -427,7 +509,7 @@ namespace PUPS {
             return value;
         }
 
-        EvalResult getv() const final {
+        [[nodiscard]] EvalResult get_ev() const final {
             return {EvalResult::type_str, {.r_str = &this->value}};
         }
     };
@@ -456,6 +538,10 @@ namespace PUPS {
     public:
         TP_Str() = default;
     };
+
+    namespace TypeCodes {
+        ObjectBase::Cnt Int, Float, Str, Byte, SChar;
+    }
 }
 
 #endif //POURUPSCRIPTTEST_STDTYPE_HPP

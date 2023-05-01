@@ -167,14 +167,14 @@ namespace PUPS {
             bool find_no_err = false, set_no_err = false, decl_no_new_scope = false;
 
             void reset() noexcept {
-                colon = get_flag = find_no_err = set_no_err = decl_no_new_scope = cst = loc = again = new_decl = false;
+                colon = get_flag = find_no_err = set_no_err = decl_no_new_scope = make = loc = again = new_decl = false;
             }
 
             // NOTICE : Call this wherever public flags are used.
             void get(const Scope *scope) noexcept {
                 if (!get_flag) {
                     while (scope != nullptr) {
-                        cst |= scope->flags.cst;
+                        make |= scope->flags.make;
                         loc |= scope->flags.loc;
                         again |= scope->flags.again;
                         new_decl != scope->flags.again;
@@ -187,7 +187,7 @@ namespace PUPS {
             friend class Scope;
 
         public:
-            bool cst = false, loc = false, again = false, new_decl = false;
+            bool make = false, loc = false, again = false, new_decl = false, returned = false;
         } flags;
 
         explicit Scope(Scope *parent, Report &report) :
@@ -354,6 +354,7 @@ namespace PUPS {
 
         void put(const Token &token, Report &report) override {
             Token tmp;
+            if (flags.returned) return;
             if (token.is_symbol())
                 switch (token.front()) {
                     case '(':
@@ -401,6 +402,10 @@ namespace PUPS {
 
         Report &get_report() noexcept {
             return _report;
+        }
+
+        void temporary_exit() noexcept {
+            flags.returned = false;
         }
     };
 

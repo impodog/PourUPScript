@@ -72,39 +72,6 @@ build libPourUPScriptLib.a: CXX_STATIC_LIBRARY_LINKER__PourUPScriptLib_Debug CMa
   TARGET_PDB = PourUPScriptLib.a.dbg
 
 # =============================================================================
-# Object build statements for EXECUTABLE target PourUPScriptTest
-
-
-#############################################
-# Order-only phony target for PourUPScriptTest
-
-build cmake_object_order_depends_target_PourUPScriptTest: phony || CMakeFiles/PourUPScriptTest.dir
-
-build CMakeFiles/PourUPScriptTest.dir/test.cpp.obj: CXX_COMPILER__PourUPScriptTest_Debug D$:/workspace/Cpp/Tool/PourUPScript/test.cpp || cmake_object_order_depends_target_PourUPScriptTest
-  DEP_FILE = CMakeFiles\PourUPScriptTest.dir\test.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  OBJECT_DIR = CMakeFiles\PourUPScriptTest.dir
-  OBJECT_FILE_DIR = CMakeFiles\PourUPScriptTest.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target PourUPScriptTest
-
-
-#############################################
-# Link the executable PourUPScriptTest.exe
-
-build PourUPScriptTest.exe: CXX_EXECUTABLE_LINKER__PourUPScriptTest_Debug CMakeFiles/PourUPScriptTest.dir/test.cpp.obj
-  FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\PourUPScriptTest.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_FILE = PourUPScriptTest.exe
-  TARGET_IMPLIB = libPourUPScriptTest.dll.a
-  TARGET_PDB = PourUPScriptTest.exe.dbg
-
-# =============================================================================
 # Object build statements for EXECUTABLE target PourUPScriptInterp
 
 
@@ -167,8 +134,6 @@ build PourUPScriptInterp: phony PourUPScriptInterp.exe
 
 build PourUPScriptLib: phony libPourUPScriptLib.a
 
-build PourUPScriptTest: phony PourUPScriptTest.exe
-
 # =============================================================================
 # Folder targets.
 
@@ -177,7 +142,7 @@ build PourUPScriptTest: phony PourUPScriptTest.exe
 #############################################
 # Folder: D:/workspace/Cpp/Tool/PourUPScript/cmake-build-debug
 
-build all: phony libPourUPScriptLib.a PourUPScriptTest.exe PourUPScriptInterp.exe
+build all: phony libPourUPScriptLib.a PourUPScriptInterp.exe
 
 # =============================================================================
 # Built-in targets

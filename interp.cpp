@@ -3,6 +3,7 @@
 //
 
 #include "pups.h"
+#include "std_lib/include.hpp"
 #include <iostream>
 
 #define str_eq(s1, s2) (!strcmp(s1, s2))
@@ -20,6 +21,8 @@ int main(int argc, char **argv) {
                             PUPS::keepTemporary = true;
                         else if (str_eq(str, "--version"))
                             std::cout << "PourUPScript" << PUPS::version << std::endl;
+                        else if (str_eq(str, "--include-std"))
+                            PUPS::INCLUDE_ALL();
                         else
                             std::cout << "WARNING : Unknown option \"" << str << "\"\n";
                         break;

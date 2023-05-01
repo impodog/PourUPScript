@@ -1,0 +1,7 @@
+comment {
+    PourUPScript standard library.
+    Defines mostly-builtin math functions.
+};
+
+again decl std;
+incl {head/math.pups -> std};

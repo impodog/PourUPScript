@@ -109,6 +109,7 @@ namespace PUPS {
         // Destroy arguments
         for (const auto &arg: args)
             scope->erase_object(arg.first);
+        scope->temporary_exit();
         return scope;
     }
 

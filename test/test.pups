@@ -1,11 +1,18 @@
-loc incl std;
-loc incl const;
-loc incl mylib;
+local incl std;
+local incl const math util;
 
-loc fn myPrint {str->show} {
-    print show;
+decl x y;
+make int y = 7;
+
+if ({std:is_null} x) {
+    local make str msg = {x is NULL};
+    print msg;
 };
-loc cst str hello = {Hello, world!};
 
-myPrint hello;
-
+if ({std:any_null} x y) {
+    local make str msg = {There is at least one NULL in x, y};
+    print msg;
+} else {
+    local make str msg = {There isn't any NULL in x, y};
+    print msg;
+};

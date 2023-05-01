@@ -45,7 +45,8 @@ namespace PUPS {
                 auto &obj = scope->find<true>(name);
                 if (obj == nullptr || !check(parameter.first, obj)) {
                     report.report(Report_TypeErr,
-                                  "Argument \"" + std::string(name) + "\" get object " + get_ptr_string(obj) +
+                                  "Argument \"" + std::string(parameter.second) +
+                                  "\" get object " + get_ptr_string(obj) +
                                   ", which does not fit in the type.");
                     return false;
                 }
@@ -60,18 +61,20 @@ namespace PUPS {
                                        [&arg](Cnt x) -> bool { return x == 0 || x == arg->type(); });
         }
 
-        void call(Scope *scope, Report &report) {
+        ObjectPtr call(Scope *scope, Report &report) {
             auto &argument = arguments.top();
             arguments.emplace();
             emplace_to_give();
             Token name = next_tag();
 
-            if (!check_args(scope, report, argument)) return;
-            make_scope(name, body, scope, report, argument);
+            if (!check_args(scope, report, argument)) return null_obj;
+            auto new_scope = make_scope(name, body, scope, report, argument);
 
+            ObjectPtr result = std::static_pointer_cast<Scope>(new_scope)->find<true>(Token{RETURN_V});
             scope->try_exit_erase_object(name);
             arguments.pop();
             to_gives.pop();
+            return result;
         }
 
     public:
@@ -93,7 +96,7 @@ namespace PUPS {
                     report.report(Report_IncorrectArguments,
                                   "Too many implicit arguments given. Argument \"" + arg + "\" skipped.");
                 else
-                    to_give.pop_back();
+                    to_give.pop_front();
             } else {
                 std::string name = arg.substr(0, det);
                 arg = arg.substr(det + strlen(determined));
@@ -109,17 +112,18 @@ namespace PUPS {
             }
         }
 
-        void inst_ends(PUPS::Scope *scope, PUPS::Report &report) final {
+        ObjectPtr inst_ends(PUPS::Scope *scope, PUPS::Report &report) final {
             auto &to_give = to_gives.top();
             if (!to_give.empty()) {
                 report.report(Report_IncorrectArguments,
                               "Arguments not enough in function call (" + std::to_string(to_give.size()) +
                               " remaining). Function call skipped.");
-                return;
+                return null_obj;
             }
-            call(scope, report);
+            auto result = call(scope, report);
             if (arguments.size() == 1)
                 reset();
+            return result;
         }
 
         [[nodiscard]] ObjectPtr copy() const noexcept override {
@@ -128,7 +132,7 @@ namespace PUPS {
     };
 
     class TP_Function : public TypeBase {
-        static constexpr const char *const type_symbol = "->";
+        static constexpr const char *const type_symbol = "@";
         using TypeSpec = INST_Function::TypeSpec;
         using ParameterList = INST_Function::ParameterList;
 
@@ -162,11 +166,15 @@ namespace PUPS {
             while (args.size() != 1) {
                 std::string arg = args.front().str_dependent();
                 auto type_index = arg.find(type_symbol);
-                std::string type = arg.substr(0, type_index);
-                arg = arg.substr(type_index + strlen(type_symbol));
-
                 TypeSpec spec;
-                get_spec(scope, report, spec, type);
+                if (type_index == std::string::npos)
+                    spec = {0};
+                else {
+                    std::string type = arg.substr(0, type_index);
+                    arg = arg.substr(type_index + strlen(type_symbol));
+
+                    get_spec(scope, report, spec, type);
+                }
 
                 add_parameters(spec, parameters, arg);
                 args.pop();
@@ -189,6 +197,49 @@ namespace PUPS {
             return false;
         }
     };
+
+    using BuiltinFunction = ObjectPtr (*)(std::queue<ObjectPtr *> &, Report &);
+    std::unordered_map<Token, ObjectPtr> builtins;
+
+    class GlobalFunction final : public ObjectBase {
+        BuiltinFunction func;
+        std::stack<std::queue<Token>> args;
+    public:
+
+        explicit GlobalFunction(BuiltinFunction func) : func(func) {
+            args.emplace();
+        }
+
+        void put(const Token &token, Report &report) override {
+            args.top().push(token);
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            std::queue<ObjectPtr *> objects;
+            while (!args.top().empty()) {
+                objects.push(&scope->find(args.top().front()));
+                args.top().pop();
+            }
+            args.emplace();
+            auto result = func(objects, report);
+            args.pop();
+            if (args.size() == 1)
+                while (!args.top().empty()) args.top().pop();
+            return result;
+        }
+
+        void exit(Report &report) override {}
+
+        [[nodiscard]] constexpr bool can_delete() const noexcept override {
+            return false;
+        }
+    };
+
+    void add_to_builtins(const Token &name, BuiltinFunction func) {
+        builtins.insert({add_builtin_mark(name.str()), std::make_shared<GlobalFunction>(func)});
+    }
+
+#define MAKE_BUILTIN(fn_name) inline ObjectPtr fn_name(std::queue<ObjectPtr *> &args, Report &report)
 }
 
 #endif //POURUPSCRIPTINTERP_FUNCTION_HPP

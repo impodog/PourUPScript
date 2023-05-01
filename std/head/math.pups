@@ -1,0 +1,13 @@
+new decl sqrt;
+fn sqrt {anyt @ x} {
+    ret (__builtin_MATH_sqrt x);
+};
+new decl b_sqrt;
+set b_sqrt = __builtin_MATH_sqrt;
+
+new decl pow;
+fn pow {anyt @ base} {anyt @ power} {
+    ret (__builtin_MATH_pow base power);
+};
+new decl b_pow;
+set b_pow = __builtin_MATH_sqrt;

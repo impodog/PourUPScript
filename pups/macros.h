@@ -25,6 +25,7 @@
 #include <memory>
 #include <cmath>
 
+
 #define FN_ALIAS_SPEC(SPECS, NEW_NAME, ...)                                     \
   template <typename... Args>                                                   \
   SPECS auto NEW_NAME(Args &&... args)                                          \
@@ -50,24 +51,28 @@ namespace PUPS {
     using cstr = const char *;
     using fpath = std::filesystem::path;
 
-    constexpr const cstr version = "0.1.0";
+    constexpr const cstr version = "0.2.0";
+
+    constexpr const cstr builtin_mark = "__builtin_";
 
     constexpr const cstr std_path = "std",
             DECL = "decl",
             REF = "ref",
             PRINT = "print",
             SET = "set",
-            LOC = "loc",
-            SCO = "sco",
+            LOC = "local",
+            SCO = "scope",
             NOTHING = "nothing",
             INCL = "incl",
-            COMM = "comm",
+            COMM = "comment",
             NULL_OBJ = "null",
-            CST = "cst",
+            MAKE = "make",
             AGAIN = "again",
             ADD_PATH = "add_path",
             NEW = "new",
             REMOVE = "rmv",
+            RETURN = "ret",
+            IF = "if",
 
 
             INT = "int",
@@ -75,7 +80,14 @@ namespace PUPS {
             STR = "str",
             BYTE = "byte",
             SCHAR = "schar",
-            FUNCTION = "fn";
+            FUNCTION = "fn",
+            ANYT = "anyt",
+            TYPET = "typet",
+            NULLT = "nullt",
+
+            RETURN_V = "__return_v__",
+            FALSE_OBJ = "false",
+            TRUE_OBJ = "true";
     constexpr const char call_symbol = 'C';
 
     bool keepTemporary = false;

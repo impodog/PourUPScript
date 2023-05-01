@@ -10,7 +10,7 @@
 namespace PUPS {
     class KeywordBase : public ObjectBase {
     public:
-        [[nodiscard]] bool can_delete() const noexcept final {
+        [[nodiscard]] constexpr bool can_delete() const noexcept final {
             return false;
         }
 
@@ -110,19 +110,20 @@ namespace PUPS {
         }
     };
 
-    class KW_Sco final : public KeywordBase {
+    class KW_Scope final : public KeywordBase {
         struct ScopeInit {
             Token name, block;
         };
         std::stack<ScopeInit> inits;
-        signed char status = -1;
+        std::stack<signed char> status;
     public:
-        KW_Sco() {
+        KW_Scope() {
             inits.emplace();
+            status.emplace(-1);
         }
 
         void put(const Token &token, Report &report) override {
-            switch (status) {
+            switch (status.top()) {
                 case -1:
                     inits.top().name = token;
                     break;
@@ -135,15 +136,17 @@ namespace PUPS {
                                   "\" for keyword \"" + SCO + "\". Token skipped.");
                     break;
             }
-            status++;
+            status.top()++;
         }
 
         ObjectPtr ends(Scope *scope, Report &report) override {
             auto &top = inits.top();
             inits.emplace();
+            status.emplace(-1);
             make_scope(top.name, top.block, scope, report);
             inits.pop();
-            status = -1;
+            status.pop();
+            status.top() = -1;
             return null_obj;
         }
     };
@@ -248,6 +251,28 @@ namespace PUPS {
         }
     };
 
+    class KW_Ret final : public KeywordBase {
+        Token name;
+    public:
+        KW_Ret() = default;
+
+        void put(const Token &token, Report &report) override {
+            if (name.null())
+                name = token;
+            else
+                report.report(Report_IncorrectArguments,
+                              "Extra argument \"" + std::string(token) + "\" in return statement");
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            scope->flags.returned = true;
+            auto result = scope->find(name);
+            name = Token{};
+            scope->set_object<true>(Token{RETURN_V}, result);
+            return null_obj;
+        }
+    };
+
 
     class KeywordQualifier : public KeywordBase {
         std::queue<Token> stmt;
@@ -283,20 +308,80 @@ namespace PUPS {
         }
     };
 
-    class KW_Cst final : public KeywordQualifier {
+    class KW_If final : public KeywordBase {
+        struct Condition {
+            unsigned char status = 0;
+            Token cond, ifTrue, ifFalse = Token{"{}", false, true};
+
+            void reset() {
+                status = 0;
+                ifFalse = Token{"{}", false, true};
+            }
+        };
+
+        std::stack<Condition> conditions;
+    public:
+        static constexpr const cstr ELSE = "else";
+
+        KW_If() {
+            conditions.emplace();
+        }
+
+        void put(const Token &token, Report &report) override {
+            auto &top = conditions.top();
+            switch (top.status) {
+                case 0:
+                    top.cond = token;
+                    break;
+                case 1:
+                    top.ifTrue = token;
+                    break;
+                case 2:
+                    if (token != ELSE) top.status = 4;
+                    break;
+                case 3:
+                    top.ifFalse = token;
+                    break;
+                default:
+                    report.report(Report_IncorrectArguments,
+                                  "Too many arguments for an if statement. \"" + token.str() + "\" skipped.");
+            }
+            top.status++;
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            Token *block;
+            {
+                auto &top = conditions.top();
+                auto &result = scope->find<true>(top.cond);
+                if (result != nullptr && result->to_condition()) block = &top.ifTrue;
+                else block = &top.ifFalse;
+            }
+            Token name = next_tag();
+            conditions.emplace();
+            make_scope(name, *block, scope, report);
+            scope->try_exit_erase_object(name);
+            conditions.pop();
+            if (conditions.size() == 1)
+                conditions.top().reset();
+            return null_obj;
+        }
+    };
+
+    class KW_Make final : public KeywordQualifier {
         void set_v(Scope *scope) override {
-            scope->flags.cst = true;
+            scope->flags.make = true;
         }
 
         const char *get_name() override {
-            return CST;
+            return MAKE;
         }
 
     public:
-        KW_Cst() = default;
+        KW_Make() = default;
     };
 
-    class KW_Loc : public KeywordQualifier {
+    class KW_Local : public KeywordQualifier {
         void set_v(Scope *scope) override {
             scope->flags.loc = true;
         }
@@ -306,7 +391,7 @@ namespace PUPS {
         }
 
     public:
-        KW_Loc() = default;
+        KW_Local() = default;
     };
 
     class KW_Nothing final : public KeywordQualifier {
@@ -346,24 +431,27 @@ namespace PUPS {
         KW_New() = default;
     };
 
+
     class Keywords {
-        std::unordered_map<Token, ObjectPtr> keywords, types;
+        std::unordered_map<Token, ObjectPtr> keywords, types, constants;
     public:
         Keywords() : keywords{
                 {Token{NULL_OBJ}, null_obj},
                 {Token{DECL},     ObjectPtr{new KW_Decl}},
                 {Token{PRINT},    ObjectPtr{new KW_Print}},
                 {Token{SET},      ObjectPtr{new KW_Set}},
-                {Token{CST},      ObjectPtr{new KW_Cst}},
-                {Token{LOC},      ObjectPtr{new KW_Loc}},
-                {Token{SCO},      ObjectPtr{new KW_Sco}},
+                {Token{MAKE},     ObjectPtr{new KW_Make}},
+                {Token{LOC},      ObjectPtr{new KW_Local}},
+                {Token{SCO},      ObjectPtr{new KW_Scope}},
                 {Token{NOTHING},  ObjectPtr{new KW_Nothing}},
                 {Token{INCL},     ObjectPtr{new KW_Incl}},
                 {Token{COMM},     ObjectPtr{new KW_Comm}},
                 {Token{AGAIN},    ObjectPtr{new KW_Again}},
                 {Token{ADD_PATH}, ObjectPtr{new KW_Add_Path}},
                 {Token{NEW},      ObjectPtr{new KW_New}},
-                {Token{REMOVE},   ObjectPtr{new KW_Remove}}
+                {Token{REMOVE},   ObjectPtr{new KW_Remove}},
+                {Token{RETURN},   ObjectPtr{new KW_Ret}},
+                {Token{IF},       ObjectPtr{new KW_If}}
         },
                      types{
                              {Token{INT},      ObjectPtr{new TP_Int}},
@@ -371,14 +459,32 @@ namespace PUPS {
                              {Token{STR},      ObjectPtr{new TP_Str}},
                              {Token{BYTE},     ObjectPtr{new TP_Byte}},
                              {Token{SCHAR},    ObjectPtr{new TP_SChar}},
-                             {Token{FUNCTION}, ObjectPtr{new TP_Function}}
-                     } {}
+                             {Token{FUNCTION}, ObjectPtr{new TP_Function}},
+                             {Token{ANYT},     ObjectPtr{new TP_AnyT}},
+                             {Token{TYPET},    ObjectPtr{new TP_TypeT}},
+                             {Token{NULLT},    ObjectPtr{new TP_NullT}}
+                     } {
+            TypeCodes::Int = types.at(Token{INT})->cnt;
+            TypeCodes::Float = types.at(Token{FLOAT})->cnt;
+            TypeCodes::Str = types.at(Token{STR})->cnt;
+            TypeCodes::Byte = types.at(Token{BYTE})->cnt;
+            TypeCodes::SChar = types.at(Token{SCHAR})->cnt;
+
+            if (!false_obj)
+                false_obj = ObjectPtr{new INST_Byte(TypeCodes::Byte, 0)};
+            if (!true_obj)
+                true_obj = std::make_shared<INST_Byte>(TypeCodes::Byte, 1);
+            constants.insert({Token{FALSE_OBJ}, false_obj});
+            constants.insert({Token{TRUE_OBJ}, true_obj});
+        }
 
         ~Keywords() = default;
 
         virtual void merge_to(Scope &scope) {
             scope.objects.merge(keywords);
             scope.objects.merge(types);
+            scope.objects.merge(constants);
+            scope.objects.merge(builtins);
         }
     };
 }
