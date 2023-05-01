@@ -13,7 +13,7 @@
     return peek == ch && cur != '\\' ? 2 : 0;                    \
 }
 #define TAG "_t"
-#define TMP "pups_tmp"
+#define TMP "tmp"
 namespace PUPS {
     static std::stack<std::string> tags;
     static constexpr const int lower_diff = 'a' - 'A';
@@ -28,6 +28,7 @@ namespace PUPS {
         return std::string("\"") + s + "\"";
     }
 
+
     inline constexpr bool is_alpha(char c) noexcept {
         return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') || c == '_';
     }
@@ -38,6 +39,22 @@ namespace PUPS {
 
     inline constexpr bool is_true_empty(char c) noexcept {
         return c == ' ' || c == '\t' || c == '\b' || c == '\n';
+    }
+
+    inline std::queue<std::string> split_spaces(const std::string &s) {
+        std::queue<std::string> result;
+        bool is_space = true;
+        for (auto c: s) {
+            if (is_true_empty(c)) is_space = true;
+            else {
+                if (is_space) {
+                    result.emplace();
+                    is_space = false;
+                }
+                result.back().push_back(c);
+            }
+        }
+        return result;
     }
 
     /*
@@ -54,9 +71,6 @@ namespace PUPS {
     */
 
     class Token {
-        static const std::string *new_token(const char *token) {
-            return &tags.emplace(token);
-        }
 
         friend class TokenInput;
 
@@ -140,10 +154,18 @@ namespace PUPS {
             return token.empty() || is_true_empty(token.front());
         }
 
+        [[nodiscard]] bool reserved() const noexcept {
+            return !token.empty() && token.front() == '_';
+        }
+
         FN_ALIAS(null, eof)
 
         [[nodiscard]] bool is_symbol() const noexcept {
             return _is_symbol;
+        }
+
+        [[nodiscard]] bool is_symbol(char c) const noexcept {
+            return _is_symbol && front() == c;
         }
 
         [[nodiscard]] bool is_long() const noexcept {
@@ -166,8 +188,16 @@ namespace PUPS {
             return token.front() == '\n';
         }
 
+        [[nodiscard]] bool dollar() const noexcept {
+            return token.front() == '$';
+        }
+
         bool operator==(const Token &cmp) const noexcept {
             return _is_symbol == cmp._is_symbol && token == cmp.token;
+        }
+
+        bool operator==(const std::string &cmp) const noexcept {
+            return token == token;
         }
 
         operator std::string() const { // NOLINT(google-explicit-constructor)

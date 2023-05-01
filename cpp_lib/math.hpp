@@ -208,6 +208,10 @@ typename std::enable_if<std::is_same<Arith, t>::value, Arith>::type eval(const s
     return std::fn(s);\
 }
 
+    EVAL_WHEN(stoi, signed char)
+
+    EVAL_WHEN(stoi, unsigned char)
+
     EVAL_WHEN(stoi, int)
 
     EVAL_WHEN(stol, long)

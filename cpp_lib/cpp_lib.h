@@ -6,5 +6,6 @@
 #define POURUPSCRIPT_CPP_LIB_H
 
 #include "math.hpp"
+#include "util.hpp"
 
 #endif //POURUPSCRIPT_CPP_LIB_H

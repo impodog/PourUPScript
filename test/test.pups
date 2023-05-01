@@ -1,10 +1,11 @@
+loc incl std;
 loc incl const;
-loc sco myScope {
-    loc cst str hello = {Hello, world!};
-    loc cst int x = 10;
-    print hello;
+loc incl mylib;
+
+loc fn myPrint {str->show} {
+    print show;
 };
-again decl {const:space};
-loc set tmp = {myScope:hello};
-print tmp {const:space} {myScope:x};
+loc cst str hello = {Hello, world!};
+
+myPrint hello;
 

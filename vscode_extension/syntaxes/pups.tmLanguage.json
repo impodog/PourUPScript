@@ -25,7 +25,7 @@
 			"patterns": [
 				{
 					"name": "entity.name.type.class",
-					"match": "\\b(int|flo|str)\\b"
+					"match": "\\b(int|flo|str|byte|schar|fn)\\b"
 				}
 			]
 		}

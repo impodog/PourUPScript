@@ -41,35 +41,35 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = D$:/workspace/Cpp/Tool/PourUPScript/cmake-build-debug/
 # =============================================================================
-# Object build statements for STATIC_LIBRARY target vscode_extension
+# Object build statements for STATIC_LIBRARY target PourUPScriptLib
 
 
 #############################################
-# Order-only phony target for vscode_extension
+# Order-only phony target for PourUPScriptLib
 
-build cmake_object_order_depends_target_vscode_extension: phony || CMakeFiles/vscode_extension.dir
+build cmake_object_order_depends_target_PourUPScriptLib: phony || CMakeFiles/PourUPScriptLib.dir
 
-build CMakeFiles/vscode_extension.dir/pups.cpp.obj: CXX_COMPILER__vscode_extension_Debug D$:/workspace/Cpp/Tool/PourUPScript/pups.cpp || cmake_object_order_depends_target_vscode_extension
-  DEP_FILE = CMakeFiles\vscode_extension.dir\pups.cpp.obj.d
+build CMakeFiles/PourUPScriptLib.dir/pups.cpp.obj: CXX_COMPILER__PourUPScriptLib_Debug D$:/workspace/Cpp/Tool/PourUPScript/pups.cpp || cmake_object_order_depends_target_PourUPScriptLib
+  DEP_FILE = CMakeFiles\PourUPScriptLib.dir\pups.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  OBJECT_DIR = CMakeFiles\vscode_extension.dir
-  OBJECT_FILE_DIR = CMakeFiles\vscode_extension.dir
+  OBJECT_DIR = CMakeFiles\PourUPScriptLib.dir
+  OBJECT_FILE_DIR = CMakeFiles\PourUPScriptLib.dir
 
 
 # =============================================================================
-# Link build statements for STATIC_LIBRARY target vscode_extension
+# Link build statements for STATIC_LIBRARY target PourUPScriptLib
 
 
 #############################################
-# Link the static library libvscode_extension.a
+# Link the static library libPourUPScriptLib.a
 
-build libvscode_extension.a: CXX_STATIC_LIBRARY_LINKER__vscode_extension_Debug CMakeFiles/vscode_extension.dir/pups.cpp.obj
+build libPourUPScriptLib.a: CXX_STATIC_LIBRARY_LINKER__PourUPScriptLib_Debug CMakeFiles/PourUPScriptLib.dir/pups.cpp.obj
   LANGUAGE_COMPILE_FLAGS = -g
-  OBJECT_DIR = CMakeFiles\vscode_extension.dir
+  OBJECT_DIR = CMakeFiles\PourUPScriptLib.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_FILE = libvscode_extension.a
-  TARGET_PDB = vscode_extension.a.dbg
+  TARGET_FILE = libPourUPScriptLib.a
+  TARGET_PDB = PourUPScriptLib.a.dbg
 
 # =============================================================================
 # Object build statements for EXECUTABLE target PourUPScriptTest
@@ -165,9 +165,9 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build PourUPScriptInterp: phony PourUPScriptInterp.exe
 
-build PourUPScriptTest: phony PourUPScriptTest.exe
+build PourUPScriptLib: phony libPourUPScriptLib.a
 
-build vscode_extension: phony libvscode_extension.a
+build PourUPScriptTest: phony PourUPScriptTest.exe
 
 # =============================================================================
 # Folder targets.
@@ -177,7 +177,7 @@ build vscode_extension: phony libvscode_extension.a
 #############################################
 # Folder: D:/workspace/Cpp/Tool/PourUPScript/cmake-build-debug
 
-build all: phony libvscode_extension.a PourUPScriptTest.exe PourUPScriptInterp.exe
+build all: phony libPourUPScriptLib.a PourUPScriptTest.exe PourUPScriptInterp.exe
 
 # =============================================================================
 # Built-in targets

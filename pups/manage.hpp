@@ -84,11 +84,12 @@ namespace PUPS {
         }
     };
 
-    ObjectPtr make_scope(const Token &name, const fpath &path, Scope *parent, Report &report) {
+    ObjectPtr make_scope(const Token &name, const fpath &path, Scope *parent, Report &report,
+                         const std::unordered_map<Token, Token> &args) {
         std::shared_ptr<Scope> scope;
         {
             auto result = parent->find<true>(name);
-            if (result == null_obj) {
+            if (is_non(result)) {
                 scope = std::make_shared<Scope>(parent, report);
             } else if (result->is_scope()) {
                 scope = std::static_pointer_cast<Scope>(result);
@@ -97,16 +98,22 @@ namespace PUPS {
                 return null_obj;
             }
         }
+        // Add arguments
+        for (const auto &arg: args)
+            scope->set_object<true>(arg.first, scope->find(arg.second));
+
         Scripter scripter(path, report, scope);
         while (scripter.forward()) {}
-        if (name.empty())
-            parent->copy_objects_from(scope.get());
-        else
-            parent->set_object(name, scope);
+        add_scope(name, scope, parent);
+
+        // Destroy arguments
+        for (const auto &arg: args)
+            scope->erase_object(arg.first);
         return scope;
     }
 
-    inline ObjectPtr make_scope(const Token &name, const Token &block, Scope *parent, Report &report) {
+    inline ObjectPtr make_scope(const Token &name, const Token &block, Scope *parent, Report &report,
+                                const std::unordered_map<Token, Token> &args) {
         if (!block.is_long()) {
             report.report(Report_WrongToken, "Cannot make Scope using non-long strings.");
             return null_obj;
@@ -116,7 +123,7 @@ namespace PUPS {
             std::ofstream out(file, std::ios::out);
             out << block.str_dependent() << std::endl;
         }
-        auto scope = make_scope(name, file, parent, report);
+        auto scope = make_scope(name, file, parent, report, args);
         if (!keepTemporary)
             std::filesystem::remove(file);
         return scope;

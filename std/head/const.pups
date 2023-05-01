@@ -1,9 +1,9 @@
-comm {
-    PourUPScript standard library.
-    This defines common constants.
-};
+new decl space;
+cst str space = { };
 
-decl space;
+new decl pi;
+cst flo pi = 3.14159265358979323846;
 
-loc cst str space = { };
+new decl e;
+cst flo e = 2.7182818284590452354;
 

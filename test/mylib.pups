@@ -1,0 +1,2 @@
+new decl hello;
+cst str hello = {Hello, world!};

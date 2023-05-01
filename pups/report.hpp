@@ -101,7 +101,9 @@ namespace PUPS {
         fpath find_file(const std::string &file) {
             for (auto path: paths) {
                 path.append(file);
-                if (std::filesystem::exists(path)) return path;
+                if (std::filesystem::exists(path)) return absolute(path);
+                path += ".pups";
+                if (std::filesystem::exists(path)) return absolute(path);
             }
             return {};
         }

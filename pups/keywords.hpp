@@ -5,7 +5,7 @@
 #ifndef POURUPSCRIPTTEST_KEYWORDS_HPP
 #define POURUPSCRIPTTEST_KEYWORDS_HPP
 
-#include "stdtype.hpp"
+#include "function.hpp"
 
 namespace PUPS {
     class KeywordBase : public ObjectBase {
@@ -93,7 +93,10 @@ namespace PUPS {
         }
 
         ObjectPtr ends(PUPS::Scope *scope, PUPS::Report &report) override {
-            if (value.null()) {
+            if (!next_is_value) {
+                report.report(Report_IncorrectArguments, "No assignment symbol is present. Statement skipped.");
+                return null_obj;
+            } else if (value.null()) {
                 report.report(Report_IncorrectArguments, "No assignment value is given. Statement skipped.");
                 return null_obj;
             }
@@ -176,8 +179,14 @@ namespace PUPS {
                 fpath path = report.find_file(pair.first.str());
                 if (path.empty())
                     report.report(Report_FileNotFound, "Include file \"" + pair.first.str() + "\" is not found.");
-                else
-                    make_scope(pair.second, path, scope, report);
+                else {
+                    try {
+                        add_scope(pair.second, find_module(path.string()), scope);
+                    } catch (const std::out_of_range &) {
+                        auto new_scope = make_scope(pair.second, path, scope, report);
+                        add_module(path, std::static_pointer_cast<Scope>(new_scope));
+                    }
+                }
                 names.pop();
             }
             return null_obj;
@@ -216,6 +225,24 @@ namespace PUPS {
             while (!paths.empty()) {
                 scope->get_report().paths.emplace_back(paths.front().str_dependent());
                 paths.pop();
+            }
+            return null_obj;
+        }
+    };
+
+    class KW_Remove final : public KeywordBase {
+        std::queue<Token> names;
+    public:
+        KW_Remove() = default;
+
+        void put(const Token &token, Report &report) override {
+            names.push(token);
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            while (!names.empty()) {
+                scope->erase_object(names.front());
+                names.pop();
             }
             return null_obj;
         }
@@ -336,11 +363,15 @@ namespace PUPS {
                 {Token{AGAIN},    ObjectPtr{new KW_Again}},
                 {Token{ADD_PATH}, ObjectPtr{new KW_Add_Path}},
                 {Token{NEW},      ObjectPtr{new KW_New}},
+                {Token{REMOVE},   ObjectPtr{new KW_Remove}}
         },
                      types{
-                             {Token{INT},   ObjectPtr{new TP_Int}},
-                             {Token{FLOAT}, ObjectPtr{new TP_Float}},
-                             {Token{STR},   ObjectPtr{new TP_Str}}
+                             {Token{INT},      ObjectPtr{new TP_Int}},
+                             {Token{FLOAT},    ObjectPtr{new TP_Float}},
+                             {Token{STR},      ObjectPtr{new TP_Str}},
+                             {Token{BYTE},     ObjectPtr{new TP_Byte}},
+                             {Token{SCHAR},    ObjectPtr{new TP_SChar}},
+                             {Token{FUNCTION}, ObjectPtr{new TP_Function}}
                      } {}
 
         ~Keywords() = default;

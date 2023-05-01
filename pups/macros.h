@@ -23,6 +23,7 @@
 #include <queue>
 #include <utility>
 #include <memory>
+#include <cmath>
 
 #define FN_ALIAS_SPEC(SPECS, NEW_NAME, ...)                                     \
   template <typename... Args>                                                   \
@@ -49,7 +50,7 @@ namespace PUPS {
     using cstr = const char *;
     using fpath = std::filesystem::path;
 
-    constexpr const cstr version = "0.0.3";
+    constexpr const cstr version = "0.1.0";
 
     constexpr const cstr std_path = "std",
             DECL = "decl",
@@ -66,11 +67,16 @@ namespace PUPS {
             AGAIN = "again",
             ADD_PATH = "add_path",
             NEW = "new",
+            REMOVE = "rmv",
 
 
             INT = "int",
             FLOAT = "flo",
-            STR = "str";
+            STR = "str",
+            BYTE = "byte",
+            SCHAR = "schar",
+            FUNCTION = "fn";
+    constexpr const char call_symbol = 'C';
 
     bool keepTemporary = false;
 

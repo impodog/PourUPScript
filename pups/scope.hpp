@@ -74,19 +74,12 @@ namespace PUPS {
             for (auto &pair: objects) {
                 if (pair.second == nullptr)
                     _report.report(Report_Uninitialized, "When exiting Scope, name \"" + std::string(pair.first) +
-                                                         "\" is a declared, uninitialized object(nullptr). Item skipped."); // fixme why did it throw out long tokens???
+                                                         "\" is a declared, uninitialized object(nullptr). Item skipped.");
                 else if (!pair.first.str().starts_with(TAG) && pair.second.use_count())
                     exit_object(pair.first);
             }
             objects.clear();
         }
-
-        friend class Keywords;
-
-    protected:
-        std::unordered_map<Token, ObjectPtr> objects;
-        Report &_report;
-        Scope *parent = nullptr;
 
         ObjectPtr &find_no_stage(const Token &name, bool &is_local) {
             Scope *scope = this;
@@ -106,21 +99,95 @@ namespace PUPS {
             }
         }
 
+        void exit_no_stage(const Token &token) {
+            objects.at(token)->exit(_report);
+        }
+
+        void erase_no_stage(const Token &token) {
+            objects.erase(token);
+        }
+
+        void declare_no_stage(const Token &token) {
+            flags.get(parent);
+            bool is_local;
+            flags.find_no_err = true;
+            auto result = find_no_stage(token, is_local);
+            flags.find_no_err = false;
+            if (is_non(result)) {
+                if (flags.again) {
+                    _report.report(Report_AgainWarning,
+                                   "Declaration of \"" + std::string(token) + "\" qualified with " +
+                                   wrap_quotes(AGAIN) +
+                                   " should be initialized. Statement skipped.");
+                    return;
+                }
+            } else if (flags.new_decl && is_local) {
+                _report.report(Report_NewWarning,
+                               "Declaration of \"" + std::string(token) + "\" qualified with " + wrap_quotes(NEW) +
+                               " should NOT be initialized. Statement skipped.");
+                return;
+            }
+            if (!flags.again) // This is used to prevent again-qualified declaration from creating a new one
+                objects.insert({token, nullptr});
+        }
+
+        // This will pop the queue until the last element
+        Scope *cut_scope_from(decltype(Token().split_stages()) &stages, bool &is_local) {
+            Scope *ptr = this;
+            while (stages.size() != 1) {
+                auto p = ptr->find_no_stage(Token{stages.front()}, is_local).get();
+                if (p == nullptr || !p->is_scope())
+                    _report.report(Report_TypeErr,
+                                   "Colon shortcuts must prefix with initialized scopes. Not \"" + stages.front() +
+                                   "\".");
+                else ptr = dynamic_cast<Scope *>(p);
+                stages.pop();
+            }
+            return ptr;
+        }
+
+        // This will pop the queue until the last element
+        Scope *cut_scope_from(decltype(Token().split_stages()) &stages) {
+            bool is_local;
+            return cut_scope_from(stages, is_local);
+        }
+
+        friend class Keywords;
+
+    protected:
+        std::unordered_map<Token, ObjectPtr> objects;
+        Report &_report;
+        Scope *parent = nullptr;
+
+
     public:
         struct Flags {
         private:
-            bool colon = false;
-            bool find_no_err = false, set_no_err = false;
+            bool colon = false, get_flag = false;
+            bool find_no_err = false, set_no_err = false, decl_no_new_scope = false;
 
-            void reset() {
-                colon = find_no_err = set_no_err = cst = loc = again = new_decl = false;
+            void reset() noexcept {
+                colon = get_flag = find_no_err = set_no_err = decl_no_new_scope = cst = loc = again = new_decl = false;
+            }
+
+            // NOTICE : Call this wherever public flags are used.
+            void get(const Scope *scope) noexcept {
+                if (!get_flag) {
+                    while (scope != nullptr) {
+                        cst |= scope->flags.cst;
+                        loc |= scope->flags.loc;
+                        again |= scope->flags.again;
+                        new_decl != scope->flags.again;
+                        scope = scope->parent;
+                    }
+                    get_flag = true;
+                }
             }
 
             friend class Scope;
 
         public:
             bool cst = false, loc = false, again = false, new_decl = false;
-
         } flags;
 
         explicit Scope(Scope *parent, Report &report) :
@@ -137,6 +204,24 @@ namespace PUPS {
             objects.insert({token, object});
             imme_names.push(token);
             return token;
+        }
+
+        ObjectPtr &find(const Token &name, bool &is_local) {
+            auto stages = name.split_stages();
+            return cut_scope_from(stages, is_local)->find_no_stage(Token{stages.front()}, is_local);
+        }
+
+        template<bool cancel_warn>
+        typename std::enable_if<cancel_warn, ObjectPtr &>::type find(const Token &name, bool &is_local) {
+            flags.find_no_err = true;
+            auto &result = find(name, is_local);
+            flags.find_no_err = false;
+            return result;
+        }
+
+        template<bool cancel_warn>
+        typename std::enable_if<!cancel_warn, ObjectPtr &>::type find(const Token &name, bool &is_local) {
+            return find(name, is_local);
         }
 
         ObjectPtr &find(const Token &name) {
@@ -158,35 +243,6 @@ namespace PUPS {
             return find(name);
         }
 
-        ObjectPtr &find(const Token &name, bool &is_local) {
-            auto stages = name.split_stages();
-            if (stages.size() == 1)
-                return find_no_stage(name, is_local);
-            else {
-                Scope *ptr = this;
-                while (stages.size() != 1) {
-                    auto p = ptr->find_no_stage(Token{stages.front()}, is_local).get();
-                    if (p == nullptr || !p->is_scope())
-                        _report.report(Report_TypeErr, "Colon shortcuts must prefix with scopes.");
-                    else ptr = dynamic_cast<Scope *>(p);
-                    stages.pop();
-                }
-                return ptr->find_no_stage(Token{stages.front()}, is_local);
-            }
-        }
-
-        template<bool cancel_warn>
-        typename std::enable_if<cancel_warn, ObjectPtr &>::type find(const Token &name, bool &is_local) {
-            flags.find_no_err = true;
-            auto &result = find(name, is_local);
-            flags.find_no_err = false;
-            return result;
-        }
-
-        template<bool cancel_warn>
-        typename std::enable_if<!cancel_warn, ObjectPtr &>::type find(const Token &name, bool &is_local) {
-            return find(name, is_local);
-        }
 
         ObjectPtr run_compound(Compound &compound) {
             if (compound.empty()) return null_obj;
@@ -203,11 +259,13 @@ namespace PUPS {
         }
 
         void exit_object(const Token &token) {
-            objects.at(token)->exit(_report);
+            find(token)->exit(_report);
         }
 
         void erase_object(const Token &token) {
-            objects.erase(token);
+            bool is_local;
+            auto stages = token.split_stages();
+            cut_scope_from(stages)->erase_no_stage(Token{stages.front()});
         }
 
         void try_exit_erase_object(const Token &token) {
@@ -219,15 +277,17 @@ namespace PUPS {
         }
 
         void set_object(const Token &token, const ObjectPtr &object) {
-            bool is_loc;
-            auto &f = find<true>(token, is_loc);
-            if (f == null_obj || !is_loc && flags.loc) {
-                if (!flags.set_no_err && !flags.loc)
+            flags.get(parent);
+            bool is_local;
+            auto &f = find<true>(token, is_local);
+            if (f == null_obj || !is_local && flags.loc) {
+                if (!(flags.set_no_err || flags.loc || token.reserved()))
                     _report.report(Report_Undeclared,
                                    "Setting name \"" + std::string(token) +
                                    "\", which is not declared. Unexpected things may happen.");
                 try_exit_erase_object(token);
-                objects.insert({token, object});
+                if (declare_object<true>(token))
+                    find<false>(token) = object;
             } else f = object;
         }
 
@@ -243,26 +303,48 @@ namespace PUPS {
             set_object(token, object);
         }
 
-        void declare_object(const Token &token) {
+        // Declares a with-or-without-colon token and return whether the operation is successful.
+        bool declare_object(const Token &token) {
+            auto stages = token.split_stages();
             bool is_local;
-            auto result = find<true>(token, is_local);
-            if (flags.loc)
-                _report.report(Report_Redundant,
-                               wrap_quotes(LOC) + " on " + wrap_quotes(DECL) + " has no effect. Remove it.");
-            if (!result || result == null_obj) {
-                if (flags.again) {
-                    _report.report(Report_AgainWarning,
-                                   wrap_quotes(DECL) + " statement qualified with " + wrap_quotes(AGAIN) +
-                                   " should be initialized. Statement skipped.");
-                    return;
-                }
-            } else if (flags.new_decl && is_local) {
-                _report.report(Report_NewWarning,
-                               wrap_quotes(DECL) + " statement qualified with " + wrap_quotes(NEW) +
-                               " should NOT be initialized. Statement skipped.");
-                return;
+            Scope *ptr = this;
+            while (stages.size() != 1) {
+                Token name = Token{stages.front()};
+                auto p = ptr->find_no_stage(name, is_local).get();
+                if (p == nullptr) {
+                    if (flags.decl_no_new_scope) {
+                        _report.report(Report_Undeclared, "Scope piece \"" + stages.front() + "\" is found nullptr.");
+                        return false;
+                    }
+                } else if (p == null_obj.get()) {
+                    if (flags.decl_no_new_scope) {
+                        _report.report(Report_Undeclared, "Scope piece \"" + stages.front() + "\" is not found.");
+                        return false;
+                    } else
+                        declare_no_stage(name);
+                } else if (!p->is_scope())
+                    _report.report(Report_TypeErr,
+                                   "Colon shortcuts must prefix with scopes. Not \"" + stages.front() +
+                                   "\".");
+                else
+                    ptr = dynamic_cast<Scope *>(p);
+                stages.pop();
             }
-            objects.insert({token, nullptr});
+            ptr->declare_no_stage(Token{stages.front()});
+            return true;
+        }
+
+        template<bool no_new>
+        typename std::enable_if<no_new, bool>::type declare_object(const Token &token) {
+            flags.decl_no_new_scope = true;
+            bool result = declare_object(token);
+            flags.decl_no_new_scope = false;
+            return result;
+        }
+
+        template<bool no_new>
+        typename std::enable_if<!no_new, bool>::type declare_object(const Token &token) {
+            return declare_object(token);
         }
 
         void copy_objects_from(Scope *scope) {
@@ -313,7 +395,7 @@ namespace PUPS {
             _exit();
         }
 
-        [[nodiscard]] bool is_scope() const noexcept final {
+        [[nodiscard]] constexpr bool is_scope() const noexcept final {
             return true;
         }
 
@@ -322,11 +404,30 @@ namespace PUPS {
         }
     };
 
-    ObjectPtr make_scope(const Token &name, const fpath &path, Scope *parent, Report &report);
+    static std::unordered_map<std::string, std::shared_ptr<Scope>> pups_modules;
 
-    ObjectPtr make_scope(const Token &name, const Token &block, Scope *parent, Report &report);
+    ObjectPtr make_scope(const Token &name, const fpath &path, Scope *parent, Report &report,
+                         const std::unordered_map<Token, Token> &args = {});
+
+    ObjectPtr make_scope(const Token &name, const Token &block, Scope *parent, Report &report,
+                         const std::unordered_map<Token, Token> &args = {});
 
     ObjectPtr make_free_scope(const fpath &path, Scope *parent, Report &report);
+
+    std::shared_ptr<Scope> &find_module(const fpath &path) {
+        return pups_modules.at(absolute(path).string());
+    }
+
+    void add_module(const fpath &path, const std::shared_ptr<Scope> &new_module) {
+        pups_modules.insert({absolute(path).string(), new_module});
+    }
+
+    inline void add_scope(const Token &name, std::shared_ptr<Scope> &scope, Scope *parent) {
+        if (name.empty())
+            parent->copy_objects_from(scope.get());
+        else
+            parent->set_object(name, scope);
+    }
 }
 
 #endif //POURUPSCRIPT_SCOPE_HPP
