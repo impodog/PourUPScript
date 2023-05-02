@@ -9,6 +9,7 @@
 #include "lib_const.hpp"
 #include "lib_math.hpp"
 #include "lib_util.hpp"
+#include "lib_random.hpp"
 
 namespace PUPS {
 
@@ -17,6 +18,7 @@ namespace PUPS {
         INCLUDE_CONST();
         INCLUDE_MATH();
         INCLUDE_UTIL();
+        INCLUDE_RANDOM();
     }
 }
 

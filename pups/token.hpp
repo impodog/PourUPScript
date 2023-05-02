@@ -60,19 +60,6 @@ namespace PUPS {
         return result;
     }
 
-    /*
-    struct TokenStruct {
-        std::string token;
-        bool _is_symbol = false, _is_long = false;
-
-        TokenStruct() = default;
-
-        explicit TokenStruct(std::string token, bool is_symbol = false, bool is_long = false) : token(std::move(token)),
-                                                                                                _is_symbol(is_symbol),
-                                                                                                _is_long(is_long) {}
-    };
-    */
-
     class Token {
 
         friend class TokenInput;
@@ -160,6 +147,14 @@ namespace PUPS {
             return *this;
         }
 
+        Token &convert_to_long() noexcept {
+            token.push_back('}');
+            token = '{' + token;
+            _is_long = true;
+            _is_symbol = _is_eof = false;
+            return *this;
+        }
+
 
         [[nodiscard]] const std::string *ptr() const noexcept {
             return &token;
@@ -223,7 +218,7 @@ namespace PUPS {
         }
 
         bool operator==(const std::string &cmp) const noexcept {
-            return token == token;
+            return token == cmp;
         }
 
         operator std::string() const { // NOLINT(google-explicit-constructor)

@@ -2,18 +2,8 @@ local incl std;
 local incl const;
 local incl math;
 local incl util;
+local incl random;
 
-local scope tmp {
-    local make str msg = {Version = };
-    print msg {std:version};
-};
-rmv tmp;
-
-local make flo x = 5;
-make number 0.0 1.1;
-do while (lambda {ret (x > 0.0);}) {
-    set x = (x - 1.1);
-    print x;
-};
-
+make number 1 10;
+print ({std:randrange} 1 10);
 

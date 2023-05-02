@@ -321,13 +321,18 @@ namespace PUPS {
     return ObjectPtr{new typeof_this{this->type(), static_cast<Arith>(this->value op std::static_pointer_cast<typeof_this>(object)->value)}};\
 }
 
+#define OVERRIDE_EQ(op_name, typeof_this) ObjectPtr op_name(const Token &nxt, Scope *scope, Report &report) override { \
+    auto &object = scope->find(nxt);\
+    this->chk_type_same(object, report);\
+    return ObjectPtr{new typeof_this{this->type(), static_cast<Arith>(abs(this->value - std::static_pointer_cast<typeof_this>(object)->value) <= epsilon)}};\
+}
+
 #define BASIC_OP(typeof_this) OVERRIDE_OP(op_add, +, typeof_this)\
 OVERRIDE_OP(op_sub, -, typeof_this)\
 OVERRIDE_OP(op_mul, *, typeof_this)\
 OVERRIDE_OP(op_div, /, typeof_this)\
 OVERRIDE_OP(op_lt, <, typeof_this)\
-OVERRIDE_OP(op_gt, >, typeof_this)\
-OVERRIDE_OP(op_eq, ==, typeof_this)
+OVERRIDE_OP(op_gt, >, typeof_this)
 
     template<typename Arith>
     class INST_Arith_Base : public InstanceBase {
@@ -377,6 +382,8 @@ OVERRIDE_OP(op_eq, ==, typeof_this)
 
         BASIC_OP(INST_Arith_Int)
 
+        OVERRIDE_OP(op_eq, ==, INST_Arith_Int)
+
         OVERRIDE_OP(op_and, &, INST_Arith_Int)
 
         OVERRIDE_OP(op_or, |, INST_Arith_Int)
@@ -405,12 +412,17 @@ OVERRIDE_OP(op_eq, ==, typeof_this)
     template<typename Arith>
     class INST_Arith_Float final : public INST_Arith_Base<Arith> {
         using Cnt = InstanceBase::Cnt;
+        static constexpr auto epsilon = epsilon_of(Arith) * 2;
     public:
         INST_Arith_Float(Cnt type, Arith value) : INST_Arith_Base<Arith>(type, value) {}
 
         BASIC_OP(INST_Arith_Float)
 
-        [[nodiscard]] EvalResult get_ev() const final {
+        OVERRIDE_EQ(op_eq, INST_Arith_Float)
+
+        [[nodiscard]] EvalResult
+
+        get_ev() const final {
             return {EvalResult::type_float, {.r_float = this->value}};
         }
 
@@ -421,6 +433,7 @@ OVERRIDE_OP(op_eq, ==, typeof_this)
 
 #undef OVERRIDE_OP
 #undef OVERRIDE_OP_BASE
+#undef OVERRIDE_EQ
 
     template<typename Arith>
     class TP_Arith final : public StdTypeBase {

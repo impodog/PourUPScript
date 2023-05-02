@@ -42,11 +42,8 @@ int main(int argc, char **argv) {
         std::cout << "ERROR : No file given. Abort.";
         exit(1);
     }
-    PUPS::Report::output = &std::cout;
-    PUPS::Keywords keywords;
-    PUPS::Scripter scripter(file, keywords);
-    while (scripter.forward()) {
-        scripter.report_all();
-    }
+    PUPS::Simple::init();
+    PUPS::Simple::InterpFile load{std::string(file)};
+    load.run();
     return 0;
 }

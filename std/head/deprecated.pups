@@ -1,0 +1,8 @@
+new decl loc;
+set loc = local;
+
+new decl ref;
+set ref = set;
+
+new decl sco;
+set sco = scope;

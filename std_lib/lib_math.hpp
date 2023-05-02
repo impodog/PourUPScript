@@ -8,31 +8,32 @@
 #include "../pups.h"
 #include <cmath>
 
-#define MATH_TYPE_CHECK(err_name) using enum EvalResult::ResultType;\
+#define MATH_TYPE_CHECK_BASE(err_name, work...) using enum EvalResult::ResultType;\
 EvalResult::ResultType type = type_default;\
-ResultQueue results;\
 while (!args.empty()) {\
     auto v = (*args.front())->get_ev();\
     if (type) {\
         if (type != v.type)\
             report.report(err_name, "Incorrect type.");\
     } else type = v.type;\
-    results.push(v);\
+    work\
     args.pop();\
 }
-#define MATH_SWITCH_TYPE(func, err_name) switch (type) {\
-    case type_int:\
+#define MATH_TYPE_CHECK(err_name)  ResultQueue results; MATH_TYPE_CHECK_BASE(err_name, results.push(v);)
+#define MATH_SWITCH_TYPE_BASE(func, err_name, results...) switch (type) {\
+    case EvalResult::type_int:\
         return func<long long>(results);\
-    case type_float:\
+    case EvalResult::type_float:\
         return func<double>(results);\
-    case type_byte:\
+    case EvalResult::type_byte:\
         return func<unsigned char>(results);\
-    case type_schar:\
+    case EvalResult::type_schar:\
         return func<signed char>(results);\
     default:\
         report.report(err_name, "Incorrect type.");\
         return null_obj;\
 }
+#define MATH_SWITCH_TYPE(func, err_name) MATH_SWITCH_TYPE_BASE(func, err_name, results)
 
 #define MATH_MAKE_FUNCTIONS(generate) generate(long long, r_int)\
 generate(double, r_float)\
@@ -103,8 +104,6 @@ inline ObjectPtr MATH_pow_base<type>(ResultQueue &results) {                  \
     }
 }
 
-#undef MATH_SWITCH_TYPE
-#undef MATH_TYPE_CHECK
 #undef MATH_MAKE_FUNCTIONS
 #undef MATH_MAKE_FUNCTIONS_TYPED
 

@@ -306,18 +306,18 @@ namespace PUPS {
                     top.ifTrue = token;
                     break;
                 case 2:
-                    if (token != ELSE) top.status = 4;
+                    if (token != ELSE) top.status = 4 - 1;
                     break;
                 case 3:
                     top.ifFalse = token;
-                    if (token == IF) top.status = 5;
+                    if (token == IF) top.status = 5 - 1;
                     break;
                 case 4:
                     report.report(Report_IncorrectArguments,
                                   "Too many arguments for an if statement. \"" + token.str() + "\" skipped.");
                     return;
                 case 5:
-                    top.ifFalse.append(token).append(' ');
+                    top.ifFalse.append(' ').append(token);
                     return;
             }
             top.status++;
@@ -328,8 +328,13 @@ namespace PUPS {
             {
                 auto &top = conditions.top();
                 top.add_semicolon();
+                if (top.status == 5) top.ifFalse.convert_to_long();
                 auto &result = scope->find<true>(top.cond);
-                if (result != nullptr && result->to_condition()) block = &top.ifTrue;
+                if (result == nullptr || result == null_obj) {
+                    report.report(Report_IncorrectArguments,
+                                  "Condition \"" + std::string(top.cond) + "\" is not defined. Condition is always false.");
+                    block = &top.ifFalse;
+                } else if (result->to_condition()) block = &top.ifTrue;
                 else block = &top.ifFalse;
             }
             Token name = next_tag();
@@ -356,7 +361,7 @@ namespace PUPS {
 
         std::stack<Condition> conditions;
 
-        ObjectPtr get_cond(const Condition &cond, Scope *scope, Report &report) {
+        static ObjectPtr get_cond(const Condition &cond, Scope *scope, Report &report) {
             auto &object = scope->find(cond.cond);
             if (object->is_instance())
                 return std::static_pointer_cast<InstanceBase>(object)->call_without_args(scope, report);
@@ -397,12 +402,10 @@ namespace PUPS {
         ObjectPtr ends(Scope *scope, Report &report) override {
             auto &top = conditions.top();
             ObjectPtr result = get_cond(top, scope, report);
-            if (scope->flags.do_while)
-                do work(result, top, scope, report);
-                while (result != nullptr && result->to_condition());
-            else
-                while (result != nullptr && result->to_condition())
-                    work(result, top, scope, report);
+            for (size_t i = 0; i < scope->flags.pre_do; i++)
+                work(result, top, scope, report);
+            while (result != nullptr && result->to_condition())
+                work(result, top, scope, report);
             if (conditions.size() == 1)
                 conditions.top().reset();
             return null_obj;
@@ -554,7 +557,7 @@ namespace PUPS {
 
     class KW_Do final : public KeywordQualifier {
         void set_v(Scope *scope) override {
-            scope->flags.do_while = true;
+            scope->flags.pre_do++;
         }
 
         const char *get_name() override {

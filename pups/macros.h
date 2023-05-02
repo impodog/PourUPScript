@@ -28,10 +28,10 @@
 
 #define FN_ALIAS_SPEC(SPECS, NEW_NAME, ...)                                     \
   template <typename... Args>                                                   \
-  SPECS auto NEW_NAME(Args &&... args)                                          \
-    noexcept(noexcept(__VA_ARGS__(std::forward<Args>(args)...)))                \
-    -> decltype(__VA_ARGS__(std::forward<Args>(args)...)) {                     \
-    return __VA_ARGS__(std::forward<Args>(args)...);                            \
+  SPECS auto NEW_NAME(Args &&... __args__)                                          \
+    noexcept(noexcept(__VA_ARGS__(std::forward<Args>(__args__)...)))                \
+    -> decltype(__VA_ARGS__(std::forward<Args>(__args__)...)) {                     \
+    return __VA_ARGS__(std::forward<Args>(__args__)...);                            \
   }
 
 #define FN_ALIAS(NEW_NAME, ...)                                                 \
@@ -51,7 +51,7 @@ namespace PUPS {
     using cstr = const char *;
     using fpath = std::filesystem::path;
 
-    constexpr const cstr version = "0.3.0";
+    constexpr const cstr version = "0.3.1";
 
     constexpr const cstr builtin_mark = "__builtin_";
 

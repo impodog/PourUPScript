@@ -75,6 +75,10 @@ namespace PUPS {
             return _report;
         }
 
+        std::shared_ptr<Scope> get_scope() const noexcept {
+            return script_scope;
+        }
+
         void add_prior_path(const fpath &path) {
             _report.paths.push_front(path);
         }
