@@ -51,7 +51,7 @@ namespace PUPS {
     using cstr = const char *;
     using fpath = std::filesystem::path;
 
-    constexpr const cstr version = "0.2.0";
+    constexpr const cstr version = "0.3.0";
 
     constexpr const cstr builtin_mark = "__builtin_";
 
@@ -73,6 +73,9 @@ namespace PUPS {
             REMOVE = "rmv",
             RETURN = "ret",
             IF = "if",
+            WHILE = "while",
+            DO = "do",
+            NUMBER = "number",
 
 
             INT = "int",
@@ -84,6 +87,7 @@ namespace PUPS {
             ANYT = "anyt",
             TYPET = "typet",
             NULLT = "nullt",
+            LAMBDA = "lambda",
 
             RETURN_V = "__return_v__",
             FALSE_OBJ = "false",

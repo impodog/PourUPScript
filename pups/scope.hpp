@@ -167,7 +167,8 @@ namespace PUPS {
             bool find_no_err = false, set_no_err = false, decl_no_new_scope = false;
 
             void reset() noexcept {
-                colon = get_flag = find_no_err = set_no_err = decl_no_new_scope = make = loc = again = new_decl = false;
+                colon = get_flag = find_no_err = set_no_err = decl_no_new_scope = make = loc = again = new_decl =
+                do_while = false;
             }
 
             // NOTICE : Call this wherever public flags are used.
@@ -177,7 +178,7 @@ namespace PUPS {
                         make |= scope->flags.make;
                         loc |= scope->flags.loc;
                         again |= scope->flags.again;
-                        new_decl != scope->flags.again;
+                        new_decl |= scope->flags.again;
                         scope = scope->parent;
                     }
                     get_flag = true;
@@ -187,7 +188,7 @@ namespace PUPS {
             friend class Scope;
 
         public:
-            bool make = false, loc = false, again = false, new_decl = false, returned = false;
+            bool make = false, loc = false, again = false, new_decl = false, returned = false, do_while = false;
         } flags;
 
         explicit Scope(Scope *parent, Report &report) :
@@ -251,9 +252,14 @@ namespace PUPS {
             compound.filter();
             for (auto &token: compound.tokens) {
                 if (status++)
-                    acceptor->put(token, _report);
+                    acceptor->put(token, _report); //fixme nullptr issue
                 else
                     acceptor = find(token);
+                if (acceptor == nullptr) {
+                    _report.report(Report_Uninitialized,
+                                   "Token \"" + std::string(token) + "\" refers to nullptr. Statement skipped.");
+                    return null_obj;
+                }
             }
             return acceptor->ends(this, _report);
         }

@@ -273,6 +273,187 @@ namespace PUPS {
         }
     };
 
+    class KW_If final : public KeywordBase {
+        struct Condition {
+            unsigned char status = 0;
+            Token cond, ifTrue, ifFalse = Token{"{}", false, true};
+
+            void reset() {
+                status = 0;
+                ifFalse = Token{"{}", false, true};
+            }
+
+            void add_semicolon() {
+                if (!ifFalse.has_semicolon()) ifFalse.append(';');
+            }
+        };
+
+        std::stack<Condition> conditions;
+    public:
+        static constexpr const cstr ELSE = "else";
+
+        KW_If() {
+            conditions.emplace();
+        }
+
+        void put(const Token &token, Report &report) override {
+            auto &top = conditions.top();
+            switch (top.status) {
+                case 0:
+                    top.cond = token;
+                    break;
+                case 1:
+                    top.ifTrue = token;
+                    break;
+                case 2:
+                    if (token != ELSE) top.status = 4;
+                    break;
+                case 3:
+                    top.ifFalse = token;
+                    if (token == IF) top.status = 5;
+                    break;
+                case 4:
+                    report.report(Report_IncorrectArguments,
+                                  "Too many arguments for an if statement. \"" + token.str() + "\" skipped.");
+                    return;
+                case 5:
+                    top.ifFalse.append(token).append(' ');
+                    return;
+            }
+            top.status++;
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            Token *block;
+            {
+                auto &top = conditions.top();
+                top.add_semicolon();
+                auto &result = scope->find<true>(top.cond);
+                if (result != nullptr && result->to_condition()) block = &top.ifTrue;
+                else block = &top.ifFalse;
+            }
+            Token name = next_tag();
+            conditions.emplace();
+            make_scope(name, *block, scope, report);
+            scope->try_exit_erase_object(name);
+            conditions.pop();
+            if (conditions.size() == 1)
+                conditions.top().reset();
+            return null_obj;
+        }
+    };
+
+    class KW_While final : public KeywordBase {
+        struct Condition {
+            unsigned char status = 0;
+            Token cond, body = Token{"{}", false, true};
+
+            void reset() {
+                status = 0;
+                body = Token{"{}", false, true};
+            }
+        };
+
+        std::stack<Condition> conditions;
+
+        ObjectPtr get_cond(const Condition &cond, Scope *scope, Report &report) {
+            auto &object = scope->find(cond.cond);
+            if (object->is_instance())
+                return std::static_pointer_cast<InstanceBase>(object)->call_without_args(scope, report);
+            report.report(Report_TypeErr,
+                          std::string(WHILE) + " statement must receive a callable instance as condition.");
+            return null_obj;
+        }
+
+        void work(ObjectPtr &result, Condition &cond, Scope *scope, Report &report) {
+            Token name = next_tag();
+            conditions.emplace();
+            make_scope(name, cond.body, scope, report);
+            scope->try_exit_erase_object(name);
+            result = get_cond(cond, scope, report);
+            conditions.pop();
+        }
+
+    public:
+        KW_While() {
+            conditions.emplace();
+        }
+
+        void put(const Token &token, Report &report) override {
+            auto &top = conditions.top();
+            switch (top.status) {
+                case 0:
+                    top.cond = token;
+                    break;
+                case 1:
+                    top.body = token;
+                    break;
+                case 2:
+                    return;
+            }
+            top.status++;
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            auto &top = conditions.top();
+            ObjectPtr result = get_cond(top, scope, report);
+            if (scope->flags.do_while)
+                do work(result, top, scope, report);
+                while (result != nullptr && result->to_condition());
+            else
+                while (result != nullptr && result->to_condition())
+                    work(result, top, scope, report);
+            if (conditions.size() == 1)
+                conditions.top().reset();
+            return null_obj;
+        }
+    };
+
+    class KW_Number final : public KeywordBase {
+        struct Number {
+            Token value;
+            bool floating, ok;
+        };
+        std::queue<Number> numbers;
+
+        static Number check_number(const Token &token) {
+            bool dot = false;
+            for (auto c: token.str()) {
+                if (c == '.') {
+                    if (dot) return {token, false, false};
+                    dot = true;
+                } else if (!is_digit(c)) return {token, false, false};
+            }
+            return {token, dot, true};
+        }
+
+    public:
+        void put(const Token &token, Report &report) override {
+            auto num = check_number(token);
+            if (num.ok)
+                numbers.push(num);
+            else
+                report.report(Report_WrongToken,
+                              "Cannot make number using token \"" + std::string(token) + "\". Token skipped.");
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            if (!scope->flags.make)
+                report.report(Report_SuggestMakeInit, std::string("Using \"") + MAKE +
+                                                      "\" along with \"" + NUMBER + "\" is suggested.");
+            while (!numbers.empty()) {
+                ObjectPtr object;
+                if (numbers.front().floating)
+                    object = std::make_shared<INST_Float>(TypeCodes::Float, eval<double>(numbers.front().value.str()));
+                else
+                    object = std::make_shared<INST_Int>(TypeCodes::Int, eval<long long>(numbers.front().value.str()));
+                scope->set_object<true>(numbers.front().value, object);
+                numbers.pop();
+            }
+            return null_obj;
+        }
+    };
+
 
     class KeywordQualifier : public KeywordBase {
         std::queue<Token> stmt;
@@ -304,66 +485,6 @@ namespace PUPS {
                     scope->run_compound(compound);
                 }
             }
-            return null_obj;
-        }
-    };
-
-    class KW_If final : public KeywordBase {
-        struct Condition {
-            unsigned char status = 0;
-            Token cond, ifTrue, ifFalse = Token{"{}", false, true};
-
-            void reset() {
-                status = 0;
-                ifFalse = Token{"{}", false, true};
-            }
-        };
-
-        std::stack<Condition> conditions;
-    public:
-        static constexpr const cstr ELSE = "else";
-
-        KW_If() {
-            conditions.emplace();
-        }
-
-        void put(const Token &token, Report &report) override {
-            auto &top = conditions.top();
-            switch (top.status) {
-                case 0:
-                    top.cond = token;
-                    break;
-                case 1:
-                    top.ifTrue = token;
-                    break;
-                case 2:
-                    if (token != ELSE) top.status = 4;
-                    break;
-                case 3:
-                    top.ifFalse = token;
-                    break;
-                default:
-                    report.report(Report_IncorrectArguments,
-                                  "Too many arguments for an if statement. \"" + token.str() + "\" skipped.");
-            }
-            top.status++;
-        }
-
-        ObjectPtr ends(Scope *scope, Report &report) override {
-            Token *block;
-            {
-                auto &top = conditions.top();
-                auto &result = scope->find<true>(top.cond);
-                if (result != nullptr && result->to_condition()) block = &top.ifTrue;
-                else block = &top.ifFalse;
-            }
-            Token name = next_tag();
-            conditions.emplace();
-            make_scope(name, *block, scope, report);
-            scope->try_exit_erase_object(name);
-            conditions.pop();
-            if (conditions.size() == 1)
-                conditions.top().reset();
             return null_obj;
         }
     };
@@ -431,6 +552,19 @@ namespace PUPS {
         KW_New() = default;
     };
 
+    class KW_Do final : public KeywordQualifier {
+        void set_v(Scope *scope) override {
+            scope->flags.do_while = true;
+        }
+
+        const char *get_name() override {
+            return DO;
+        }
+
+    public:
+        KW_Do() = default;
+    };
+
 
     class Keywords {
         std::unordered_map<Token, ObjectPtr> keywords, types, constants;
@@ -451,7 +585,10 @@ namespace PUPS {
                 {Token{NEW},      ObjectPtr{new KW_New}},
                 {Token{REMOVE},   ObjectPtr{new KW_Remove}},
                 {Token{RETURN},   ObjectPtr{new KW_Ret}},
-                {Token{IF},       ObjectPtr{new KW_If}}
+                {Token{IF},       ObjectPtr{new KW_If}},
+                {Token{WHILE},    ObjectPtr{new KW_While}},
+                {Token{DO},       ObjectPtr{new KW_Do}},
+                {Token{NUMBER},   ObjectPtr{new KW_Number}}
         },
                      types{
                              {Token{INT},      ObjectPtr{new TP_Int}},
@@ -462,7 +599,8 @@ namespace PUPS {
                              {Token{FUNCTION}, ObjectPtr{new TP_Function}},
                              {Token{ANYT},     ObjectPtr{new TP_AnyT}},
                              {Token{TYPET},    ObjectPtr{new TP_TypeT}},
-                             {Token{NULLT},    ObjectPtr{new TP_NullT}}
+                             {Token{NULLT},    ObjectPtr{new TP_NullT}},
+                             {Token{LAMBDA},   ObjectPtr{new TP_LambdaFunction}}
                      } {
             TypeCodes::Int = types.at(Token{INT})->cnt;
             TypeCodes::Float = types.at(Token{FLOAT})->cnt;

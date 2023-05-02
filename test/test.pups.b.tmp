@@ -1,4 +1,0 @@
-
-    local make str msg = {There is at least one NULL in x, y};
-    print msg;
-

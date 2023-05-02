@@ -1,4 +1,0 @@
-
-    local make str msg = {x is NULL};
-    print msg;
-

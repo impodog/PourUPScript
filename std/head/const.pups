@@ -7,3 +7,5 @@ make flo pi = 3.14159265358979323846;
 new decl e;
 make flo e = 2.7182818284590452354;
 
+new decl version;
+set version = (__builtin_CONST_version);

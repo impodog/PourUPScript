@@ -9,4 +9,4 @@ project(PourUPScriptInterp)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(PourUPScriptInterp interp.cpp std_lib/lib_math.hpp std_lib/lib_util.hpp std_lib/include.hpp)
+add_executable(PourUPScriptInterp interp.cpp std_lib/lib_math.hpp std_lib/lib_util.hpp std_lib/include.hpp std_lib/lib_const.hpp)

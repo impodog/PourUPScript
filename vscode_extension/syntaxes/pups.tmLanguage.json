@@ -17,7 +17,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.pups",
-					"match": "\\b(decl|print|set|local|scope|nothing|incl|comment|null|make|again|add_path|new|rmv|ret|if|else)\\b"
+					"match": "\\b(decl|print|set|local|scope|nothing|incl|comment|null|make|again|add_path|new|rmv|ret|if|else|true|false|while|do|number)\\b"
 				}
 			]
 		},
@@ -25,7 +25,7 @@
 			"patterns": [
 				{
 					"name": "entity.name.type.class",
-					"match": "\\b(int|flo|str|byte|schar|fn|anyt|typet|nullt)\\b"
+					"match": "\\b(int|flo|str|byte|schar|fn|anyt|typet|nullt|lambda)\\b"
 				}
 			]
 		}

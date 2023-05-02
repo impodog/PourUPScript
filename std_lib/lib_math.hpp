@@ -98,8 +98,8 @@ inline ObjectPtr MATH_pow_base<type>(ResultQueue &results) {                  \
     }
 
     inline void INCLUDE_MATH() {
-        add_to_builtins(Token{"MATH_sqrt"}, MATH_sqrt);
-        add_to_builtins(Token{"MATH_pow"}, MATH_pow);
+        add_to_builtins("MATH_sqrt", MATH_sqrt);
+        add_to_builtins("MATH_pow", MATH_pow);
     }
 }
 

@@ -132,6 +132,7 @@ namespace PUPS {
     };
 
     class TP_Function : public TypeBase {
+    protected:
         static constexpr const char *const type_symbol = "@";
         using TypeSpec = INST_Function::TypeSpec;
         using ParameterList = INST_Function::ParameterList;
@@ -159,7 +160,6 @@ namespace PUPS {
             }
         }
 
-    protected:
         ObjectPtr construct(Scope *scope, Report &report, std::queue<Token> &names,
                             std::queue<Token> &args) override {
             ParameterList parameters;
@@ -179,18 +179,20 @@ namespace PUPS {
                 add_parameters(spec, parameters, arg);
                 args.pop();
             }
-            if (!args.front().is_long())
+            if (!args.front().is_long()) {
                 report.report(Report_WrongToken, "The final argument to construct function must be long, not \"" +
                                                  std::string(args.front()) + "\".");
-            else {
-                ObjectPtr func = ObjectPtr{new INST_Function{cnt, parameters, args.front()}};
+                args.pop();
+                return null_obj;
+            } else {
+                ObjectPtr func = std::make_shared<INST_Function>(cnt, parameters, args.front());
                 while (!names.empty()) {
                     scope->set_object(names.front(), func);
                     names.pop();
                 }
+                args.pop();
+                return func;
             }
-            args.pop();
-            return null_obj;
         }
 
         [[nodiscard]] constexpr bool require_assign() const noexcept final {
@@ -236,10 +238,23 @@ namespace PUPS {
     };
 
     void add_to_builtins(const Token &name, BuiltinFunction func) {
-        builtins.insert({add_builtin_mark(name.str()), std::make_shared<GlobalFunction>(func)});
+        builtins.insert({builtin_marked(name.str()), std::make_shared<GlobalFunction>(func)});
+    }
+
+    void add_to_builtins(const char *name, BuiltinFunction func) {
+        builtins.insert({builtin_marked(name), std::make_shared<GlobalFunction>(func)});
     }
 
 #define MAKE_BUILTIN(fn_name) inline ObjectPtr fn_name(std::queue<ObjectPtr *> &args, Report &report)
+
+    class TP_LambdaFunction : public TP_Function {
+    protected:
+        ObjectPtr construct(Scope *scope, Report &report, std::queue<Token> &names, std::queue<Token> &args) override {
+            if (args.empty()) names.swap(args);
+            return TP_Function::construct(scope, report, names, args);
+        }
+    };
 }
+
 
 #endif //POURUPSCRIPTINTERP_FUNCTION_HPP

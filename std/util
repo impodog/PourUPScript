@@ -1,6 +1,6 @@
 comment {
     PourUPScript standard library.
-    C++  related utility.
+    C++ related utility.
 };
 
 again decl std;

@@ -103,7 +103,9 @@ namespace PUPS {
             scope->set_object<true>(arg.first, scope->find(arg.second));
 
         Scripter scripter(path, report, scope);
-        while (scripter.forward()) {}
+        while (scripter.forward()) {
+            scripter.report_all();
+        }
         add_scope(name, scope, parent);
 
         // Destroy arguments

@@ -1,18 +1,19 @@
 local incl std;
-local incl const math util;
+local incl const;
+local incl math;
+local incl util;
 
-decl x y;
-make int y = 7;
+local scope tmp {
+    local make str msg = {Version = };
+    print msg {std:version};
+};
+rmv tmp;
 
-if ({std:is_null} x) {
-    local make str msg = {x is NULL};
-    print msg;
+local make flo x = 5;
+make number 0.0 1.1;
+do while (lambda {ret (x > 0.0);}) {
+    set x = (x - 1.1);
+    print x;
 };
 
-if ({std:any_null} x y) {
-    local make str msg = {There is at least one NULL in x, y};
-    print msg;
-} else {
-    local make str msg = {There isn't any NULL in x, y};
-    print msg;
-};
+

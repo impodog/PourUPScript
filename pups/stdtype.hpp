@@ -161,6 +161,8 @@ namespace PUPS {
 
         }
 
+        FN_ALIAS(call_without_args, inst_ends)
+
         [[nodiscard]] constexpr bool can_delete() const noexcept override {
             return true;
         }
@@ -304,8 +306,8 @@ namespace PUPS {
     protected:
         static void chk_cst(Scope *scope, Report &report) {
             if (!scope->flags.make)
-                report.report(Report_UnConstInit, std::string("Std type initialization with \"") + MAKE +
-                                                  "\" qualifier is suggested. Statement continued in spite of warnings.");
+                report.report(Report_SuggestMakeInit, std::string("Std type initialization with \"") + MAKE +
+                                                      "\" qualifier is suggested. Statement continued in spite of warnings.");
         }
 
         void type_ends(PUPS::Scope *scope, PUPS::Report &report) final {
@@ -319,7 +321,7 @@ namespace PUPS {
     return ObjectPtr{new typeof_this{this->type(), static_cast<Arith>(this->value op std::static_pointer_cast<typeof_this>(object)->value)}};\
 }
 
-#define BASIC_OP(typeof_this) \
+#define BASIC_OP(typeof_this) OVERRIDE_OP(op_add, +, typeof_this)\
 OVERRIDE_OP(op_sub, -, typeof_this)\
 OVERRIDE_OP(op_mul, *, typeof_this)\
 OVERRIDE_OP(op_div, /, typeof_this)\
@@ -339,7 +341,7 @@ OVERRIDE_OP(op_eq, ==, typeof_this)
             return std::to_string(value);
         }
 
-        [[nodiscard]] constexpr bool to_condition() const noexcept override {
+        [[nodiscard]] constexpr bool to_condition() const noexcept final {
             return value != 0;
         }
 
@@ -372,21 +374,6 @@ OVERRIDE_OP(op_eq, ==, typeof_this)
 
     public:
         INST_Arith_Int(Cnt type, Arith value) : INST_Arith_Base<Arith>(type, value) {}
-
-        ObjectPtr op_add(const Token &nxt, Scope *scope, Report &report)
-        override {
-            auto &object = scope->find(nxt);
-            this->
-                    chk_type_same(object, report
-            );
-            return ObjectPtr{
-                    new INST_Arith_Int{
-                            this->
-                                    type(),
-                            static_cast<Arith>(this->value +
-                                               std::static_pointer_cast<INST_Arith_Int>(object)
-                                                       ->value)}};
-        }
 
         BASIC_OP(INST_Arith_Int)
 

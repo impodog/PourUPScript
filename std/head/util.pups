@@ -1,10 +1,25 @@
-new decl same;
+new decl same b_same;
 fn same {anyt @ x} {anyt @ y} {
     ret (__builtin_UTIL_same x y);
 };
-new decl b_same;
 set b_same = __builtin_UTIL_same;
 
 new decl any_null is_null;
 set any_null = __builtin_UTIL_any_null;
 set is_null = any_null;
+
+new decl to_boolean;
+fn to_boolean {anyt @ obj} {
+    ret (__builtin_UTIL_to_boolean obj);
+};
+
+new decl to_not_boolean;
+fn to_not_boolean {anyt @ obj} {
+    ret (__builtin_UTIL_to_not_boolean obj);
+};
+
+new decl to_str b_to_str;
+fn to_str {anyt @ obj} {
+    ret (__builtin_UTIL_to_str obj);
+};
+set b_to_str = __builtin_UTIL_to_str;

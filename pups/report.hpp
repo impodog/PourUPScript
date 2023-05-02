@@ -23,7 +23,7 @@ namespace PUPS {
             Report_OperatorErr = "OperatorErr",
             Report_Undeclared = "Undeclared",
             Report_TypeErr = "TypeErr",
-            Report_UnConstInit = "UnConstInit",
+            Report_SuggestMakeInit = "SuggestMakeInit",
             Report_LocalityErr = "LocalityErr",
             Report_FileNotFound = "FileNotFound",
             Report_SuspiciousLine = "SuspiciousLine",
@@ -60,6 +60,7 @@ namespace PUPS {
                                                                               cur_line(cur_line) {
             paths.push_back(_file.parent_path());
             paths.emplace_back(std_path);
+            paths.emplace_back(".");
         }
 
         explicit Report(const TokenInput &input) : Report{input.line_num(), input.file(), input.cur_line()} {}
