@@ -14,8 +14,9 @@ namespace PUPS {
     using RandomNumber = decltype(random());
 
     template<typename Arith>
-    typename std::enable_if<std::is_unsigned<Arith>::value, Arith>::type
+    typename std::enable_if<std::is_integral<Arith>::value, Arith>::type
     generate(Arith min, Arith max) {
+        if (min > max) swap(min, max);
         Arith sub = max - min;
         if (sub > std::random_device::max()) {
             Arith result = 0;
@@ -25,19 +26,13 @@ namespace PUPS {
             }
             return result % sub + min;
         } else
-            return random() % sub + min;
-    }
-
-    template<typename Arith>
-    typename std::enable_if<std::is_signed<Arith>::value && std::is_integral<Arith>::value, Arith>::type
-    generate(Arith min, Arith max) {
-        bool sign = random() > std::random_device::max() / 2;
-        return generate<typename std::make_unsigned<Arith>::type>(min, max) * (sign ? -1 : 1);
+            return static_cast<Arith>(random()) % sub + min;
     }
 
     template<typename Arith>
     typename std::enable_if<std::is_floating_point<Arith>::value, Arith>::type
     generate(Arith min, Arith max) {
+        if (min > max) swap(min, max);
         Arith sub = max - min;
         if (sub > std::random_device::max()) {
             Arith result = 0;
@@ -47,7 +42,7 @@ namespace PUPS {
             }
             return result / std::random_device::max() * sub + min;
         } else
-            return random() / std::random_device::max() * sub + min;
+            return static_cast<Arith>(random()) / std::random_device::max() * sub + min;
     }
 
 #define GET_MIN_MAX(type, access) type min, max; bool is_max = false; \

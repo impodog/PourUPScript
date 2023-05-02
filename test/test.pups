@@ -1,9 +1,6 @@
 local incl std;
-local incl const;
-local incl math;
-local incl util;
 local incl random;
 
-make number 1 10;
-print ({std:randrange} 1 10);
+make number 1.0 10.0;
+print ({std:randrange} 1.0 10.0);
 

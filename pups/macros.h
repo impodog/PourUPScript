@@ -51,7 +51,7 @@ namespace PUPS {
     using cstr = const char *;
     using fpath = std::filesystem::path;
 
-    constexpr const cstr version = "0.3.1";
+    constexpr const cstr version = "0.3.2";
 
     constexpr const cstr builtin_mark = "__builtin_";
 
