@@ -95,6 +95,7 @@ namespace PUPS {
     };
 
     using ObjectPtr = ObjectBase::ObjectPtr;
+    using ResultQueue = std::queue<EvalResult>;
 
     size_t ObjectBase::count = 3;
 

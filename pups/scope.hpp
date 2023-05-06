@@ -418,13 +418,24 @@ namespace PUPS {
 
     static std::unordered_map<std::string, std::shared_ptr<Scope>> pups_modules;
 
-    ObjectPtr make_scope(const Token &name, const fpath &path, Scope *parent, Report &report,
-                         const std::unordered_map<Token, Token> &args = {});
+    inline bool forward(Scope *scope, Report &report) {
+        bool end = false, result = true;
+        while (!end) {
+            auto token = report.next();
+            bool is_symbol = token.is_symbol();
+            if (token.eof()) {
+                result = false;
+                break;
+            }
+            if (token.empty()) continue;
 
-    ObjectPtr make_scope(const Token &name, const Token &block, Scope *parent, Report &report,
-                         const std::unordered_map<Token, Token> &args = {});
+            scope->put(token, report);
+            end = is_symbol && token.semicolon();
+        }
 
-    ObjectPtr make_free_scope(const fpath &path, Scope *parent, Report &report);
+        scope->ends(scope, report);
+        return result;
+    }
 
     std::shared_ptr<Scope> &find_module(const fpath &path) {
         return pups_modules.at(absolute(path).string());
@@ -440,6 +451,63 @@ namespace PUPS {
         else
             parent->set_object(name, scope);
     }
+
+    inline std::shared_ptr<Scope> make_scope(const Token &name, Scope *parent, Report &report) {
+        std::shared_ptr<Scope> scope;
+        {
+            auto result = parent->find<true>(name);
+            if (is_non(result)) {
+                scope = std::make_shared<Scope>(parent, report);
+            } else if (result->is_scope()) {
+                scope = std::static_pointer_cast<Scope>(result);
+            } else {
+                report.report(Report_TypeErr, "Scope re-entering must point to a previous scope. Action skipped.");
+                throw std::exception();
+            }
+        }
+        return scope;
+    }
+
+    template<typename DataType>
+    ObjectPtr create_scope(const Token &name, const DataType &data, Scope *parent, Report &report,
+                           const std::unordered_map<Token, Token> &args = {}) {
+        std::shared_ptr<Scope> scope;
+        try {
+            scope = make_scope(name, parent, report);
+        } catch (const std::exception &) {
+            return null_obj;
+        }
+        // Add arguments
+        for (const auto &arg: args)
+            scope->set_object<true>(arg.first, scope->find(arg.second));
+
+        Report new_report(report, data);
+        while (forward(scope.get(), new_report)) {
+            new_report.release_all();
+        }
+        add_scope(name, scope, parent);
+
+        // Destroy arguments
+        for (const auto &arg: args)
+            scope->erase_object(arg.first);
+        scope->temporary_exit();
+        return scope;
+    }
+
+    inline void include_path(Scope *scope, Report &report, const std::pair<Token, Token> &pair) {
+        fpath path = report.find_file(pair.first.str());
+        if (path.empty())
+            report.report(Report_FileNotFound, "Include file \"" + pair.first.str() + "\" is not found.");
+        else {
+            try {
+                add_scope(pair.second, find_module(path.string()), scope);
+            } catch (const std::out_of_range &) {
+                auto new_scope = create_scope(pair.second, path, scope, report);
+                add_module(path, std::static_pointer_cast<Scope>(new_scope));
+            }
+        }
+    }
+
 }
 
 #endif //POURUPSCRIPT_SCOPE_HPP

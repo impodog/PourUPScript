@@ -7,16 +7,16 @@
 
 #include "../pups.h"
 
-namespace PUPS {
-    MAKE_BUILTIN(CONST_version) {
-        if (!args.empty())
-            report.report("CONST_version", "No args should be received.");
-        return std::make_shared<INST_Str>(TypeCodes::Str, version);
-    }
+namespace PUPS::Std_Const {
+        MAKE_BUILTIN(CONST_version) {
+            if (!args.empty())
+                report.report("CONST_version", "No args should be received.");
+            return std::make_shared<INST_Str>(TypeCodes::Str, version);
+        }
 
-    void INCLUDE_CONST() {
-        add_to_builtins("CONST_version", CONST_version);
+        void INCLUDE() {
+            add_to_builtins("CONST_version", CONST_version);
+        }
     }
-}
 
 #endif //POURUPSCRIPTINTERP_LIB_CONST_HPP

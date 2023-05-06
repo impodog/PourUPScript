@@ -45,11 +45,9 @@ generate(double, r_float, INST_Float, TypeCodes::Float)\
 generate(unsigned char, r_byte, INST_Byte, TypeCodes::Byte)\
 generate(signed char, r_schar, INST_SChar, TypeCodes::SChar)
 
-namespace PUPS {
-    using ResultQueue = std::queue<EvalResult>;
-
-    template<typename T>
-    static ObjectPtr MATH_sqrt_base(ResultQueue &results);
+namespace PUPS::Std_Math {
+        template<typename T>
+        static ObjectPtr MATH_sqrt_base(ResultQueue &results);
 
 #define SQRT_FUNC(type, access) template<>                     \
 inline ObjectPtr MATH_sqrt_base<type>(ResultQueue &results) {         \
@@ -61,17 +59,17 @@ inline ObjectPtr MATH_sqrt_base<type>(ResultQueue &results) {         \
     return std::make_shared<INST_Float>(TypeCodes::Float, res);\
 }
 
-    MATH_MAKE_FUNCTIONS(SQRT_FUNC)
+        MATH_MAKE_FUNCTIONS(SQRT_FUNC)
 
 #undef SQRT_FUNC
 
-    MAKE_BUILTIN(MATH_sqrt) {
-        MATH_TYPE_CHECK("MATH_sqrt")
-        MATH_SWITCH_TYPE(MATH_sqrt_base, "MATH_sqrt")
-    }
+        MAKE_BUILTIN(MATH_sqrt) {
+            MATH_TYPE_CHECK("MATH_sqrt")
+            MATH_SWITCH_TYPE(MATH_sqrt_base, "MATH_sqrt")
+        }
 
-    template<typename T>
-    static ObjectPtr MATH_pow_base(ResultQueue &results);
+        template<typename T>
+        static ObjectPtr MATH_pow_base(ResultQueue &results);
 
 #define POW_FUNC(type, access, type_ret, typecode) template<>          \
 inline ObjectPtr MATH_pow_base<type>(ResultQueue &results) {                  \
@@ -89,20 +87,20 @@ inline ObjectPtr MATH_pow_base<type>(ResultQueue &results) {                  \
     return std::make_shared<type_ret>(typecode, std::pow(base, power));\
 }
 
-    MATH_MAKE_FUNCTIONS_TYPED(POW_FUNC)
+        MATH_MAKE_FUNCTIONS_TYPED(POW_FUNC)
 
 #undef POW_FUNC
 
-    MAKE_BUILTIN(MATH_pow) {
-        MATH_TYPE_CHECK("MATH_pow")
-        MATH_SWITCH_TYPE(MATH_pow_base, "MATH_pow")
-    }
+        MAKE_BUILTIN(MATH_pow) {
+            MATH_TYPE_CHECK("MATH_pow")
+            MATH_SWITCH_TYPE(MATH_pow_base, "MATH_pow")
+        }
 
-    inline void INCLUDE_MATH() {
-        add_to_builtins("MATH_sqrt", MATH_sqrt);
-        add_to_builtins("MATH_pow", MATH_pow);
+        inline void INCLUDE() {
+            add_to_builtins("MATH_sqrt", MATH_sqrt);
+            add_to_builtins("MATH_pow", MATH_pow);
+        }
     }
-}
 
 #undef MATH_MAKE_FUNCTIONS
 #undef MATH_MAKE_FUNCTIONS_TYPED

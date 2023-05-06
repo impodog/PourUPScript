@@ -15,10 +15,10 @@ namespace PUPS {
 
     // Adds all std libraries.
     void INCLUDE_ALL() {
-        INCLUDE_CONST();
-        INCLUDE_MATH();
-        INCLUDE_UTIL();
-        INCLUDE_RANDOM();
+        Std_Const::INCLUDE();
+        Std_Util::INCLUDE();
+        Std_Math::INCLUDE();
+        Std_Random::INCLUDE();
     }
 }
 

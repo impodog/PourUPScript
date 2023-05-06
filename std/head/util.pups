@@ -18,6 +18,9 @@ fn to_not_boolean {anyt @ obj} {
     ret (__builtin_UTIL_to_not_boolean obj);
 };
 
+new decl not;
+set not = to_not_boolean;
+
 new decl to_str b_to_str;
 fn to_str {anyt @ obj} {
     ret (__builtin_UTIL_to_str obj);

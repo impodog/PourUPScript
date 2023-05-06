@@ -1,8 +1,10 @@
-new decl loc;
-set loc = local;
+scope deprecated {
+    new decl loc;
+    set loc = local;
 
-new decl ref;
-set ref = set;
+    new decl ref;
+    set ref = set;
 
-new decl sco;
-set sco = scope;
+    new decl sco;
+    set sco = scope;
+};

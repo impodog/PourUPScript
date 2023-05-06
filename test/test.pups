@@ -1,6 +1,8 @@
 local incl std;
 local incl random;
+local incl deprecated;
 
 make number 1.0 10.0;
-print ({std:randrange} 1.0 10.0);
+std:deprecated:ref 1 = 1.0;
+print (std:randrange 1 10.0);
 

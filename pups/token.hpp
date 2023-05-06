@@ -29,7 +29,8 @@ namespace PUPS {
     }
 
     inline constexpr bool is_alpha(char c) noexcept {
-        return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') || c == '_' || c == '.';
+        return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') || c == '_' || c == '.' ||
+               c == ':';
     }
 
     inline constexpr bool is_digit(char c) noexcept {
@@ -268,9 +269,16 @@ namespace PUPS {
 
     UNTIL_FN(until_dquote, '\"')
 
+    struct StringInput {
+        const std::string &s;
+        size_t index = 0;
+
+        [[nodiscard]] char peek() const noexcept {
+            return s[index + 1];
+        }
+    };
+
     class TokenInput final {
-        std::ifstream input;
-        fpath _file;
         std::string _cur_line;
         std::vector<Token> tokens;
         size_t line = 1, index = 0;
@@ -278,19 +286,25 @@ namespace PUPS {
 
         friend std::ostream &operator<<(std::ostream &out, const TokenInput &input);
 
-        char next_peek() {
+        void next_peek(std::ifstream &input) {
             cur = peek;
             input.get(peek);
-            return peek;
         }
 
-        bool next_token() {
+        void next_peek(StringInput &buf) {
+            cur = peek;
+            peek = buf.s[buf.index++];
+            if (buf.index == buf.s.size()) cur = EOF;
+        }
+
+        template<typename InputType>
+        bool next_token(InputType &input) {
             tokens.emplace_back();
             std::string &buf = tokens.back().token;
             bool &is_symbol = tokens.back()._is_symbol, &is_long = tokens.back()._is_long;
             size_t braced_mode = 0;
             while (true) {
-                next_peek();
+                next_peek(input);
                 if (cur == '{') {
                     is_long = true;
                     braced_mode++;
@@ -315,15 +329,25 @@ namespace PUPS {
             }
         }
 
-        void mk_tokens() {
-            while (!next_token()) {}
+        void mk_tokens(const fpath &file) {
+            std::ifstream input(file, std::ios::in);
+            while (!next_token(input)) {}
+        }
+
+        void mk_tokens(const std::string &str) {
+            StringInput input{str};
+            while (!next_token(input)) {}
         }
 
     public:
         using NextUntil = int (*)(char cur, char peek);
 
-        explicit TokenInput(const fpath &file) : input(file, std::ios::in), _file(file) {
-            mk_tokens();
+        explicit TokenInput(const fpath &file) {
+            mk_tokens(file);
+        }
+
+        explicit TokenInput(const std::string &str) {
+            mk_tokens(str);
         }
 
         Token next() noexcept {
@@ -343,16 +367,12 @@ namespace PUPS {
             return token;
         }
 
-        const size_t &line_num() const noexcept {
+        [[nodiscard]] const size_t &line_num() const noexcept {
             return line;
         }
 
-        const std::string &cur_line() const noexcept {
+        [[nodiscard]] const std::string &cur_line() const noexcept {
             return _cur_line;
-        }
-
-        std::string file() const noexcept {
-            return _file.string();
         }
     };
 

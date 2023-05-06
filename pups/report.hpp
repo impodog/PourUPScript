@@ -35,16 +35,16 @@ namespace PUPS {
     class ObjectBase;
 
     class Report {
-        const size_t &line;
-        fpath _file;
-        const std::string &cur_line;
+        TokenInput input;
+        std::string name;
         struct ReportMsg {
             size_t line;
             std::string head, body;
-            const fpath &file;
-            const std::string &cur_line;
+            fpath file;
+            std::string cur_line;
         };
-        std::queue<ReportMsg> reports;
+        std::queue<ReportMsg> *reports;
+        Report *parent = nullptr;
 
         static void show_msg(const ReportMsg &msg) {
             *output << "[" << msg.head << " in " << msg.file << " line " << msg.line
@@ -52,40 +52,55 @@ namespace PUPS {
         }
 
     public:
-        std::list<fpath> paths;
+        std::list<fpath> *paths;
         static std::ostream *output;
 
-        Report(const size_t &line, fpath file, const std::string &cur_line) : line(line),
-                                                                              _file(std::move(file)),
-                                                                              cur_line(cur_line) {
-            paths.push_back(_file.parent_path());
-            paths.emplace_back(std_path);
-            paths.emplace_back(".");
+        explicit Report(const fpath &path) : input(path), name(path.string()), reports(new std::queue<ReportMsg>),
+                                             paths(new std::list<fpath>) {
+            paths->push_back(std::filesystem::absolute(path.parent_path()));
+            paths->push_back("./std");
+            paths->push_back(".");
         }
 
-        explicit Report(const TokenInput &input) : Report{input.line_num(), input.file(), input.cur_line()} {}
+        Report(Report &report, const fpath &p) : input(p), name(report.name), reports(report.reports),
+                                                 paths(report.paths),
+                                                 parent(&report) {}
 
-        Report(const Report &report) : Report{report.line, report._file, report.cur_line} {}
+        Report(Report &report, const Token &t) : input(t.str_dependent()), name(report.name), reports(report.reports),
+                                                 paths(report.paths),
+                                                 parent(&report) {}
+
+        Report(Report &report, const std::string &s) : input(s), name(report.name), reports(report.reports),
+                                                       paths(report.paths),
+                                                       parent(&report) {}
+
+        ~Report() {
+            if (!parent) {
+                release_all();
+                delete reports;
+                delete paths;
+            }
+        }
 
         [[nodiscard]] std::string where() const {
-            return "in " + _file.string() + " line " + std::to_string(line) + "\nEXECUTING:\n" + cur_line;
+            return "in " + name + " line " + std::to_string(input.line_num()) + "\nEXECUTING:\n" + input.cur_line();
         }
 
         [[nodiscard]] std::string file() const noexcept {
-            return _file.string();
+            return name;
         }
 
         void report(std::string head, std::string body) {
-            reports.push({line, std::move(head), std::move(body), _file, cur_line});
+            reports->push({input.line_num(), std::move(head), std::move(body), name, input.cur_line()});
         }
 
         [[nodiscard]] bool no_report() const noexcept {
-            return reports.empty();
+            return reports->empty();
         }
 
         void release() {
-            show_msg(reports.front());
-            reports.pop();
+            show_msg(reports->front());
+            reports->pop();
         }
 
         void release_all() {
@@ -93,21 +108,18 @@ namespace PUPS {
                 release();
         }
 
-        void append(Report &report) {
-            while (!report.reports.empty()) {
-                reports.push(report.reports.front());
-                report.reports.pop();
-            }
-        }
-
-        fpath find_file(const std::string &file) {
-            for (auto path: paths) {
+        [[nodiscard]] fpath find_file(const std::string &file) const {
+            for (auto path: *paths) {
                 path.append(file);
                 if (std::filesystem::exists(path)) return absolute(path);
                 path += ".pups";
                 if (std::filesystem::exists(path)) return absolute(path);
             }
             return {};
+        }
+
+        Token next() {
+            return input.next();
         }
     };
 

@@ -141,9 +141,10 @@ namespace PUPS {
 
         ObjectPtr ends(Scope *scope, Report &report) override {
             auto &top = inits.top();
+            if (top.block.empty()) swap(top.name, top.block);
             inits.emplace();
             status.emplace(-1);
-            make_scope(top.name, top.block, scope, report);
+            create_scope(top.name, top.block, scope, report);
             inits.pop();
             status.pop();
             status.top() = -1;
@@ -179,17 +180,7 @@ namespace PUPS {
         ObjectPtr ends(Scope *scope, Report &report) override {
             for (auto &pair: names.top()) {
                 names.emplace();
-                fpath path = report.find_file(pair.first.str());
-                if (path.empty())
-                    report.report(Report_FileNotFound, "Include file \"" + pair.first.str() + "\" is not found.");
-                else {
-                    try {
-                        add_scope(pair.second, find_module(path.string()), scope);
-                    } catch (const std::out_of_range &) {
-                        auto new_scope = make_scope(pair.second, path, scope, report);
-                        add_module(path, std::static_pointer_cast<Scope>(new_scope));
-                    }
-                }
+                include_path(scope, report, pair);
                 names.pop();
             }
             return null_obj;
@@ -226,7 +217,7 @@ namespace PUPS {
 
         ObjectPtr ends(Scope *scope, Report &report) override {
             while (!paths.empty()) {
-                scope->get_report().paths.emplace_back(paths.front().str_dependent());
+                scope->get_report().paths->emplace_back(paths.front().str_dependent());
                 paths.pop();
             }
             return null_obj;
@@ -332,14 +323,15 @@ namespace PUPS {
                 auto &result = scope->find<true>(top.cond);
                 if (result == nullptr || result == null_obj) {
                     report.report(Report_IncorrectArguments,
-                                  "Condition \"" + std::string(top.cond) + "\" is not defined. Condition is always false.");
+                                  "Condition \"" + std::string(top.cond) +
+                                  "\" is not defined. Condition is always false.");
                     block = &top.ifFalse;
                 } else if (result->to_condition()) block = &top.ifTrue;
                 else block = &top.ifFalse;
             }
             Token name = next_tag();
             conditions.emplace();
-            make_scope(name, *block, scope, report);
+            create_scope(name, *block, scope, report);
             scope->try_exit_erase_object(name);
             conditions.pop();
             if (conditions.size() == 1)
@@ -373,7 +365,7 @@ namespace PUPS {
         void work(ObjectPtr &result, Condition &cond, Scope *scope, Report &report) {
             Token name = next_tag();
             conditions.emplace();
-            make_scope(name, cond.body, scope, report);
+            create_scope(name, cond.body, scope, report);
             scope->try_exit_erase_object(name);
             result = get_cond(cond, scope, report);
             conditions.pop();

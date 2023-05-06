@@ -68,7 +68,7 @@ namespace PUPS {
             Token name = next_tag();
 
             if (!check_args(scope, report, argument)) return null_obj;
-            auto new_scope = make_scope(name, body, scope, report, argument);
+            auto new_scope = create_scope(name, body, scope, report, argument);
 
             ObjectPtr result = std::static_pointer_cast<Scope>(new_scope)->find<true>(Token{RETURN_V});
             scope->try_exit_erase_object(name);

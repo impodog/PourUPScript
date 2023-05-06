@@ -13,21 +13,16 @@ namespace PUPS {
     class Scripter {
         bool ind_open;
     protected:
-        TokenInput tokenInput;
         Report _report;
         std::shared_ptr<Scope> script_scope;
     public:
 
         Scripter(const fpath &file, Keywords &keywords,
                  const std::shared_ptr<Scope> &scope = std::shared_ptr<Scope>()) :
-                tokenInput(file), _report(tokenInput), script_scope(scope), ind_open(true) {
+                _report(file), script_scope(scope), ind_open(true) {
             if (!script_scope)
                 script_scope = std::make_shared<Scope>(nullptr, _report);
             keywords.merge_to(*script_scope);
-        }
-
-        Scripter(const fpath &file, Report &report, std::shared_ptr<Scope> &scope) :
-                tokenInput(file), _report(tokenInput), script_scope(scope), ind_open(false) {
         }
 
         ~Scripter() {
@@ -41,22 +36,7 @@ namespace PUPS {
 
         /*Go forward until next end of statement*/
         bool forward() {
-            bool end = false, result = true;
-            while (!end) {
-                auto token = tokenInput.next();
-                bool is_symbol = token.is_symbol();
-                if (token.eof()) {
-                    result = false;
-                    break;
-                }
-                if (token.empty()) continue;
-
-                script_scope->put(token, _report);
-                end = is_symbol && token.semicolon();
-            }
-
-            script_scope->ends(script_scope.get(), _report);
-            return result;
+            return ::PUPS::forward(script_scope.get(), _report);
         }
 
         /*Output report for certain times. Safe to call with any number because it quits when no report is present*/
@@ -75,16 +55,16 @@ namespace PUPS {
             return _report;
         }
 
-        std::shared_ptr<Scope> get_scope() const noexcept {
+        [[nodiscard]] std::shared_ptr<Scope> get_scope() const noexcept {
             return script_scope;
         }
 
-        void add_prior_path(const fpath &path) {
-            _report.paths.push_front(path);
+        void add_prior_path(const fpath &path) const {
+            _report.paths->push_front(path);
         }
 
-        void add_least_path(const fpath &path) {
-            _report.paths.push_back(path);
+        void add_least_path(const fpath &path) const {
+            _report.paths->push_back(path);
         }
     };
 
@@ -106,9 +86,9 @@ namespace PUPS {
         for (const auto &arg: args)
             scope->set_object<true>(arg.first, scope->find(arg.second));
 
-        Scripter scripter(path, report, scope);
-        while (scripter.forward()) {
-            scripter.report_all();
+        Report new_report(path);
+        while (forward(scope.get(), new_report)) {
+            new_report.release_all();
         }
         add_scope(name, scope, parent);
 
