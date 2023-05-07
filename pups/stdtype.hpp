@@ -16,6 +16,35 @@
 #define CALL_OP(op_name) object = op_name(top.front(), scope, report);
 
 namespace PUPS {
+    using TypeSpec = std::vector<ObjectBase::Cnt>;
+    std::unordered_map<ObjectBase::Cnt, TypeSpec> type_relations = {{0, {0}}};
+
+    namespace TypeCodes {
+        ObjectBase::Cnt Int, Float, Str, Byte, SChar;
+    }
+
+    inline bool type_check(ObjectBase::Cnt target, ObjectBase::Cnt instance) {
+        if (target == instance)
+            return true;
+        for (auto code: type_relations.at(target)) {
+            if (code) {
+                if (type_check(code, instance))
+                    return true;
+            } else
+                return false;
+        }
+        return false;
+    }
+
+    static bool type_check(const TypeSpec &type_spec, const ObjectPtr &arg) noexcept {
+        ObjectBase::Cnt type = arg->type();
+        if (std::ranges::any_of(type_spec.cbegin(), type_spec.cend(),
+                                [](ObjectBase::Cnt x) -> bool { return x == 0; }))
+            return true;
+        return std::ranges::any_of(type_spec.cbegin(), type_spec.cend(),
+                                   [type](ObjectBase::Cnt x) -> bool { return type_check(x, type); });
+    }
+
     class InstanceBase : public ObjectBase {
         std::stack<std::queue<Token>> args;
     protected:
@@ -188,9 +217,20 @@ namespace PUPS {
         }
 
     public:
-        TypeBase() {
+        explicit TypeBase() {
             names.emplace();
             args.emplace();
+            type_relations.insert({cnt, {0}});
+        }
+
+        explicit TypeBase(const std::vector<Cnt> &parent) {
+            names.emplace();
+            args.emplace();
+            type_relations.insert({cnt, parent});
+        }
+
+        ~TypeBase() override {
+            type_relations.erase(cnt);
         }
 
         void put(const Token &token, Report &report) final {
@@ -234,7 +274,6 @@ namespace PUPS {
         }
 
         void exit(PUPS::Report &report) override {
-
         }
 
         [[nodiscard]] Cnt type() const noexcept final {
@@ -315,17 +354,14 @@ namespace PUPS {
         }
     };
 
-#define OVERRIDE_OP(op_name, op, typeof_this) ObjectPtr op_name(const Token &nxt, Scope *scope, Report &report) override { \
-    auto &object = scope->find(nxt);\
-    this->chk_type_same(object, report);\
-    return ObjectPtr{new typeof_this{this->type(), static_cast<Arith>(this->value op std::static_pointer_cast<typeof_this>(object)->value)}};\
+#define OVERRIDE_OP_BASE(op_name, then...) ObjectPtr op_name(const Token &nxt, Scope *scope, Report &report) override {\
+    auto &object = scope->find(nxt);                                                                                   \
+    this->chk_type_same(object, report);                                                                               \
+    then                                                                                                               \
 }
+#define OVERRIDE_OP(op_name, op, typeof_this) OVERRIDE_OP_BASE(op_name, return ObjectPtr{new typeof_this{this->type(), static_cast<Arith>(this->value op std::static_pointer_cast<typeof_this>(object)->value)}};)
 
-#define OVERRIDE_EQ(op_name, typeof_this) ObjectPtr op_name(const Token &nxt, Scope *scope, Report &report) override { \
-    auto &object = scope->find(nxt);\
-    this->chk_type_same(object, report);\
-    return ObjectPtr{new typeof_this{this->type(), static_cast<Arith>(abs(this->value - std::static_pointer_cast<typeof_this>(object)->value) <= epsilon)}};\
-}
+#define OVERRIDE_EQ(op_name, typeof_this) OVERRIDE_OP_BASE(op_name, return ObjectPtr{new typeof_this{this->type(), static_cast<Arith>(abs(this->value - std::static_pointer_cast<typeof_this>(object)->value) <= epsilon)}};)
 
 #define BASIC_OP(typeof_this) OVERRIDE_OP(op_add, +, typeof_this)\
 OVERRIDE_OP(op_sub, -, typeof_this)\
@@ -382,11 +418,13 @@ OVERRIDE_OP(op_gt, >, typeof_this)
 
         BASIC_OP(INST_Arith_Int)
 
-        OVERRIDE_OP(op_eq, ==, INST_Arith_Int)
+        OVERRIDE_OP(op_eq,
+                    ==, INST_Arith_Int)
 
         OVERRIDE_OP(op_and, &, INST_Arith_Int)
 
-        OVERRIDE_OP(op_or, |, INST_Arith_Int)
+        OVERRIDE_OP(op_or,
+                    |, INST_Arith_Int)
 
         OVERRIDE_OP(op_xor, ^, INST_Arith_Int)
 
@@ -432,7 +470,6 @@ OVERRIDE_OP(op_gt, >, typeof_this)
     };
 
 #undef OVERRIDE_OP
-#undef OVERRIDE_OP_BASE
 #undef OVERRIDE_EQ
 
     template<typename Arith>
@@ -488,11 +525,17 @@ OVERRIDE_OP(op_gt, >, typeof_this)
     class INST_Str final : public InstanceBase {
         std::string value;
     protected:
-        ObjectPtr op_add(const Token &nxt, Scope *scope, Report &report) override {
-            auto &object = scope->find(nxt);
-            chk_type_same(object, report);
-            return ObjectPtr{new INST_Str(_type, value + std::static_pointer_cast<INST_Str>(object)->value)};
-        }
+        OVERRIDE_OP_BASE(op_add, return ObjectPtr{
+                new INST_Str(_type, value + std::static_pointer_cast<INST_Str>(object)->value)};)
+
+        OVERRIDE_OP_BASE(op_eq,
+                         return value == std::static_pointer_cast<INST_Str>(object)->value ? true_obj : false_obj;)
+
+        OVERRIDE_OP_BASE(op_gt,
+                         return value > std::static_pointer_cast<INST_Str>(object)->value ? true_obj : false_obj;)
+
+        OVERRIDE_OP_BASE(op_lt,
+                         return value < std::static_pointer_cast<INST_Str>(object)->value ? true_obj : false_obj;)
 
         [[nodiscard]] ObjectPtr copy() const noexcept override {
             return ObjectPtr{new INST_Str{*this}};
@@ -538,10 +581,6 @@ OVERRIDE_OP(op_gt, >, typeof_this)
     public:
         TP_Str() = default;
     };
-
-    namespace TypeCodes {
-        ObjectBase::Cnt Int, Float, Str, Byte, SChar;
-    }
 }
 
 #endif //POURUPSCRIPTTEST_STDTYPE_HPP

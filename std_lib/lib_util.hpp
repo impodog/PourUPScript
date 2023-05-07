@@ -56,6 +56,18 @@ namespace PUPS::Std_Util {
             return std::make_shared<INST_Str>(TypeCodes::Str, result);
         }
 
+        MAKE_BUILTIN(UTIL_swap) {
+            if (args.size() != 2) {
+                report.report("UTIL_swap",
+                              "Swapping should get two arguments only. Statement skipped(NULL is returned).");
+                return null_obj;
+            }
+            ObjectPtr tmp = *args.front();
+            *args.front() = *args.back();
+            *args.back() = tmp;
+            return null_obj;
+        }
+
         inline void INCLUDE() {
             add_to_builtins("UTIL_same", UTIL_same);
             add_to_builtins("UTIL_any_null", UTIL_any_null);
@@ -63,6 +75,7 @@ namespace PUPS::Std_Util {
             add_to_builtins("UTIL_to_boolean", UTIL_to_boolean);
             add_to_builtins("UTIL_to_not_boolean", UTIL_to_not_boolean);
             add_to_builtins("UTIL_to_str", UTIL_to_str);
+            add_to_builtins("UTIL_swap", UTIL_swap);
         }
     }
 

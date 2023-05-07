@@ -62,15 +62,17 @@ namespace PUPS {
             paths->push_back(".");
         }
 
-        Report(Report &report, const fpath &p) : input(p), name(report.name), reports(report.reports),
+        Report(Report &report, const fpath &p, const Token &name = eofToken) : input(p), name(report.name), reports(report.reports),
                                                  paths(report.paths),
                                                  parent(&report) {}
 
-        Report(Report &report, const Token &t) : input(t.str_dependent()), name(report.name), reports(report.reports),
-                                                 paths(report.paths),
-                                                 parent(&report) {}
+        Report(Report &report, const Token &t, const Token &name) : input(t.str_dependent()),
+                                                                    name(report.name + ":" + name.str_dependent()),
+                                                                    reports(report.reports),
+                                                                    paths(report.paths),
+                                                                    parent(&report) {}
 
-        Report(Report &report, const std::string &s) : input(s), name(report.name), reports(report.reports),
+        Report(Report &report, const std::string &s, const Token &name) : input(s), name(report.name + ":" + name.str_dependent()), reports(report.reports),
                                                        paths(report.paths),
                                                        parent(&report) {}
 

@@ -256,6 +256,10 @@ namespace PUPS {
         }
 
         ObjectPtr ends(Scope *scope, Report &report) override {
+            if (name.null()) {
+                report.report(Report_IncorrectArguments, "No return value is given. Statement skipped.");
+                return null_obj;
+            }
             scope->flags.returned = true;
             auto result = scope->find(name);
             name = Token{};
@@ -267,11 +271,11 @@ namespace PUPS {
     class KW_If final : public KeywordBase {
         struct Condition {
             unsigned char status = 0;
-            Token cond, ifTrue, ifFalse = Token{"{}", false, true};
+            Token cond, ifTrue, ifFalse = Token{"{}", Token::type_long};
 
             void reset() {
                 status = 0;
-                ifFalse = Token{"{}", false, true};
+                ifFalse = Token{"{}", Token::type_long};
             }
 
             void add_semicolon() {
@@ -318,8 +322,10 @@ namespace PUPS {
             Token *block;
             {
                 auto &top = conditions.top();
-                top.add_semicolon();
-                if (top.status == 5) top.ifFalse.convert_to_long();
+                if (top.status == 5) {
+                    top.add_semicolon();
+                    top.ifFalse.convert_to_long();
+                }
                 auto &result = scope->find<true>(top.cond);
                 if (result == nullptr || result == null_obj) {
                     report.report(Report_IncorrectArguments,
@@ -343,11 +349,11 @@ namespace PUPS {
     class KW_While final : public KeywordBase {
         struct Condition {
             unsigned char status = 0;
-            Token cond, body = Token{"{}", false, true};
+            Token cond, body = Token{"{}", Token::type_long};
 
             void reset() {
                 status = 0;
-                body = Token{"{}", false, true};
+                body = Token{"{}", Token::type_long};
             }
         };
 
@@ -449,6 +455,27 @@ namespace PUPS {
         }
     };
 
+    class KW_Using final : public KeywordBase {
+        std::queue<Token> using_ns;
+    public:
+        void put(const Token &token, Report &report) override {
+            using_ns.push(token);
+        }
+
+        ObjectPtr ends(Scope *scope, Report &report) override {
+            while (!using_ns.empty()) {
+                auto object = scope->find(using_ns.front());
+                if (!object->is_scope())
+                    report.report(Report_TypeErr, "Cannot use \"" + std::string(using_ns.front()) +
+                                                  "\" as a using scope. Token skipped.");
+                else
+                    scope->copy_objects_from(std::static_pointer_cast<Scope>(object).get());
+                using_ns.pop();
+            }
+            return null_obj;
+        }
+    };
+
 
     class KeywordQualifier : public KeywordBase {
         std::queue<Token> stmt;
@@ -472,12 +499,13 @@ namespace PUPS {
         ObjectPtr ends(Scope *scope, Report &report) final {
             if (check(scope, report)) {
                 set_v(scope);
-                if (stmt.empty())
+                if (stmt.empty()) {
                     report.report(Report_IncorrectArguments,
                                   std::string("No statement after \"") + get_name() + "\" qualifier.");
-                else {
+                    return null_obj;
+                } else {
                     Compound compound(stmt);
-                    scope->run_compound(compound);
+                    return scope->run_compound(compound);
                 }
             }
             return null_obj;
@@ -583,7 +611,8 @@ namespace PUPS {
                 {Token{IF},       ObjectPtr{new KW_If}},
                 {Token{WHILE},    ObjectPtr{new KW_While}},
                 {Token{DO},       ObjectPtr{new KW_Do}},
-                {Token{NUMBER},   ObjectPtr{new KW_Number}}
+                {Token{NUMBER},   ObjectPtr{new KW_Number}},
+                {Token{USING},    ObjectPtr(new KW_Using)}
         },
                      types{
                              {Token{INT},      ObjectPtr{new TP_Int}},

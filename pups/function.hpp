@@ -10,7 +10,6 @@
 namespace PUPS {
 
     class INST_Function : public InstanceBase {
-        using TypeSpec = std::vector<Cnt>;
         using Parameter = std::pair<TypeSpec, Token>;
         using ParameterList = std::vector<Parameter>;
         using ArgumentList = std::unordered_map<Token, Token>;
@@ -43,7 +42,7 @@ namespace PUPS {
             for (auto &parameter: parameters) {
                 auto &name = argument.at(parameter.second);
                 auto &obj = scope->find<true>(name);
-                if (obj == nullptr || !check(parameter.first, obj)) {
+                if (obj == nullptr || !type_check(parameter.first, obj)) {
                     report.report(Report_TypeErr,
                                   "Argument \"" + std::string(parameter.second) +
                                   "\" get object " + get_ptr_string(obj) +
@@ -56,10 +55,6 @@ namespace PUPS {
 
 
     protected:
-        static bool check(const TypeSpec &type_spec, const ObjectPtr &arg) noexcept {
-            return std::ranges::any_of(type_spec.cbegin(), type_spec.cend(),
-                                       [&arg](Cnt x) -> bool { return x == 0 || x == arg->type(); });
-        }
 
         ObjectPtr call(Scope *scope, Report &report) {
             auto &argument = arguments.top();
@@ -134,7 +129,6 @@ namespace PUPS {
     class TP_Function : public TypeBase {
     protected:
         static constexpr const char *const type_symbol = "@";
-        using TypeSpec = INST_Function::TypeSpec;
         using ParameterList = INST_Function::ParameterList;
 
         static void get_spec(Scope *scope, Report &report, TypeSpec &spec, const std::string &type_str) {
@@ -200,7 +194,7 @@ namespace PUPS {
         }
     };
 
-    using BuiltinFunction = ObjectPtr (*)(std::queue<ObjectPtr *> &, Report &);
+    using BuiltinFunction = ObjectPtr (*)(Scope *scope, Report &report, std::queue<ObjectPtr *> &args);
     std::unordered_map<Token, ObjectPtr> builtins;
 
     class GlobalFunction final : public ObjectBase {
@@ -223,7 +217,7 @@ namespace PUPS {
                 args.top().pop();
             }
             args.emplace();
-            auto result = func(objects, report);
+            auto result = func(scope, report, objects);
             args.pop();
             if (args.size() == 1)
                 while (!args.top().empty()) args.top().pop();
@@ -245,7 +239,15 @@ namespace PUPS {
         builtins.insert({builtin_marked(name), std::make_shared<GlobalFunction>(func)});
     }
 
-#define MAKE_BUILTIN(fn_name) inline ObjectPtr fn_name(std::queue<ObjectPtr *> &args, Report &report)
+    void add_to_builtins(const Token &name, const ObjectPtr &object) {
+        builtins.insert({builtin_marked(name.str()), object});
+    }
+
+    void add_to_builtins(const char *name, const ObjectPtr &object) {
+        builtins.insert({builtin_marked(name), object});
+    }
+
+#define MAKE_BUILTIN(fn_name) inline ObjectPtr fn_name(Scope *scope, Report &report, std::queue<ObjectPtr *> &args)
 
     class TP_LambdaFunction : public TP_Function {
     protected:

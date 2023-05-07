@@ -17,7 +17,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.pups",
-					"match": "\\b(decl|print|set|local|scope|nothing|incl|comment|null|make|again|add_path|new|rmv|ret|if|else|true|false|while|do|number)\\b"
+					"match": "\\b(decl|print|set|local|scope|nothing|incl|comment|null|make|again|add_path|new|rmv|ret|if|else|true|false|while|do|number|using)\\b"
 				}
 			]
 		},

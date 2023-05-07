@@ -61,25 +61,33 @@ namespace PUPS {
         return result;
     }
 
+    inline std::queue<std::string> split_by(const std::string &s, char sep) {
+        std::queue<std::string> result;
+        result.emplace();
+        for (auto c: s) {
+            if (c == sep) result.emplace();
+            else result.back().push_back(c);
+        }
+        return result;
+    }
+
     class Token {
 
         friend class TokenInput;
 
     protected:
         std::string token;
-        bool _is_symbol = false, _is_long = false, _is_eof = false;
-
-        friend Token make_eof();
 
     public:
+        using TypeT = unsigned char;
+        static constexpr const TypeT type_eof = 0, type_regular = 1, type_symbol = 2, type_long = 3,
+                type_get = 4;
+        TypeT type = type_eof;
+
         explicit Token() = default;
 
-        explicit Token(std::string token, bool is_symbol = false, bool is_long = false) noexcept: token(
-                std::move(token)),
-                                                                                                  _is_symbol(
-                                                                                                          is_symbol),
-                                                                                                  _is_long(
-                                                                                                          is_long) {}
+        explicit Token(std::string token, TypeT type = type_regular) noexcept: token(
+                std::move(token)), type(type) {}
 
         [[nodiscard]] const std::string &str() const noexcept {
             return token;
@@ -101,12 +109,12 @@ namespace PUPS {
 
         // If is long, return the cut string, otherwise the whole str
         [[nodiscard]] std::string str_dependent() const noexcept {
-            return is_long() ? long_cut() : str();
+            return requires_cut() ? long_cut() : str();
         }
 
         // If is long, return the cut string without spaces, otherwise the whole str
         [[nodiscard]] std::string str_dependent_no_space() const noexcept {
-            return is_long() ? long_cut_no_space() : str();
+            return requires_cut() ? long_cut_no_space() : str();
         }
 
         [[nodiscard]] std::queue<std::string> split_by(char sep) const noexcept {
@@ -151,8 +159,7 @@ namespace PUPS {
         Token &convert_to_long() noexcept {
             token.push_back('}');
             token = '{' + token;
-            _is_long = true;
-            _is_symbol = _is_eof = false;
+            type = type_long;
             return *this;
         }
 
@@ -162,7 +169,7 @@ namespace PUPS {
         }
 
         [[nodiscard]] bool eof() const noexcept {
-            return _is_eof;
+            return type == type_eof;
         }
 
         [[nodiscard]] bool empty() const noexcept {
@@ -174,19 +181,27 @@ namespace PUPS {
         }
 
         [[nodiscard]] bool null() const noexcept {
-            return _is_eof || token.empty();
+            return eof() || token.empty();
         }
 
         [[nodiscard]] bool is_symbol() const noexcept {
-            return _is_symbol;
+            return type == type_symbol;
         }
 
         [[nodiscard]] bool is_symbol(char c) const noexcept {
-            return _is_symbol && front() == c;
+            return is_symbol() && front() == c;
         }
 
         [[nodiscard]] bool is_long() const noexcept {
-            return _is_long;
+            return type == type_long;
+        }
+
+        [[nodiscard]] bool is_get() const noexcept {
+            return type == type_get;
+        }
+
+        [[nodiscard]] bool requires_cut() const noexcept {
+            return type == type_long || type == type_get;
         }
 
         [[nodiscard]] char front() const noexcept {
@@ -215,7 +230,7 @@ namespace PUPS {
         }
 
         bool operator==(const Token &cmp) const noexcept {
-            return _is_symbol == cmp._is_symbol && token == cmp.token;
+            return type == cmp.type && token == cmp.token;
         }
 
         bool operator==(const std::string &cmp) const noexcept {
@@ -227,13 +242,7 @@ namespace PUPS {
         }
     };
 
-    Token make_eof() {
-        Token result;
-        result._is_eof = true;
-        return result;
-    }
-
-    const Token eofToken = make_eof();
+    const Token eofToken = Token{};
 
     std::ostream &operator<<(std::ostream &o, const Token &token) {
         return o << std::string(token);
@@ -293,27 +302,36 @@ namespace PUPS {
 
         void next_peek(StringInput &buf) {
             cur = peek;
-            peek = buf.s[buf.index++];
-            if (buf.index == buf.s.size()) cur = EOF;
+            if (buf.index == buf.s.size())
+                peek = EOF;
+            else
+                peek = buf.s[buf.index++];
         }
 
         template<typename InputType>
         bool next_token(InputType &input) {
             tokens.emplace_back();
             std::string &buf = tokens.back().token;
-            bool &is_symbol = tokens.back()._is_symbol, &is_long = tokens.back()._is_long;
+            Token::TypeT &type = tokens.back().type;
             size_t braced_mode = 0;
+            type = Token::type_regular;
             while (true) {
                 next_peek(input);
-                if (cur == '{') {
-                    is_long = true;
-                    braced_mode++;
-                } else if (cur == '}') {
-                    braced_mode--;
-                    if (!braced_mode)
-                        buf.push_back(cur);
+                switch (cur) {
+                    case '{':
+                        if (type == Token::type_regular)
+                            type = Token::type_long;
+                        braced_mode++;
+                        break;
+                    case '}' :
+                        braced_mode--;
+                        if (!braced_mode)
+                            buf.push_back(cur);
+                        break;
+                    case EOF:
+                        return true;
                 }
-                if (cur == EOF || input.peek() == EOF) return true;
+                if (input.peek() == EOF) return true;
                 if (braced_mode)
                     buf.push_back(cur);
                 else {
@@ -321,9 +339,9 @@ namespace PUPS {
                         buf.push_back(cur);
                     else if (buf.empty() && !is_empty(cur)) {
                         buf.push_back(cur);
-                        is_symbol = true;
+                        type = Token::type_symbol;
                     }
-                    if (!is_alpha(peek) || is_symbol)
+                    if (!is_alpha(peek) || tokens.back().is_symbol())
                         return false;
                 }
             }
@@ -358,10 +376,10 @@ namespace PUPS {
                 return eofToken;
             }
             _cur_line.append(token.token).push_back(' ');
-            if (token._is_symbol && token.token.front() == '\n') {
+            if (token.is_symbol() && token.token.front() == '\n') {
                 line++;
                 _cur_line.clear();
-            } else if (token._is_long) {
+            } else if (token.is_long()) {
                 line += std::count(token.token.begin(), token.token.end(), '\n');
             }
             return token;

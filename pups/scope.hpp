@@ -44,7 +44,7 @@ namespace PUPS {
                 tokens.push_back(token);
         }
 
-        ObjectPtr ends(PUPS::Scope *scope, PUPS::Report &report) override {
+        ObjectPtr ends(PUPS::Scope *scope, PUPS::Report &report) {
             if (tokens.empty())
                 report.report(Report_EmptyCompound, "Ending statement with empty compound.");
             return null_obj;
@@ -86,6 +86,7 @@ namespace PUPS {
             is_local = true;
             while (true) {
                 try {
+                    auto &obj = scope->objects.at(name);
                     return scope->objects.at(name);
                 } catch (const std::out_of_range &) {
                     if (scope->parent == nullptr) {
@@ -132,6 +133,22 @@ namespace PUPS {
         }
 
         // This will pop the queue until the last element
+        ObjectPtr &cut_stages_from(decltype(Token().split_stages()) &stages, bool &is_local) {
+            ObjectPtr *ptr = &this->get(Token{stages.front()}, _report);
+            stages.pop();
+            while (!stages.empty()) {
+                auto p = &(*ptr)->get(Token{stages.front()}, _report);
+                if (p == nullptr)
+                    _report.report(Report_TypeErr,
+                                   "Colon shortcuts must prefix with initialized objects. Item \"" + stages.front() +
+                                   "\" skipped.");
+                else ptr = p;
+                stages.pop();
+            }
+            return *ptr;
+        }
+
+        // This will pop the queue until the last element
         Scope *cut_scope_from(decltype(Token().split_stages()) &stages, bool &is_local) {
             Scope *ptr = this;
             while (stages.size() != 1) {
@@ -146,7 +163,6 @@ namespace PUPS {
             return ptr;
         }
 
-        // This will pop the queue until the last element
         Scope *cut_scope_from(decltype(Token().split_stages()) &stages) {
             bool is_local;
             return cut_scope_from(stages, is_local);
@@ -210,7 +226,8 @@ namespace PUPS {
 
         ObjectPtr &find(const Token &name, bool &is_local) {
             auto stages = name.split_stages();
-            return cut_scope_from(stages, is_local)->find_no_stage(Token{stages.front()}, is_local);
+            auto &object = cut_stages_from(stages, is_local);
+            return object;
         }
 
         template<bool cancel_warn>
@@ -229,6 +246,11 @@ namespace PUPS {
         ObjectPtr &find(const Token &name) {
             bool _tmp;
             return find(name, _tmp);
+        }
+
+        ObjectPtr &get(const Token &token, Report &report) override {
+            bool is_local;
+            return find_no_stage(token, is_local);
         }
 
         template<bool cancel_warn>
@@ -270,9 +292,9 @@ namespace PUPS {
         }
 
         void erase_object(const Token &token) {
-            bool is_local;
             auto stages = token.split_stages();
-            cut_scope_from(stages)->erase_no_stage(Token{stages.front()});
+            auto object = cut_scope_from(stages);
+            object->erase_no_stage(Token{stages.front()});
         }
 
         void try_exit_erase_object(const Token &token) {
@@ -287,12 +309,12 @@ namespace PUPS {
             flags.get(parent);
             bool is_local;
             auto &f = find<true>(token, is_local);
+            //std::cout << "Set " << token << " to " << object->to_repr() << std::endl;
             if (f == null_obj || !is_local && flags.loc) {
                 if (!(flags.set_no_err || flags.loc || token.reserved()))
                     _report.report(Report_Undeclared,
                                    "Setting name \"" + std::string(token) +
                                    "\", which is not declared. Unexpected things may happen.");
-                try_exit_erase_object(token);
                 if (declare_object<true>(token))
                     find<false>(token) = object;
             } else f = object;
@@ -462,7 +484,7 @@ namespace PUPS {
                 scope = std::static_pointer_cast<Scope>(result);
             } else {
                 report.report(Report_TypeErr, "Scope re-entering must point to a previous scope. Action skipped.");
-                throw std::exception();
+                throw std::runtime_error("Catch this in create_scope.");
             }
         }
         return scope;
@@ -474,14 +496,14 @@ namespace PUPS {
         std::shared_ptr<Scope> scope;
         try {
             scope = make_scope(name, parent, report);
-        } catch (const std::exception &) {
+        } catch (const std::runtime_error &) {
             return null_obj;
         }
         // Add arguments
         for (const auto &arg: args)
             scope->set_object<true>(arg.first, scope->find(arg.second));
 
-        Report new_report(report, data);
+        Report new_report(report, data, name);
         while (forward(scope.get(), new_report)) {
             new_report.release_all();
         }
@@ -502,8 +524,8 @@ namespace PUPS {
             try {
                 add_scope(pair.second, find_module(path.string()), scope);
             } catch (const std::out_of_range &) {
-                auto new_scope = create_scope(pair.second, path, scope, report);
-                add_module(path, std::static_pointer_cast<Scope>(new_scope));
+                auto new_scope = std::static_pointer_cast<Scope>(create_scope(pair.second, path, scope, report));
+                add_module(path, new_scope);
             }
         }
     }

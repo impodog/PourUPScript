@@ -10,6 +10,8 @@
 #include "lib_math.hpp"
 #include "lib_util.hpp"
 #include "lib_random.hpp"
+#include "lib_dynamic.hpp"
+#include "lib_version_info.hpp"
 
 namespace PUPS {
 
@@ -19,6 +21,8 @@ namespace PUPS {
         Std_Util::INCLUDE();
         Std_Math::INCLUDE();
         Std_Random::INCLUDE();
+        Std_Dynamic::INCLUDE();
+        Std_VersionInfo::INCLUDE();
     }
 }
 

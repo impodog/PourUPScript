@@ -30,6 +30,14 @@ namespace PUPS {
         } result;
     };
 
+    class ObjectBase;
+
+    using ObjectPtr = std::shared_ptr<ObjectBase>;
+
+    extern ObjectPtr null_obj;
+    extern ObjectPtr true_obj, false_obj;
+
+
     class ObjectBase {
     public:
         using Cnt = size_t;
@@ -41,7 +49,6 @@ namespace PUPS {
             int i;
         };
     public:
-        using ObjectPtr = std::shared_ptr<ObjectBase>;
         static constexpr const Cnt AnyT_cnt = 0, TypeT_Cnt = 1, NullT_Cnt = 2;
         const Cnt cnt = count++;
 
@@ -50,6 +57,12 @@ namespace PUPS {
         virtual ObjectPtr ends(PUPS::Scope *scope, PUPS::Report &report) = 0;
 
         virtual void exit(Report &report) = 0;
+
+        virtual ObjectPtr &get(const Token &token, Report &report) {
+            report.report(Report_IncorrectArguments,
+                          "Object " + to_repr() + " does not allow \":\" getting. \"" + std::string(token) + "\" skipped.");
+            return null_obj;
+        }
 
         [[nodiscard]] virtual constexpr bool can_delete() const noexcept {
             return true;
@@ -94,13 +107,9 @@ namespace PUPS {
         }
     };
 
-    using ObjectPtr = ObjectBase::ObjectPtr;
     using ResultQueue = std::queue<EvalResult>;
-
-    size_t ObjectBase::count = 3;
-
-    extern ObjectPtr null_obj;
     ObjectPtr true_obj, false_obj;
+    size_t ObjectBase::count = 3;
 
     class Null : public ObjectBase {
     public:

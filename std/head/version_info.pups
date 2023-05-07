@@ -1,0 +1,31 @@
+scope version_info {
+    new decl version;
+    set version = (__builtin_VERSION_INFO_version);
+
+    new decl is_same;
+    fn is_same {str @ ver} {
+        ret (__builtin_VERSION_INFO_is_same ver);
+    };
+
+    new decl is_gt;
+    fn is_gt {str @ ver} {
+        ret (__builtin_VERSION_INFO_is_gt ver);
+    };
+
+    new decl is_lt;
+    fn is_lt {str @ ver} {
+        ret (__builtin_VERSION_INFO_is_lt ver);
+    };
+
+    new decl is_ge;
+    fn is_ge {str @ ver} {
+        ret (__builtin_VERSION_INFO_is_ge ver);
+    };
+
+    new decl is_le;
+    fn is_le {str @ ver} {
+        ret (__builtin_VERSION_INFO_is_le ver);
+    };
+};
+new decl version;
+set version = version_info:version;

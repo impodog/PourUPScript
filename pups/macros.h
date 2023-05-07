@@ -45,13 +45,18 @@
 #include "windows.h"
 
 #endif // WIN32
-
+#define MAJOR_VERSION "0"
+#define MINOR_VERSION "4"
+#define PATCH_VERSION "0"
 namespace PUPS {
     using cppstr = const std::string &;
     using cstr = const char *;
     using fpath = std::filesystem::path;
 
-    constexpr const cstr version = "0.3.3";
+    constexpr const cstr version = MAJOR_VERSION "." MINOR_VERSION "." PATCH_VERSION,
+            major_version = MAJOR_VERSION,
+            minor_version = MINOR_VERSION,
+            patch_version = PATCH_VERSION;
 
     constexpr const cstr builtin_mark = "__builtin_";
 
@@ -76,6 +81,7 @@ namespace PUPS {
             WHILE = "while",
             DO = "do",
             NUMBER = "number",
+            USING = "using",
 
 
             INT = "int",
@@ -92,10 +98,13 @@ namespace PUPS {
             RETURN_V = "__return_v__",
             FALSE_OBJ = "false",
             TRUE_OBJ = "true";
-    constexpr const char call_symbol = 'C';
+    constexpr const char call_symbol = 'C', get_symbol = 'G';
 
     bool keepTemporary = false;
 
 }
+#undef MAJOR_VERSION
+#undef MINOR_VERSION
+#undef PATCH_VERSION
 
 #endif //POURUPSCRIPT_MACROS_H

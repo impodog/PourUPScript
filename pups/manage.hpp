@@ -67,54 +67,6 @@ namespace PUPS {
             _report.paths->push_back(path);
         }
     };
-
-    ObjectPtr make_scope(const Token &name, const fpath &path, Scope *parent, Report &report,
-                         const std::unordered_map<Token, Token> &args) {
-        std::shared_ptr<Scope> scope;
-        {
-            auto result = parent->find<true>(name);
-            if (is_non(result)) {
-                scope = std::make_shared<Scope>(parent, report);
-            } else if (result->is_scope()) {
-                scope = std::static_pointer_cast<Scope>(result);
-            } else {
-                report.report(Report_TypeErr, "Scope re-entering must point to a previous scope. Action skipped.");
-                return null_obj;
-            }
-        }
-        // Add arguments
-        for (const auto &arg: args)
-            scope->set_object<true>(arg.first, scope->find(arg.second));
-
-        Report new_report(path);
-        while (forward(scope.get(), new_report)) {
-            new_report.release_all();
-        }
-        add_scope(name, scope, parent);
-
-        // Destroy arguments
-        for (const auto &arg: args)
-            scope->erase_object(arg.first);
-        scope->temporary_exit();
-        return scope;
-    }
-
-    inline ObjectPtr make_scope(const Token &name, const Token &block, Scope *parent, Report &report,
-                                const std::unordered_map<Token, Token> &args) {
-        if (!block.is_long()) {
-            report.report(Report_WrongToken, "Cannot make Scope using non-long strings.");
-            return null_obj;
-        }
-        std::string file = next_file_s(report.file());
-        {
-            std::ofstream out(file, std::ios::out);
-            out << block.str_dependent() << std::endl;
-        }
-        auto scope = make_scope(name, file, parent, report, args);
-        if (!keepTemporary)
-            std::filesystem::remove(file);
-        return scope;
-    }
 }
 
 #endif //POURUPSCRIPT_MANAGE_HPP

@@ -1,5 +1,7 @@
-new decl randrange b_randrange;
-fn randrange {anyt @ min} {anyt @ max} {
-    ret (__builtin_RANDOM_randrange min max);
+scope random {
+    new decl randrange b_randrange;
+    fn randrange {anyt @ min} {anyt @ max} {
+        ret (__builtin_RANDOM_randrange min max);
+    };
+    set b_randrange = __builtin_RANDOM_randrange;
 };
-set b_randrange = __builtin_RANDOM_randrange;

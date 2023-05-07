@@ -1,0 +1,7 @@
+comment {
+    PourUPScript standard library.
+    Defines dynamic PUPS execution.
+};
+
+again decl std;
+incl {head/dynamic.pups -> std};

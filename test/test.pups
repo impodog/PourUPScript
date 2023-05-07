@@ -1,8 +1,8 @@
 local incl std;
-local incl random;
-local incl deprecated;
-
-make number 1.0 10.0;
-std:deprecated:ref 1 = 1.0;
-print (std:randrange 1 10.0);
-
+local incl version_info;
+using std;
+if (version_info:is_ge (make str = {0.3.4})) {
+    print (make str = {Version ok!});
+} else {
+    print (make str = {Version not ok!});
+};

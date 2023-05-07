@@ -1,11 +1,19 @@
-new decl sqrt b_sqrt;
-fn sqrt {anyt @ x} {
-    ret (__builtin_MATH_sqrt x);
-};
-set b_sqrt = __builtin_MATH_sqrt;
+scope math {
+    new decl pi;
+    make flo pi = 3.14159265358979323846;
 
-new decl pow b_pow;
-fn pow {anyt @ base} {anyt @ power} {
-    ret (__builtin_MATH_pow base power);
+    new decl e;
+    make flo e = 2.7182818284590452354;
+
+    new decl sqrt b_sqrt;
+    fn sqrt {anyt @ x} {
+        ret (__builtin_MATH_sqrt x);
+    };
+    set b_sqrt = __builtin_MATH_sqrt;
+
+    new decl pow b_pow;
+    fn pow {anyt @ base} {anyt @ power} {
+        ret (__builtin_MATH_pow base power);
+    };
+    set b_pow = __builtin_MATH_sqrt;
 };
-set b_pow = __builtin_MATH_sqrt;
