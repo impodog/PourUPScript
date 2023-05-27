@@ -1,7 +1,0 @@
-comment {
-    PourUPScript standard library.
-    Defines common constants.
-};
-
-again decl std;
-incl {head/const.pups -> std};

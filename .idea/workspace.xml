@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="pups_Lib_Tests" targetName="pups_Lib_Tests" />
+      <config projectName="pups_Lib_Tests" targetName="pups_Lib" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/source/builtins/builtins.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/numbers.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/control.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/error.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/error.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/main.pups" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-a84f4b1f978a3cb9182c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-ec6dc60a368ffec8f844.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-d14ac0d8f9305f1b8705.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-05-07T02-27-13-0632.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-PourUPScriptInterp-Debug-c432328b52a368e392dd.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-PourUPScriptLib-Debug-40c9693322b2ee56cdc4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-101ffa6c2eaec4c36382.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/PourUPScriptInterp.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/PourUPScriptTest.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libPourUPScript.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libPourUPScriptLib.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libvscode_extension.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpp_lib/cpp_lib.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpp_lib/math.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpp_lib/util.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/interp.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/function.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/keywords.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/macros.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/manage.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/object.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/report.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/scope.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/stdtype.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups/token.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups_simple.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/const" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/deprecated" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/dynamic" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/head/const.pups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/head/deprecated.pups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/head/dynamic.pups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/head/math.pups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/head/random.pups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/head/util.pups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/head/version_info.pups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/math" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/random" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/std" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/util" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/version_info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std_lib/include.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std_lib/lib_const.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std_lib/lib_container.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std_lib/lib_dynamic.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std_lib/lib_math.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std_lib/lib_random.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std_lib/lib_util.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std_lib/lib_version_info.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.pups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vscode_extension/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vscode_extension/.vscodeignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vscode_extension/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vscode_extension/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vscode_extension/language-configuration.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vscode_extension/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vscode_extension/pourupscript-0.4.0.vsix" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vscode_extension/syntaxes/pups.tmLanguage.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="bjsxeyq2" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="1.3" />
+  </component>
+  <component name="ProjectId" id="2QL2WKnSI9Iy3TC9BoIBkuokHgh" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="pups_Lib" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="pups_Lib_Tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib_Tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib_Tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.PUPS_EzN" />
+      <item itemvalue="CMake Application.pups_Lib" />
+      <item itemvalue="CMake Application.pups_Lib_Tests" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="" />
+      <created>1685118573991</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685118573991</updated>
+      <workItem from="1685118575781" duration="1765000" />
+      <workItem from="1685177069144" duration="820000" />
+      <workItem from="1685178934479" duration="987000" />
+      <workItem from="1685179948635" duration="6599000" />
+      <workItem from="1685188841716" duration="5707000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/source/map.cpp</url>
+          <line>42</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

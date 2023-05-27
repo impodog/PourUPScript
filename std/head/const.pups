@@ -1,4 +1,0 @@
-scope const {
-    new decl space;
-    make str space = { };
-};

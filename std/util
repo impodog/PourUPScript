@@ -1,7 +1,0 @@
-comment {
-    PourUPScript standard library.
-    C++ related utility.
-};
-
-again decl std;
-incl {head/util.pups -> std};

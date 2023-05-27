@@ -1,7 +1,0 @@
-comment {
-    PourUPScript standard library.
-    Random number generator.
-};
-
-again decl std;
-incl {head/random.pups -> std};

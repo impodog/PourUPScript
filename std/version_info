@@ -1,7 +1,0 @@
-comment {
-    PourUPScript standard library.
-    Gives the version of PUPS.
-};
-
-again decl std;
-incl {head/version_info.pups -> std};

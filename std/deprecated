@@ -1,7 +1,0 @@
-comment {
-    PourUPScript standard library.
-    Defines the deprecated keywords and types.
-};
-
-again decl std;
-incl {head/deprecated.pups -> std};

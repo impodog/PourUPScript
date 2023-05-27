@@ -1,7 +1,0 @@
-scope dynamic {
-    new decl run b_run;
-    fn run {str @ s} {
-        ret (__builtin_DYNAMIC_run s);
-    };
-    set b_run = __builtin_DYNAMIC_run;
-};

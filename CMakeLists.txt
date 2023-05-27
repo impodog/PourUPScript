@@ -1,12 +1,10 @@
 cmake_minimum_required(VERSION 3.25)
-project(PourUPScriptLib)
+project(pups_Lib)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 
-add_library(PourUPScriptLib pups.cpp cpp_lib/math.hpp pups/macros.h cpp_lib/cpp_lib.h pups/object.hpp pups/token.hpp pups/scope.hpp pups/report.hpp pups/manage.hpp pups/keywords.hpp pups/stdtype.hpp pups/function.hpp cpp_lib/util.hpp std_lib/lib_math.hpp std_lib/include.hpp pups_simple.hpp std_lib/lib_random.hpp std_lib/lib_dynamic.hpp std_lib/lib_container.hpp)
+add_library(pups_Lib source/const.h source/syntax.cpp source/syntax.h source/object.cpp source/object.h source/map.cpp source/map.h source/control.cpp source/control.h source/error.cpp source/error.h source/builtins/numbers.cpp source/builtins/numbers.h source/builtins/function.cpp source/builtins/function.h source/builtins/builtins.h source/builtins/builtins.cpp)
 
-project(PourUPScriptInterp)
+project(pups_Lib_Tests)
 
-set(CMAKE_CXX_STANDARD 20)
-
-add_executable(PourUPScriptInterp interp.cpp std_lib/lib_math.hpp std_lib/lib_util.hpp std_lib/include.hpp std_lib/lib_const.hpp pups_simple.hpp std_lib/lib_random.hpp std_lib/lib_version_info.hpp)
+add_executable(pups_Lib_Tests source/const.h source/syntax.cpp source/syntax.h test.cpp source/object.cpp source/object.h source/map.cpp source/map.h source/control.cpp source/control.h source/error.cpp source/error.h source/builtins/function.cpp source/builtins/function.h source/builtins/builtins.h)
