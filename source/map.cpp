@@ -46,7 +46,7 @@ namespace pups::library {
             if (!m_return) { // when returned, the map skips all the statements below
                 if (m_base) {
                     auto ptr = m_base->put(object, this);
-                    if (ptr)
+                    if (ptr) // when returning nullptr, m_base stays the same
                         m_base = ptr;
                 } else {
                     m_base = object;
@@ -81,6 +81,10 @@ namespace pups::library {
         }
     }
 
+    void Map::set_object(const Id &name, const ObjectPtr &object) {
+        get(name) = object;
+    }
+
     ObjectPtr Map::end_of_line(Map *map) {
         auto deepest = deepest_sub_map();
         if (deepest && deepest->m_base) {
@@ -90,11 +94,9 @@ namespace pups::library {
         return pending;
     }
 
+    // WARNING the result can be null
     ObjectPtr &Map::get_return() noexcept {
-        if (m_return)
-            return m_return;
-        else
-            return pending;
+        return m_return;
     }
 
     ObjectPtr &Map::get_temp() noexcept {
@@ -102,6 +104,10 @@ namespace pups::library {
             return m_temp;
         else
             return pending;
+    }
+
+    Map *Map::get_parent() noexcept {
+        return m_parent_map;
     }
 
     ObjectPtr Error::put(ObjectPtr &object, Map *map) {

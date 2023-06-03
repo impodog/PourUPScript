@@ -6,6 +6,7 @@
 #define PUPS_LIB_TESTS_OBJECT_H
 
 #include "syntax.h"
+#include "debug/record.h"
 
 namespace pups::library {
     class Object;
@@ -39,12 +40,12 @@ namespace pups::library {
 
         [[nodiscard]] virtual bool is_long_str() const noexcept;
 
-        virtual std::string str() const noexcept;
+        [[nodiscard]] virtual std::string str() const noexcept;
+
+        [[nodiscard]] virtual bool condition() const noexcept;
     };
 
     class Pending final : public Object {
-    protected:
-        ObjectPtr m_object;
     public:
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 

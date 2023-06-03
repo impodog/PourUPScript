@@ -27,6 +27,10 @@ namespace pups::library {
         return "<Object:" + std::to_string(m_count) + ">";
     }
 
+    bool Object::condition() const noexcept {
+        return true;
+    }
+
     std::string Pending::str() const noexcept {
         return "<Object:Pending>";
     }

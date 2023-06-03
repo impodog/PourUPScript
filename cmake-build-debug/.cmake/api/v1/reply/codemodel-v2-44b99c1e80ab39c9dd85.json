@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "pups_Lib_Tests",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "pups_Lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pups_Lib-Debug-dae9880da1199c671231.json",
+					"name" : "pups_Lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "pups_Lib_Tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pups_Lib_Tests-Debug-9e6d35fefc088f298647.json",
+					"name" : "pups_Lib_Tests",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/workspace/Cpp/Tool/PourUPScript/cmake-build-debug",
+		"source" : "D:/workspace/Cpp/Tool/PourUPScript"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

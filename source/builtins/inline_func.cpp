@@ -5,22 +5,24 @@
 #include "inline_func.h"
 
 namespace pups::library::builtins::inline_func {
+    Id id_arg_catch{"", "param"};
+
     Arguments::Arguments(FunctionArgs args) : args(std::move(args)) {
 
     }
 
     ObjectPtr Arguments::put(ObjectPtr &object, Map *map) {
         if (args.empty())
-            map->throw_error(std::make_shared<ArgumentError>("Too many arguments to catch to."));
+            map->throw_error(std::make_shared<ArgumentError>("Not enough arguments given."));
         else {
             object = *args.front();
             args.pop();
         }
-        return pending;
+        return nullptr;
     }
 
     void InlineFunc::add_arguments(MapPtr &map, const FunctionArgs &args) {
-        map->add_object(id_args, std::make_shared<Arguments>(args));
+        map->add_object(id_arg_catch, std::make_shared<Arguments>(args));
     }
 
     InlineFunc::InlineFunc(IdFile idFile) :
@@ -30,7 +32,8 @@ namespace pups::library::builtins::inline_func {
                 Control control(m_idFile, sub_map);
                 add_arguments(sub_map, args);
                 control.run();
-                return sub_map->get_return();
+                auto ret = sub_map->get_return();
+                return ret ? ret : pending;
             }) {
 
     }
@@ -39,7 +42,7 @@ namespace pups::library::builtins::inline_func {
             Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
                 if (args.size() != 1 || !args.front()->get()->is_long_str()) {
                     map->throw_error(std::make_shared<ArgumentError>(
-                            "Inline Func init should receive one long string argument."));
+                            "Inline Func restart should receive one long string argument."));
                     return pending;
                 }
 

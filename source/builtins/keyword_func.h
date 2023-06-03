@@ -20,6 +20,26 @@ namespace pups::library::builtins::keyword_func {
         MoveTo();
     };
 
+    class If : public Function {
+    public:
+        explicit If(bool require_false);
+    };
+
+    class While : public Function {
+    public:
+        explicit While(bool require_false);
+    };
+
+    class Return : public Function {
+    public:
+        Return();
+    };
+
+    class Targeting : public Function {
+    public:
+        Targeting();
+    };
+
     void init(Constants &constants);
 }
 

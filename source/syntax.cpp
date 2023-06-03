@@ -137,6 +137,10 @@ namespace pups::library {
         m_file.clear();
     }
 
+    void IdFile::restart() noexcept {
+        m_cursor = {0, 0};
+    }
+
     IdFile::Line IdFile::all() const noexcept {
         Line result;
         for (auto &line: m_file) {
@@ -185,6 +189,7 @@ namespace pups::library {
                 add_id();
                 auto tmp = read_block(func, peek);
                 result.add_idFile(std::make_shared<IdFile>(tmp));
+                result.new_line(); // There is always new line after blocks
                 continue;
             } else if (isspace(c)) {
                 if (!is_space) {
@@ -247,7 +252,7 @@ namespace pups::library {
 
     Id generate_id() {
         static size_t count = 0;
-        std::string buf;
+        std::string buf = "_R_";
         size_t c = count++;
         do {
             buf.push_back(static_cast<char>(c % 26 + 'a'));
@@ -258,12 +263,10 @@ namespace pups::library {
 
     IdFile read_block(const SyntaxFunc &func, const SyntaxFunc &peek) {
         char prev = EOF;
-        char c = EOF;
+        char c = peek();
         bool depth_count = false;
         size_t depth = 0, depth_c = -1;
         auto block = read_from([&c, &prev, &depth_count, &func, &peek, &depth, &depth_c]() -> char {
-            prev = func();
-            c = peek(); // The first peek is the second char after colon
             if (depth_count) {
                 depth_count = false;
                 if (isspace(c)) {
@@ -272,13 +275,16 @@ namespace pups::library {
                 } else if (depth) {
                     if (depth_c < depth)
                         return EOF;
-                } else
+                } else {
                     depth = depth_c;
+                }
             }
             if (c == '\n') {
                 depth_count = true;
                 depth_c = 0;
             }
+            prev = func();
+            c = peek(); // The first peek is the second char after colon
             return prev;
         }, peek);
         return block;

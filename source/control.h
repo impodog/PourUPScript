@@ -14,7 +14,6 @@ namespace pups::library {
     public:
         IdFile idFile;
         const IdFactor *cur_id;
-        size_t brace_depth = 0;
         bool is_new_line = false;
 
         explicit Control(const path &path, Constants &constants);
@@ -28,6 +27,8 @@ namespace pups::library {
         bool next_line();
 
         void run();
+
+        void restart(MapPtr map);
     };
 }
 

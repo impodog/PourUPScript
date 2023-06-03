@@ -36,9 +36,13 @@ namespace pups::library {
 
         void add_object(const Id &name, const ObjectPtr &object = pending);
 
+        void set_object(const Id &name, const ObjectPtr &object = pending);
+
         ObjectPtr &get_return() noexcept;
 
         ObjectPtr &get_temp() noexcept;
+
+        Map *get_parent() noexcept;
     };
 }
 

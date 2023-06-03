@@ -10,6 +10,8 @@
 #include "inline_func.h"
 #include "keyword_func.h"
 #include "strings.h"
+#include "map_open.h"
+#include "qualifiers.h"
 
 
 namespace pups::library::builtins {

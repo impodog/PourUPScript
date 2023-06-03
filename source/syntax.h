@@ -70,7 +70,6 @@ namespace pups::library {
 
     extern IdPtr empty_id;
     extern IdFactor empty_factor;
-    extern Id id_args;
 
     class IdFile {
     protected:
@@ -97,6 +96,8 @@ namespace pups::library {
         [[nodiscard]] bool empty() const noexcept;
 
         void clear() noexcept;
+
+        void restart() noexcept;
 
         [[nodiscard]] Line all() const noexcept;
 

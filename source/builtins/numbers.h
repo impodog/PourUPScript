@@ -26,6 +26,10 @@ namespace pups::library::builtins::numbers {
         [[nodiscard]] std::string str() const noexcept override {
             return std::to_string(value);
         }
+
+        [[nodiscard]] bool condition() const noexcept override {
+            return value != 0;
+        }
     };
 
     template<typename Arithmetic>
@@ -56,7 +60,8 @@ if (lhs && rhs)\
 }
 
         Number_Operator(CORE_ARG(int), CORE_ARG(float)) :
-                Function([int_core, float_core](FunctionArgs &args, Map *map) -> ObjectPtr { // Here I use copy catch to avoid external deletions
+                Function([int_core, float_core](FunctionArgs &args,
+                                                Map *map) -> ObjectPtr { // Here I use copy catch to avoid external deletions
                     if (args.size() != 2)
                         map->throw_error(std::make_shared<ArgumentError>("Number operator requires two arguments."));
                     else {

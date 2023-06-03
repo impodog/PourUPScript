@@ -1,5 +1,11 @@
-print x
-add x y
-mov x
-print x
-print hello
+print x y
+targeting x
+if:while:
+	print x
+	add x y
+	mov x
+	return
+map:
+	targeting x
+	mov z
+	print z

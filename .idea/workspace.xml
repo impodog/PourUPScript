@@ -21,43 +21,36 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.0.2&#10;Change formatting mode to indents">
-      <change afterPath="$PROJECT_DIR$/source/builtins/strings.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/strings.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/constants.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/constants.h" afterDir="false" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.1.0&#10;Add builtin types : int, float, str;&#10;Make use of the .con file">
+      <change afterPath="$PROJECT_DIR$/source/builtins/map_open.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/map_open.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/qualifiers.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/qualifiers.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-a8eeeb2ceb0746b2ee4b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-06-03T04-37-07-0348.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib-Debug-4ae47437d3b445c3690c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib_Tests-Debug-ca4a69fd8f98458d3ccf.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-70cba82230815bff72f9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-06-03T08-42-30-0570.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib-Debug-8427c74dbfd393c74521.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib_Tests-Debug-2a75f73cdc78a311fdab.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/pups_Lib_Tests.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/pups_Lib_Tests.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/builtins.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/builtins.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/keyword_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keyword_func.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/keyword_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keyword_func.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/numbers.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/control.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/error.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/error.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/syntax.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/main.con" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.con" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/main.ez" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.ez" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/main.pups" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.pups" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -160,7 +153,7 @@
       <workItem from="1685730685168" duration="4114000" />
       <workItem from="1685743898942" duration="8195000" />
       <workItem from="1685752497865" duration="1299000" />
-      <workItem from="1685757962324" duration="21482000" />
+      <workItem from="1685757962324" duration="31701000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -176,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685769732846</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="v0.1.0&#10;Add builtin types : int, float, str;&#10;Make use of the .con file">
+      <created>1685782281694</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1685782281694</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,17 +192,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="v0.0.1&#10;Saturday work save" />
     <MESSAGE value="v0.0.2&#10;Change formatting mode to indents" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.0.2&#10;Change formatting mode to indents" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/source/debug/record.h</url>
-          <line>38</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="v0.1.0&#10;Add builtin types : int, float, str;&#10;Make use of the .con file" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.1.0&#10;Add builtin types : int, float, str;&#10;Make use of the .con file" />
   </component>
 </project>
