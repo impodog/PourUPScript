@@ -7,15 +7,15 @@
 
 #include "../control.h"
 
-namespace pups::library::builtins {
-    using FunctionArgs = vector<ObjectPtr *>;
-    using FunctionParams = vector<Id>;
-    using FunctionCore = function<ObjectPtr(const FunctionArgs &, Map *)>;
+namespace pups::library::builtins::function {
+    using FunctionArgs = std::queue<ObjectPtr *>;
+    using FunctionParams = std::vector<Id>;
+    using FunctionCore = std::function<ObjectPtr(FunctionArgs &, Map *)>;
 
     class Function : public Object {
     protected:
         FunctionCore m_core;
-        unordered_map<Map *, FunctionArgs> m_args;
+        std::unordered_map<Map *, FunctionArgs> m_args;
     public:
         explicit Function(FunctionCore core);
 

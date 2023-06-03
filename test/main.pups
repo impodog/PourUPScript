@@ -1,7 +1,5 @@
-A:
-	B:
-		C
-	D:
-		E
-	F G
-H
+print x
+add x y
+mov x
+print x
+print hello

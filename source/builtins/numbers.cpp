@@ -4,9 +4,34 @@
 
 #include "numbers.h"
 
-namespace pups::library::builtins {
+namespace pups::library::builtins::numbers {
+#define OPERATOR(type, op) [](NumPtrRef<type> lhs, NumPtrRef<type> rhs) -> NumPtr<type> {\
+                    return std::make_shared<NumType<type>>(lhs->value op rhs->value);\
+                }
 
-    void init_numbers(Constants &constants) {
+    Id id_add{"", "add"};
+    Id id_sub{"", "sub"};
+    Id id_mul{"", "mul"};
+    Id id_div{"", "div"};
 
+    void init(Constants &constants) {
+        constants.add(id_add, std::make_shared<Number_Operator>(
+                OPERATOR(int, +),
+                OPERATOR(float, +)
+        ));
+        constants.add(id_sub, std::make_shared<Number_Operator>(
+                OPERATOR(int, -),
+                OPERATOR(float, -)
+        ));
+        constants.add(id_mul, std::make_shared<Number_Operator>(
+                OPERATOR(int, *),
+                OPERATOR(float, *)
+        ));
+        constants.add(id_div, std::make_shared<Number_Operator>(
+                OPERATOR(int, /),
+                OPERATOR(float, /)
+        ));
     }
+
+#undef OPERATOR
 }

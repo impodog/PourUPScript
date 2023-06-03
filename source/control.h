@@ -5,25 +5,9 @@
 #ifndef PUPS_LIB_TESTS_CONTROL_H
 #define PUPS_LIB_TESTS_CONTROL_H
 
-#include "map.h"
+#include "constants.h"
 
 namespace pups::library {
-    extern ObjectPtr sym_assign;
-
-    class Constants {
-    protected:
-        ObjectMap constants;
-
-        void load_from(const path &path);
-
-    public:
-        explicit Constants(const path &path);
-
-        void export_to(Map *map);
-
-        void add(const Id &id, const ObjectPtr &object);
-    };
-
     class Control {
     protected:
         MapPtr m_map;

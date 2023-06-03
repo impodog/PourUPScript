@@ -8,6 +8,9 @@
 #include "function.h"
 #include "numbers.h"
 #include "inline_func.h"
+#include "keyword_func.h"
+#include "strings.h"
+
 
 namespace pups::library::builtins {
     void init(Constants &constants);

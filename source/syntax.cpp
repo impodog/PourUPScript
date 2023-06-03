@@ -81,7 +81,7 @@ namespace pups::library {
         return m_idFile;
     }
 
-    string IdFactor::str() const noexcept {
+    std::string IdFactor::str() const noexcept {
         switch (m_type) {
             case t_id:
                 return m_id->str();
@@ -146,8 +146,8 @@ namespace pups::library {
         return result;
     }
 
-    string IdFile::str() const noexcept {
-        string result;
+    std::string IdFile::str() const noexcept {
+        std::string result;
         result.append("{\n");
         for (auto &line: m_file) {
             for (auto &id: line) {
@@ -165,7 +165,7 @@ namespace pups::library {
 
     IdFile read_from(const SyntaxFunc &func, const SyntaxFunc &peek) {
         IdFile result;
-        string qual, id;
+        std::string qual, id;
         bool is_space = true;
         char c;
         int status = 0;
@@ -223,7 +223,7 @@ namespace pups::library {
     }
 
     IdFile read_file(const path &path) {
-        ifstream ifs(path);
+        std::ifstream ifs(path);
         if (!ifs.is_open())
             throw std::runtime_error("Cannot open file: " + path.string());
         return read_from([&ifs]() -> char {
@@ -233,7 +233,7 @@ namespace pups::library {
         });
     }
 
-    IdFile read_string(string s) {
+    IdFile read_string(std::string s) {
         s.push_back(EOF);
         size_t i = 0;
         return read_from([&s, &i]() -> char {

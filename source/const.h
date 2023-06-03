@@ -18,10 +18,8 @@
 #include <valarray>
 
 namespace pups::library {
-    using std::string, std::ifstream, std::ofstream, std::queue, std::vector, std::unordered_map, std::shared_ptr,
-            std::filesystem::path, std::stack, std::function, std::unique_ptr;
-
-    constexpr const char *const PUPS_LIB_VERSION = "0.0.2";
+    using std::filesystem::path;
+    constexpr const char *const PUPS_LIB_VERSION = "0.1.0";
     constexpr const char segment_symbol = '%';
 }
 

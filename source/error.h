@@ -10,42 +10,42 @@
 namespace pups::library {
     class Error : public Object {
     protected:
-        string m_error;
+        std::string m_error;
 
-        [[nodiscard]] virtual string error_name() const noexcept = 0;
+        [[nodiscard]] virtual std::string error_name() const noexcept = 0;
 
     public:
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        explicit Error(string s);
+        explicit Error(std::string s);
 
-        [[nodiscard]] string get() const noexcept;
+        [[nodiscard]] std::string get() const noexcept;
     };
 
-    using ErrorPtr = shared_ptr<Error>;
+    using ErrorPtr = std::shared_ptr<Error>;
 
     class TypeError : public Error {
     protected:
-        [[nodiscard]] string error_name() const noexcept override;
+        [[nodiscard]] std::string error_name() const noexcept override;
 
     public:
-        explicit TypeError(const string &s);
+        explicit TypeError(const std::string &s);
     };
 
     class IdError : public Error {
     protected:
-        [[nodiscard]] string error_name() const noexcept override;
+        [[nodiscard]] std::string error_name() const noexcept override;
 
     public:
-        explicit IdError(const string &s);
+        explicit IdError(const std::string &s);
     };
 
     class ArgumentError : public Error {
     protected:
-        [[nodiscard]] string error_name() const noexcept override;
+        [[nodiscard]] std::string error_name() const noexcept override;
 
     public:
-        explicit ArgumentError(const string &s);
+        explicit ArgumentError(const std::string &s);
     };
 }
 

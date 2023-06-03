@@ -9,6 +9,8 @@
 namespace pups::library {
     size_t Object::static_count = 0;
 
+    Object::Object() : m_count(static_count++) {}
+
     ObjectPtr Object::end_of_line(Map *map) {
         return pending;
     }
@@ -19,6 +21,14 @@ namespace pups::library {
 
     bool Object::is_long_str() const noexcept {
         return false;
+    }
+
+    std::string Object::str() const noexcept {
+        return "<Object:" + std::to_string(m_count) + ">";
+    }
+
+    std::string Pending::str() const noexcept {
+        return "<Object:Pending>";
     }
 
     ObjectPtr pending = std::make_shared<Pending>();

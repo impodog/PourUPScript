@@ -1,4 +1,0 @@
-func main:
-    print "Hello World"
-if (defined env:main):
-    main

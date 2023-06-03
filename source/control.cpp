@@ -5,24 +5,9 @@
 #include "control.h"
 
 namespace pups::library {
-    ObjectPtr sym_assign = std::make_shared<Symbol>();
+    Control::Control(const IdFile &idFile, MapPtr map) :
+            idFile(idFile), cur_id(&idFile.get_id()), m_map(std::move(map)) {
 
-    void Constants::load_from(const path &path) {
-    }
-
-    Constants::Constants(const path &path) :
-            constants({{Id{"", "="}, sym_assign}}) {
-        load_from(path);
-    }
-
-    void Constants::export_to(Map *map) {
-        for (auto &constant: constants) {
-            map->add_object(constant.first, constant.second);
-        }
-    }
-
-    void Constants::add(const Id &id, const ObjectPtr &object) {
-        constants.insert({id, object});
     }
 
     Control::Control(const path &path, Constants &constants) :
@@ -30,13 +15,8 @@ namespace pups::library {
         constants.export_to(m_map.get());
     }
 
-    Control::Control(const IdFile &idFile, MapPtr map) :
-            idFile(idFile), cur_id(&idFile.get_id()), m_map(std::move(map)) {
-
-    }
-
     bool Control::next_id() {
-        std::cout << cur_id->str() << std::endl;
+        //std::cout << cur_id->str() << std::endl;
         if (cur_id->is_id()) {
             m_map->put(m_map->get(*cur_id->id()), m_map.get());
         } else {

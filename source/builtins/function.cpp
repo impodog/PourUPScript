@@ -6,16 +6,17 @@
 
 #include <utility>
 
-namespace pups::library::builtins {
+namespace pups::library::builtins::function {
     Function::Function(FunctionCore core) : m_core(std::move(core)) {
         m_args.emplace();
     }
 
     ObjectPtr Function::put(ObjectPtr &object, Map *map) {
         try {
-            m_args.at(map).push_back(&object);
+            m_args.at(map).push(&object);
         } catch (const std::out_of_range &) {
-            m_args.insert({map, {&object}});
+            m_args.insert({map, {}});
+            m_args.at(map).push(&object);
         }
         return nullptr;
     }

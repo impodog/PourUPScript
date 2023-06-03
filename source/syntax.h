@@ -65,7 +65,7 @@ namespace pups::library {
 
         [[nodiscard]] const IdFilePtr &idFile() const noexcept;
 
-        [[nodiscard]] string str() const noexcept;
+        [[nodiscard]] std::string str() const noexcept;
     };
 
     extern IdPtr empty_id;
@@ -100,12 +100,12 @@ namespace pups::library {
 
         [[nodiscard]] Line all() const noexcept;
 
-        string str() const noexcept;
+        [[nodiscard]] std::string str() const noexcept;
     };
 
     IdFile read_file(const path &path);
 
-    IdFile read_string(string s);
+    IdFile read_string(std::string s);
 
     using SyntaxFunc = std::function<char()>;
 

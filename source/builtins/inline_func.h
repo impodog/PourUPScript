@@ -7,7 +7,9 @@
 
 #include "function.h"
 
-namespace pups::library::builtins {
+namespace pups::library::builtins::inline_func {
+    using namespace function;
+
     class Arguments final : public Object {
     protected:
         FunctionArgs args;
@@ -32,7 +34,7 @@ namespace pups::library::builtins {
         InlineFunc_Init();
     };
 
-    void init_inline_func(Constants &constants);
+    void init(Constants &constants);
 }
 
 #endif //PUPS_LIB_TESTS_INLINE_FUNC_H

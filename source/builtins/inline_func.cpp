@@ -4,13 +4,18 @@
 
 #include "inline_func.h"
 
-namespace pups::library::builtins {
+namespace pups::library::builtins::inline_func {
     Arguments::Arguments(FunctionArgs args) : args(std::move(args)) {
 
     }
 
     ObjectPtr Arguments::put(ObjectPtr &object, Map *map) {
-        // todo get argument by index
+        if (args.empty())
+            map->throw_error(std::make_shared<ArgumentError>("Too many arguments to catch to."));
+        else {
+            object = *args.front();
+            args.pop();
+        }
         return pending;
     }
 
@@ -31,7 +36,7 @@ namespace pups::library::builtins {
     }
 
     InlineFunc_Init::InlineFunc_Init() :
-            Function([](const FunctionArgs &args, Map *map) -> ObjectPtr {
+            Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
                 if (args.size() != 1 || !args.front()->get()->is_long_str()) {
                     map->throw_error(std::make_shared<ArgumentError>(
                             "Inline Func init should receive one long string argument."));
@@ -44,7 +49,7 @@ namespace pups::library::builtins {
 
     }
 
-    void init_inline_func(Constants &constants) {
+    void init(Constants &constants) {
         constants.add(Id{"", "func"}, std::make_shared<InlineFunc_Init>());
     }
 }

@@ -5,29 +5,29 @@
 #include "error.h"
 
 namespace pups::library {
-    Error::Error(string s) : m_error(std::move(s)) {
+    Error::Error(std::string s) : m_error(std::move(s)) {
 
     }
 
-    string Error::get() const noexcept {
+    std::string Error::get() const noexcept {
         return error_name() + ": " + m_error;
     }
 
-    string TypeError::error_name() const noexcept {
+    std::string TypeError::error_name() const noexcept {
         return "TypeError";
     }
 
-    TypeError::TypeError(const string &s) : Error(s) {}
+    TypeError::TypeError(const std::string &s) : Error(s) {}
 
-    string IdError::error_name() const noexcept {
+    std::string IdError::error_name() const noexcept {
         return "IdError";
     }
 
-    IdError::IdError(const string &s) : Error(s) {}
+    IdError::IdError(const std::string &s) : Error(s) {}
 
-    string ArgumentError::error_name() const noexcept {
+    std::string ArgumentError::error_name() const noexcept {
         return "ArgumentError";
     }
 
-    ArgumentError::ArgumentError(const string &s) : Error(s) {}
+    ArgumentError::ArgumentError(const std::string &s) : Error(s) {}
 }

@@ -5,7 +5,9 @@
 
 namespace pups::library::builtins {
     void init(Constants &constants) {
-        init_numbers(constants);
-        init_inline_func(constants);
+        numbers::init(constants);
+        inline_func::init(constants);
+        keyword_func::init(constants);
+        strings::init(constants);
     }
 }

@@ -8,7 +8,7 @@
 #include "error.h"
 
 namespace pups::library {
-    using ObjectMap = unordered_map<Id, ObjectPtr, Id::hash>;
+    using ObjectMap = std::unordered_map<Id, ObjectPtr, Id::hash>;
 
     class Map : public Object {
     protected:

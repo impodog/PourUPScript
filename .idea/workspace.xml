@@ -21,23 +21,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.0.1&#10;Saturday work save">
-      <change afterPath="$PROJECT_DIR$/source/builtins/inline_func.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/inline_func.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/keyword_func.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/keyword_func.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/debug/record.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/main.con" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/main.ez" afterDir="false" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.0.2&#10;Change formatting mode to indents">
+      <change afterPath="$PROJECT_DIR$/source/builtins/strings.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/strings.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/constants.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/constants.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-f9834df11ac5226261f3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-5bdaa215bf94b3479cee.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-d221111b17581af4cd98.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-05-27T13-36-46-0592.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib-Debug-f613c34426bcdef16504.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib_Tests-Debug-965b4fd8069741c1da14.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-46636b6521ff02dee955.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-a8eeeb2ceb0746b2ee4b.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-06-03T04-37-07-0348.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib-Debug-4ae47437d3b445c3690c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib_Tests-Debug-ca4a69fd8f98458d3ccf.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
@@ -46,6 +40,10 @@
       <change beforePath="$PROJECT_DIR$/source/builtins/builtins.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keyword_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keyword_func.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keyword_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keyword_func.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/numbers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/numbers.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
@@ -53,13 +51,13 @@
       <change beforePath="$PROJECT_DIR$/source/control.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/error.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/error.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/syntax.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/main.con" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.con" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/main.ez" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.ez" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/main.pups" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.pups" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -162,7 +160,7 @@
       <workItem from="1685730685168" duration="4114000" />
       <workItem from="1685743898942" duration="8195000" />
       <workItem from="1685752497865" duration="1299000" />
-      <workItem from="1685757962324" duration="9867000" />
+      <workItem from="1685757962324" duration="21482000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -171,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685195418653</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="v0.0.2&#10;Change formatting mode to indents">
+      <created>1685769732846</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1685769732846</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,7 +191,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="v0.0.1&#10;Saturday work save" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.0.1&#10;Saturday work save" />
+    <MESSAGE value="v0.0.2&#10;Change formatting mode to indents" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.0.2&#10;Change formatting mode to indents" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -195,11 +201,6 @@
           <url>file://$PROJECT_DIR$/source/debug/record.h</url>
           <line>38</line>
           <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/source/syntax.cpp</url>
-          <line>286</line>
-          <option name="timeStamp" value="76" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

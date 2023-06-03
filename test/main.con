@@ -1,7 +1,5 @@
 INT:
-x = 10
-y = 15
-FLOAT:
-z = 3.14
-STRING:
-hello = hello, world!
+x = 15
+y = -6
+STR:
+hello = Hello, world!

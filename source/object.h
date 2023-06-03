@@ -10,19 +10,21 @@
 namespace pups::library {
     class Object;
 
-    using ObjectPtr = shared_ptr<Object>;
+    using ObjectPtr = std::shared_ptr<Object>;
 
     class Map;
 
-    using MapPtr = shared_ptr<Map>;
+    using MapPtr = std::shared_ptr<Map>;
 
-    using Arguments = queue<ObjectPtr &>;
+    using Arguments = std::queue<ObjectPtr &>;
 
     class Object {
     protected:
         static size_t static_count;
     public:
-        size_t m_count = static_count++;
+        size_t m_count;
+
+        Object();
 
         // Put the next given object into the base. The return value is for switching base.
         // Most of the time, you would want to return nullptr for not switching base.
@@ -36,6 +38,8 @@ namespace pups::library {
         bool is(const ObjectPtr &object);
 
         [[nodiscard]] virtual bool is_long_str() const noexcept;
+
+        virtual std::string str() const noexcept;
     };
 
     class Pending final : public Object {
@@ -43,6 +47,8 @@ namespace pups::library {
         ObjectPtr m_object;
     public:
         ObjectPtr put(ObjectPtr &object, Map *map) override;
+
+        [[nodiscard]] std::string str() const noexcept override;
     };
 
     extern ObjectPtr pending;
@@ -67,7 +73,7 @@ namespace pups::library {
         ObjectPtr put(ObjectPtr &object, Map *map) override;
     };
 
-    using LongStrPtr = shared_ptr<LongStr>;
+    using LongStrPtr = std::shared_ptr<LongStr>;
 }
 
 
