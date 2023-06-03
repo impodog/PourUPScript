@@ -6,7 +6,7 @@
 
 namespace pups::library::builtins {
 
-    void init_numbers() {
+    void init_numbers(Constants &constants) {
 
     }
 }

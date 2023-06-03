@@ -4,8 +4,8 @@
 #include "builtins.h"
 
 namespace pups::library::builtins {
-    void init() {
-        init_numbers();
-        init_function();
+    void init(Constants &constants) {
+        init_numbers(constants);
+        init_inline_func(constants);
     }
 }

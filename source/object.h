@@ -24,11 +24,16 @@ namespace pups::library {
     public:
         size_t m_count = static_count++;
 
+        // Put the next given object into the base. The return value is for switching base.
+        // Most of the time, you would want to return nullptr for not switching base.
         virtual ObjectPtr put(ObjectPtr &object, Map *map) = 0;
 
+        // Mark an end of this line. The return value is stored in Map::m_temp.
         virtual ObjectPtr end_of_line(Map *map);
 
         virtual ~Object() = default;
+
+        bool is(const ObjectPtr &object);
 
         [[nodiscard]] virtual bool is_long_str() const noexcept;
     };
@@ -44,15 +49,22 @@ namespace pups::library {
 
     class LongStr : public Object {
     protected:
-        IdFile m_idFile;
+        IdFilePtr m_idFile;
     public:
-        explicit LongStr(IdFile idFile);
+        explicit LongStr(IdFilePtr idFile);
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        [[nodiscard]] const IdFile &get() const noexcept;
+        [[nodiscard]] const IdFilePtr &get() const noexcept;
 
         [[nodiscard]] bool is_long_str() const noexcept final;
+    };
+
+    class Symbol final : public Object {
+    public:
+        Symbol() = default;
+
+        ObjectPtr put(ObjectPtr &object, Map *map) override;
     };
 
     using LongStrPtr = shared_ptr<LongStr>;

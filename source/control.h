@@ -6,37 +6,44 @@
 #define PUPS_LIB_TESTS_CONTROL_H
 
 #include "map.h"
-#include "builtins/numbers.h"
 
 namespace pups::library {
+    extern ObjectPtr sym_assign;
+
     class Constants {
     protected:
         ObjectMap constants;
+
+        void load_from(const path &path);
+
     public:
         explicit Constants(const path &path);
 
         void export_to(Map *map);
+
+        void add(const Id &id, const ObjectPtr &object);
     };
 
     class Control {
     protected:
-        Map global_map;
+        MapPtr m_map;
     public:
-        IdFile idFile, then_end_idFile;
-        Id cur_id;
-        size_t then_depth = 0;
+        IdFile idFile;
+        const IdFactor *cur_id;
+        size_t brace_depth = 0;
+        bool is_new_line = false;
 
-        explicit Control(const path &path);
+        explicit Control(const path &path, Constants &constants);
 
-        explicit Control(const string &str);
-
-        explicit Control(const IdFile &idFile);
+        explicit Control(const IdFile &idFile, MapPtr map);
 
         // Return if the id is empty(EOF => true)
-        bool next_id(bool &is_new_line);
+        bool next_id();
 
         // Return if the id is empty(EOF => true)
         bool next_line();
+
+        void run();
     };
 }
 

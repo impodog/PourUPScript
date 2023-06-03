@@ -24,12 +24,12 @@ namespace pups::library {
         if (m_parent_map) {
             m_parent_map->m_sub_map = nullptr;
             while (!m_errors.empty()) {
-                m_parent_map->m_errors.push(m_errors.top());
+                m_parent_map->m_errors.push(m_errors.front());
                 m_errors.pop();
             }
         } else {
             while (!m_errors.empty()) {
-                std::cerr << m_errors.top()->get() << std::endl;
+                std::cerr << m_errors.front()->get() << std::endl;
                 m_errors.pop();
             }
         }
@@ -43,19 +43,21 @@ namespace pups::library {
         if (m_sub_map)
             return m_sub_map->put(object, this);
         else {
-            if (m_base) {
-                auto ptr = m_base->put(object, this);
-                if (ptr)
-                    m_base = ptr;
-            } else {
-                m_base = object;
+            if (!m_return) { // when returned, the map skips all the statements below
+                if (m_base) {
+                    auto ptr = m_base->put(object, this);
+                    if (ptr)
+                        m_base = ptr;
+                } else {
+                    m_base = object;
+                }
             }
             return nullptr;
         }
     }
 
     ObjectPtr &Map::get(const Id &name) {
-        Map *map = this;
+        Map *deepest = deepest_sub_map(), *map = deepest;
         while (map) {
             try {
                 return map->m_map.at(name);
@@ -63,8 +65,8 @@ namespace pups::library {
                 map = map->m_parent_map;
             }
         }
-        throw_error(std::make_shared<IdError>("Identifier " + name.str() + " not found."));
-        return pending;
+        deepest->add_object(name);
+        return deepest->m_map.at(name);
     }
 
     void Map::throw_error(const ErrorPtr &error) {
@@ -80,8 +82,26 @@ namespace pups::library {
     }
 
     ObjectPtr Map::end_of_line(Map *map) {
-        deepest_sub_map()->m_base = nullptr;
+        auto deepest = deepest_sub_map();
+        if (deepest && deepest->m_base) {
+            deepest->m_temp = deepest->m_base->end_of_line(map);
+            deepest->m_base = nullptr;
+        }
         return pending;
+    }
+
+    ObjectPtr &Map::get_return() noexcept {
+        if (m_return)
+            return m_return;
+        else
+            return pending;
+    }
+
+    ObjectPtr &Map::get_temp() noexcept {
+        if (m_temp)
+            return m_temp;
+        else
+            return pending;
     }
 
     ObjectPtr Error::put(ObjectPtr &object, Map *map) {
@@ -94,20 +114,13 @@ namespace pups::library {
         return pending;
     }
 
-    LongStr::LongStr(IdFile idFile) : m_idFile(std::move(idFile)) {
-
-    }
-
     ObjectPtr LongStr::put(ObjectPtr &object, Map *map) {
         map->throw_error(std::make_shared<TypeError>("Putting into LongStr is not allowed."));
         return pending;
     }
 
-    const IdFile &LongStr::get() const noexcept {
-        return m_idFile;
-    }
-
-    bool LongStr::is_long_str() const noexcept {
-        return true;
+    ObjectPtr Symbol::put(ObjectPtr &object, Map *map) {
+        map->throw_error(std::make_shared<TypeError>("Putting into Symbol is not allowed."));
+        return pending;
     }
 }

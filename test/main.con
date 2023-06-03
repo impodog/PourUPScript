@@ -1,0 +1,7 @@
+INT:
+x = 10
+y = 15
+FLOAT:
+z = 3.14
+STRING:
+hello = hello, world!

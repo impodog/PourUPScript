@@ -7,9 +7,10 @@
 
 #include "function.h"
 #include "numbers.h"
+#include "inline_func.h"
 
 namespace pups::library::builtins {
-    void init();
+    void init(Constants &constants);
 }
 
 #endif //PUPS_LIB_TESTS_BUILTINS_H

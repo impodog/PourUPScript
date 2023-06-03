@@ -12,9 +12,9 @@ namespace pups::library {
 
     class Map : public Object {
     protected:
-        std::stack<ErrorPtr> m_errors;
+        std::queue<ErrorPtr> m_errors;
         ObjectMap m_map;
-        ObjectPtr m_base;
+        ObjectPtr m_base, m_return, m_temp;
         Map *m_sub_map = nullptr, *m_parent_map = nullptr;
 
         Map *deepest_sub_map();
@@ -35,6 +35,10 @@ namespace pups::library {
         void throw_error(const ErrorPtr &error);
 
         void add_object(const Id &name, const ObjectPtr &object = pending);
+
+        ObjectPtr &get_return() noexcept;
+
+        ObjectPtr &get_temp() noexcept;
     };
 }
 

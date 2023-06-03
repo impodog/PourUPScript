@@ -14,7 +14,7 @@ namespace pups::library {
     public:
         Id() = default;
 
-        Id(std::string m_qual, std::string id);
+        explicit Id(std::string qual, std::string id);
 
         [[nodiscard]] const std::string &qual() const;
 
@@ -28,6 +28,10 @@ namespace pups::library {
 
         [[nodiscard]] bool lf() const noexcept;
 
+        [[nodiscard]] bool lbrace() const noexcept;
+
+        [[nodiscard]] bool rbrace() const noexcept;
+
         bool operator==(const Id &rhs) const;
 
         struct hash {
@@ -35,11 +39,42 @@ namespace pups::library {
         };
     };
 
-    extern Id empty_id;
+    class IdFile;
+
+    using IdPtr = std::shared_ptr<Id>;
+    using IdFilePtr = std::shared_ptr<IdFile>;
+
+    class IdFactor {
+        enum Type {
+            t_id, t_idFile
+        } const m_type;
+        IdPtr m_id;
+        IdFilePtr m_idFile;
+    public:
+        explicit IdFactor(IdPtr id);
+
+        explicit IdFactor(IdFilePtr idFile);
+
+        ~IdFactor() = default;
+
+        [[nodiscard]] bool is_id() const noexcept;
+
+        [[nodiscard]] bool empty() const noexcept;
+
+        [[nodiscard]] const IdPtr &id() const noexcept;
+
+        [[nodiscard]] const IdFilePtr &idFile() const noexcept;
+
+        [[nodiscard]] string str() const noexcept;
+    };
+
+    extern IdPtr empty_id;
+    extern IdFactor empty_factor;
+    extern Id id_args;
 
     class IdFile {
     protected:
-        using Line = std::vector<Id>;
+        using Line = std::vector<IdFactor>;
         using File = std::vector<Line>;
         File m_file = {{}};
         std::pair<size_t, size_t> m_cursor = {0, 0};
@@ -49,22 +84,32 @@ namespace pups::library {
     public:
         IdFile() = default;
 
-        [[nodiscard]] const Id &get_id() const;
+        [[nodiscard]] const IdFactor &get_id() const;
 
-        const Id &next_id(bool &is_new_line);
+        const IdFactor &next_id(bool &is_new_line);
 
-        void add_id(const Id &id);
+        void add_id(const IdPtr &id);
+
+        void add_idFile(const IdFilePtr &idFile);
 
         void new_line();
 
-        bool empty() const noexcept;
+        [[nodiscard]] bool empty() const noexcept;
 
         void clear() noexcept;
+
+        [[nodiscard]] Line all() const noexcept;
+
+        string str() const noexcept;
     };
 
     IdFile read_file(const path &path);
 
     IdFile read_string(string s);
+
+    using SyntaxFunc = std::function<char()>;
+
+    IdFile read_block(const SyntaxFunc &func, const SyntaxFunc &peek);
 
     // Generates a different, minimal id each time.
     Id generate_id();

@@ -3,12 +3,17 @@
 //
 
 #include "syntax.h"
+//#include "debug/record.h"
+
+#include <utility>
 
 namespace pups::library {
 
-    Id empty_id;
+    IdPtr empty_id = std::make_shared<Id>();
+    IdFactor empty_factor{empty_id};
+    Id id_args{"", "args"};
 
-    Id::Id(std::string m_qual, std::string id) : m_qual(std::move(m_qual)), m_id(std::move(id)) {
+    Id::Id(std::string qual, std::string id) : m_qual(std::move(qual)), m_id(std::move(id)) {
 
     }
 
@@ -36,12 +41,54 @@ namespace pups::library {
         return m_id.front() == '\n';
     }
 
+    bool Id::lbrace() const noexcept {
+        return m_id.front() == '{';
+    }
+
+    bool Id::rbrace() const noexcept {
+        return m_id.front() == '}';
+    }
+
     bool Id::operator==(const Id &rhs) const {
         return m_id == rhs.m_id;
     }
 
     size_t Id::hash::operator()(const Id &id) const {
         return std::hash<std::string>()(id.m_id);
+    }
+
+    IdFactor::IdFactor(IdPtr id) : m_type(t_id), m_id{std::move(id)} {
+
+    }
+
+    IdFactor::IdFactor(IdFilePtr idFile) : m_type(t_idFile), m_idFile{std::move(idFile)} {
+
+    }
+
+    bool IdFactor::is_id() const noexcept {
+        return m_type == t_id;
+    }
+
+    bool IdFactor::empty() const noexcept {
+        return is_id() && m_id->empty();
+    }
+
+    const IdPtr &IdFactor::id() const noexcept {
+        return m_id;
+    }
+
+    const IdFilePtr &IdFactor::idFile() const noexcept {
+        return m_idFile;
+    }
+
+    string IdFactor::str() const noexcept {
+        switch (m_type) {
+            case t_id:
+                return m_id->str();
+            case t_idFile:
+                return m_idFile->str();
+        }
+        return "[ERROR]";
     }
 
     bool IdFile::next_cursor() {
@@ -55,23 +102,27 @@ namespace pups::library {
         }
     }
 
-    const Id &IdFile::get_id() const {
+    const IdFactor &IdFile::get_id() const {
         if (m_cursor.first == m_file.size())
-            return empty_id;
+            return empty_factor;
         try {
             return m_file.at(m_cursor.first).at(m_cursor.second);
         } catch (const std::out_of_range &) {
-            return empty_id;
+            return empty_factor;
         }
     }
 
-    const Id &IdFile::next_id(bool &is_new_line) {
+    const IdFactor &IdFile::next_id(bool &is_new_line) {
         is_new_line = next_cursor();
         return get_id();
     }
 
-    void IdFile::add_id(const Id &id) {
-        m_file.back().push_back(id);
+    void IdFile::add_id(const IdPtr &id) {
+        m_file.back().emplace_back(id);
+    }
+
+    void IdFile::add_idFile(const IdFilePtr &idFile) {
+        m_file.back().emplace_back(idFile);
     }
 
     void IdFile::new_line() {
@@ -86,28 +137,63 @@ namespace pups::library {
         m_file.clear();
     }
 
+    IdFile::Line IdFile::all() const noexcept {
+        Line result;
+        for (auto &line: m_file) {
+            for (auto &id: line)
+                result.push_back(id);
+        }
+        return result;
+    }
+
+    string IdFile::str() const noexcept {
+        string result;
+        result.append("{\n");
+        for (auto &line: m_file) {
+            for (auto &id: line) {
+                result.append(id.str()).push_back(' ');
+            }
+            result.append("\n");
+        }
+        result.append("}");
+        return result;
+    }
+
     bool is_qualifier(char c) {
         return c == '$' || c == '&' || c == '%' || c == '\"';
     }
 
-    IdFile read_from(const std::function<char()> &func) {
+    IdFile read_from(const SyntaxFunc &func, const SyntaxFunc &peek) {
         IdFile result;
         string qual, id;
-        size_t i = 0;
         bool is_space = true;
         char c;
         int status = 0;
+        const auto add_id = [&result, &qual, &id]() {
+            if (!id.empty())
+                result.add_id(std::make_shared<Id>(qual, id));
+            qual.clear();
+            id.clear();
+        };
         do {
             c = func();
             if (c == EOF)
                 break;
-            if (isspace(c)) {
+            else if (c == ':') {
+                status = 0;
+                is_space = true;
+                add_id();
+                auto tmp = read_block(func, peek);
+                result.add_idFile(std::make_shared<IdFile>(tmp));
+                continue;
+            } else if (isspace(c)) {
                 if (!is_space) {
                     status = 0;
-                    is_space = true;
-                    result.add_id(Id{qual, id});
-                    qual.clear();
-                    id.clear();
+                    is_space = false;
+
+                    if (!id.empty())
+                        add_id();
+
                     if (c == '\n')
                         result.new_line();
                 }
@@ -116,9 +202,11 @@ namespace pups::library {
             is_space = false;
             switch (status) {
                 case 0:
-                    qual.push_back(c);
-                    if (!is_qualifier(c))
+                    if (!is_qualifier(c)) {
+                        id.push_back(c);
                         status = 1;
+                    } else
+                        qual.push_back(c);
                     break;
                 case 1:
                     id.push_back(c);
@@ -129,6 +217,8 @@ namespace pups::library {
                     throw std::runtime_error("Unknown status: " + std::to_string(status));
             }
         } while (true);
+        if (!id.empty())
+            result.add_id(std::make_shared<Id>(qual, id));
         return result;
     }
 
@@ -138,6 +228,8 @@ namespace pups::library {
             throw std::runtime_error("Cannot open file: " + path.string());
         return read_from([&ifs]() -> char {
             return static_cast<char>(ifs.get());
+        }, [&ifs]() -> char {
+            return static_cast<char>(ifs.peek());
         });
     }
 
@@ -146,6 +238,10 @@ namespace pups::library {
         size_t i = 0;
         return read_from([&s, &i]() -> char {
             return s[i++];
+        }, [&s, &i]() -> char {
+            if (s[i] == EOF)
+                return EOF;
+            return s[i + 1];
         });
     }
 
@@ -157,6 +253,34 @@ namespace pups::library {
             buf.push_back(static_cast<char>(c % 26 + 'a'));
             c /= 26;
         } while (c);
-        return {"", buf};
+        return Id{"", buf};
+    }
+
+    IdFile read_block(const SyntaxFunc &func, const SyntaxFunc &peek) {
+        char prev = EOF;
+        char c = EOF;
+        bool depth_count = false;
+        size_t depth = 0, depth_c = -1;
+        auto block = read_from([&c, &prev, &depth_count, &func, &peek, &depth, &depth_c]() -> char {
+            prev = func();
+            c = peek(); // The first peek is the second char after colon
+            if (depth_count) {
+                depth_count = false;
+                if (isspace(c)) {
+                    depth_c++;
+                    depth_count = true;
+                } else if (depth) {
+                    if (depth_c < depth)
+                        return EOF;
+                } else
+                    depth = depth_c;
+            }
+            if (c == '\n') {
+                depth_count = true;
+                depth_c = 0;
+            }
+            return prev;
+        }, peek);
+        return block;
     }
 }

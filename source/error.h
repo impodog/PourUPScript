@@ -39,6 +39,14 @@ namespace pups::library {
     public:
         explicit IdError(const string &s);
     };
+
+    class ArgumentError : public Error {
+    protected:
+        [[nodiscard]] string error_name() const noexcept override;
+
+    public:
+        explicit ArgumentError(const string &s);
+    };
 }
 
 #endif //PUPS_LIB_TESTS_ERROR_H

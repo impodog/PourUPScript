@@ -21,93 +21,46 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/source/builtins/builtins.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/numbers.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/control.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/error.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/error.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/main.pups" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.0.1&#10;Saturday work save">
+      <change afterPath="$PROJECT_DIR$/source/builtins/inline_func.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/inline_func.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/keyword_func.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/keyword_func.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/debug/record.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/main.con" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/main.ez" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-a84f4b1f978a3cb9182c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-ec6dc60a368ffec8f844.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-d14ac0d8f9305f1b8705.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-05-07T02-27-13-0632.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-PourUPScriptInterp-Debug-c432328b52a368e392dd.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-PourUPScriptLib-Debug-40c9693322b2ee56cdc4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-101ffa6c2eaec4c36382.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-f9834df11ac5226261f3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-5bdaa215bf94b3479cee.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-d221111b17581af4cd98.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-05-27T13-36-46-0592.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib-Debug-f613c34426bcdef16504.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib_Tests-Debug-965b4fd8069741c1da14.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-46636b6521ff02dee955.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/PourUPScriptInterp.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/PourUPScriptTest.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libPourUPScript.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libPourUPScriptLib.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libvscode_extension.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_lib/cpp_lib.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_lib/math.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_lib/util.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/interp.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/function.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/keywords.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/macros.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/manage.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/object.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/report.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/scope.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/stdtype.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups/token.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups_simple.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/const" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/deprecated" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/dynamic" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/head/const.pups" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/head/deprecated.pups" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/head/dynamic.pups" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/head/math.pups" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/head/random.pups" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/head/util.pups" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/head/version_info.pups" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/math" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/random" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/std" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/util" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/version_info" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std_lib/include.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std_lib/lib_const.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std_lib/lib_container.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std_lib/lib_dynamic.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std_lib/lib_math.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std_lib/lib_random.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std_lib/lib_util.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std_lib/lib_version_info.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test.pups" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vscode_extension/.vscode/launch.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vscode_extension/.vscodeignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vscode_extension/CHANGELOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vscode_extension/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vscode_extension/language-configuration.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vscode_extension/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vscode_extension/pourupscript-0.4.0.vsix" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vscode_extension/syntaxes/pups.tmLanguage.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/pups_Lib_Tests.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/pups_Lib_Tests.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/control.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/error.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/error.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/syntax.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/main.pups" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.pups" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,24 +93,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "development",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/workspace/Cpp/Tool/PourUPScript",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -197,8 +152,26 @@
       <workItem from="1685177069144" duration="820000" />
       <workItem from="1685178934479" duration="987000" />
       <workItem from="1685179948635" duration="6599000" />
-      <workItem from="1685188841716" duration="5707000" />
+      <workItem from="1685188841716" duration="6532000" />
+      <workItem from="1685228316818" duration="6413000" />
+      <workItem from="1685235285191" duration="1199000" />
+      <workItem from="1685236504943" duration="996000" />
+      <workItem from="1685237682993" duration="1000" />
+      <workItem from="1685240278020" duration="2226000" />
+      <workItem from="1685243852456" duration="931000" />
+      <workItem from="1685730685168" duration="4114000" />
+      <workItem from="1685743898942" duration="8195000" />
+      <workItem from="1685752497865" duration="1299000" />
+      <workItem from="1685757962324" duration="9867000" />
     </task>
+    <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
+      <created>1685195418653</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1685195418653</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,13 +183,23 @@
     <isAutomaticFoundErrors value="true" />
     <isAutomaticFoundErrors value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="v0.0.1&#10;Saturday work save" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.0.1&#10;Saturday work save" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/source/map.cpp</url>
-          <line>42</line>
-          <option name="timeStamp" value="14" />
+          <url>file://$PROJECT_DIR$/source/debug/record.h</url>
+          <line>38</line>
+          <option name="timeStamp" value="70" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/source/syntax.cpp</url>
+          <line>286</line>
+          <option name="timeStamp" value="76" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

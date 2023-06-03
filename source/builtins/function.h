@@ -5,26 +5,24 @@
 #ifndef PUPS_LIB_TESTS_FUNCTION_H
 #define PUPS_LIB_TESTS_FUNCTION_H
 
-#include "../map.h"
+#include "../control.h"
 
 namespace pups::library::builtins {
-    using FunctionParameters = std::vector<Id>;
+    using FunctionArgs = vector<ObjectPtr *>;
+    using FunctionParams = vector<Id>;
+    using FunctionCore = function<ObjectPtr(const FunctionArgs &, Map *)>;
 
     class Function : public Object {
     protected:
-        IdFile m_idFile;
-        FunctionParameters parameters;
+        FunctionCore m_core;
+        unordered_map<Map *, FunctionArgs> m_args;
     public:
-        Function() = default;
-
-        explicit Function(IdFile idFile); //todo
+        explicit Function(FunctionCore core);
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
         ObjectPtr end_of_line(Map *map) override;
     };
-
-    void init_function();
 }
 
 #endif //PUPS_LIB_TESTS_FUNCTION_H

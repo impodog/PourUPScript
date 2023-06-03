@@ -15,12 +15,13 @@
 #include <unordered_map>
 #include <memory>
 #include <utility>
+#include <valarray>
 
 namespace pups::library {
     using std::string, std::ifstream, std::ofstream, std::queue, std::vector, std::unordered_map, std::shared_ptr,
-            std::filesystem::path;
+            std::filesystem::path, std::stack, std::function, std::unique_ptr;
 
-    constexpr const char *const PUPS_LIB_VERSION = "0.0.1";
+    constexpr const char *const PUPS_LIB_VERSION = "0.0.2";
     constexpr const char segment_symbol = '%';
 }
 

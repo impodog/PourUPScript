@@ -24,4 +24,10 @@ namespace pups::library {
     }
 
     IdError::IdError(const string &s) : Error(s) {}
+
+    string ArgumentError::error_name() const noexcept {
+        return "ArgumentError";
+    }
+
+    ArgumentError::ArgumentError(const string &s) : Error(s) {}
 }
