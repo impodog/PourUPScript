@@ -43,6 +43,8 @@ namespace pups::library {
         ObjectPtr &get_temp() noexcept;
 
         Map *get_parent() noexcept;
+
+        void set_child(Map *sub_map) noexcept;
     };
 }
 

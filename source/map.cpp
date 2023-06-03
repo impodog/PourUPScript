@@ -110,6 +110,10 @@ namespace pups::library {
         return m_parent_map;
     }
 
+    void Map::set_child(Map *sub_map) noexcept {
+        m_sub_map = sub_map;
+    }
+
     ObjectPtr Error::put(ObjectPtr &object, Map *map) {
         map->throw_error(std::make_shared<TypeError>("Putting into Error is not allowed."));
         return pending;

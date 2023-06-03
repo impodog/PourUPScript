@@ -16,7 +16,9 @@ namespace pups::library::builtins::strings {
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        std::string str() const noexcept override;
+        [[nodiscard]] std::string str() const noexcept override;
+
+        [[nodiscard]] const std::string &data() const noexcept;
     };
 
     void init(Constants &constants);

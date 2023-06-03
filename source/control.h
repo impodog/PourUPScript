@@ -9,16 +9,19 @@
 
 namespace pups::library {
     class Control {
-    protected:
-        MapPtr m_map;
     public:
+        MapPtr map;
         IdFile idFile;
         const IdFactor *cur_id;
         bool is_new_line = false;
 
         explicit Control(const path &path, Constants &constants);
 
+        explicit Control(const path &path, Constants &constants, Map *map);
+
         explicit Control(const IdFile &idFile, MapPtr map);
+
+        ~Control();
 
         // Return if the id is empty(EOF => true)
         bool next_id();
@@ -28,7 +31,7 @@ namespace pups::library {
 
         void run();
 
-        void restart(MapPtr map);
+        void restart(MapPtr sub_map);
     };
 }
 

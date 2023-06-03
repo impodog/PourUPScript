@@ -6,31 +6,41 @@
 
 namespace pups::library {
     Control::Control(const IdFile &idFile, MapPtr map) :
-            idFile(idFile), cur_id(&idFile.get_id()), m_map(std::move(map)) {
+            idFile(idFile), cur_id(&idFile.get_id()), map(std::move(map)) {
 
     }
 
     Control::Control(const path &path, Constants &constants) :
-            idFile(read_file(path)), cur_id(&idFile.get_id()), m_map(std::make_shared<Map>()) {
-        constants.export_to(m_map.get());
+            idFile(read_file(path)), cur_id(&idFile.get_id()), map(std::make_shared<Map>()) {
+        constants.export_to(this->map.get());
+    }
+
+    Control::Control(const path &path, Constants &constants, Map *map) :
+            idFile(read_file(path)), cur_id(&idFile.get_id()), map(std::make_shared<Map>(map)) {
+        constants.export_to(this->map.get());
+    }
+
+    Control::~Control() {
+        if (map->get_parent())
+            map->get_parent()->set_child(nullptr);
     }
 
     bool Control::next_id() {
         //std::cout << cur_id->str() << std::endl;
         if (!cur_id->empty()) {
             if (cur_id->is_id()) {
-                m_map->put(m_map->get(*cur_id->id()), m_map.get());
+                map->put(map->get(*cur_id->id()), map.get());
             } else {
                 Id id = generate_id();
                 ObjectPtr object = std::make_shared<LongStr>(cur_id->idFile());
-                m_map->add_object(id, object);
-                m_map->put(object, m_map.get());
+                map->add_object(id, object);
+                map->put(object, map.get());
             }
         }
 
         cur_id = &idFile.next_id(is_new_line);
         if (is_new_line)
-            m_map->end_of_line(m_map.get());
+            map->end_of_line(map.get());
         return cur_id->empty();
     }
 
@@ -47,8 +57,8 @@ namespace pups::library {
         }
     }
 
-    void Control::restart(MapPtr map) {
-        m_map = std::move(map);
+    void Control::restart(MapPtr sub_map) {
+        map = std::move(sub_map);
         idFile.restart();
         cur_id = &idFile.get_id();
     }

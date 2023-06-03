@@ -25,6 +25,10 @@ namespace pups::library::builtins::strings {
         return m_data;
     }
 
+    const std::string &String::data() const noexcept {
+        return m_data;
+    }
+
 
     void init(Constants &constants) {
 

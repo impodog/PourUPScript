@@ -40,14 +40,19 @@ namespace pups::library::builtins::inline_func {
 
     InlineFunc_Init::InlineFunc_Init() :
             Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
-                if (args.size() != 1 || !args.front()->get()->is_long_str()) {
+                if (args.empty() || !args.back()->get()->is_long_str()) {
                     map->throw_error(std::make_shared<ArgumentError>(
-                            "Inline Func restart should receive one long string argument."));
+                            "Inline Func restart should receive one long str argument in the back."));
                     return pending;
                 }
 
-                return std::make_shared<InlineFunc>(
-                        *std::static_pointer_cast<LongStr>(*args.front())->get());
+                auto func = std::make_shared<InlineFunc>(
+                        *std::static_pointer_cast<LongStr>(*args.back())->get());
+                while (args.size() != 1) {
+                    *args.front() = func;
+                    args.pop();
+                }
+                return func;
             }) {
 
     }

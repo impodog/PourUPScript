@@ -30,4 +30,10 @@ namespace pups::library {
     }
 
     ArgumentError::ArgumentError(const std::string &s) : Error(s) {}
+
+    std::string FileNotFoundError::error_name() const noexcept {
+        return "FileNotFoundError";
+    }
+
+    FileNotFoundError::FileNotFoundError(const std::string &s) : Error(s) {}
 }

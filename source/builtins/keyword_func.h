@@ -40,6 +40,11 @@ namespace pups::library::builtins::keyword_func {
         Targeting();
     };
 
+    class CopyOut : public Function {
+    public:
+        CopyOut();
+    };
+
     void init(Constants &constants);
 }
 

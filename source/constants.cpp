@@ -43,6 +43,8 @@ namespace pups::library {
     void Constants::load_from(const path &path) {
         std::ifstream ifs(path);
         std::string line;
+        if (!ifs.is_open())
+            throw std::invalid_argument("File \"" + path.string() + "\" is not found.");
         while (!ifs.eof()) {
             std::getline(ifs, line);
             run_line(line);

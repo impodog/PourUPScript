@@ -8,13 +8,11 @@ namespace pups::library::builtins::numbers {
 #define OPERATOR(type, op) [](NumPtrRef<type> lhs, NumPtrRef<type> rhs) -> NumPtr<type> {\
                     return std::make_shared<NumType<type>>(lhs->value op rhs->value);\
                 }
-
-    Id id_add{"", "add"};
-    Id id_sub{"", "sub"};
-    Id id_mul{"", "mul"};
-    Id id_div{"", "div"};
+    Id id_pass{"", "pass"};
+    Id id_add{"", "add"}, id_sub{"", "sub"}, id_mul{"", "mul"}, id_div{"", "div"};
 
     void init(Constants &constants) {
+        constants.add(id_pass, std::make_shared<NumType<bool>>(false));
         constants.add(id_add, std::make_shared<Number_Operator>(
                 OPERATOR(int, +),
                 OPERATOR(float, +)

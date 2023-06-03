@@ -1,11 +1,11 @@
 print x y
-targeting x
+module m
+mov myModule
+targeting xx
 if:while:
 	print x
 	add x y
 	mov x
 	return
-map:
-	targeting x
-	mov z
-	print z
+with myModule:
+	print pi

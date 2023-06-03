@@ -1,3 +1,7 @@
 INT:
-x = 5
+x = 20
 y = -1
+STR:
+dog_s = I like dogs!
+hello = Hello.
+m = test/mod.pups

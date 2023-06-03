@@ -15,6 +15,16 @@ namespace pups::library::builtins::map_open {
         MapOpen();
     };
 
+    class ModuleOpen : public Function {
+    public:
+        ModuleOpen();
+    };
+
+    class MapWith : public Function {
+    public:
+        MapWith();
+    };
+
     void init(Constants &constants);
 }
 
