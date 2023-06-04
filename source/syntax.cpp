@@ -13,8 +13,34 @@ namespace pups::library {
     IdFactor empty_factor{empty_id};
     Id id_args{"", "args"};
 
+    bool is_qualifier(char c) {
+        return c == '$' || c == '&' || c == '%';
+    }
+
     Id::Id(std::string qual, std::string id) : m_qual(std::move(qual)), m_id(std::move(id)) {
 
+    }
+
+    Id::Id(const std::string &qual_id) {
+        int status = 0;
+        for (auto c: qual_id) {
+            switch (status) {
+                case 0:
+                    if (!is_qualifier(c)) {
+                        m_id.push_back(c);
+                        status = 1;
+                    } else
+                        m_qual.push_back(c);
+                    break;
+                case 1:
+                    m_id.push_back(c);
+                    if (is_qualifier(c))
+                        throw std::runtime_error("Unexpected qualifier: " + std::to_string(c));
+                    break;
+                default:
+                    throw std::runtime_error("Unknown status: " + std::to_string(status));
+            }
+        }
     }
 
     const std::string &Id::qual() const {
@@ -31,6 +57,15 @@ namespace pups::library {
 
     std::string Id::str() const {
         return m_qual + m_id;
+    }
+
+    std::queue<std::string> Id::split_by(char sep) const {
+        std::queue<std::string> result;
+        result.emplace();
+        for (auto c: m_id)
+            if (c == sep) result.emplace();
+            else result.back().push_back(c);
+        return result;
     }
 
     bool Id::empty() const noexcept {
@@ -51,6 +86,10 @@ namespace pups::library {
 
     bool Id::operator==(const Id &rhs) const {
         return m_id == rhs.m_id;
+    }
+
+    bool Id::operator==(const std::string &rhs) const {
+        return m_id == rhs;
     }
 
     size_t Id::hash::operator()(const Id &id) const {
@@ -163,20 +202,15 @@ namespace pups::library {
         return result;
     }
 
-    bool is_qualifier(char c) {
-        return c == '$' || c == '&' || c == '%' || c == '\"';
-    }
-
     IdFile read_from(const SyntaxFunc &func, const SyntaxFunc &peek) {
         IdFile result;
-        std::string qual, id;
+        std::string id;
         bool is_space = true;
         char c;
         int status = 0;
-        const auto add_id = [&result, &qual, &id]() {
+        const auto add_id = [&result, &id]() {
             if (!id.empty())
-                result.add_id(std::make_shared<Id>(qual, id));
-            qual.clear();
+                result.add_id(std::make_shared<Id>(id));
             id.clear();
         };
         do {
@@ -205,25 +239,10 @@ namespace pups::library {
                 continue;
             }
             is_space = false;
-            switch (status) {
-                case 0:
-                    if (!is_qualifier(c)) {
-                        id.push_back(c);
-                        status = 1;
-                    } else
-                        qual.push_back(c);
-                    break;
-                case 1:
-                    id.push_back(c);
-                    if (is_qualifier(c))
-                        throw std::runtime_error("Unexpected qualifier: " + std::to_string(c));
-                    break;
-                default:
-                    throw std::runtime_error("Unknown status: " + std::to_string(status));
-            }
+            id.push_back(c);
         } while (true);
         if (!id.empty())
-            result.add_id(std::make_shared<Id>(qual, id));
+            result.add_id(std::make_shared<Id>(id));
         return result;
     }
 

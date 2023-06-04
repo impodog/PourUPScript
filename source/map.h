@@ -19,6 +19,10 @@ namespace pups::library {
 
         Map *deepest_sub_map();
 
+        static ObjectPtr &bare_find(const Id &name, Map *deepest);
+
+        static ObjectPtr &staged_find(std::queue<std::string> &parts, Map *deepest);
+
     public:
         Map() = default;
 
@@ -28,7 +32,7 @@ namespace pups::library {
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        ObjectPtr &get(const Id &name);
+        ObjectPtr &find(const Id &name) override;
 
         ObjectPtr end_of_line(Map *map) override;
 

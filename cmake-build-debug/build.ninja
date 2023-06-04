@@ -133,6 +133,12 @@ build CMakeFiles/pups_Lib.dir/source/builtins/map_open.cpp.obj: CXX_COMPILER__pu
   OBJECT_DIR = CMakeFiles\pups_Lib.dir
   OBJECT_FILE_DIR = CMakeFiles\pups_Lib.dir\source\builtins
 
+build CMakeFiles/pups_Lib.dir/source/builtins/builtin_func.cpp.obj: CXX_COMPILER__pups_Lib_Debug D$:/workspace/Cpp/Tool/PourUPScript/source/builtins/builtin_func.cpp || cmake_object_order_depends_target_pups_Lib
+  DEP_FILE = CMakeFiles\pups_Lib.dir\source\builtins\builtin_func.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\pups_Lib.dir
+  OBJECT_FILE_DIR = CMakeFiles\pups_Lib.dir\source\builtins
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target pups_Lib
@@ -141,7 +147,7 @@ build CMakeFiles/pups_Lib.dir/source/builtins/map_open.cpp.obj: CXX_COMPILER__pu
 #############################################
 # Link the static library libpups_Lib.a
 
-build libpups_Lib.a: CXX_STATIC_LIBRARY_LINKER__pups_Lib_Debug CMakeFiles/pups_Lib.dir/source/syntax.cpp.obj CMakeFiles/pups_Lib.dir/source/object.cpp.obj CMakeFiles/pups_Lib.dir/source/map.cpp.obj CMakeFiles/pups_Lib.dir/source/control.cpp.obj CMakeFiles/pups_Lib.dir/source/error.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/numbers.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/function.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/builtins.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/inline_func.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/keyword_func.cpp.obj CMakeFiles/pups_Lib.dir/source/constants.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/strings.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/qualifiers.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/map_open.cpp.obj
+build libpups_Lib.a: CXX_STATIC_LIBRARY_LINKER__pups_Lib_Debug CMakeFiles/pups_Lib.dir/source/syntax.cpp.obj CMakeFiles/pups_Lib.dir/source/object.cpp.obj CMakeFiles/pups_Lib.dir/source/map.cpp.obj CMakeFiles/pups_Lib.dir/source/control.cpp.obj CMakeFiles/pups_Lib.dir/source/error.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/numbers.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/function.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/builtins.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/inline_func.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/keyword_func.cpp.obj CMakeFiles/pups_Lib.dir/source/constants.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/strings.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/qualifiers.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/map_open.cpp.obj CMakeFiles/pups_Lib.dir/source/builtins/builtin_func.cpp.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles\pups_Lib.dir
   POST_BUILD = cd .
@@ -248,6 +254,12 @@ build CMakeFiles/pups_Lib_Tests.dir/source/builtins/map_open.cpp.obj: CXX_COMPIL
   OBJECT_DIR = CMakeFiles\pups_Lib_Tests.dir
   OBJECT_FILE_DIR = CMakeFiles\pups_Lib_Tests.dir\source\builtins
 
+build CMakeFiles/pups_Lib_Tests.dir/source/builtins/builtin_func.cpp.obj: CXX_COMPILER__pups_Lib_Tests_Debug D$:/workspace/Cpp/Tool/PourUPScript/source/builtins/builtin_func.cpp || cmake_object_order_depends_target_pups_Lib_Tests
+  DEP_FILE = CMakeFiles\pups_Lib_Tests.dir\source\builtins\builtin_func.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\pups_Lib_Tests.dir
+  OBJECT_FILE_DIR = CMakeFiles\pups_Lib_Tests.dir\source\builtins
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target pups_Lib_Tests
@@ -256,7 +268,7 @@ build CMakeFiles/pups_Lib_Tests.dir/source/builtins/map_open.cpp.obj: CXX_COMPIL
 #############################################
 # Link the executable pups_Lib_Tests.exe
 
-build pups_Lib_Tests.exe: CXX_EXECUTABLE_LINKER__pups_Lib_Tests_Debug CMakeFiles/pups_Lib_Tests.dir/source/syntax.cpp.obj CMakeFiles/pups_Lib_Tests.dir/test.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/object.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/map.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/control.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/error.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/numbers.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/function.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/builtins.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/inline_func.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/keyword_func.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/constants.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/strings.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/qualifiers.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/map_open.cpp.obj
+build pups_Lib_Tests.exe: CXX_EXECUTABLE_LINKER__pups_Lib_Tests_Debug CMakeFiles/pups_Lib_Tests.dir/source/syntax.cpp.obj CMakeFiles/pups_Lib_Tests.dir/test.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/object.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/map.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/control.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/error.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/numbers.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/function.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/builtins.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/inline_func.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/keyword_func.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/constants.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/strings.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/qualifiers.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/map_open.cpp.obj CMakeFiles/pups_Lib_Tests.dir/source/builtins/builtin_func.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\pups_Lib_Tests.dir

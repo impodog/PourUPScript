@@ -7,9 +7,9 @@
 using namespace pups::library;
 
 int main() {
-    Constants constants("test/main.con");
+    Constants constants("test/test.con");
     builtins::init(constants);
-    Control control(path{"test/main.pups"}, constants);
+    Control control(path{"test/test.pups"}, constants);
     control.run();
     return 0;
 }

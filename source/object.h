@@ -31,6 +31,9 @@ namespace pups::library {
         // Most of the time, you would want to return nullptr for not switching base.
         virtual ObjectPtr put(ObjectPtr &object, Map *map) = 0;
 
+        // Get an object from this as in "[this].name"
+        virtual ObjectPtr &find(const Id &name);
+
         // Mark an end of this line. The return value is stored in Map::m_temp.
         virtual ObjectPtr end_of_line(Map *map);
 
@@ -62,7 +65,7 @@ namespace pups::library {
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        [[nodiscard]] const IdFilePtr &get() const noexcept;
+        [[nodiscard]] const IdFilePtr &ids() const noexcept;
 
         [[nodiscard]] bool is_long_str() const noexcept final;
     };

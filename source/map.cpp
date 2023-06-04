@@ -20,6 +20,35 @@ namespace pups::library {
             return this;
     }
 
+    ObjectPtr &Map::bare_find(const Id &name, Map *deepest) {
+        Map *map = deepest;
+        while (map) {
+            try {
+                return map->m_map.at(name);
+            } catch (const std::out_of_range &) {
+                map = map->m_parent_map;
+            }
+        }
+        deepest->add_object(name);
+        return deepest->m_map.at(name);
+    }
+
+    ObjectPtr &Map::staged_find(std::queue<std::string> &parts, Map *deepest) {
+        ObjectPtr *object = &bare_find(Id{parts.front()}, deepest);
+        MapPtr tmp;
+        while (!parts.empty()) {
+            tmp = std::dynamic_pointer_cast<Map>(*object);
+            if (tmp) {
+                deepest = tmp.get();
+                object = &tmp->bare_find(Id{parts.front()}, deepest);
+            } else {
+                object = &object->get()->find(Id{parts.front()});
+            }
+            parts.pop();
+        }
+        return *object;
+    }
+
     Map::~Map() {
         if (m_parent_map) {
             m_parent_map->m_sub_map = nullptr;
@@ -56,17 +85,13 @@ namespace pups::library {
         }
     }
 
-    ObjectPtr &Map::get(const Id &name) {
-        Map *deepest = deepest_sub_map(), *map = deepest;
-        while (map) {
-            try {
-                return map->m_map.at(name);
-            } catch (const std::out_of_range &) {
-                map = map->m_parent_map;
-            }
-        }
-        deepest->add_object(name);
-        return deepest->m_map.at(name);
+    ObjectPtr &Map::find(const Id &name) {
+        Map *deepest = deepest_sub_map();
+        auto parts = name.split_by('.');
+        if (parts.size() == 1)
+            return bare_find(name, deepest);
+        else
+            return staged_find(parts, deepest);
     }
 
     void Map::throw_error(const ErrorPtr &error) {
@@ -82,7 +107,7 @@ namespace pups::library {
     }
 
     void Map::set_object(const Id &name, const ObjectPtr &object) {
-        get(name) = object;
+        find(name) = object;
     }
 
     ObjectPtr Map::end_of_line(Map *map) {

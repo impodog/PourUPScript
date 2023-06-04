@@ -11,6 +11,10 @@ namespace pups::library {
 
     Object::Object() : m_count(static_count++) {}
 
+    ObjectPtr &Object::find(const Id &name) {
+        return pending;
+    }
+
     ObjectPtr Object::end_of_line(Map *map) {
         return pending;
     }
@@ -41,7 +45,7 @@ namespace pups::library {
 
     }
 
-    const IdFilePtr &LongStr::get() const noexcept {
+    const IdFilePtr &LongStr::ids() const noexcept {
         return m_idFile;
     }
 

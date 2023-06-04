@@ -16,6 +16,8 @@ namespace pups::library {
 
         explicit Id(std::string qual, std::string id);
 
+        explicit Id(const std::string& qual_id);
+
         [[nodiscard]] const std::string &qual() const;
 
         [[nodiscard]] bool qual_has(char q) const;
@@ -23,6 +25,8 @@ namespace pups::library {
         [[nodiscard]] const std::string &id() const;
 
         [[nodiscard]] std::string str() const;
+
+        [[nodiscard]] std::queue<std::string> split_by(char sep) const;
 
         [[nodiscard]] bool empty() const noexcept;
 
@@ -33,6 +37,8 @@ namespace pups::library {
         [[nodiscard]] bool rbrace() const noexcept;
 
         bool operator==(const Id &rhs) const;
+
+        bool operator==(const std::string &rhs) const;
 
         struct hash {
             size_t operator()(const Id &id) const;

@@ -1,0 +1,10 @@
+targeting _aNUM_b
+mov a
+print _aSTR_c
+inputs name
+name.eq _aSTR_d
+mov _aBRC_f
+if _aBRC_f:
+    print _aSTR_e
+else:
+    print hello

@@ -10,5 +10,6 @@ namespace pups::library::builtins {
         keyword_func::init(constants);
         strings::init(constants);
         map_open::init(constants);
+        builtin_func::init(constants);
     }
 }

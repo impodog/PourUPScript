@@ -36,7 +36,7 @@ namespace pups::library::builtins::numbers {
     struct NumTypes {
         using NumberType = Number<Arithmetic>;
         using NumberPtr = std::shared_ptr<NumberType>;
-        using OperatorCore = std::function<NumberPtr(const NumberPtr &, const NumberPtr &)>;
+        using OperatorCore = std::function<ObjectPtr(const NumberPtr &, const NumberPtr &)>;
     };
     template<typename Arithmetic>
     using NumType = typename NumTypes<Arithmetic>::NumberType;
@@ -69,11 +69,7 @@ if (lhs && rhs)\
                         args.pop();
                         auto &second = *args.front();
                         args.pop();
-                        {
-                            auto lhs = std::dynamic_pointer_cast<NumType<int>>(
-                                    first), rhs = std::dynamic_pointer_cast<NumType<int>>(second);
-                            if (lhs && rhs)return int_core(lhs, rhs);
-                        }
+                        TRY_TYPE(int)
                         TRY_TYPE(float)
                         map->throw_error(std::make_shared<TypeError>("Number operator cannot process the two types."));
                     }

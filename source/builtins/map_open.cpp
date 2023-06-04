@@ -10,11 +10,11 @@ namespace pups::library::builtins::map_open {
             [](FunctionArgs &args, Map *map) -> ObjectPtr {
                 if (args.empty() || !args.back()->get()->is_long_str()) {
                     map->throw_error(
-                            std::make_shared<ArgumentError>("Map opening must get one long str argument in the back."));
+                            std::make_shared<ArgumentError>("Map opening must find one long str argument in the back."));
                     return pending;
                 }
                 MapPtr sub_map = std::make_shared<Map>(map);
-                Control control(*std::static_pointer_cast<LongStr>(*args.back())->get(), sub_map);
+                Control control(*std::static_pointer_cast<LongStr>(*args.back())->ids(), sub_map);
                 control.run();
                 while (args.size() != 1) {
                     *args.front() = sub_map;
@@ -26,7 +26,7 @@ namespace pups::library::builtins::map_open {
 
     ModuleOpen::ModuleOpen() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.size() != 1) {
-            map->throw_error(std::make_shared<ArgumentError>("Module opening must get one only string argument."));
+            map->throw_error(std::make_shared<ArgumentError>("Module opening must find one only string argument."));
             return pending;
         }
         auto ptr = std::dynamic_pointer_cast<strings::String>(*args.front());
@@ -43,7 +43,7 @@ namespace pups::library::builtins::map_open {
                 return pending;
             }
         } else {
-            map->throw_error(std::make_shared<ArgumentError>("Module opening must get a string argument."));
+            map->throw_error(std::make_shared<ArgumentError>("Module opening must find a string argument."));
             return pending;
         }
     }) {}
@@ -51,7 +51,7 @@ namespace pups::library::builtins::map_open {
     MapWith::MapWith() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.size() != 2) {
             map->throw_error(std::make_shared<ArgumentError>(
-                    "Map-with statement must get a map argument and long string argument."));
+                    "Map-with statement must find a map argument and long string argument."));
             return pending;
         }
         auto sub_map = std::dynamic_pointer_cast<Map>(*args.front());
@@ -60,13 +60,13 @@ namespace pups::library::builtins::map_open {
         args.pop();
         if (sub_map && ids) {
             sub_map->get_parent()->set_child(sub_map.get());
-            Control control(*ids->get(), sub_map);
+            Control control(*ids->ids(), sub_map);
             control.run();
             return sub_map;
             // Naturally the child would be cleaned up by Control
         } else {
             map->throw_error(std::make_shared<ArgumentError>(
-                    "Map-with statement must get a map argument and a long string argument."));
+                    "Map-with statement must find a map argument and a long string argument."));
             return pending;
         }
     }) {}

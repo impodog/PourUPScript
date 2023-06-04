@@ -32,7 +32,7 @@ namespace pups::library::builtins::keyword_func {
         else {
             if (map->get_temp()->condition() ^ require_false) {
                 MapPtr sub_map = std::make_shared<Map>(map);
-                Control control(*std::static_pointer_cast<LongStr>(*args.front())->get(), sub_map);
+                Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
                 control.run();
                 result = true;
             }
@@ -48,7 +48,7 @@ namespace pups::library::builtins::keyword_func {
         else {
             ObjectPtr return_v = pending;
             MapPtr sub_map = std::make_shared<Map>(map);
-            Control control(*std::static_pointer_cast<LongStr>(*args.front())->get(), sub_map);
+            Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
             while (return_v == pending || (return_v->condition() ^ require_false)) {
                 control.run();
                 return_v = sub_map->get_return();
@@ -70,10 +70,10 @@ namespace pups::library::builtins::keyword_func {
     }) {}
 
     Targeting::Targeting() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
-        if (args.size() == 1)
+        if (args.size() == 1 && *args.front() != pending)
             return *args.front();
         else
-            map->throw_error(std::make_shared<ArgumentError>("Explicit targeting requires one only argument."));
+            map->throw_error(std::make_shared<ArgumentError>("Explicit targeting requires one only non-pending argument."));
         return pending;
     }) {}
 

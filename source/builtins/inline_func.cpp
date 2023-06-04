@@ -47,7 +47,7 @@ namespace pups::library::builtins::inline_func {
                 }
 
                 auto func = std::make_shared<InlineFunc>(
-                        *std::static_pointer_cast<LongStr>(*args.back())->get());
+                        *std::static_pointer_cast<LongStr>(*args.back())->ids());
                 while (args.size() != 1) {
                     *args.front() = func;
                     args.pop();

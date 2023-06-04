@@ -1,0 +1,7 @@
+INT:
+_aNUM_b = 1
+FLOAT:
+STR:
+_aSTR_c = What's your name
+_aSTR_d = Do
+_aSTR_e = That's not a name

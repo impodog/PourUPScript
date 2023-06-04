@@ -1,1 +1,8 @@
-#<define put asd>
+#{define hello "Hello, "}
+a = 1
+print "What's your name?"
+inputs name
+if (name.eq "Dog"):
+    print "That's not a name!"
+else:
+    print hello

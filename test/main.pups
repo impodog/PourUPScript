@@ -1,11 +1,16 @@
 print x y
 module m
 mov myModule
-targeting xx
+targeting x
 if:while:
 	print x
 	add x y
 	mov x
 	return
-with myModule:
-	print pi
+print myModule.pi
+
+eq x zero
+if:
+	print is0
+else:
+	print isnot0

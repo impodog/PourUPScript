@@ -21,7 +21,17 @@ namespace pups::library::builtins::strings {
         }
     }
 
+    ObjectPtr &String::find(const Id &name) {
+        if (name == "eq")
+            return eq_function;
+        return Object::find(name);
+    }
+
     std::string String::str() const noexcept {
+        return m_data;
+    }
+
+    std::string &String::data() noexcept {
         return m_data;
     }
 
