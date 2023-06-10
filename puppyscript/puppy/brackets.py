@@ -1,5 +1,5 @@
 import re
-from .ids import next_name, firsts, temp_id, targeting, moveTo
+from .ids import next_name, firsts, temp_id, with_cmd, moveTo
 
 
 class Brackets:

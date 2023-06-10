@@ -1,6 +1,20 @@
-inputs dog
-targeting dog
-if:
-    print dog
-else:
-    print _aSTR_b
+with _aNUM_b
+mov a
+with true
+if:while:
+    a.sub _aNUM_c
+    mov _aFAC_e
+    mov a
+    print a
+    a.lt _aNUM_d
+    mov _aFAC_g
+    mov _aFAC_f
+    with _aFAC_f
+    if:
+        break false
+    ref a
+    mov a_r
+    with a
+    mov a_r.data
+    break true
+del a

@@ -1,7 +1,12 @@
-inputs dog
-if dog:
-    print dog
-else:
-    print _aSTR_b
+a = _aNUM_b
+while true:
+    a = {expr a - _aNUM_c}
+    print a
+    if {expr a < _aNUM_d}:
+        break
+    a_r = ref a
+    a_r.data = a
+del a
+
 
 

@@ -15,7 +15,7 @@ class Extract:
 
     def scan_constexpr(self):
         while True:
-            result = re.search(r"<constexpr\s+(.+?)>", self.content)
+            result = re.search(r"\{constexpr\s+(.+?)}", self.content)
             if result is None:
                 break
             try:
@@ -25,18 +25,20 @@ class Extract:
                 raise SyntaxError("Cannot analyze constexpr \"%s\"." % result.group(1))
 
     def extract_number(self):
-        # the negative numbers are intended not to be extracted
         while True:
-            result = re.search(r"\b(\d+)(\.\d+)?\b", self.content)
-            if result is None:
+            result = re.search(r"(.)(\d+)(\.\d+)?\b", self.content)
+            if result is None or result.group(1).isalnum():
                 break
             name = next_name("NUM")
-            if result.group(2) is None:
-                value = result.group(1)
+            if result.group(3) is None:
+                value = result.group(2)
             else:
-                value = result.group(1) + result.group(2)
+                value = result.group(2) + result.group(3)
+            is_negative = result.group(1) == "-"
+            if is_negative:
+                value = "-" + value
             self.extracted[name] = eval(value)
-            self.content = re.sub(r"(\b)%s(\b)" % value, r"\1%s\2" % name, self.content)
+            self.content = re.sub((('()' if is_negative else r'(\b)') + r"%s(\b)") % value, r"\1%s\2" % name, self.content)
 
     def extract_string(self):
         self.content = " " + self.content

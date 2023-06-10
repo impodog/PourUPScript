@@ -30,14 +30,29 @@ namespace pups::library::builtins::keyword_func {
         Return();
     };
 
-    class Targeting : public Function {
+    class With : public Function {
     public:
-        Targeting();
+        With();
     };
 
-    class CopyOut : public Function {
+    class Clear : public Function {
     public:
-        CopyOut();
+        Clear();
+    };
+
+    class Delete : public Function {
+    public:
+        Delete();
+    };
+
+    class Break : public Function {
+    public:
+        Break();
+    };
+
+    class Unmap : public Function {
+    public:
+        Unmap();
     };
 
     void init(Constants &constants);

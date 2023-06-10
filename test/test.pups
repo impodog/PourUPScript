@@ -1,9 +1,16 @@
-println _aSTR_b
-inputs name
-name.eq _aSTR_c
-mov _aFAC_g
-targeting _aFAC_g
-if:
-    println _aSTR_d
-else:
-    println _aSTR_e name _aSTR_f
+with _aNUM_b
+mov a
+with true
+if:while:
+    a.sub _aNUM_c
+    mov _aFAC_e
+    mov a
+    print a
+    a.lt _aNUM_d
+    mov _aFAC_g
+    mov _aFAC_f
+    with _aFAC_f
+    if:
+        break false
+    break true
+unmap

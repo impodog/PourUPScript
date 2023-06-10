@@ -1,6 +1,10 @@
-println "What's your name?"
-inputs name
-if name.eq "dog":
-    println "That's not a name!"
-else:
-    println "Hello, " name "!"
+a = 5
+while true:
+    a = {expr a - 1}
+    print a
+    if {expr a < 0}:
+        break
+unmap
+print a
+del a
+

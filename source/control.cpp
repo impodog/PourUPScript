@@ -53,7 +53,7 @@ namespace pups::library {
 
     void Control::run() {
         while (!next_line()) {
-            //std::cout << pending << std::endl;
+            map->report_errs();
         }
     }
 

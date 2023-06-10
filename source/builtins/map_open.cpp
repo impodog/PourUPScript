@@ -10,7 +10,8 @@ namespace pups::library::builtins::map_open {
             [](FunctionArgs &args, Map *map) -> ObjectPtr {
                 if (args.empty() || !args.back()->get()->is_long_str()) {
                     map->throw_error(
-                            std::make_shared<ArgumentError>("Map opening must find one long str argument in the back."));
+                            std::make_shared<ArgumentError>(
+                                    "Map opening must find one long str argument in the back."));
                     return pending;
                 }
                 MapPtr sub_map = std::make_shared<Map>(map);
@@ -48,10 +49,10 @@ namespace pups::library::builtins::map_open {
         }
     }) {}
 
-    MapWith::MapWith() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+    MapEnter::MapEnter() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.size() != 2) {
             map->throw_error(std::make_shared<ArgumentError>(
-                    "Map-with statement must find a map argument and long string argument."));
+                    "Map-enter statement must find a map argument and long string argument."));
             return pending;
         }
         auto sub_map = std::dynamic_pointer_cast<Map>(*args.front());
@@ -66,18 +67,17 @@ namespace pups::library::builtins::map_open {
             // Naturally the child would be cleaned up by Control
         } else {
             map->throw_error(std::make_shared<ArgumentError>(
-                    "Map-with statement must find a map argument and a long string argument."));
+                    "Map-enter statement must find a map argument and a long string argument."));
             return pending;
         }
     }) {}
 
 
-    Id id_mapOpen{"", "map"}, id_moduleOpen{"", "module"}, id_mapWith{"", "with"};
+    Id id_mapOpen{"", "map"}, id_moduleOpen{"", "imp"}, id_mapEnter{"", "enter"};
 
     void init(Constants &constants) {
         constants.add(id_mapOpen, std::make_shared<MapOpen>());
         constants.add(id_moduleOpen, std::make_shared<ModuleOpen>());
-        constants.add(id_mapWith, std::make_shared<MapWith>());
-
+        constants.add(id_mapEnter, std::make_shared<MapEnter>());
     }
 }

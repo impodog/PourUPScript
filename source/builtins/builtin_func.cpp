@@ -19,7 +19,7 @@ namespace pups::library::builtins::builtin_func {
     }) {}
 
 
-    Println::Println() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+    Print::Print() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             std::cout << args.front()->get()->str();
             args.pop();
@@ -28,7 +28,7 @@ namespace pups::library::builtins::builtin_func {
         return pending;
     }) {}
 
-    Print::Print() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+    Puts::Puts() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             std::cout << args.front()->get()->str();
             args.pop();
@@ -36,11 +36,11 @@ namespace pups::library::builtins::builtin_func {
         return pending;
     }) {}
 
-    Id id_inputs{"", "inputs"}, id_println{"", "println"}, id_print{"", "print"};
+    Id id_inputs{"", "inputs"}, id_print{"", "print"}, id_puts{"", "puts"};
 
     void init(Constants &constants) {
         constants.add(id_inputs, std::make_shared<Inputs>());
-        constants.add(id_println, std::make_shared<Println>());
         constants.add(id_print, std::make_shared<Print>());
+        constants.add(id_puts, std::make_shared<Puts>());
     }
 }

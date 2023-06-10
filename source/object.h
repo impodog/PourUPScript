@@ -55,6 +55,8 @@ namespace pups::library {
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
         [[nodiscard]] std::string str() const noexcept override;
+
+        [[nodiscard]] bool condition() const noexcept override;
     };
 
     extern ObjectPtr pending;

@@ -24,9 +24,19 @@ namespace pups::library {
 
         ObjectPtr &staged_find(std::queue<std::string> &parts, Map *deepest);
 
+        void copy_signs_from(Map *map);
+
         friend class Object;
 
+        friend class Control;
+
     public:
+        struct Signs {
+            ObjectPtr break_sign = nullptr;
+
+            void set_break_sign(ObjectPtr object);
+        } signs;
+
         Map() = default;
 
         ~Map() override;
@@ -54,7 +64,14 @@ namespace pups::library {
         void set_child(Map *sub_map) noexcept;
 
         ObjectPtr &add_to_memory_stack(const ObjectPtr &object);
+
+        void report_errs();
+
+        void copy_objects_from(Map *map);
     };
+
+    // This saves the number of errors reported. Can be freely set to 0.
+    extern size_t err_count;
 }
 
 #endif //PUPS_LIB_TESTS_MAP_H

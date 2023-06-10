@@ -9,6 +9,8 @@
 
 
 namespace pups::library {
+    size_t err_count = 0;
+
     Map *Map::deepest_sub_map() {
         auto map = m_sub_map;
         if (map) {
@@ -54,6 +56,10 @@ namespace pups::library {
         return *object;
     }
 
+    void Map::copy_signs_from(Map *map) {
+        signs.break_sign = map->signs.break_sign;
+    }
+
     Map::~Map() {
         if (m_parent_map) {
             m_parent_map->m_sub_map = nullptr;
@@ -61,12 +67,8 @@ namespace pups::library {
                 m_parent_map->m_errors.push(m_errors.front());
                 m_errors.pop();
             }
-        } else {
-            while (!m_errors.empty()) {
-                std::cerr << m_errors.front()->get() << std::endl;
-                m_errors.pop();
-            }
-        }
+        } else
+            report_errs();
     }
 
     Map::Map(Map *parent_map) : m_parent_map(parent_map) {
@@ -77,7 +79,8 @@ namespace pups::library {
         if (m_sub_map)
             return m_sub_map->put(object, this);
         else {
-            if (!m_return) { // when returned, the map skips all the statements below
+            if (!m_return &&
+                !signs.break_sign) { // when map is returned or broken, the map skips all the statements below
                 if (m_base) {
                     auto ptr = m_base->put(object, this);
                     if (ptr) // when returning nullptr, m_base stays the same
@@ -121,6 +124,8 @@ namespace pups::library {
             deepest->m_temp = deepest->m_base->end_of_line(map);
             deepest->m_base = nullptr;
         }
+        while (!m_memory_stack.empty())
+            m_memory_stack.pop();
         return pending;
     }
 
@@ -141,6 +146,8 @@ namespace pups::library {
     }
 
     void Map::set_child(Map *sub_map) noexcept {
+        if (m_sub_map && sub_map == nullptr)
+            copy_signs_from(m_sub_map);
         m_sub_map = sub_map;
     }
 
@@ -149,11 +156,34 @@ namespace pups::library {
         return m_memory_stack.top();
     }
 
+    void Map::report_errs() {
+        while (!m_errors.empty()) {
+            std::cerr << m_errors.front()->get() << std::endl;
+            err_count += 1;
+            m_errors.pop();
+        }
+    }
+
+    void Map::copy_objects_from(Map *map) {
+        if (map == this)
+            return;
+        for (auto &obj: map->m_map) {
+            const auto &id = obj.first.id();
+            if (id.empty() || id.front() != '_')
+                add_object(obj.first, obj.second);
+        }
+    }
+
     ObjectPtr &Object::find(const Id &name, Map *map, bool *reput_this) {
         auto true_name = template_name(name.str(), {type_name()});
         if (reput_this)
             *reput_this = true;
         return map->bare_find(true_name, map);
+    }
+
+    void Map::Signs::set_break_sign(ObjectPtr object) {
+        if (!break_sign || !object)
+            break_sign = std::move(object);
     }
 
     ObjectPtr Error::put(ObjectPtr &object, Map *map) {

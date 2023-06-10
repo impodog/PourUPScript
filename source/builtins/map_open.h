@@ -20,9 +20,9 @@ namespace pups::library::builtins::map_open {
         ModuleOpen();
     };
 
-    class MapWith : public Function {
+    class MapEnter : public Function {
     public:
-        MapWith();
+        MapEnter();
     };
 
     void init(Constants &constants);

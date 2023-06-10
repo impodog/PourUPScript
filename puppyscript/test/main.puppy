@@ -1,6 +1,10 @@
-#define hello = "Hello, world!"
-inputs dog
-if dog:
-    print dog
-else:
-    print hello
+a = 5
+while true:
+    a = {expr a - 1}
+    print a
+    if {expr a < 0}:
+        break
+    a_r = ref a
+    a_r.data = a
+del a
+

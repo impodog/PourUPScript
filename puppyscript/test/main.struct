@@ -1,9 +1,12 @@
-inputs dog
-targeting dog
-if:
-    print dog
-else:
-    print _aSTR_b
-
-
-
+a = _aNUM_b
+with true
+if:while:
+    a = (a.sub _aNUM_c)
+    print a
+    with ((a.lt _aNUM_d))
+    if:
+        break false
+    a_r = ref a
+    a_r.data = a
+    break true
+del a

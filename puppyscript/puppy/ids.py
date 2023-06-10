@@ -24,10 +24,24 @@ def firsts(s: str, sub: str = "\t ") -> str:
 
 
 def is_word(s: str) -> bool:
-    return re.fullmatch(r"\w+", s) is not None
+    return re.fullmatch(r"[\w.]+", s) is not None
+
+
+def stmt_add_brc(s: str) -> str:
+    if is_word(s):
+        return s
+    return f"({s})"
+
+
+def with_stmt_line(indent: str, var: str) -> str:
+    if is_word(var):
+        return indent + with_cmd + " " + var
+    else:
+        return indent + var
 
 
 temp_id = "_R_TMP"
-targeting = "targeting"
+with_cmd = "with"
 moveTo = "mov"
-ret = "return"
+ret = "ret"
+break_cmd = "break"

@@ -1,5 +1,5 @@
 import re
-from .ids import is_word
+from .ids import is_word, break_cmd
 
 
 class Command:
@@ -66,8 +66,7 @@ class Preprocess:
         self.content = result
 
     def predefined(self):
-        self.content_replace("true", "1")
-        self.content_replace("false", "0")
+        ...
 
     def scan_defines(self):
         results = re.findall(r"^#define\s*(.+?)\s*=\s*(.+)\s*", self.content)

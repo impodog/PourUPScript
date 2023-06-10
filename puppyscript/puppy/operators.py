@@ -1,6 +1,6 @@
 import re
 
-from .ids import next_name, targeting, moveTo
+from .ids import next_name, with_cmd, moveTo
 
 
 class OperatorObject:
@@ -10,45 +10,45 @@ class OperatorObject:
         self.value = value
 
     def __add__(self, other):
-        return OperatorObject("(add %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.add %s)" % (self.value, other.value))
 
     def __sub__(self, other):
-        return OperatorObject("(sub %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.sub %s)" % (self.value, other.value))
 
     def __mul__(self, other):
-        return OperatorObject("(mul %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.mul %s)" % (self.value, other.value))
 
     def __div__(self, other):
-        return OperatorObject("(div %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.div %s)" % (self.value, other.value))
 
     def __lt__(self, other):
-        return OperatorObject("(lt %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.lt %s)" % (self.value, other.value))
 
     def __le__(self, other):
-        return OperatorObject("(le %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.le %s)" % (self.value, other.value))
 
     def __gt__(self, other):
-        return OperatorObject("(gt %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.gt %s)" % (self.value, other.value))
 
     def __ge__(self, other):
-        return OperatorObject("(ge %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.ge %s)" % (self.value, other.value))
 
     def __eq__(self, other):
-        return OperatorObject("(eq %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.eq %s)" % (self.value, other.value))
 
     def __ne__(self, other):
-        return OperatorObject("(ne %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.ne %s)" % (self.value, other.value))
 
     def __and__(self, other):
-        return OperatorObject("(and %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.and %s)" % (self.value, other.value))
 
     def __or__(self, other):
-        return OperatorObject("(or %s %s)" % (self.value, other.value))
+        return OperatorObject("(%s.or %s)" % (self.value, other.value))
 
 
 def analyze(s: str) -> str:
     loc = locals()
-    names = re.findall(r"\w+", s)
+    names = re.findall(r"[\w.]+", s)
     for name in names:
         loc[name] = OperatorObject(name)
     result: OperatorObject = eval(s)

@@ -1,4 +1,6 @@
 INT:
+_aNUM_b = 5
+_aNUM_c = 1
+_aNUM_d = 0
 FLOAT:
 STR:
-_aSTR_b = Hello, world!

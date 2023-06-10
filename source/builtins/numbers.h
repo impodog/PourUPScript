@@ -10,6 +10,22 @@
 namespace pups::library::builtins::numbers {
     using namespace function;
 
+#define is_type(ty) std::is_same<Arithmetic, ty>::value
+
+    template<typename Arithmetic>
+    constexpr const char *type_name_of_arith() noexcept {
+        if constexpr (is_type(int))
+            return "i";
+        else if constexpr (is_type(float))
+            return "f";
+        else if constexpr (is_type(bool))
+            return "b";
+        else
+            static_assert(is_type(int), "Type is not supported");
+    }
+
+#undef is_type
+
     template<typename Arithmetic>
     class Number : public Object {
         static_assert(std::is_arithmetic<Arithmetic>::value, "Number type must be arithmetic.");
@@ -21,6 +37,11 @@ namespace pups::library::builtins::numbers {
         ObjectPtr put(ObjectPtr &object, Map *map) override {
             map->throw_error(std::make_shared<TypeError>("Numbers do NOT allow putting."));
             return nullptr;
+        }
+
+
+        [[nodiscard]] std::string type_name() const noexcept override {
+            return type_name_of_arith<Arithmetic>();
         }
 
         [[nodiscard]] std::string str() const noexcept override {
@@ -48,37 +69,6 @@ namespace pups::library::builtins::numbers {
     using NumCore = typename NumTypes<Arithmetic>::OperatorCore;
     template<typename Arithmetic>
     using NumCoreRef = const NumCore<Arithmetic> &;
-
-    class Number_Operator : public Function {
-    public:
-#define CORE_ARG(type) const NumCore<type> &type##_core
-#define TRY_TYPE(type) {\
-auto lhs = std::dynamic_pointer_cast<NumType<type>>(first),\
-rhs = std::dynamic_pointer_cast<NumType<type>>(second);\
-if (lhs && rhs)\
-    return type##_core(lhs, rhs);\
-}
-
-        Number_Operator(CORE_ARG(int), CORE_ARG(float)) :
-                Function([int_core, float_core](FunctionArgs &args,
-                                                Map *map) -> ObjectPtr { // Here I use copy catch to avoid external deletions
-                    if (args.size() != 2)
-                        map->throw_error(std::make_shared<ArgumentError>("Number operator requires two arguments."));
-                    else {
-                        auto &first = *args.front();
-                        args.pop();
-                        auto &second = *args.front();
-                        args.pop();
-                        TRY_TYPE(int)
-                        TRY_TYPE(float)
-                        map->throw_error(std::make_shared<TypeError>("Number operator cannot process the two types."));
-                    }
-                    return pending;
-                }) {}
-    };
-
-#undef CORE_ARG
-#undef TRY_TYPE
 
     extern ObjectPtr True, False;
 
