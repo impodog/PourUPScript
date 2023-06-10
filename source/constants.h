@@ -31,6 +31,8 @@ namespace pups::library {
 
         void switch_status(std::string status);
 
+        void analyze_line(const std::string &line);
+
     public:
         explicit Constants(const path &path);
 

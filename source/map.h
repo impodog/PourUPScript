@@ -15,13 +15,16 @@ namespace pups::library {
         std::queue<ErrorPtr> m_errors;
         ObjectMap m_map;
         ObjectPtr m_base, m_return, m_temp;
+        std::stack<ObjectPtr> m_memory_stack;
         Map *m_sub_map = nullptr, *m_parent_map = nullptr;
 
         Map *deepest_sub_map();
 
         static ObjectPtr &bare_find(const Id &name, Map *deepest);
 
-        static ObjectPtr &staged_find(std::queue<std::string> &parts, Map *deepest);
+        ObjectPtr &staged_find(std::queue<std::string> &parts, Map *deepest);
+
+        friend class Object;
 
     public:
         Map() = default;
@@ -32,7 +35,7 @@ namespace pups::library {
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        ObjectPtr &find(const Id &name) override;
+        ObjectPtr &find(const Id &name, Map *map, bool *reput_this) override;
 
         ObjectPtr end_of_line(Map *map) override;
 
@@ -49,6 +52,8 @@ namespace pups::library {
         Map *get_parent() noexcept;
 
         void set_child(Map *sub_map) noexcept;
+
+        ObjectPtr &add_to_memory_stack(const ObjectPtr &object);
     };
 }
 

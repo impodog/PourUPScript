@@ -33,7 +33,7 @@ class Brackets:
             if begin != -1:
                 if count == 0:
                     tmp = s[begin + 1:i]
-                    name = next_name("BRC")
+                    name = next_name("FAC")
                     self.scan_bracket(tmp, indent)
                     self.put_line("%s %s" % (indent + moveTo, name))
                     tmp = s[:begin] + name + s[i + 1:]

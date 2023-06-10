@@ -80,6 +80,8 @@ if (lhs && rhs)\
 #undef CORE_ARG
 #undef TRY_TYPE
 
+    extern ObjectPtr True, False;
+
     void init(Constants &constants);
 }
 #endif //PUPS_LIB_TESTS_NUMBERS_H

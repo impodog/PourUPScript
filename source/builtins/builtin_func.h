@@ -15,6 +15,16 @@ namespace pups::library::builtins::builtin_func {
         Inputs();
     };
 
+    class Println : public Function {
+    public:
+        Println();
+    };
+
+    class Print : public Function {
+    public:
+        Print();
+    };
+
     void init(Constants &constants);
 }
 

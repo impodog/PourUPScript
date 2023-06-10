@@ -19,7 +19,7 @@ namespace pups::library::builtins::strings {
             else {
                 auto ptr = std::dynamic_pointer_cast<String>(*args.front());
                 if (ptr)
-                    return std::make_shared<numbers::NumType<bool>>(this->m_data == ptr->m_data);
+                    return this->m_data == ptr->m_data ? numbers::True : numbers::False;
                 else
                     map->throw_error(std::make_shared<ArgumentError>("String.eq requires a string argument"));
             }
@@ -30,13 +30,14 @@ namespace pups::library::builtins::strings {
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        ObjectPtr &find(const Id &name) override;
 
         [[nodiscard]] std::string str() const noexcept override;
 
         [[nodiscard]] std::string &data() noexcept;
 
         [[nodiscard]] const std::string &data() const noexcept;
+
+        std::string type_name() const noexcept override;
     };
 
     void init(Constants &constants);

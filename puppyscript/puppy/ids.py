@@ -1,3 +1,5 @@
+import re
+
 _count = 1
 
 
@@ -19,6 +21,10 @@ def firsts(s: str, sub: str = "\t ") -> str:
             return result
         result += c
     return result
+
+
+def is_word(s: str) -> bool:
+    return re.fullmatch(r"\w+", s) is not None
 
 
 temp_id = "_R_TMP"

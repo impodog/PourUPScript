@@ -36,13 +36,18 @@ namespace pups::library {
     ObjectPtr &Map::staged_find(std::queue<std::string> &parts, Map *deepest) {
         ObjectPtr *object = &bare_find(Id{parts.front()}, deepest);
         MapPtr tmp;
+        parts.pop(); // since the first is used, pop it
         while (!parts.empty()) {
             tmp = std::dynamic_pointer_cast<Map>(*object);
             if (tmp) {
                 deepest = tmp.get();
                 object = &tmp->bare_find(Id{parts.front()}, deepest);
             } else {
-                object = &object->get()->find(Id{parts.front()});
+                bool reput_this = false;
+                auto next = &object->get()->find(Id{parts.front()}, this, &reput_this);
+                if (reput_this)
+                    next->get()->put(*object, this);
+                object = next;
             }
             parts.pop();
         }
@@ -85,7 +90,7 @@ namespace pups::library {
         }
     }
 
-    ObjectPtr &Map::find(const Id &name) {
+    ObjectPtr &Map::find(const Id &name, Map *map, bool *reput_this) {
         Map *deepest = deepest_sub_map();
         auto parts = name.split_by('.');
         if (parts.size() == 1)
@@ -107,7 +112,7 @@ namespace pups::library {
     }
 
     void Map::set_object(const Id &name, const ObjectPtr &object) {
-        find(name) = object;
+        find(name, this, nullptr) = object;
     }
 
     ObjectPtr Map::end_of_line(Map *map) {
@@ -137,6 +142,18 @@ namespace pups::library {
 
     void Map::set_child(Map *sub_map) noexcept {
         m_sub_map = sub_map;
+    }
+
+    ObjectPtr &Map::add_to_memory_stack(const ObjectPtr &object) {
+        m_memory_stack.push(object);
+        return m_memory_stack.top();
+    }
+
+    ObjectPtr &Object::find(const Id &name, Map *map, bool *reput_this) {
+        auto true_name = template_name(name.str(), {type_name()});
+        if (reput_this)
+            *reput_this = true;
+        return map->bare_find(true_name, map);
     }
 
     ObjectPtr Error::put(ObjectPtr &object, Map *map) {

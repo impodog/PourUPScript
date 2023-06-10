@@ -1,8 +1,6 @@
-#{define hello "Hello, "}
-a = 1
-print "What's your name?"
+println "What's your name?"
 inputs name
-if (name.eq "Dog"):
-    print "That's not a name!"
+if name.eq "dog":
+    println "That's not a name!"
 else:
-    print hello
+    println "Hello, " name "!"

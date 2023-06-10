@@ -1,0 +1,6 @@
+inputs dog
+targeting dog
+if:
+    print dog
+else:
+    print _aSTR_b

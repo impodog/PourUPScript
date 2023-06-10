@@ -1,10 +1,9 @@
-targeting _aNUM_b
-mov a
-print _aSTR_c
+println _aSTR_b
 inputs name
-name.eq _aSTR_d
-mov _aBRC_f
-if _aBRC_f:
-    print _aSTR_e
+name.eq _aSTR_c
+mov _aFAC_g
+targeting _aFAC_g
+if:
+    println _aSTR_d
 else:
-    print hello
+    println _aSTR_e name _aSTR_f

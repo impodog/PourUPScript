@@ -46,20 +46,21 @@ class OperatorObject:
         return OperatorObject("(or %s %s)" % (self.value, other.value))
 
 
+def analyze(s: str) -> str:
+    loc = locals()
+    names = re.findall(r"\w+", s)
+    for name in names:
+        loc[name] = OperatorObject(name)
+    result: OperatorObject = eval(s)
+    return result.value
+
+
 class Operators:
     content: str
 
     def __init__(self, file: str):
         with open(file, "r", encoding="utf-8") as f:
             self.content = f.read()
-
-    def analyze(self, s: str) -> str:
-        loc = locals()
-        names = re.findall(r"\w+", s)
-        for name in names:
-            loc[name] = OperatorObject(name)
-        result: OperatorObject = eval(s)
-        return result.value
 
     def scan_operators(self):
         result = str()
@@ -68,7 +69,7 @@ class Operators:
             if tmp is None:
                 result += line + "\n"
             else:
-                result += line[:tmp.start(0)] + self.analyze(tmp.group(1)) + line[tmp.end(0):] + "\n"
+                result += line[:tmp.start(0)] + analyze(tmp.group(1)) + line[tmp.end(0):] + "\n"
         self.content = result
 
     def work(self, output_name: str):

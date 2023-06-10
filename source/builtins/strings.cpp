@@ -7,6 +7,8 @@
 #include <utility>
 
 namespace pups::library::builtins::strings {
+    constexpr const char *STRING_TYPE_NAME = "s";
+
     String::String(std::string data) : m_data(std::move(data)) {
 
     }
@@ -21,12 +23,6 @@ namespace pups::library::builtins::strings {
         }
     }
 
-    ObjectPtr &String::find(const Id &name) {
-        if (name == "eq")
-            return eq_function;
-        return Object::find(name);
-    }
-
     std::string String::str() const noexcept {
         return m_data;
     }
@@ -39,8 +35,36 @@ namespace pups::library::builtins::strings {
         return m_data;
     }
 
+    std::string String::type_name() const noexcept {
+        return "s";
+    }
+
+#define s_func(not_op) [](FunctionArgs &args, Map *map) -> ObjectPtr {\
+    const std::string *str = nullptr;\
+    while (!args.empty()) {\
+        auto ptr = std::dynamic_pointer_cast<String>(*args.front());\
+        if (ptr) {\
+            if (str) {\
+                if (ptr->data() not_op *str)\
+                    return numbers::False;\
+            } else\
+                str = &ptr->data();\
+        } else\
+            map->throw_error(std::make_shared<TypeError>("Incorrect call of type on STR.eq."));\
+        args.pop();\
+    }\
+    return numbers::True;\
+}
 
     void init(Constants &constants) {
-
+        static const auto add_s_func = [&constants](const std::string &name, const FunctionCore &core) {
+            constants.add(template_name(name, {STRING_TYPE_NAME}), std::make_shared<Function>(core));
+        };
+        add_s_func("eq", s_func(!=));
+        add_s_func("ne", s_func(!=));
+        add_s_func("lt", s_func(>=));
+        add_s_func("le", s_func(>));
+        add_s_func("gt", s_func(<=));
+        add_s_func("ge", s_func(<));
     }
 }

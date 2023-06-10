@@ -54,30 +54,8 @@ namespace pups::library {
     void Constants::run_line(const std::string &line) {
         if (line.back() == ':')
             switch_status(line.substr(0, line.size() - 1));
-        else {
-            std::string front, back;
-            split_trim(line, front, back);
-            if (!front.empty() && !back.empty())
-                try {
-                    switch (stat) {
-                        case stat_none:
-                            std::cout << "Line \"" << line << "\" is skipped because no status is set." << std::endl;
-                            break;
-                        case stat_int:
-                            add(Id{"", front}, std::make_shared<builtins::numbers::NumType<int>>(std::stoi(back)));
-                            break;
-                        case stat_float:
-                            add(Id{"", front}, std::make_shared<builtins::numbers::NumType<float>>(std::stof(back)));
-                            break;
-                        case stat_str:
-                            add(Id{"", front}, std::make_shared<builtins::strings::String>(back));
-                            break;
-                    }
-                } catch (const std::invalid_argument &exception) {
-                    throw std::runtime_error(
-                            "Cannot analyze constant file line: \"" + line + "\" as follows: " + exception.what());
-                }
-        }
+        else
+            analyze_line(line);
     }
 
     void Constants::switch_status(std::string status) {
@@ -87,6 +65,42 @@ namespace pups::library {
         } catch (const std::out_of_range &) {
             throw std::runtime_error("Unknown status mark : \"" + status + "\".");
         }
+    }
+
+    void Constants::analyze_line(const std::string &line) {
+        std::string front, back;
+        split_trim(line, front, back);
+        if (!front.empty() && !back.empty())
+            try {
+                switch (stat) {
+                    case stat_none:
+                        std::cout << "Line \"" << line << "\" is skipped because no status is set." << std::endl;
+                        break;
+                    case stat_int:
+                        add(Id{"", front}, std::make_shared<builtins::numbers::NumType<int>>(std::stoi(back)));
+                        break;
+                    case stat_float:
+                        add(Id{"", front}, std::make_shared<builtins::numbers::NumType<float>>(std::stof(back)));
+                        break;
+                    case stat_str:
+                        if (back.front() == '\\')
+                            back = back.substr(1);
+                        if (back.back() == '\\')
+                            back = back.substr(0, back.size() - 1);
+                        size_t ret_pos;
+                        do {
+                            ret_pos = back.find("\\n");
+                            if (ret_pos == std::string::npos)
+                                break;
+                            back = back.replace(ret_pos, 2, "\n");
+                        } while (true);
+                        add(Id{"", front}, std::make_shared<builtins::strings::String>(back));
+                        break;
+                }
+            } catch (const std::invalid_argument &exception) {
+                throw std::runtime_error(
+                        "Cannot analyze constant file line: \"" + line + "\" as follows: " + exception.what());
+            }
     }
 
     Constants::Constants(const path &path) :

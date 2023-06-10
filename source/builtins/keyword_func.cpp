@@ -7,15 +7,6 @@
 
 namespace pups::library::builtins::keyword_func {
 
-    Print::Print() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
-        while (!args.empty()) {
-            std::cout << args.front()->get()->str() << " ";
-            args.pop();
-        }
-        std::cout << std::endl;
-        return pending;
-    }) {}
-
     MoveTo::MoveTo() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             *args.front() = map->get_temp();
@@ -37,7 +28,7 @@ namespace pups::library::builtins::keyword_func {
                 result = true;
             }
         }
-        return std::make_shared<numbers::NumType<bool>>(result);
+        return result ? numbers::True : numbers::False;
     }) {}
 
     While::While(bool require_false) : Function([require_false](FunctionArgs &args, Map *map) -> ObjectPtr {
@@ -73,16 +64,16 @@ namespace pups::library::builtins::keyword_func {
         if (args.size() == 1 && *args.front() != pending)
             return *args.front();
         else
-            map->throw_error(std::make_shared<ArgumentError>("Explicit targeting requires one only non-pending argument."));
+            map->throw_error(
+                    std::make_shared<ArgumentError>("Explicit targeting requires one only non-pending argument."));
         return pending;
     }) {}
 
-    Id id_print{"", "print"}, id_moveTo{"", "mov"}, id_ifTrue{"", "if"}, id_ifFalse{"", "else"},
+    Id id_moveTo{"", "mov"}, id_ifTrue{"", "if"}, id_ifFalse{"", "else"},
             id_whileTrue{"", "while"}, id_whileFalse{"", "while_not"}, id_return{"", "return"},
             id_targeting{"", "targeting"};
 
     void init(Constants &constants) {
-        constants.add(id_print, std::make_shared<Print>());
         constants.add(id_moveTo, std::make_shared<MoveTo>());
         constants.add(id_ifTrue, std::make_shared<If>(false));
         constants.add(id_ifFalse, std::make_shared<If>(true));

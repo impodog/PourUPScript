@@ -1,8 +1,6 @@
-gt a _aNUM_b
-mov _aBRC_d
+inputs dog
+targeting dog
 if:
-while:
-    print _aSTR_c
-    gt a _aNUM_b
-    mov _aBRC_e
-    return
+    print dog
+else:
+    print _aSTR_b

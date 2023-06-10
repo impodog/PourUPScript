@@ -21,9 +21,9 @@ def script(file: str, output_name: str, keep_temp: bool):
     delete_temp()
     file = Structure(file).work(output_name)
     delete_temp()
-    file = Brackets(file).work(output_name)
-    delete_temp()
     file = Assignment(file).work(output_name)
+    delete_temp()
+    file = Brackets(file).work(output_name)
     delete_temp()
     with open(file, "r") as f:
         with open(output_name + ".pups", "w") as out:

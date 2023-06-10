@@ -1,19 +1,40 @@
 import re
+from .ids import is_word
 
 
 class Command:
     src: str
     target: str
+    is_word: bool
 
     def __init__(self, src: str, target: str):
-        self.src = src
+        self.is_word = is_word(src)
+        if self.is_word:
+            self.src = r"#*(\b)(%s)(\b)#*" % src
+        else:
+            self.src = src
         self.target = target
 
     def sub(self, s) -> str | None:
         if isinstance(s, Command):
             s.target = self.sub(s.target)
         else:
-            return re.sub(self.src, self.target, s)
+            if self.is_word:
+                while True:
+                    result = re.search(self.src, s)
+                    if result is None:
+                        return s
+                    if result.group(1) == "#":
+                        tmp = s[:result.start(0)] + self.target
+                    else:
+                        tmp = s[:result.start(2)] + self.target
+                    if result.group(3) == "#":
+                        tmp += s[result.end(0):]
+                    else:
+                        tmp += s[result.end(2):]
+                    s = tmp
+            else:
+                return re.sub(self.src, self.target, s)
 
 
 class Preprocess:
@@ -49,7 +70,7 @@ class Preprocess:
         self.content_replace("false", "0")
 
     def scan_defines(self):
-        results = re.findall(r"#\{define\s*(.+?)\s*=\s*(.+?)\s*}", self.content)
+        results = re.findall(r"^#define\s*(.+?)\s*=\s*(.+)\s*", self.content)
         for result in results:
             tmp = Command(result[0], result[1])
             for cmd in self.commands:

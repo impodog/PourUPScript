@@ -11,10 +11,6 @@ namespace pups::library {
 
     Object::Object() : m_count(static_count++) {}
 
-    ObjectPtr &Object::find(const Id &name) {
-        return pending;
-    }
-
     ObjectPtr Object::end_of_line(Map *map) {
         return pending;
     }
@@ -35,6 +31,10 @@ namespace pups::library {
         return true;
     }
 
+    std::string Object::type_name() const noexcept {
+        return "o";
+    }
+
     std::string Pending::str() const noexcept {
         return "<Object:Pending>";
     }
@@ -51,5 +51,12 @@ namespace pups::library {
 
     bool LongStr::is_long_str() const noexcept {
         return true;
+    }
+
+    Id template_name(std::string name, const std::vector<std::string> &templates) {
+        name = "_T_" + name;
+        for (const auto &obj: templates)
+            name.append("_" + obj);
+        return Id{"", name};
     }
 }

@@ -10,11 +10,6 @@
 namespace pups::library::builtins::keyword_func {
     using namespace function;
 
-    class Print : public Function {
-    public:
-        Print();
-    };
-
     class MoveTo : public Function {
     public:
         MoveTo();

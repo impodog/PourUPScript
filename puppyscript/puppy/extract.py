@@ -41,13 +41,19 @@ class Extract:
     def extract_string(self):
         self.content = " " + self.content
         while True:
-            result = re.search(r'[^\\]"(.*?)[^\\]"', self.content)
+            result = re.search(r'[^\\]"(.*?[^\\])"', self.content)
             if result is None:
                 break
             name = next_name("STR")
             value = result.group(1)
-            self.extracted[name] = eval('"' + value + '"')
-            self.content = re.sub(r'([^\\])"%s[^\\]"' % value, r"\1%s" % name, self.content)
+            tmp = value
+            if len(tmp) > 0:
+                if tmp[0].isspace():
+                    tmp = "\\\\" + tmp
+                if tmp[-1].isspace():
+                    tmp += "\\\\"
+            self.extracted[name] = eval('"' + tmp + '"').replace("\n", "\\n")
+            self.content = self.content.replace('"%s"' % value, name)
         self.content = self.content[1:]
 
     def make_extraction(self):

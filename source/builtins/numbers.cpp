@@ -18,8 +18,10 @@ namespace pups::library::builtins::numbers {
             id_gt{"", "gt"}, id_lt{"", "lt"}, id_ge{"", "ge"}, id_le{"", "le"}, id_eq{"", "eq"}, id_ne{"", "ne"},
             id_and{"", "and"}, id_or{"", "or"};
 
+    ObjectPtr True = std::make_shared<NumType<bool>>(true), False = std::make_shared<NumType<bool>>(false);
+
     void init(Constants &constants) {
-        constants.add(id_pass, std::make_shared<NumType<bool>>(false));
+        constants.add(id_pass, False);
         constants.add(id_add, std::make_shared<Number_Operator>(
                 OPERATORS(+)
         ));

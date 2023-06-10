@@ -271,7 +271,7 @@ namespace pups::library {
 
     Id generate_id() {
         static size_t count = 0;
-        std::string buf = "_R_";
+        std::string buf = RESERVED;
         size_t c = count++;
         do {
             buf.push_back(static_cast<char>(c % 26 + 'a'));

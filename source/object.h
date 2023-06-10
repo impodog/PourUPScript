@@ -32,7 +32,7 @@ namespace pups::library {
         virtual ObjectPtr put(ObjectPtr &object, Map *map) = 0;
 
         // Get an object from this as in "[this].name"
-        virtual ObjectPtr &find(const Id &name);
+        virtual ObjectPtr &find(const Id &name, Map *map, bool *reput_this);
 
         // Mark an end of this line. The return value is stored in Map::m_temp.
         virtual ObjectPtr end_of_line(Map *map);
@@ -46,6 +46,8 @@ namespace pups::library {
         [[nodiscard]] virtual std::string str() const noexcept;
 
         [[nodiscard]] virtual bool condition() const noexcept;
+
+        virtual std::string type_name() const noexcept;
     };
 
     class Pending final : public Object {
@@ -78,6 +80,8 @@ namespace pups::library {
     };
 
     using LongStrPtr = std::shared_ptr<LongStr>;
+
+    Id template_name(std::string name, const std::vector<std::string> &templates);
 }
 
 
