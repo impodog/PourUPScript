@@ -7,7 +7,7 @@
 #include <utility>
 
 namespace pups::library::builtins::strings {
-    constexpr const char *STRING_TYPE_NAME = "s";
+    constexpr const char *STRING_TYPE_NAME = "str";
 
     String::String(std::string data) : m_data(std::move(data)) {
 
@@ -36,7 +36,7 @@ namespace pups::library::builtins::strings {
     }
 
     std::string String::type_name() const noexcept {
-        return "s";
+        return STRING_TYPE_NAME;
     }
 
 #define s_func(op) [](FunctionArgs &args, Map *map) -> ObjectPtr {\

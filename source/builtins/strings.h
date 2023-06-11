@@ -37,7 +37,7 @@ namespace pups::library::builtins::strings {
 
         [[nodiscard]] const std::string &data() const noexcept;
 
-        std::string type_name() const noexcept override;
+        [[nodiscard]] std::string type_name() const noexcept override;
     };
 
     void init(Constants &constants);

@@ -22,6 +22,8 @@ namespace pups::library::builtins::function {
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
         ObjectPtr end_of_line(Map *map) override;
+
+        std::string type_name() const noexcept override;
     };
 }
 

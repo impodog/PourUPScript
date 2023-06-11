@@ -15,11 +15,11 @@ namespace pups::library::builtins::numbers {
     template<typename Arithmetic>
     constexpr const char *type_name_of_arith() noexcept {
         if constexpr (is_type(int))
-            return "i";
+            return "int";
         else if constexpr (is_type(float))
-            return "f";
+            return "float";
         else if constexpr (is_type(bool))
-            return "b";
+            return "bool";
         else
             static_assert(is_type(int), "Type is not supported");
     }
