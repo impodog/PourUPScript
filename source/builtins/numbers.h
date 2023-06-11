@@ -49,7 +49,10 @@ namespace pups::library::builtins::numbers {
         }
 
         [[nodiscard]] bool condition() const noexcept override {
-            return value != 0;
+            if constexpr (std::is_same<Arithmetic, bool>::value)
+                return value;
+            else
+                return value != 0;
         }
     };
 

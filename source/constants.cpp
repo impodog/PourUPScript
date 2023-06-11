@@ -40,17 +40,6 @@ namespace pups::library {
         back = trim(back);
     }
 
-    void Constants::load_from(const path &path) {
-        std::ifstream ifs(path);
-        std::string line;
-        if (!ifs.is_open())
-            throw std::invalid_argument("File \"" + path.string() + "\" is not found.");
-        while (!ifs.eof()) {
-            std::getline(ifs, line);
-            run_line(line);
-        }
-    }
-
     void Constants::run_line(const std::string &line) {
         if (line.back() == ':')
             switch_status(line.substr(0, line.size() - 1));
@@ -103,9 +92,28 @@ namespace pups::library {
             }
     }
 
-    Constants::Constants(const path &path) :
+    Constants::Constants() :
             constants({{Id{"", "="}, sym_assign}}) {
+    }
+
+    Constants::Constants(const path &path) : Constants() {
         load_from(path);
+    }
+
+    Constants::Constants(std::initializer_list<path> path) : Constants() {
+        for (const auto& p: path)
+            load_from(p);
+    }
+
+    void Constants::load_from(const path &path) {
+        std::ifstream ifs(path);
+        std::string line;
+        if (!ifs.is_open())
+            throw std::invalid_argument("File \"" + path.string() + "\" is not found.");
+        while (!ifs.eof()) {
+            std::getline(ifs, line);
+            run_line(line);
+        }
     }
 
     void Constants::export_to(Map *map) {

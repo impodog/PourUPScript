@@ -1,6 +1,5 @@
 INT:
+_aNUM_c = 1
 FLOAT:
 STR:
-_aSTR_b = dog
-_aSTR_c = It is smaller than or equal to dog
-_aSTR_d = It is bigger than dog
+_aSTR_b = Type a digit!

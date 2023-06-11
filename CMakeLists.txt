@@ -20,7 +20,7 @@ set(source_files source/const.h
         source/builtins/map_open.cpp source/builtins/map_open.h
         source/builtins/builtin_func.cpp source/builtins/builtin_func.h
         source/builtins/reference.cpp source/builtins/reference.h
-        )
+        pups.h)
 
 add_library(pups_Lib ${source_files})
 

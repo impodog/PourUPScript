@@ -10,4 +10,21 @@ PUPS aims for being fast, flexible on top of the restricted Cpp-Style grammar, w
 
 ## How to Use
 
-PUPS is based on a library. You can copy the files from **./source**
+PUPS is based on a library. You can copy the files from **./source** freely.
+
+### Running a program
+
+We provide **CMakeLists.txt** and **test.cpp** for reference. Read the twos files for more information.
+
+To tell if the library works, build *pups_Lib_Tests* using CMake and run the executable.
+
+## Using Puppyscript
+
+Puppyscript is a extension to PourUPScript and is much easier to use.
+
+To use Puppyscript, you'll need Python(tested on 3.11, need to be at least 3.10)
+
+A Puppyscript compiler is given under ./puppyscript, just simply run "python main.py (file) [--output, -o output_path]" to compile Puppyscript
+
+To learn more, see ./learn under the root library (just open those files with your favortite text editor).
+

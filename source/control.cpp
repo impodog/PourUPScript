@@ -52,9 +52,7 @@ namespace pups::library {
     }
 
     void Control::run() {
-        while (!next_line()) {
-            map->report_errs();
-        }
+        while (!next_line()) {}
     }
 
     void Control::restart(MapPtr sub_map) {

@@ -1,5 +1,5 @@
+print "Type a digit!"
 inputs name
-if_not name.gt "dog":
-    print "It is smaller than or equal to dog"
-else:
-    print "It is bigger than dog"
+x = (name.toi)
+print {expr x + 1}
+print (typename_of x)

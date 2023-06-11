@@ -1,9 +1,11 @@
+print _aSTR_b
 inputs name
-name.gt _aSTR_b
+name.toi
+mov _aFAC_d
+mov x
+x.add _aNUM_c
 mov _aFAC_e
-with _aFAC_e
-if_not:
-    print _aSTR_c
-with true
-elif:
-    print _aSTR_d
+print _aFAC_e
+typename_of x
+mov _aFAC_f
+print _aFAC_f

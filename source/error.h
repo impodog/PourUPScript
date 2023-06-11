@@ -55,6 +55,14 @@ namespace pups::library {
     public:
         explicit FileNotFoundError(const std::string &s);
     };
+
+    class ValueError : public Error {
+    protected:
+        [[nodiscard]] std::string error_name() const noexcept override;
+
+    public:
+        explicit ValueError(const std::string &s);
+    };
 }
 
 #endif //PUPS_LIB_TESTS_ERROR_H

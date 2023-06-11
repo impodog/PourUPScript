@@ -25,8 +25,6 @@ namespace pups::library {
         };
         ObjectMap constants;
 
-        void load_from(const path &path);
-
         void run_line(const std::string &line);
 
         void switch_status(std::string status);
@@ -34,7 +32,13 @@ namespace pups::library {
         void analyze_line(const std::string &line);
 
     public:
+        Constants();
+
         explicit Constants(const path &path);
+
+        Constants(std::initializer_list<path> path);
+
+        void load_from(const path &path);
 
         void export_to(Map *map);
 

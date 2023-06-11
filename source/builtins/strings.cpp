@@ -39,13 +39,13 @@ namespace pups::library::builtins::strings {
         return "s";
     }
 
-#define s_func(not_op) [](FunctionArgs &args, Map *map) -> ObjectPtr {\
+#define s_func(op) [](FunctionArgs &args, Map *map) -> ObjectPtr {\
     const std::string *str = nullptr;\
     while (!args.empty()) {\
         auto ptr = std::dynamic_pointer_cast<String>(*args.front());\
         if (ptr) {\
             if (str) {\
-                if (ptr->data() not_op *str)\
+                if (!(*str op ptr->data()))\
                     return numbers::False;\
             } else\
                 str = &ptr->data();\
@@ -56,15 +56,68 @@ namespace pups::library::builtins::strings {
     return numbers::True;\
 }
 
+    template<typename Arithmetic>
+    ObjectPtr string_to(FunctionArgs &args, Map *map) {
+        if (args.size() == 1) {
+            auto ptr = std::dynamic_pointer_cast<String>(*args.front());
+            if (ptr) {
+                Arithmetic x;
+                try {
+                    if constexpr (std::is_same<Arithmetic, int>::value)
+                        x = std::stoi(ptr->data());
+                    else if constexpr (std::is_same<Arithmetic, float>::value)
+                        x = std::stof(ptr->data());
+                    else if constexpr (std::is_same<Arithmetic, bool>::value)
+                        x = ptr->data() == "true";
+                } catch (const std::invalid_argument &) {
+                    map->throw_error(std::make_shared<ValueError>(
+                            "Invalid value \"" + ptr->data() + "\" for string conversion."));
+                    return pending;
+                }
+                return std::make_shared<numbers::NumType<Arithmetic>>(x);
+            } else
+                map->throw_error(std::make_shared<TypeError>("String conversion requires a string."));
+        } else
+            map->throw_error(
+                    std::make_shared<ArgumentError>(
+                            "String conversion method does not require addition arguments."));
+        return pending;
+    }
+
+    ObjectPtr repr_of(FunctionArgs &args, Map *map) {
+        std::string result;
+        while (!args.empty()) {
+            result.append(args.front()->get()->str());
+            args.pop();
+        }
+        return std::make_shared<String>(result);
+    }
+
+    ObjectPtr typename_of(FunctionArgs &args, Map *map) {
+        std::string result;
+        while (!args.empty()) {
+            result.append(args.front()->get()->type_name()).push_back('_');
+            args.pop();
+        }
+        return std::make_shared<String>(result.substr(0, result.size() - 1));
+    }
+
+    Id id_repr_of{"", "repr_of"}, id_typename_of{"", "typename_of"};
+
     void init(Constants &constants) {
         static const auto add_s_func = [&constants](const std::string &name, const FunctionCore &core) {
             constants.add(template_name(name, {STRING_TYPE_NAME}), std::make_shared<Function>(core));
         };
+        constants.add(id_repr_of, std::make_shared<Function>(repr_of));
+        constants.add(id_typename_of, std::make_shared<Function>(typename_of));
         add_s_func("gt", s_func(>));
         add_s_func("ge", s_func(>=));
         add_s_func("lt", s_func(<));
         add_s_func("le", s_func(<=));
-        add_s_func("eq", s_func(!=));
+        add_s_func("eq", s_func(==));
         add_s_func("ne", s_func(!=));
+        add_s_func("toi", string_to<int>);
+        add_s_func("tof", string_to<float>);
+        add_s_func("bool", string_to<bool>);
     }
 }

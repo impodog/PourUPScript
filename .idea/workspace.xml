@@ -21,41 +21,26 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.3.0&#10;Add references, better while loop, better puppy grammar, more keywords">
-      <change afterPath="$PROJECT_DIR$/learn/1. Statements, Expressions.puppy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learn/2. Code Blocks.puppy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learn/3. Conditional Blocks.puppy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learn/4. Functions.puppy" afterDir="false" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.4.0&#10;Add and fix if-elif-else statements.&#10;Add four learning files for puppyscript">
+      <change afterPath="$PROJECT_DIR$/pups.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-6de225e531121027ddbe.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-2df6e6e052ab02d8bad2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-06-10T05-07-47-0745.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-44aec1e3e372c849a99c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-170b36c90d09636b0c96.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib-Debug-5b770c6d5e2c29a31eca.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib_Tests-Debug-34a13d7cc9921e872110.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/pups_Lib_Tests.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/pups_Lib_Tests.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/extract.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/extract.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/structure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/tmp.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/tmp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.con" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.con" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.extract" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.extract" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.no_assign" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.no_assign" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.no_brc" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.no_brc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.no_op" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.no_op" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.prep" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.prep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.pups" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.pups" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.struct" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.struct" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/keyword_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keyword_func.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/keyword_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keyword_func.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/strings.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/constants.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/constants.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/constants.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/error.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/error.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.con" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.con" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.puppy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.pups" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.pups" afterDir="false" />
@@ -125,6 +110,11 @@
   }
 }</component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -188,7 +178,8 @@
       <workItem from="1686352232853" duration="9405000" />
       <workItem from="1686371992762" duration="22398000" />
       <workItem from="1686440208758" duration="1988000" />
-      <workItem from="1686443469065" duration="2442000" />
+      <workItem from="1686443469065" duration="2679000" />
+      <workItem from="1686451821232" duration="3422000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -246,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686388465393</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="v0.4.0&#10;Add and fix if-elif-else statements.&#10;Add four learning files for puppyscript">
+      <created>1686451534209</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1686451534209</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,7 +266,8 @@
     <MESSAGE value="v0.1.3&#10;Add puppyscript(not complete, testing)" />
     <MESSAGE value="v0.2.0&#10;Puppy and PUPS fixes, better grammar" />
     <MESSAGE value="v0.3.0&#10;Add references, better while loop, better puppy grammar, more keywords" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.3.0&#10;Add references, better while loop, better puppy grammar, more keywords" />
+    <MESSAGE value="v0.4.0&#10;Add and fix if-elif-else statements.&#10;Add four learning files for puppyscript" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.4.0&#10;Add and fix if-elif-else statements.&#10;Add four learning files for puppyscript" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

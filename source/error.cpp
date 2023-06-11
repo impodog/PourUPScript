@@ -36,4 +36,10 @@ namespace pups::library {
     }
 
     FileNotFoundError::FileNotFoundError(const std::string &s) : Error(s) {}
+
+    std::string ValueError::error_name() const noexcept {
+        return "ValueError";
+    }
+
+    ValueError::ValueError(const std::string &s) : Error(s) {}
 }
