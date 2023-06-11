@@ -1,0 +1,60 @@
+/*In this file, we will be making functions! No no no, not math, but functions that will help us with our code.*/
+
+/*Functions are a way to group a set of statements together to perform a specific task.
+If different parts of a script repeat the same task, you can reuse the function (rather than repeating the same set of statements).*/
+func bark:
+    print "Woof!"
+    print "I'm a dog!"
+bark /*This means to execute the function, or say, do the statements you have just wrote.*/
+print "So what are you?"
+inputs name
+print "I don't care!"
+bark
+
+
+
+/*Functions can also take in inputs, or parameters. These are values that you can pass into the function, and the function can use them privately.
+Functions can also give responses, or return values. These are values that the function can give back to the main code, since the code is executed in another map*/
+func add:
+    param a b
+    ret a.add b
+x = add 5 6
+print x
+/*This function takes in two parameters, a and b, and returns the sum of a and b.*/
+
+
+
+/*Functions can also be used to isolate code parts, to avoid conflicts with other code parts.*/
+func add:
+    param a b
+    ret a.add b
+func sub:
+    param a b /*This function uses the same names with the same meanings, but it doesn't matter, since the function is isolated.*/
+    ret a.sub b
+/*This is the main code, and it uses the same names. But functions stopped them from conflicting.*/
+a = 3
+b = 7
+print ((add a b).mul (sub a b))
+
+
+/*Functions are also useful for making code more readable. For example, you can make a function that does a specific task, and then use it in the main code.*/
+func printName:
+    param name
+    print "Hello, " name "!"
+printName "John"
+printName "Mary"
+printName "Bob"
+/*This function prints a greeting to the name that is passed in.*/
+
+
+
+/*Functions have one special uaage: recursion. Recursion is when a function calls itself. This is useful for making loops.*/
+func countDown:
+    param n
+    print n
+    if n.gt 0:
+        countDown (n.sub 1)
+countDown 10
+/*This function counts down from n to 0.
+It prints n, and then calls itself with n - 1, until n is 0.
+That's not all! Functions can also call other functions, and those functions can call other functions, and so on.*/

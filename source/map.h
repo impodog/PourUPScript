@@ -16,6 +16,7 @@ namespace pups::library {
         ObjectMap m_map;
         ObjectPtr m_base, m_return, m_temp;
         std::stack<ObjectPtr> m_memory_stack;
+        std::queue<std::pair<ObjectPtr, ObjectPtr>> m_pending_put;
         Map *m_sub_map = nullptr, *m_parent_map = nullptr;
 
         Map *deepest_sub_map();
@@ -33,6 +34,7 @@ namespace pups::library {
     public:
         struct Signs {
             ObjectPtr break_sign = nullptr;
+            bool else_sign = true;
 
             void set_break_sign(ObjectPtr object);
         } signs;

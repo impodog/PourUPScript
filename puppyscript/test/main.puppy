@@ -1,10 +1,16 @@
-a = 5
-while true:
-    a = {expr a - 1}
-    print a
-    if {expr a < 0}:
-        break
-    a_r = ref a
-    a_r.data = a
-del a
-
+inputs x
+if x.gt "dogs":
+    print "what?"
+elif x.gt "giraffes":
+    print "hey!"
+    inputs y
+    if y.gt "cats":
+        print "yes!"
+    elif true:
+        print "e"
+    elif true:
+        print "q"
+    else:
+        print "yay!"
+else:
+    print "no!"

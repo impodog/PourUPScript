@@ -1,0 +1,70 @@
+/*In this file, we will be learning blocks of code in Puppyscript*/
+
+
+
+/*The following statement(yes, the whole thing) is a block of code.
+It declares a new map within the global map. Once it is given, all the commands will be executed in the new map.
+The block begins with a certain indentation, and ends when the indentation falls behind the beginning indentation.*/
+map Block:
+    print "I'm now in the block!"
+    a = 1
+
+
+/*Maps are special objects. However, they are still capable of "find"ing(if you don't remember what it is, see the statement "Block.a").
+Here we accessed the map "Block" and found the value of "a" in it to print it out.*/
+print Block.a
+
+
+
+/*Blocks of code can be in another block of code. In this case, the inner map is called a "sub-map" of the outer map.*/
+map Outer:
+    print "I'm in the outer block!"
+    map Inner:
+        print "I'm in the inner block!"
+        b = 5
+    print "I'm still in the outer block!"
+print "I'm out of the outer block!"
+
+
+
+/*...And you can still access the sub-map from the global map. In fact, any depth will be ok.*/
+print Outer.Inner.b
+
+
+
+/*The maps can also be reused. Here we are using the map "Block" again.*/
+enter Block:
+    print "I'm in the block again!"
+    c = 10
+
+
+
+/*The map "Block" is not being renewed when using "enter". All the data in it is still there. So we can access "a" once again, along with "c".*/
+print Block.a
+print Block.c
+
+
+
+/*But there is a way to renew the map. Just use "map" keyword again!*/
+map Block:
+    print "I'm in the block again!"
+    c = 10
+
+
+
+/*Sometimes, we need to remove some of the undesired data. We can use "pop" keyword to do that.
+After doing so, we can't access the data from this name anymore*/
+pop Block.c
+
+
+
+/*We can also use "pop" to remove the whole map.*/
+pop Block
+
+
+/*But hang on! Why did we say "from this name"? Does that mean we can still access the data from another name?
+Yes. We can. The data is still there, but we just can't access it from the name we popped.
+To avoid this(and possibly create bugs), we can use "del" keyword to delete the data permanantly.*/
+del Outer.Inner.b
+del Outer
+/*Now we can't access the data from any name.*/

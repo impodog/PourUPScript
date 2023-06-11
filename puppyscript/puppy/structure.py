@@ -1,5 +1,5 @@
 import re
-from .ids import with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc
+from .ids import with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, ret
 
 
 class Structure:
@@ -12,12 +12,18 @@ class Structure:
     def scan_if(self):
         result = list()
         for line in self.content.split("\n"):
-            tmp = re.match(r"(\s*)(if|if_not)\s+(.+):", line)
+            tmp = re.match(r"(\s*)else\s*:", line)
             if tmp is None:
-                result.append(line)
+                tmp = re.match(r"(\s*)((if|elif)(_not)?)\s+(.+):", line)
+                if tmp is None:
+                    result.append(line)
+                else:
+                    result.append("%s %s" % (tmp.group(1) + with_cmd,
+                                             stmt_add_brc(tmp.group(5))))
+                    result.append(tmp.group(1) + tmp.group(2) + ":")
             else:
-                result.append("%s %s" % (tmp.group(1) + with_cmd, stmt_add_brc(tmp.group(3))))
-                result.append(tmp.group(1) + tmp.group(2) + ":")
+                result.append("%s %s" % (tmp.group(1) + with_cmd, "true"))
+                result.append(tmp.group(1) + "elif:")
         self.content = "\n".join(result)
 
     def scan_while(self):
@@ -26,7 +32,9 @@ class Structure:
         stack = list()
         outer_indent = inner_indent = None
         for line in self.content.split("\n"):
-            if while_name is not None:
+            if while_name is False:
+                result.append(line)
+            elif while_name is not None:
                 stack.append(line)
                 if inner_indent is None:
                     inner_indent = firsts(line)
@@ -34,11 +42,12 @@ class Structure:
                     stack.pop()
                     stack[0] = outer_indent + "if:" + stack[0].strip()
                     stack.insert(0, with_stmt_line(outer_indent, while_name))
-                    stack.append("%s %s" % (inner_indent + break_cmd, stmt_add_brc(while_name)))
+                    stack.append("%s %s" % (inner_indent +
+                                            break_cmd, stmt_add_brc(while_name)))
 
                     result.extend(stack)
                     result.append(line)
-                    break
+                    while_name = False
             else:
                 tmp = re.match(r"(\s*)while\s+(.+):", line)
                 if tmp is None:
@@ -55,13 +64,28 @@ class Structure:
         while self.scan_while():
             ...
 
+    def scan_returns(self):
+        result = list()
+        for line in self.content.split("\n"):
+            tmp = re.match(rf"(\s*){ret}\s+(.+)", line)
+            if tmp is None:
+                result.append(line)
+            else:
+                result.append("%s %s" % (tmp.group(1) + with_cmd,
+                                         stmt_add_brc(tmp.group(2))))
+                result.append(tmp.group(1) + ret)
+        self.content = "\n".join(result)
+
     def break_shortcuts(self):
-        self.content = re.sub(r"break(\s*\n)", break_cmd + r" false\1", self.content)
-        self.content = re.sub(r"conti(\s*\n)", break_cmd + r" true\1", self.content)
+        self.content = re.sub(
+            r"break(\s*\n)", break_cmd + r" false\1", self.content)
+        self.content = re.sub(
+            r"conti(\s*\n)", break_cmd + r" true\1", self.content)
 
     def work(self, output_name: str) -> str:
         self.scan_if()
         self.scan_all_while()
+        self.scan_returns()
         self.break_shortcuts()
         output = output_name + ".struct"
         with open(output, "w", encoding="utf-8") as f:

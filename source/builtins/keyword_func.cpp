@@ -15,20 +15,29 @@ namespace pups::library::builtins::keyword_func {
         return map->get_temp();
     }) {}
 
-    If::If(bool require_false) : Function([require_false](FunctionArgs &args, Map *map) -> ObjectPtr {
-        MapPtr sub_map;
-        if (args.size() != 1 || !args.front()->get()->is_long_str())
-            map->throw_error(
-                    std::make_shared<ArgumentError>("Incorrect argument for keyword if. One long string is required."));
-        else {
-            if (map->get_temp()->condition() ^ require_false) {
-                sub_map = std::make_shared<Map>(map);
-                Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
-                control.run();
-            }
-        }
-        return sub_map;
-    }) {}
+    IfNoArg::IfNoArg(bool require_false, bool is_direct) :
+            Function([require_false, is_direct](FunctionArgs &args, Map *map) -> ObjectPtr {
+                MapPtr sub_map;
+                bool result = false;
+                if (is_direct || map->signs.else_sign) {
+                    if (args.size() != 1 || !args.front()->get()->is_long_str())
+                        map->throw_error(
+                                std::make_shared<ArgumentError>(
+                                        "Incorrect argument for keyword if(no arguments). One long string is required."));
+                    else {
+                        if (map->get_temp()->condition() ^ require_false) {
+                            sub_map = std::make_shared<Map>(map);
+                            Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
+                            control.run();
+                            result = true;
+                            map->signs.else_sign = false;
+                        }
+                    }
+                }
+                if (is_direct && !result)
+                    map->signs.else_sign = true;
+                return result ? numbers::True : numbers::False;
+            }) {}
 
     While::While(bool require_false) : Function([require_false](FunctionArgs &args, Map *map) -> ObjectPtr {
         MapPtr sub_map;
@@ -70,7 +79,7 @@ namespace pups::library::builtins::keyword_func {
         return pending;
     }) {}
 
-    Clear::Clear() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+    Pop::Pop() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             *args.front() = pending;
             args.pop();
@@ -113,20 +122,22 @@ namespace pups::library::builtins::keyword_func {
         return pending;
     }) {}
 
-    Id id_moveTo{"", "mov"}, id_ifTrue{"", "if"}, id_ifFalse{"", "else"},
+    Id id_moveTo{"", "mov"}, id_if{"", "if"}, id_elif{"", "elif"}, id_if_not{"", "if_not"}, id_elif_not{"", "elif_not"},
             id_whileTrue{"", "while"}, id_whileFalse{"", "while_not"}, id_return{"", "ret"},
-            id_with{"", "with"}, id_clear{"", "clr"}, id_delete{"", "del"}, id_break{"", "break"},
+            id_with{"", "with"}, id_pop{"", "pop"}, id_delete{"", "del"}, id_break{"", "break"},
             id_unmap{"", "unmap"};
 
     void init(Constants &constants) {
         constants.add(id_moveTo, std::make_shared<MoveTo>());
-        constants.add(id_ifTrue, std::make_shared<If>(false));
-        constants.add(id_ifFalse, std::make_shared<If>(true));
+        constants.add(id_if, std::make_shared<IfNoArg>(false, true));
+        constants.add(id_elif, std::make_shared<IfNoArg>(false, false));
+        constants.add(id_if_not, std::make_shared<IfNoArg>(true, true));
+        constants.add(id_elif_not, std::make_shared<IfNoArg>(true, false));
         constants.add(id_whileTrue, std::make_shared<While>(false));
         constants.add(id_whileFalse, std::make_shared<While>(true));
         constants.add(id_return, std::make_shared<Return>());
         constants.add(id_with, std::make_shared<With>());
-        constants.add(id_clear, std::make_shared<Clear>());
+        constants.add(id_pop, std::make_shared<Pop>());
         constants.add(id_delete, std::make_shared<Delete>());
         constants.add(id_break, std::make_shared<Break>());
         constants.add(id_unmap, std::make_shared<Unmap>());

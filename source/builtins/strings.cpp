@@ -60,11 +60,11 @@ namespace pups::library::builtins::strings {
         static const auto add_s_func = [&constants](const std::string &name, const FunctionCore &core) {
             constants.add(template_name(name, {STRING_TYPE_NAME}), std::make_shared<Function>(core));
         };
+        add_s_func("gt", s_func(>));
+        add_s_func("ge", s_func(>=));
+        add_s_func("lt", s_func(<));
+        add_s_func("le", s_func(<=));
         add_s_func("eq", s_func(!=));
         add_s_func("ne", s_func(!=));
-        add_s_func("lt", s_func(>=));
-        add_s_func("le", s_func(>));
-        add_s_func("gt", s_func(<=));
-        add_s_func("ge", s_func(<));
     }
 }

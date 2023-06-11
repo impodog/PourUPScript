@@ -53,6 +53,9 @@ class Preprocess:
                 break
             self.content = self.content[:result.start(0)] + new + self.content[result.end(0):]
 
+    def remove_comments(self):
+        self.content = re.sub(r"/\*.*?\*/", "", self.content, flags=re.S)
+
     def fix_line_continue(self):
         stack = str()
         result = str()
@@ -86,6 +89,7 @@ class Preprocess:
         self.content = tmp
 
     def work(self, output_name: str) -> str:
+        self.remove_comments()
         self.fix_line_continue()
         self.predefined()
         self.scan_defines()

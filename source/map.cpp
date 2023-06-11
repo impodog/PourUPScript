@@ -48,7 +48,7 @@ namespace pups::library {
                 bool reput_this = false;
                 auto next = &object->get()->find(Id{parts.front()}, this, &reput_this);
                 if (reput_this)
-                    next->get()->put(*object, this);
+                    m_pending_put.emplace(*next, *object);
                 object = next;
             }
             parts.pop();
@@ -81,6 +81,10 @@ namespace pups::library {
         else {
             if (!m_return &&
                 !signs.break_sign) { // when map is returned or broken, the map skips all the statements below
+                while (!m_pending_put.empty()) {
+                    m_pending_put.front().first->put(m_pending_put.front().second, this);
+                    m_pending_put.pop();
+                }
                 if (m_base) {
                     auto ptr = m_base->put(object, this);
                     if (ptr) // when returning nullptr, m_base stays the same
@@ -94,6 +98,7 @@ namespace pups::library {
     }
 
     ObjectPtr &Map::find(const Id &name, Map *map, bool *reput_this) {
+        //std::cout << name.str() << std::endl;
         Map *deepest = deepest_sub_map();
         auto parts = name.split_by('.');
         if (parts.size() == 1)
@@ -126,6 +131,9 @@ namespace pups::library {
         }
         while (!m_memory_stack.empty())
             m_memory_stack.pop();
+        while (!m_pending_put.empty()) {
+            m_pending_put.pop();
+        }
         return pending;
     }
 
@@ -158,7 +166,7 @@ namespace pups::library {
 
     void Map::report_errs() {
         while (!m_errors.empty()) {
-            std::cerr << m_errors.front()->get() << std::endl;
+            std::cout << m_errors.front()->get() << std::endl;
             err_count += 1;
             m_errors.pop();
         }

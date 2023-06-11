@@ -15,9 +15,9 @@ namespace pups::library::builtins::keyword_func {
         MoveTo();
     };
 
-    class If : public Function {
+    class IfNoArg : public Function {
     public:
-        explicit If(bool require_false);
+        explicit IfNoArg(bool require_false, bool is_direct);
     };
 
     class While : public Function {
@@ -35,9 +35,9 @@ namespace pups::library::builtins::keyword_func {
         With();
     };
 
-    class Clear : public Function {
+    class Pop : public Function {
     public:
-        Clear();
+        Pop();
     };
 
     class Delete : public Function {

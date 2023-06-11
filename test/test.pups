@@ -1,16 +1,9 @@
-with _aNUM_b
-mov a
+inputs name
+name.gt _aSTR_b
+mov _aFAC_e
+with _aFAC_e
+if_not:
+    print _aSTR_c
 with true
-if:while:
-    a.sub _aNUM_c
-    mov _aFAC_e
-    mov a
-    print a
-    a.lt _aNUM_d
-    mov _aFAC_g
-    mov _aFAC_f
-    with _aFAC_f
-    if:
-        break false
-    break true
-unmap
+elif:
+    print _aSTR_d

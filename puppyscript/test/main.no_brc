@@ -1,20 +1,29 @@
-with _aNUM_b
-mov a
-with true
-if:while:
-    a.sub _aNUM_c
-    mov _aFAC_e
-    mov a
-    print a
-    a.lt _aNUM_d
-    mov _aFAC_g
-    mov _aFAC_f
-    with _aFAC_f
+inputs x
+x.gt _aSTR_b
+mov _aFAC_l
+with _aFAC_l
+if:
+    print _aSTR_c
+x.gt _aSTR_d
+mov _aFAC_m
+with _aFAC_m
+elif:
+    print _aSTR_e
+    inputs y
+    y.gt _aSTR_f
+    mov _aFAC_n
+    with _aFAC_n
     if:
-        break false
-    ref a
-    mov a_r
-    with a
-    mov a_r.data
-    break true
-del a
+        print _aSTR_g
+    with true
+    elif:
+        print _aSTR_h
+    with true
+    elif:
+        print _aSTR_i
+    with true
+    elif:
+        print _aSTR_j
+with true
+elif:
+    print _aSTR_k

@@ -1,10 +1,5 @@
-a = 5
-while true:
-    a = {expr a - 1}
-    print a
-    if {expr a < 0}:
-        break
-unmap
-print a
-del a
-
+inputs name
+if_not name.gt "dog":
+    print "It is smaller than or equal to dog"
+else:
+    print "It is bigger than dog"

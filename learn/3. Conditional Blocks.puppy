@@ -1,0 +1,76 @@
+/*In this file, we are going to see the most important feature: Conditional Blocks, which means you control the flow of the program.*/
+
+
+/*The if statement is the most basic of all the control flow statements. It tells your program to execute a certain section of code only if a particular test evaluates to true.
+The evaluation is done by method "condition".*/
+a = 5
+b = 6
+if a.lt b:
+    print "a is less than b"
+/*This statement means, if the expression "a.lt b", or "a < b" is true, the following block is executed.
+In this case, it is always true. That's not the purpose for if at all!*/
+
+
+/*The if-else statement provides a secondary path of execution when an "if" clause evaluates to false.
+You can use the "else" clause to specify an alternative path of execution to follow when the condition is false.*/
+c = a.add b
+if c.lt 10:
+    print "c is less than 10"
+else:
+    print "c is greater than or equal to 10"
+/*Therefore, if the expression "c.lt 10", or "c < 10" is true, the first block is executed, otherwise the second block is executed.*/
+
+
+
+/*The elif statement is used to check multiple expressions for true and execute a block of code as soon as one of the conditions evaluates to true.
+After getting true for one condition, it will not check the rest of the conditions, and go to the next statements.
+Similar to the else, the elif statement is optional. However, unlike else, for which there can be at most one statement, there can be as many elif statements as you want in an if-elif-else chain.*/
+print "What animal do you like?"
+inputs animal
+if animal.eq "cat":
+    print "Meow!"
+elif animal.eq "dog":
+    print "Woof!"
+elif animal.gt "dog":
+    print "I don't know that animal. But it's bigger than dog."
+else:
+    print "I don't know that animal. But it's smaller than dog."
+
+
+
+/*The while statement allows you to repeatedly execute a block of statements as long as a condition is true.*/
+print "Let me show you something majestic:"
+i = 0
+while i.lt 100:
+    print i
+    i = i.add 1
+/*This statement means, if the expression "i.lt 100", or "i < 100" is true, the following block is executed repeatedly until it is false.
+As you can see, the statement can be a little messed up if the condition is always true, since it will never stop.*/
+
+
+
+/*To possibly avoid getting stuck in an infinite loop, you can use the break statement.
+The break statement jumps out of the smallest enclosing while loop.*/
+print "Let me show you something *really* majestic:"
+i = 1
+while true:    /*"true" stands for "do this infinitely!"*/
+    print i
+    i = i.add i
+    if i.gt 1000:
+        break
+/*This statement means, if the expression "i.gt 1000", or "i > 1000" is true, the following block is executed, and the loop is broken.*/
+
+
+
+/*The while loop can also be a little more flexible.
+By using "conti" statement, you can skip the rest of the block and do the whole thing again.*/
+print "Let me show you something *absolutely* majestic:"
+i = 3
+while true:
+    i = i.mul i
+    if i.lt 1000:
+        conti
+    print i
+    if i.gt 10000:
+        break
+/*This statement means, if the expression "i.lt 1000", or "i < 1000" is true, the following block is skipped, and the loop is continued.*/

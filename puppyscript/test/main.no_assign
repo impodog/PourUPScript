@@ -1,16 +1,26 @@
-with _aNUM_b
-mov a
-with true
-if:while:
-    (a.sub _aNUM_c)
-    mov a
-    print a
-    with ((a.lt _aNUM_d))
+inputs x
+with (x.gt _aSTR_b)
+if:
+    print _aSTR_c
+with (x.gt _aSTR_d)
+elif:
+    print _aSTR_e
+    inputs y
+    with (y.gt _aSTR_f)
     if:
-        break false
-    ref a
-    mov a_r
-    with a
-    mov a_r.data
-    break true
-del a
+        print _aSTR_g
+    with true
+    elif:
+        print _aSTR_h
+    with true
+    elif:
+        print _aSTR_i
+    with true
+    elif:
+        print _aSTR_j
+with true
+elif:
+    print _aSTR_k
+
+
+

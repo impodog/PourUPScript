@@ -1,0 +1,78 @@
+/*This is some comment!*/
+/*This is a
+multi-line
+comment!*/
+
+/*The programs starts at the beginning of the file.
+Here, which is the global "map", or namespace, we store all the variables, constants, keywords and such.
+Let's walk through Puppyscript with a simple program.*/
+
+
+
+/*This is a typical statement.
+In each statement, the first id to meet is taken as the base.
+Then, the rest of the objects is put into it, and it receives a "end_of_line" call at last.
+
+Here, "print" is the base, and the string, which is a constant, is put into "print", and it results in printing the string out.*/
+print "Hello, world!"
+
+
+
+/*Here we meet a number constant. Numbers and strings will be taken out from the source, to a .con file when compiling.
+So, the generated id of the number will be left here.
+
+We also give the value "1" to a. It is not a simple assignment as you see. Actually, it consists of two parts:
+1. Move the number "1" to the map's temporary space.
+2. Move the temporary object to "a"
+By doing so, we make a new variable "a".*/
+a = 1
+
+
+
+/*Here we meet a complex statement. It is made up of two parts:
+1. Run statement "a" and get the result to save to the temporary space.
+2. Move the temporary object to "b".
+
+However, the statement "a.add 3" is especially interesting.
+First, when we use ".", or dots within a factor, the factor will be taken as the base, and the rest of the objects will be put into it.
+The factor "add" is being given to "a" by another method "find", and a, depending on its type, will find the method "add" in its class.
+Then, the method "add" will be called, with a subtle swap: "a" is being put into "add" as the first parameter, and "3" is being put into "add" as the second parameter.
+The method "add" will then return the result, and the result will be put into the temporary space.
+
+Finally, the temporary object will be moved to "b".*/
+b = a.add 3
+
+
+
+/*Here we meet a statement with brackets. The brackets will change the order of the statement, as you expected.
+First, "a.sub b" is being executed first, and the result is put into the temporary space.
+Then, "5.mul ..." is being executed, but this time, the temporary object is being put into "mul" as the second parameter.
+Finally, the temporary object is moved to "c".*/
+c = 5.mul (a.sub b)
+
+
+
+/*Sometimes, the expression can get too annoying to write. So, we have a special replacement:
+This is a expression, which is the simplified form of basic calculations. To use it, just use this syntax:
+"{expr ...}", and it will be automatically replaced with the method-call form.*/
+d = {expr (5*(a-b)+8)*c}
+
+
+
+/*Calculations can take time. So why not just do the calculation before the program runs?
+This is a constant expression, which stands for some numbers or strings that are constant. To use it, just use this syntax:
+"{constexpr ...}", and it will be automatically replaced with the constant value.*/
+e = {constexpr 1+2+3+4}
+
+
+
+/*We can also use the "inputs" statement to get string input from the user.
+The statement "inputs" will take the input from the user, and put it into the arguments that follow.*/
+print "What's your name?"
+inputs name
+print "Hello, " name "!"
+
+
+
+/*Now, what's the result like?*/
+print "a=" a " b=" b " c=" c " d=" d " e=" e " name=" name

@@ -1,13 +1,19 @@
-a = _aNUM_b
-while true:
-    a = (a.sub _aNUM_c)
-    print a
-    if (a.lt _aNUM_d):
-        break
-    a_r = ref a
-    a_r.data = a
-del a
-
+inputs x
+if x.gt _aSTR_b:
+    print _aSTR_c
+elif x.gt _aSTR_d:
+    print _aSTR_e
+    inputs y
+    if y.gt _aSTR_f:
+        print _aSTR_g
+    elif true:
+        print _aSTR_h
+    elif true:
+        print _aSTR_i
+    else:
+        print _aSTR_j
+else:
+    print _aSTR_k
 
 
 

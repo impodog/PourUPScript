@@ -2,6 +2,10 @@ import re
 from .ids import next_name
 
 
+def need_add_backslash(c: str):
+    return c.isspace() or c == ":" or c == "\\"
+
+
 class Extract:
     extracted: dict[str, object]
     content: str
@@ -38,7 +42,8 @@ class Extract:
             if is_negative:
                 value = "-" + value
             self.extracted[name] = eval(value)
-            self.content = re.sub((('()' if is_negative else r'(\b)') + r"%s(\b)") % value, r"\1%s\2" % name, self.content)
+            self.content = re.sub((('()' if is_negative else r'(\b)') + r"%s(\b)") % value, r"\1%s\2" % name,
+                                  self.content)
 
     def extract_string(self):
         self.content = " " + self.content
@@ -50,9 +55,9 @@ class Extract:
             value = result.group(1)
             tmp = value
             if len(tmp) > 0:
-                if tmp[0].isspace():
+                if need_add_backslash(tmp[0]):
                     tmp = "\\\\" + tmp
-                if tmp[-1].isspace():
+                if need_add_backslash(tmp[-1]):
                     tmp += "\\\\"
             self.extracted[name] = eval('"' + tmp + '"').replace("\n", "\\n")
             self.content = self.content.replace('"%s"' % value, name)
@@ -81,8 +86,8 @@ class Extract:
 
     def work(self, output_name: str) -> str:
         self.scan_constexpr()
-        self.extract_number()
         self.extract_string()
+        self.extract_number()
         self.make_extraction()
 
         output = output_name + ".extract"
