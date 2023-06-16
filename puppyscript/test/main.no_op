@@ -1,0 +1,10 @@
+x = _aNUM_b
+func f:
+    local x
+    x = x.add _aNUM_c
+f
+f
+print x
+
+
+

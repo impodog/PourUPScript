@@ -1,13 +1,5 @@
 INT:
+_aNUM_b = 1
+_aNUM_c = 3
 FLOAT:
 STR:
-_aSTR_b = dogs
-_aSTR_c = what?
-_aSTR_d = giraffes
-_aSTR_e = hey!
-_aSTR_f = cats
-_aSTR_g = yes!
-_aSTR_h = e
-_aSTR_i = q
-_aSTR_j = yay!
-_aSTR_k = no!

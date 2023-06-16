@@ -11,19 +11,17 @@
 namespace pups::library {
     size_t err_count = 0;
 
-    Map *Map::deepest_sub_map() {
-        auto map = m_sub_map;
-        if (map) {
-            while (map->m_sub_map) {
-                map = map->m_sub_map;
-            }
-            return map;
-        } else
-            return this;
+    ObjectPtr &Map::local_find(const Id &name) {
+        try {
+            return m_map.at(name);
+        } catch (const std::out_of_range &) {
+            add_object(name);
+            return m_map.at(name);
+        }
     }
 
-    ObjectPtr &Map::bare_find(const Id &name, Map *deepest) {
-        Map *map = deepest;
+    ObjectPtr &Map::bare_find(const Id &name) {
+        Map *map = m_deepest;
         while (map) {
             try {
                 return map->m_map.at(name);
@@ -31,19 +29,25 @@ namespace pups::library {
                 map = map->m_parent_map;
             }
         }
-        deepest->add_object(name);
-        return deepest->m_map.at(name);
+        add_object(name);
+        return m_map.at(name);
     }
 
-    ObjectPtr &Map::staged_find(std::queue<std::string> &parts, Map *deepest) {
-        ObjectPtr *object = &bare_find(Id{parts.front()}, deepest);
+    ObjectPtr &Map::single_find(const Id &name) {
+        if (name.qual_has('&'))
+            return local_find(name);
+        else
+            return bare_find(name);
+    }
+
+    ObjectPtr &Map::staged_find(std::queue<std::string> &parts) {
+        ObjectPtr *object = &single_find(Id{parts.front()});
         MapPtr tmp;
         parts.pop(); // since the first is used, pop it
         while (!parts.empty()) {
             tmp = std::dynamic_pointer_cast<Map>(*object);
             if (tmp) {
-                deepest = tmp.get();
-                object = &tmp->bare_find(Id{parts.front()}, deepest);
+                object = &tmp->single_find(Id{parts.front()});
             } else {
                 bool reput_this = false;
                 auto next = &object->get()->find(Id{parts.front()}, this, &reput_this);
@@ -76,20 +80,23 @@ namespace pups::library {
     }
 
     ObjectPtr Map::put(ObjectPtr &object, Map *map) {
-        if (m_sub_map)
-            return m_sub_map->put(object, this);
+        if (m_deepest != this)
+            return m_deepest->put(object, m_deepest);
         else {
-            if (!m_return &&
-                !signs.break_sign) { // when map is returned or broken, the map skips all the statements below
-                while (!m_pending_put.empty()) {
-                    m_pending_put.front().first->put(m_pending_put.front().second, this);
-                    m_pending_put.pop();
-                }
+            if (!m_return && !signs.break_sign) {
+                /* when map is returned or broken,
+                * the map skips all the statements below*/
                 if (m_base) {
+                    while (!m_pending_put.empty())
+                        m_pending_put.pop();
                     auto ptr = m_base->put(object, this);
                     if (ptr) // when returning nullptr, m_base stays the same
                         m_base = ptr;
                 } else {
+                    while (!m_pending_put.empty()) {
+                        m_pending_put.front().first->put(m_pending_put.front().second, this);
+                        m_pending_put.pop();
+                    }
                     m_base = object;
                 }
             }
@@ -98,13 +105,11 @@ namespace pups::library {
     }
 
     ObjectPtr &Map::find(const Id &name, Map *map, bool *reput_this) {
-        //std::cout << name.str() << std::endl;
-        Map *deepest = deepest_sub_map();
         auto parts = name.split_by('.');
         if (parts.size() == 1)
-            return bare_find(name, deepest);
+            return single_find(name);
         else
-            return staged_find(parts, deepest);
+            return staged_find(parts);
     }
 
     void Map::throw_error(const ErrorPtr &error) {
@@ -124,10 +129,9 @@ namespace pups::library {
     }
 
     ObjectPtr Map::end_of_line(Map *map) {
-        auto deepest = deepest_sub_map();
-        if (deepest && deepest->m_base) {
-            deepest->m_temp = deepest->m_base->end_of_line(map);
-            deepest->m_base = nullptr;
+        if (m_deepest && m_deepest->m_base) {
+            m_deepest->m_temp = m_deepest->m_base->end_of_line(map);
+            m_deepest->m_base = nullptr;
         }
         while (!m_memory_stack.empty())
             m_memory_stack.pop();
@@ -154,8 +158,20 @@ namespace pups::library {
     }
 
     void Map::set_child(Map *sub_map) noexcept {
-        if (m_sub_map && sub_map == nullptr)
-            copy_signs_from(m_sub_map);
+        bool is_null = sub_map == nullptr;
+        Map *map = is_null ? this : sub_map, *deepest;
+        if (is_null) {
+            if (m_sub_map)
+                copy_signs_from(m_sub_map);
+            deepest = this;
+        } else {
+            sub_map->m_parent_map = this;
+            deepest = sub_map;
+        }
+        while (map) {
+            map->m_deepest = deepest;
+            map = map->m_parent_map;
+        }
         m_sub_map = sub_map;
     }
 
@@ -186,7 +202,7 @@ namespace pups::library {
         auto true_name = template_name(name.str(), {type_name()});
         if (reput_this)
             *reput_this = true;
-        return map->bare_find(true_name, map);
+        return map->single_find(true_name);
     }
 
     void Map::Signs::set_break_sign(ObjectPtr object) {
@@ -210,7 +226,7 @@ namespace pups::library {
     }
 
     ObjectPtr Symbol::put(ObjectPtr &object, Map *map) {
-        map->throw_error(std::make_shared<TypeError>("Putting into Symbol is not allowed."));
+        map->throw_error(std::make_shared<TypeError>("Putting into Symbol \"" + m_name + "\" is not allowed."));
         return pending;
     }
 }

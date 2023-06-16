@@ -13,9 +13,8 @@ namespace pups::library::builtins::function {
     using FunctionCore = std::function<ObjectPtr(FunctionArgs &, Map *)>;
 
     class Function : public Object {
-    protected:
-        FunctionCore m_core;
         std::unordered_map<Map *, FunctionArgs> m_args;
+        FunctionCore m_core;
     public:
         explicit Function(FunctionCore core);
 

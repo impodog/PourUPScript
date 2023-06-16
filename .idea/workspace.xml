@@ -22,36 +22,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.4.1&#10;Add more complete README and other guides.&#10;Add some string-related functions">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/puppyscript/test/main.extract" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/puppyscript/test/main.no_assign" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/puppyscript/test/main.no_brc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/puppyscript/test/main.no_op" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/puppyscript/test/main.prep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/puppyscript/test/main.struct" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cache-v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-24f623762030aa3df753.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-5a01fac3a63fb67cbebe.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-051c198be69c69e9eb0b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-06-11T02-56-16-0581.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib-Debug-94bc8478f476eec1a457.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-pups_Lib_Tests-Debug-34b5d2f01c8070b96429.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-1505d7fd90137c18d919.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/pups_Lib_Tests.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.extract" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.no_assign" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.no_brc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.no_op" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.prep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.struct" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/ids.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/ids.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.con" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.con" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/test/main.pups" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/test/main.pups" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups.h" beforeDir="false" afterPath="$PROJECT_DIR$/pups.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/strings.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/strings.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/constants.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/constants.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/constants.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.con" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.con" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.pups" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.pups" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,12 +116,12 @@
   }
 }</component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -188,6 +186,7 @@
       <workItem from="1686440208758" duration="1988000" />
       <workItem from="1686443469065" duration="2679000" />
       <workItem from="1686451821232" duration="5734000" />
+      <workItem from="1686915927961" duration="7834000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -289,14 +288,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/source/map.cpp</url>
-          <line>202</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/source/object.cpp</url>
-          <line>63</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/source/builtins/keyword_func.cpp</url>
+          <line>10</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

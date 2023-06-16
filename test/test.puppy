@@ -1,5 +1,7 @@
-print "Type a digit!"
-inputs name
-x = (name.toi)
-print {expr x + 1}
-print (typename_of x)
+map A:
+    func B:
+        param &p
+        if p.gt 0:
+            print "Now p is " p
+            B (p.sub 1)
+A.B 10

@@ -17,13 +17,16 @@ namespace pups::library {
         ObjectPtr m_base, m_return, m_temp;
         std::stack<ObjectPtr> m_memory_stack;
         std::queue<std::pair<ObjectPtr, ObjectPtr>> m_pending_put;
-        Map *m_sub_map = nullptr, *m_parent_map = nullptr;
 
-        Map *deepest_sub_map();
+        Map *m_sub_map = nullptr, *m_parent_map = nullptr, *m_deepest = this;
 
-        static ObjectPtr &bare_find(const Id &name, Map *deepest);
+        ObjectPtr &local_find(const Id &name);
 
-        ObjectPtr &staged_find(std::queue<std::string> &parts, Map *deepest);
+        ObjectPtr &bare_find(const Id &name);
+
+        ObjectPtr &single_find(const Id &name);
+
+        ObjectPtr &staged_find(std::queue<std::string> &parts);
 
         void copy_signs_from(Map *map);
 

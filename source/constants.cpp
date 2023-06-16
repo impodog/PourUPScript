@@ -7,7 +7,11 @@
 #include "builtins/strings.h"
 
 namespace pups::library {
-    ObjectPtr sym_assign = std::make_shared<Symbol>();
+    using cstr = const char *;
+    constexpr cstr sym_name_assign = "assign",
+            sym_name_dynamic = "dynamic";
+    ObjectPtr sym_assign = std::make_shared<Symbol>(sym_name_assign),
+            sym_dynamic = std::make_shared<Symbol>(sym_name_dynamic);
 
     void to_lower(std::string &s) {
         for (auto &c: s)
@@ -93,7 +97,10 @@ namespace pups::library {
     }
 
     Constants::Constants() :
-            constants({{Id{"", "="}, sym_assign}}) {
+            constants{
+                    {Id{"", "="},              sym_assign},
+                    {Id{"", sym_name_dynamic}, sym_dynamic}
+            } {
     }
 
     Constants::Constants(const path &path) : Constants() {
@@ -101,7 +108,7 @@ namespace pups::library {
     }
 
     Constants::Constants(std::initializer_list<path> path) : Constants() {
-        for (const auto& p: path)
+        for (const auto &p: path)
             load_from(p);
     }
 

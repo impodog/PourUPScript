@@ -1,7 +1,9 @@
 x = 1
 func f:
     local x
-    x = &x.add 3
+    x = x.add 3
 f
 f
 print x
+
+

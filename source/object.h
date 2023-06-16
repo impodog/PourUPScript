@@ -75,8 +75,9 @@ namespace pups::library {
     };
 
     class Symbol final : public Object {
+        std::string m_name;
     public:
-        Symbol() = default;
+        explicit Symbol(std::string name);
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
     };

@@ -1,7 +1,9 @@
-with _aNUM_b
-mov x
+x = _aNUM_b
 func f:
     &x = &x.add _aNUM_c
 f
 f
 print x
+
+
+

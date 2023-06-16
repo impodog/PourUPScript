@@ -25,10 +25,10 @@ namespace pups::library::builtins::inline_func {
         map->add_object(id_arg_catch, std::make_shared<Arguments>(args));
     }
 
-    InlineFunc::InlineFunc(IdFile idFile) :
-            m_idFile(std::move(idFile)),
+    InlineFunc::InlineFunc(IdFile idFile, Map *m_static_link) :
+            m_idFile(std::move(idFile)), m_static_link(m_static_link),
             Function([this](const FunctionArgs &args, Map *map) -> ObjectPtr {
-                MapPtr sub_map = std::make_shared<Map>(map);
+                MapPtr sub_map = std::make_shared<Map>(this->m_static_link ? this->m_static_link : map);
                 Control control(m_idFile, sub_map);
                 add_arguments(sub_map, args);
                 control.run();
@@ -45,14 +45,15 @@ namespace pups::library::builtins::inline_func {
                             "Inline Func restart should receive one long str argument in the back."));
                     return pending;
                 }
-
-                auto func = std::make_shared<InlineFunc>(
-                        *std::static_pointer_cast<LongStr>(*args.back())->ids());
+                Map *static_link = map;
                 while (args.size() != 1) {
-                    *args.front() = func;
+                    if (args.front()->get() == sym_dynamic.get())
+                        static_link = nullptr;
+                    *args.front() = std::make_shared<InlineFunc>(
+                            *std::static_pointer_cast<LongStr>(*args.back())->ids(), static_link);
                     args.pop();
                 }
-                return func;
+                return pending;
             }) {
 
     }

@@ -1,11 +1,12 @@
-print _aSTR_b
-inputs name
-name.toi
-mov _aFAC_d
-mov x
-x.add _aNUM_c
-mov _aFAC_e
-print _aFAC_e
-typename_of x
-mov _aFAC_f
-print _aFAC_f
+map A:
+    func B:
+        param &p
+        p.gt _aNUM_c
+        mov _aFAC_f
+        with _aFAC_f
+        if:
+            print _aSTR_b p
+            p.sub _aNUM_d
+            mov _aFAC_g
+            B _aFAC_g
+A.B _aNUM_e

@@ -1,5 +1,5 @@
 import re
-from .ids import with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, ret
+from .ids import next_name, with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, ret, refTo
 
 
 class Structure:
@@ -64,6 +64,39 @@ class Structure:
         while self.scan_while():
             ...
 
+    def scan_local(self):
+        result = list()
+        indent = -1
+        local_vars = list()
+        succeeded = False
+        for line in self.content.split("\n"):
+            if indent != -1:
+                cur_indent = len(firsts(line))
+                if cur_indent < indent:
+                    indent = -1
+                    local_vars.clear()
+                elif cur_indent == indent:
+                    for name in local_vars:
+                        line = re.sub(r"(\b)%s(\b)" % name, r"\1&%s\2" % name, line)
+                result.append(line)
+            else:
+                tmp = re.match(r"(\s*)local\s+(.*)", line)
+                if tmp is None:
+                    result.append(line)
+                else:
+                    indent = tmp.group(1)
+                    for name in tmp.group(2).split(" "):
+                        if len(name) > 0 and not name.isspace():
+                            local_vars.append(name)
+                    indent = len(indent)
+                    succeeded = True
+        self.content = "\n".join(result)
+        return succeeded
+
+    def scan_all_local(self):
+        while self.scan_local():
+            ...
+
     def scan_returns(self):
         result = list()
         for line in self.content.split("\n"):
@@ -85,6 +118,7 @@ class Structure:
     def work(self, output_name: str) -> str:
         self.scan_if()
         self.scan_all_while()
+        self.scan_all_local()
         self.scan_returns()
         self.break_shortcuts()
         output = output_name + ".struct"

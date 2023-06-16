@@ -8,7 +8,7 @@
 #include "map.h"
 
 namespace pups::library {
-    extern ObjectPtr sym_assign;
+    extern ObjectPtr sym_assign, sym_dynamic;
 
     class Constants {
     protected:

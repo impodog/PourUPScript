@@ -34,7 +34,7 @@ namespace pups::library::builtins::function {
     }
 
     std::string Function::type_name() const noexcept {
-        return "fun";
+        return "func";
     }
 
     void init_function() {

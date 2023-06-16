@@ -11,7 +11,7 @@
 namespace pups {
     // Link commonly used classes and functions
     using library::Id, library::Map, library::Object, library::Error, library::Constants, library::Control;
-    using library::builtins::function::Function, library::builtins::reference::Reference;
+    using library::builtins::function::Function;
     using library::builtins::numbers::Number, library::builtins::strings::String;
     constexpr const auto &init_builtins = library::builtins::init;
 }

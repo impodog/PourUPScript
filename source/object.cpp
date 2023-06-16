@@ -57,6 +57,8 @@ namespace pups::library {
         return true;
     }
 
+    Symbol::Symbol(std::string name) : m_name(std::move(name)) {}
+
     Id template_name(std::string name, const std::vector<std::string> &templates) {
         name = "_T_" + name;
         for (const auto &obj: templates)
