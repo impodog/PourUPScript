@@ -9,7 +9,7 @@
 namespace pups::library::builtins::reference {
     constexpr const char *REF_TYPE_NAME = "ref";
 
-    Reference::Reference(ObjectPtr &object) : m_ref(&object) {
+    Reference::Reference(ObjectPtr *object) : m_ref(object) {
 
     }
 
@@ -33,7 +33,7 @@ namespace pups::library::builtins::reference {
         if (args.size() != 1)
             map->throw_error(std::make_shared<ArgumentError>("For taking reference, one only argument is required."));
         else {
-            return std::make_shared<Reference>(*args.front());
+            return std::make_shared<Reference>(args.front());
         }
         return pending;
     }) {}

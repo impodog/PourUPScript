@@ -15,7 +15,7 @@ namespace pups::library::builtins::reference {
         ObjectPtrPtr m_ref;
     protected:
     public:
-        explicit Reference(ObjectPtr &object);
+        explicit Reference(ObjectPtr *object);
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 

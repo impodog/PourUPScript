@@ -25,6 +25,11 @@ namespace pups::library::builtins::builtin_func {
         Puts();
     };
 
+    class Call : public Function {
+    public:
+        Call();
+    };
+
     void init(Constants &constants);
 }
 

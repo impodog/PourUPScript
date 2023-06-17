@@ -36,11 +36,27 @@ namespace pups::library::builtins::builtin_func {
         return pending;
     }) {}
 
-    Id id_inputs{"", "inputs"}, id_print{"", "print"}, id_puts{"", "puts"};
+    Call::Call() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+        if (args.size() != 1)
+            map->throw_error(std::make_shared<ArgumentError>("Call function requires one only argument."));
+        else {
+            auto ptr = std::dynamic_pointer_cast<Function>(*args.front());
+            if (ptr)
+                return ptr->end_of_line(map);
+            else
+                map->throw_error(std::make_shared<TypeError>("Call function requires a Function."));
+        }
+        return pending;
+    }) {
+
+    }
+
+    Id id_inputs{"", "inputs"}, id_print{"", "print"}, id_puts{"", "puts"}, id_call{"", "call"};
 
     void init(Constants &constants) {
         constants.add(id_inputs, std::make_shared<Inputs>());
         constants.add(id_print, std::make_shared<Print>());
         constants.add(id_puts, std::make_shared<Puts>());
+        constants.add(id_call, std::make_shared<Call>());
     }
 }

@@ -7,7 +7,7 @@
 #include <utility>
 
 namespace pups::library::builtins::strings {
-    constexpr const char *STRING_TYPE_NAME = "str";
+    constexpr const char *name_string = "str";
 
     String::String(std::string data) : m_data(std::move(data)) {
 
@@ -36,7 +36,7 @@ namespace pups::library::builtins::strings {
     }
 
     std::string String::type_name() const noexcept {
-        return STRING_TYPE_NAME;
+        return name_string;
     }
 
     size_t String::hash() const noexcept {
@@ -93,6 +93,24 @@ namespace pups::library::builtins::strings {
         return pending;
     }
 
+    FunctionCore string_function(const std::function<std::string(const std::string &, const std::string &)> &core) {
+        return [core](FunctionArgs &args, Map *map) -> ObjectPtr {
+            if (args.size() != 2)
+                map->throw_error(std::make_shared<ArgumentError>("String operators requires two only arguments."));
+            else {
+                auto lhs = std::dynamic_pointer_cast<String>(*args.front());
+                args.pop();
+                auto rhs = std::dynamic_pointer_cast<String>(*args.front());
+                args.pop();
+                if (lhs && rhs)
+                    return std::make_shared<String>(core(lhs->data(), rhs->data()));
+                else
+                    map->throw_error(std::make_shared<TypeError>("String operators require two string arguments."));
+            }
+            return pending;
+        };
+    }
+
     ObjectPtr repr_of(FunctionArgs &args, Map *map) {
         std::string result;
         while (!args.empty()) {
@@ -115,7 +133,7 @@ namespace pups::library::builtins::strings {
 
     void init(Constants &constants) {
         static const auto add_s_func = [&constants](const std::string &name, const FunctionCore &core) {
-            constants.add(template_name(name, {STRING_TYPE_NAME}), std::make_shared<Function>(core));
+            constants.add(template_name(name, {name_string}), std::make_shared<Function>(core));
         };
         constants.add(id_repr_of, std::make_shared<Function>(repr_of));
         constants.add(id_typename_of, std::make_shared<Function>(typename_of));
@@ -128,5 +146,8 @@ namespace pups::library::builtins::strings {
         add_s_func("toi", string_to<int>);
         add_s_func("tof", string_to<float>);
         add_s_func("bool", string_to<bool>);
+        add_s_func("add", string_function([](const std::string &lhs, const std::string &rhs) -> std::string {
+            return lhs + rhs;
+        }));
     }
 }

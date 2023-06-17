@@ -1,0 +1,44 @@
+/* In this file, we see an unsafe, yet powerful technique in Puppyscript*/
+
+
+
+/* Name finding can be difficult. So why not we just use a reference to the name?
+Note that using references to names is unsafe, and can cause unsafe dereferencing.*/
+myName = "Dogs"
+myNameRef = ref myName // The reference is created here
+print myNameRef.data // The data that the reference saved is printed here
+myNameRef.data = myNameRef.data.add " Cute" // The data that the reference saved is changed here
+print myName // The original variable is affected by doing changes to the reference's data
+
+
+
+/* We can also use references to functions.*/
+func makeHello:
+    param nameRef
+    nameRef.data = {expr "Hello, " + nameRef.data + "!"}
+makeHello myNameRef // The function is called here with the reference passed
+print myName // Now myName is changed by the function
+del myNameRef // Deleting the reference after use is a good habit to prevent memory isuues
+
+
+
+/* Builtin containers also provided references to their elements.*/
+arr = array 1 2 3
+print arr
+arr_ref = arr.at_ref 1 // The reference to the second element
+arr_ref.data = 4 // The second element is changed
+print arr
+arr_ref = arr.at_ref 2 // The reference to the third element
+arr_ref.data = 5 // The third element is changed
+print arr
+del arr_ref // Delete the reference!
+
+
+
+/* Hashmaps also have references to their elements.*/
+hashm = hashmap 1::2 3::4 7::8
+print hashm
+hashm_ref = hashm.at_ref 7 // The reference to the value of key 7
+hashm_ref.data = 9 // The value of key 7 is changed
+print hashm
+del hashm_ref // Delete the reference!

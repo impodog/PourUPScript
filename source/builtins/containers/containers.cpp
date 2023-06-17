@@ -6,11 +6,7 @@
 
 namespace pups::library::builtins::containers {
     template<typename Container>
-    using ContainerOperatorCore = std::function<
-
-            ObjectPtr(const std::shared_ptr<Container> &, FunctionArgs &, Map *)
-
-    >;
+    using ContainerOperatorCore = std::function<ObjectPtr(const std::shared_ptr<Container> &, FunctionArgs &, Map *)>;
 
     template<typename Container>
     void constant_add(Constants &constants, const Id &name, const ContainerOperatorCore<Container> &core) {
@@ -100,7 +96,7 @@ namespace pups::library::builtins::containers {
             if (ptr) {
                 try {
                     if constexpr (return_reference)
-                        return std::make_shared<reference::Reference>(container->data.at(ptr->value));
+                        return std::make_shared<reference::Reference>(&container->data.at(ptr->value));
                     else
                         return container->data.at(ptr->value);
                 } catch (const std::out_of_range &exc) {
@@ -124,7 +120,7 @@ namespace pups::library::builtins::containers {
             auto ptr = *args.front();
             try {
                 if constexpr (return_reference)
-                    return std::make_shared<reference::Reference>(container->data.at(ptr));
+                    return std::make_shared<reference::Reference>(&container->data.at(ptr));
                 else
                     return container->data.at(ptr);
             } catch (const std::out_of_range &exc) {

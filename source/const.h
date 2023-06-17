@@ -20,7 +20,7 @@
 
 namespace pups::library {
     using std::filesystem::path;
-    constexpr const char *const PUPS_LIB_VERSION = "0.6.0";
+    constexpr const char *const PUPS_LIB_VERSION = "0.6.1";
     constexpr const char segment_symbol = '%';
     constexpr const char *RESERVED = "_R_";
 

@@ -48,11 +48,20 @@ class OperatorObject:
 
 def analyze(s: str) -> str:
     loc = locals()
+    changed = dict()
     names = re.findall(rf"{WORD}", s)
     for name in names:
+        if re.fullmatch(r"\w+", name) is None:
+            change_to = next_name("OP_TMP")
+            changed[change_to] = name
+            s = s.replace(name, change_to)
+            name = change_to
         loc[name] = OperatorObject(name)
     result: OperatorObject = eval(s)
-    return result.value
+    value = result.value
+    for change_to, name in changed.items():
+        value = value.replace(change_to, name)
+    return value
 
 
 class Operators:
@@ -75,13 +84,9 @@ class Operators:
     def scan_pairs(self):
         self.content = re.sub(rf"({WORD})\s*::\s*({WORD})", r"(pair \1 \2)", self.content)
 
-    def scan_call(self):
-        self.content = re.sub(rf"\bcall\s+({WORD})", r"(\1)", self.content)
-
     def work(self, output_name: str):
         self.scan_operators()
         self.scan_pairs()
-        self.scan_call()
         output = output_name + ".no_op"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)
