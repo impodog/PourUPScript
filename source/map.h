@@ -17,8 +17,11 @@ namespace pups::library {
         ObjectPtr m_base, m_return, m_temp;
         std::stack<ObjectPtr> m_memory_stack;
         std::queue<std::pair<ObjectPtr, ObjectPtr>> m_pending_put;
+        std::string m_execute_string;
 
-        Map *m_sub_map = nullptr, *m_parent_map = nullptr, *m_deepest = this;
+        using MapBarePtr = Map *;
+
+        MapBarePtr m_sub_map = nullptr, m_parent_map = nullptr, m_deepest = this, m_global = this, m_upsearch_map = this;
 
         ObjectPtr &local_find(const Id &name);
 
@@ -26,7 +29,8 @@ namespace pups::library {
 
         ObjectPtr &single_find(const Id &name);
 
-        ObjectPtr &staged_find(std::queue<std::string> &parts);
+        // Find objects from dotted stages. The map is used to "reput" caller
+        ObjectPtr &staged_find(std::queue<std::string> &parts, Map *map = nullptr);
 
         void copy_signs_from(Map *map);
 
@@ -46,7 +50,7 @@ namespace pups::library {
 
         ~Map() override;
 
-        explicit Map(Map *parent_map);
+        Map(Map *parent_map, bool allow_upsearch);
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
@@ -73,6 +77,8 @@ namespace pups::library {
         void report_errs();
 
         void copy_objects_from(Map *map);
+
+        size_t count_depth() const noexcept;
     };
 
     // This saves the number of errors reported. Can be freely set to 0.

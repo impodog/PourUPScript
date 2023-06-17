@@ -11,12 +11,13 @@ namespace pups::library {
     }
 
     Control::Control(const path &path, Constants &constants) :
-            idFile(read_file(path)), cur_id(&idFile.get_id()), map(std::make_shared<Map>()) {
-        constants.export_to(this->map.get());
+            idFile(read_file(path)), cur_id(&idFile.get_id()),
+            global_map(std::make_shared<Map>()), map(std::make_shared<Map>(global_map.get(), false)) {
+        constants.export_to(global_map.get());
     }
 
-    Control::Control(const path &path, Constants &constants, Map *map) :
-            idFile(read_file(path)), cur_id(&idFile.get_id()), map(std::make_shared<Map>(map)) {
+    Control::Control(const path &path, Constants &constants, Map *map, bool allow_upsearch) :
+            idFile(read_file(path)), cur_id(&idFile.get_id()), map(std::make_shared<Map>(map, allow_upsearch)) {
         constants.export_to(this->map.get());
     }
 

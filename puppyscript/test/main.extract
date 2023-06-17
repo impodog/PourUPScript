@@ -1,9 +1,12 @@
-x = _aNUM_b
-func f:
-    local x
-    x = x.add _aNUM_c
-f
-f
-print x
+
+value = _aNUM_f
+extern_value = _aNUM_g
+another_extern_value = _aNUM_h
+map Inside:
+    value = _aNUM_i 
+    extern extern_value 
+    extern_value = _aNUM_j 
+    &another_extern_value = _aNUM_k 
+print _aSTR_b value _aSTR_c Inside.value _aSTR_d extern_value _aSTR_e another_extern_value
 
 

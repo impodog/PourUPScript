@@ -1,7 +1,4 @@
 INT:
-_aNUM_c = 0
-_aNUM_d = 1
-_aNUM_e = 10
 FLOAT:
 STR:
-_aSTR_b = Now p is \
+_aSTR_b = test/module.pups

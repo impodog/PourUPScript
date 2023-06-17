@@ -53,7 +53,7 @@ As you can see, the statement can be a little messed up if the condition is alwa
 The break statement jumps out of the smallest enclosing while loop.*/
 print "Let me show you something *really* majestic:"
 i = 1
-while true:    /*"true" stands for "do this infinitely!"*/
+while true:    // "while true" stands for "do this infinitely!"
     print i
     i = i.add i
     if i.gt 1000:
@@ -74,3 +74,6 @@ while true:
     if i.gt 10000:
         break
 /*This statement means, if the expression "i.lt 1000", or "i < 1000" is true, the following block is skipped, and the loop is continued.*/
+
+/*After seeing all the code examples, you may have noticed that you can directly change the external variables in conditional blocks, but not in maps.
+This is a special design for conditional blocks! Please keep that in mind.*/

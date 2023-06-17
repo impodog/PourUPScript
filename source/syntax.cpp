@@ -23,6 +23,7 @@ namespace pups::library {
 
     Id::Id(const std::string &qual_id) {
         int status = 0;
+        bool is_dotted = false;
         for (auto c: qual_id) {
             switch (status) {
                 case 0:
@@ -34,8 +35,13 @@ namespace pups::library {
                     break;
                 case 1:
                     m_id.push_back(c);
-                    if (is_qualifier(c))
-                        throw std::runtime_error("Unexpected qualifier: " + std::to_string(c));
+                    if (is_qualifier(c)) {
+                        if (!is_dotted)
+                            throw std::runtime_error("Unexpected qualifier: " + std::to_string(c) + " in id \"" + qual_id + "\"");
+                    } else
+                        is_dotted = false;
+                    if (c == '.')
+                        is_dotted = true;
                     break;
                 default:
                     throw std::runtime_error("Unknown status: " + std::to_string(status));
@@ -62,7 +68,7 @@ namespace pups::library {
     std::queue<std::string> Id::split_by(char sep) const {
         std::queue<std::string> result;
         result.emplace();
-        for (auto c: m_id)
+        for (auto c: str())
             if (c == sep) result.emplace();
             else result.back().push_back(c);
         return result;

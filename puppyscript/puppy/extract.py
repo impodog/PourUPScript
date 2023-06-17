@@ -42,7 +42,7 @@ class Extract:
             if is_negative:
                 value = "-" + value
             self.extracted[name] = eval(value)
-            self.content = re.sub((('()' if is_negative else r'(\b)') + r"%s(\b)") % value, r"\1%s\2" % name,
+            self.content = re.sub((('()' if is_negative else r'([^-\w])') + r"%s(\b)") % value, r"\1%s\2" % name,
                                   self.content)
 
     def extract_string(self):

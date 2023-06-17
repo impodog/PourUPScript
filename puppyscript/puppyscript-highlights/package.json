@@ -1,0 +1,25 @@
+{
+  "name": "puppyscript-highlights",
+  "displayName": "Puppyscript Highlights",
+  "description": "Highlights simple Puppyscript syntax",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.79.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "puppyscript",
+      "aliases": ["Puppyscript", "puppyscript"],
+      "extensions": [".puppy"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "puppyscript",
+      "scopeName": "source.puppy",
+      "path": "./syntaxes/puppyscript.tmLanguage.json"
+    }]
+  }
+}

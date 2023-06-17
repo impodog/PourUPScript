@@ -1,5 +1,5 @@
 import re
-from .ids import next_name, with_cmd, moveTo, with_stmt_line, stmt_add_brc
+from .ids import next_name, with_cmd, moveTo, with_stmt_line, stmt_add_brc, WORD, INDENT
 
 
 class Assignment:
@@ -12,11 +12,11 @@ class Assignment:
     def scan_assign(self):
         result: list[str] = [""]
         for line in self.content.split("\n"):
-            tmp = re.fullmatch(r"(\s*)([\w.]+)\s*=\s*(.+)", line)
+            tmp = re.fullmatch(rf"(\s*)({WORD})\s*=\s*(.+?)\s*", line)
             if tmp is None:
                 result.append(line)
             else:
-                prev = re.fullmatch(r"%s\s+([\w.]+)\s*" % (tmp.group(1) + moveTo), result[-1])
+                prev = re.fullmatch(rf"%s\s+({WORD})\s*" % (tmp.group(1) + moveTo), result[-1])
                 if prev is not None and prev.group(1) == tmp.group(3):
                     result[-1] = tmp.group(1) + moveTo + " " + tmp.group(2)
                 else:
@@ -24,8 +24,20 @@ class Assignment:
                     result.append("%s %s" % (tmp.group(1) + moveTo, tmp.group(2)))
         self.content = "\n".join(result[1:])
 
+    def scan_import(self):
+        result = list()
+        for line in self.content.split("\n"):
+            tmp = re.fullmatch(rf"(\s*)imp\s+({WORD})\s+as\s+({WORD})", line)
+            if tmp is None:
+                result.append(line)
+            else:
+                result.append("%s %s" % (tmp.group(1) + "imp", tmp.group(2)))
+                result.append("%s %s" % (tmp.group(1) + moveTo, tmp.group(3)))
+        self.content = "\n".join(result)
+
     def work(self, output_name: str) -> str:
         self.scan_assign()
+        self.scan_import()
         output = output_name + ".no_assign"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)

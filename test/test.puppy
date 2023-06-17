@@ -1,7 +1,2 @@
-map A:
-    func B:
-        param &p
-        if p.gt 0:
-            print "Now p is " p
-            B (p.sub 1)
-A.B 10
+imp "test/module.pups" as module
+print module.a

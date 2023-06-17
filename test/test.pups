@@ -1,12 +1,3 @@
-map A:
-    func B:
-        param &p
-        p.gt _aNUM_c
-        mov _aFAC_f
-        with _aFAC_f
-        if:
-            print _aSTR_b p
-            p.sub _aNUM_d
-            mov _aFAC_g
-            B _aFAC_g
-A.B _aNUM_e
+imp _aSTR_b
+mov module
+print module.a

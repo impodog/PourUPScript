@@ -14,14 +14,16 @@ namespace pups::library {
     ObjectPtr &Map::local_find(const Id &name) {
         try {
             return m_map.at(name);
-        } catch (const std::out_of_range &) {
-            add_object(name);
-            return m_map.at(name);
-        }
+        } catch (const std::out_of_range &) {}
+        try {
+            return m_global->m_map.at(name);
+        } catch (const std::out_of_range &) {}
+        add_object(name);
+        return m_map.at(name);
     }
 
     ObjectPtr &Map::bare_find(const Id &name) {
-        Map *map = m_deepest;
+        Map *map = this;
         while (map) {
             try {
                 return map->m_map.at(name);
@@ -35,12 +37,14 @@ namespace pups::library {
 
     ObjectPtr &Map::single_find(const Id &name) {
         if (name.qual_has('&'))
-            return local_find(name);
-        else
             return bare_find(name);
+        else
+            return local_find(name);
     }
 
-    ObjectPtr &Map::staged_find(std::queue<std::string> &parts) {
+    ObjectPtr &Map::staged_find(std::queue<std::string> &parts, Map *map) {
+        if (map == nullptr)
+            map = this;
         ObjectPtr *object = &single_find(Id{parts.front()});
         MapPtr tmp;
         parts.pop(); // since the first is used, pop it
@@ -52,7 +56,7 @@ namespace pups::library {
                 bool reput_this = false;
                 auto next = &object->get()->find(Id{parts.front()}, this, &reput_this);
                 if (reput_this)
-                    m_pending_put.emplace(*next, *object);
+                    map->m_pending_put.emplace(*next, *object);
                 object = next;
             }
             parts.pop();
@@ -75,8 +79,12 @@ namespace pups::library {
             report_errs();
     }
 
-    Map::Map(Map *parent_map) : m_parent_map(parent_map) {
-        m_parent_map->m_sub_map = this;
+    Map::Map(Map *parent_map, bool allow_upsearch) :
+            m_parent_map(parent_map), m_global(parent_map->m_global) {
+        if (allow_upsearch)
+            // The default upsearch map is m_parent_map unless it's changed
+            m_upsearch_map = m_parent_map->m_upsearch_map;
+        m_parent_map->set_child(this);
     }
 
     ObjectPtr Map::put(ObjectPtr &object, Map *map) {
@@ -105,11 +113,12 @@ namespace pups::library {
     }
 
     ObjectPtr &Map::find(const Id &name, Map *map, bool *reput_this) {
+        //std::cout << "FINDING " << name.str() << std::endl;
         auto parts = name.split_by('.');
         if (parts.size() == 1)
-            return single_find(name);
+            return m_upsearch_map->single_find(name);
         else
-            return staged_find(parts);
+            return m_upsearch_map->staged_find(parts, this);
     }
 
     void Map::throw_error(const ErrorPtr &error) {
@@ -196,6 +205,16 @@ namespace pups::library {
             if (id.empty() || id.front() != '_')
                 add_object(obj.first, obj.second);
         }
+    }
+
+    size_t Map::count_depth() const noexcept {
+        const Map *map = this;
+        size_t result = 1;
+        while (map) {
+            result++;
+            map = map->m_sub_map;
+        }
+        return result;
     }
 
     ObjectPtr &Object::find(const Id &name, Map *map, bool *reput_this) {

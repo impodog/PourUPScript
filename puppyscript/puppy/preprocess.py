@@ -55,6 +55,7 @@ class Preprocess:
 
     def remove_comments(self):
         self.content = re.sub(r"/\*.*?\*/", "", self.content, flags=re.S)
+        self.content = re.sub(r"//.+\n", "\n", self.content)
 
     def fix_line_continue(self):
         stack = str()

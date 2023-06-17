@@ -1,6 +1,6 @@
 import re
 
-from .ids import next_name, with_cmd, moveTo
+from .ids import next_name, with_cmd, moveTo, WORD
 
 
 class OperatorObject:
@@ -48,7 +48,7 @@ class OperatorObject:
 
 def analyze(s: str) -> str:
     loc = locals()
-    names = re.findall(r"[\w.]+", s)
+    names = re.findall(rf"{WORD}", s)
     for name in names:
         loc[name] = OperatorObject(name)
     result: OperatorObject = eval(s)

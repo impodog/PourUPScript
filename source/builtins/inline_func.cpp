@@ -28,7 +28,7 @@ namespace pups::library::builtins::inline_func {
     InlineFunc::InlineFunc(IdFile idFile, Map *m_static_link) :
             m_idFile(std::move(idFile)), m_static_link(m_static_link),
             Function([this](const FunctionArgs &args, Map *map) -> ObjectPtr {
-                MapPtr sub_map = std::make_shared<Map>(this->m_static_link ? this->m_static_link : map);
+                MapPtr sub_map = std::make_shared<Map>(this->m_static_link ? this->m_static_link : map, false);
                 Control control(m_idFile, sub_map);
                 add_arguments(sub_map, args);
                 control.run();

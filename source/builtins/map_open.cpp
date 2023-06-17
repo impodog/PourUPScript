@@ -14,7 +14,7 @@ namespace pups::library::builtins::map_open {
                                     "Map opening must find one long str argument in the back."));
                     return pending;
                 }
-                MapPtr sub_map = std::make_shared<Map>(map);
+                MapPtr sub_map = std::make_shared<Map>(map, false);
                 Control control(*std::static_pointer_cast<LongStr>(*args.back())->ids(), sub_map);
                 control.run();
                 while (args.size() != 1) {
@@ -36,7 +36,7 @@ namespace pups::library::builtins::map_open {
             if (std::filesystem::exists(p)) {
                 path const_path = p.parent_path().append(p.stem().string() + ".con");
                 Constants constants(const_path);
-                Control control(p, constants, map);
+                Control control(p, constants, map, false);
                 control.run();
                 return control.map;
             } else {

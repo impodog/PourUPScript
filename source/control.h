@@ -10,14 +10,14 @@
 namespace pups::library {
     class Control {
     public:
-        MapPtr map;
+        MapPtr global_map = nullptr, map;
         IdFile idFile;
         const IdFactor *cur_id;
         bool is_new_line = false;
 
         explicit Control(const path &path, Constants &constants);
 
-        explicit Control(const path &path, Constants &constants, Map *map);
+        explicit Control(const path &path, Constants &constants, Map *map, bool allow_upsearch);
 
         explicit Control(const IdFile &idFile, MapPtr map);
 

@@ -24,6 +24,16 @@ namespace pups::library {
         back = source.substr(index + 1);
     }
 
+    void replace_all(std::string &source, const char *from, const char *to) {
+        size_t ret_pos;
+        do {
+            ret_pos = source.find(from);
+            if (ret_pos == std::string::npos)
+                break;
+            source.replace(ret_pos, 2, to);
+        } while (true);
+    }
+
     std::string ltrim(const std::string &s) {
         size_t start = s.find_first_not_of(' ');
         return (start == std::string::npos) ? "" : s.substr(start);
@@ -80,13 +90,7 @@ namespace pups::library {
                             back = back.substr(1);
                         if (back.back() == '\\')
                             back = back.substr(0, back.size() - 1);
-                        size_t ret_pos;
-                        do {
-                            ret_pos = back.find("\\n");
-                            if (ret_pos == std::string::npos)
-                                break;
-                            back = back.replace(ret_pos, 2, "\n");
-                        } while (true);
+                        replace_all(back, "\\n", "\n");
                         add(Id{"", front}, std::make_shared<builtins::strings::String>(back));
                         break;
                 }

@@ -1,0 +1,53 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Puppyscript",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#numberd"
+		},
+		{
+			"include": "#comments"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"name": "keyword.control.puppyscript",
+			"match": "\\b(map|func|param|ret|extern|if|elif|else|while|break|conti|true|false|print|inputs|imp|as)\\b"
+		},
+		"strings": {
+			"name": "string.quoted.double.puppyscript",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.puppyscript",
+					"match": "\\\\."
+				}
+			]
+		},
+		"numbers": {
+			"name": "constant.numeric.puppyscript",
+			"match": "\\b(\\d+(\\.\\d+)?)\\b"
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.puppyscript",
+					"match": "//.*"
+				},
+				{
+					"name": "comment.line.puppyscript",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
+		}
+	},
+	"scopeName": "source.puppy"
+}

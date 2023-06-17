@@ -2,6 +2,7 @@
 /*This is a
 multi-line
 comment!*/
+// Comments can also be in-line!
 
 /*The programs starts at the beginning of the file.
 Here, which is the global "map", or namespace, we store all the variables, constants, keywords and such.

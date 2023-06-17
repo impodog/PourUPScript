@@ -5,7 +5,7 @@ If different parts of a script repeat the same task, you can reuse the function 
 func bark:
     print "Woof!"
     print "I'm a dog!"
-bark /*This means to execute the function, or say, do the statements you have just wrote.*/
+bark //This means to execute the function, or say, do the statements you have just wrote in a separate map.
 print "So what are you?"
 inputs name
 print "I don't care!"
@@ -29,7 +29,7 @@ func add:
     param a b
     ret a.add b
 func sub:
-    param a b /*This function uses the same names with the same meanings, but it doesn't matter, since the function is isolated.*/
+    param a b //This function uses the same names with the same meanings, but it doesn't matter, since the function is isolated.
     ret a.sub b
 /*This is the main code, and it uses the same names. But functions stopped them from conflicting.*/
 a = 3
@@ -48,12 +48,12 @@ printName "Bob"
 
 
 
-/*Functions have one special uaage: recursion. Recursion is when a function calls itself. This is useful for making loops.*/
+/*Functions have one special usage: recursion. Recursion is when a function calls itself. This is useful for making loops.*/
 func countDown:
     param n
     print n
     if n.gt 0:
-        countDown (n.sub 1)
+        &countDown (n.sub 1) // The "&" is used here because we're inside a function map, and the function we want to find is outside the function map.
 countDown 10
 /*This function counts down from n to 0.
 It prints n, and then calls itself with n - 1, until n is 0.

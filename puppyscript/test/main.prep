@@ -1,9 +1,12 @@
-x = 1
-func f:
-    local x
-    x = x.add 3
-f
-f
-print x
+
+value = 3
+extern_value = 6
+another_extern_value = 2
+map Inside:
+    value = 5 
+    extern extern_value 
+    extern_value = 7 
+    &another_extern_value = -3 
+print "Outside:" value " Inside:" Inside.value " Extern Value:" extern_value " Another Extern Value:" another_extern_value
 
 

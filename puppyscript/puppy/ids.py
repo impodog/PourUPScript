@@ -23,8 +23,12 @@ def firsts(s: str, sub: str = "\t ") -> str:
     return result
 
 
+WORD = r"[\w.&]+"
+INDENT = r"[^\S\n]*"
+
+
 def is_word(s: str) -> bool:
-    return re.fullmatch(r"[\w.]+", s) is not None
+    return re.fullmatch(rf"{WORD}", s) is not None
 
 
 def stmt_add_brc(s: str) -> str:

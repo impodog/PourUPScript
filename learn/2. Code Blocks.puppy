@@ -67,4 +67,16 @@ Yes. We can. The data is still there, but we just can't access it from the name 
 To avoid this(and possibly create bugs), we can use "del" keyword to delete the data permanantly.*/
 del Outer.Inner.b
 del Outer
-/*Now we can't access the data from any name.*/
+
+
+
+/*To access values from a inner map, we use "extern" keyword to say "I want to access the value from somewhere outside the map"*/
+value = 3
+extern_value = 6
+another_extern_value = 2
+map Inside:
+    value = 5 // Values use different spaces in different maps, even when the maps contain each other!
+    extern extern_value // This is the value from outside the map.
+    extern_value = 7 // Now we can change it!
+    &another_extern_value = -3 // We can also declare external values in an expression by using "&" operator. It will only take effect at the moment we access the value.
+print "Outside:" value " Inside:" Inside.value " Extern Value:" extern_value " Another Extern Value:" another_extern_value

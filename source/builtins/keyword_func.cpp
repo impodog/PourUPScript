@@ -26,7 +26,7 @@ namespace pups::library::builtins::keyword_func {
                                         "Incorrect argument for keyword if(no arguments). One long string is required."));
                     else {
                         if (map->get_temp()->condition() ^ require_false) {
-                            sub_map = std::make_shared<Map>(map);
+                            sub_map = std::make_shared<Map>(map, true);
                             Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
                             control.run();
                             result = true;
@@ -47,14 +47,14 @@ namespace pups::library::builtins::keyword_func {
                             "Incorrect argument for keyword while. One long string is required."));
         else {
             ObjectPtr break_v = pending;
-            sub_map = std::make_shared<Map>(map);
+            sub_map = std::make_shared<Map>(map, true);
             Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
             while (break_v == pending || (break_v->condition() ^ require_false)) {
                 control.run();
                 break_v = sub_map->signs.break_sign;
                 if (break_v == nullptr) break_v = pending;
 
-                sub_map = std::make_shared<Map>(sub_map->get_parent());
+                sub_map = std::make_shared<Map>(sub_map->get_parent(), true);
                 control.restart(sub_map);
             }
             sub_map->signs.set_break_sign(nullptr);
