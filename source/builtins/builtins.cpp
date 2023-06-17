@@ -16,6 +16,7 @@ namespace pups::library::builtins {
         strings::init(constants);
         map_open::init(constants);
         builtin_func::init(constants);
-        //reference::init(constants);
+        reference::init(constants);
+        containers::init(constants);
     }
 }

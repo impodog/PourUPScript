@@ -47,7 +47,19 @@ namespace pups::library {
 
         [[nodiscard]] virtual bool condition() const noexcept;
 
-        virtual std::string type_name() const noexcept;
+        [[nodiscard]] virtual std::string type_name() const noexcept;
+
+        [[nodiscard]] virtual size_t hash() const noexcept;
+
+        virtual size_t equal(const ObjectPtr &object) const noexcept;
+    };
+
+    struct ObjectHash {
+        size_t operator()(const ObjectPtr &object) const;
+    };
+
+    struct ObjectEqual {
+        size_t operator()(const ObjectPtr &lhs, const ObjectPtr &rhs) const;
     };
 
     class Pending final : public Object {

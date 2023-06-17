@@ -19,7 +19,7 @@ namespace pups::library::builtins::strings {
             else {
                 auto ptr = std::dynamic_pointer_cast<String>(*args.front());
                 if (ptr)
-                    return this->m_data == ptr->m_data ? numbers::True : numbers::False;
+                    return this->data() == ptr->data() ? numbers::True : numbers::False;
                 else
                     map->throw_error(std::make_shared<ArgumentError>("String.eq requires a string argument"));
             }
@@ -38,6 +38,10 @@ namespace pups::library::builtins::strings {
         [[nodiscard]] const std::string &data() const noexcept;
 
         [[nodiscard]] std::string type_name() const noexcept override;
+
+        [[nodiscard]] size_t hash() const noexcept override;
+
+        [[nodiscard]] size_t equal(const ObjectPtr &object) const noexcept override;
     };
 
     void init(Constants &constants);

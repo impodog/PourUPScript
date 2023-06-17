@@ -1,2 +1,0 @@
-imp "test/module.pups" as module
-print module.a

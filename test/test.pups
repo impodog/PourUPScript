@@ -1,3 +1,0 @@
-imp _aSTR_b
-mov module
-print module.a

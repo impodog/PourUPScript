@@ -9,7 +9,7 @@
 namespace pups::library::builtins::reference {
     constexpr const char *REF_TYPE_NAME = "ref";
 
-    Reference::Reference(ObjectPtr &object) : m_ref(std::make_shared<ObjectPtr>(object)) {
+    Reference::Reference(ObjectPtr &object) : m_ref(&object) {
 
     }
 

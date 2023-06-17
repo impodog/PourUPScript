@@ -20,9 +20,11 @@
 
 namespace pups::library {
     using std::filesystem::path;
-    constexpr const char *const PUPS_LIB_VERSION = "0.5.0";
+    constexpr const char *const PUPS_LIB_VERSION = "0.6.0";
     constexpr const char segment_symbol = '%';
     constexpr const char *RESERVED = "_R_";
+
+    using cstr = const char *;
 }
 
 #endif //PUPS_EZN_CONST_H

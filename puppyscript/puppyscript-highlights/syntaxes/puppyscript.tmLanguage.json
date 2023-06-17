@@ -18,7 +18,7 @@
 	"repository": {
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(map|func|param|ret|extern|if|elif|else|while|break|conti|true|false|print|inputs|imp|as)\\b"
+			"match": "\\b(map|func|param|ret|extern|if|elif|else|while|break|conti|true|false|print|inputs|imp|as|puts|array|pair|hashmap)\\b"
 		},
 		"strings": {
 			"name": "string.quoted.double.puppyscript",

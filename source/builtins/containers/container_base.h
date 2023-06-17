@@ -1,0 +1,24 @@
+//
+// Created by impodog on 6/17/2023.
+//
+
+#ifndef PUPS_LIB_TESTS_CONTAINER_BASE_H
+#define PUPS_LIB_TESTS_CONTAINER_BASE_H
+
+#include "../function.h"
+#include "../reference.h"
+#include "../numbers.h"
+
+namespace pups::library::builtins::containers {
+    using namespace function;
+    constexpr cstr name_array = "array", name_pair = "pair", name_hashmap = "hashmap";
+
+    class ContainerBase : public Object {
+    public:
+        ObjectPtr put(ObjectPtr &object, Map *map) override;
+    };
+
+    using ContainerPtr = std::shared_ptr<ContainerBase>;
+}
+
+#endif //PUPS_LIB_TESTS_CONTAINER_BASE_H

@@ -7,7 +7,6 @@
 #include "builtins/strings.h"
 
 namespace pups::library {
-    using cstr = const char *;
     constexpr cstr sym_name_assign = "assign",
             sym_name_dynamic = "dynamic";
     ObjectPtr sym_assign = std::make_shared<Symbol>(sym_name_assign),
@@ -80,10 +79,10 @@ namespace pups::library {
                         std::cout << "Line \"" << line << "\" is skipped because no status is set." << std::endl;
                         break;
                     case stat_int:
-                        add(Id{"", front}, std::make_shared<builtins::numbers::NumType<int>>(std::stoi(back)));
+                        add(Id{"", front}, std::make_shared<builtins::numbers::IntType>(std::stoi(back)));
                         break;
                     case stat_float:
-                        add(Id{"", front}, std::make_shared<builtins::numbers::NumType<float>>(std::stof(back)));
+                        add(Id{"", front}, std::make_shared<builtins::numbers::FloatType>(std::stof(back)));
                         break;
                     case stat_str:
                         if (back.front() == '\\')

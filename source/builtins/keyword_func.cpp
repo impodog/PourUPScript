@@ -124,7 +124,7 @@ namespace pups::library::builtins::keyword_func {
 
     Id id_moveTo{"", "mov"}, id_if{"", "if"}, id_elif{"", "elif"}, id_if_not{"", "if_not"}, id_elif_not{"", "elif_not"},
             id_whileTrue{"", "while"}, id_whileFalse{"", "while_not"}, id_return{"", "ret"},
-            id_with{"", "with"}, id_pop{"", "pop"}, id_delete{"", "del"}, id_break{"", "break"},
+            id_with{"", "with"}, id_pop{"", "pop_back"}, id_delete{"", "del"}, id_break{"", "break"},
             id_unmap{"", "unmap"};
 
     void init(Constants &constants) {

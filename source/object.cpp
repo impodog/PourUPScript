@@ -35,6 +35,22 @@ namespace pups::library {
         return "o";
     }
 
+    size_t Object::hash() const noexcept {
+        return std::hash<const void *>()(reinterpret_cast<const void *>(this));
+    }
+
+    size_t Object::equal(const ObjectPtr &object) const noexcept {
+        return this == object.get();
+    }
+
+    size_t ObjectHash::operator()(const ObjectPtr &object) const {
+        return object->hash();
+    }
+
+    size_t ObjectEqual::operator()(const ObjectPtr &lhs, const ObjectPtr &rhs) const {
+        return lhs->equal(rhs);
+    }
+
     std::string Pending::str() const noexcept {
         return "<Object:Pending>";
     }

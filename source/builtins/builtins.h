@@ -13,7 +13,8 @@
 #include "map_open.h"
 #include "qualifiers.h"
 #include "builtin_func.h"
-// /*DEPRECATED*/ #include "reference.h"
+#include "reference.h"
+#include "containers/containers.h"
 
 
 namespace pups::library::builtins {

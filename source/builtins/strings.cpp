@@ -39,6 +39,15 @@ namespace pups::library::builtins::strings {
         return STRING_TYPE_NAME;
     }
 
+    size_t String::hash() const noexcept {
+        return std::hash<std::string>()(m_data);
+    }
+
+    size_t String::equal(const ObjectPtr &object) const noexcept {
+        auto ptr = std::dynamic_pointer_cast<String>(object);
+        return ptr && m_data == ptr->m_data;
+    }
+
 #define s_func(op) [](FunctionArgs &args, Map *map) -> ObjectPtr {\
     const std::string *str = nullptr;\
     while (!args.empty()) {\

@@ -37,7 +37,7 @@ namespace pups::library::builtins::function {
         return "func";
     }
 
-    void init_function() {
+    void init(Constants &constants) {
 
     }
 }

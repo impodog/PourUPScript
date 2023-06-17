@@ -1,0 +1,87 @@
+/* In this file, we're going to get to know about some important data structures : Containers
+Containers are collections of objects. They are used to save uncertain number of objects.*/
+
+
+
+/* Array : Arrays are used to store store an ordered list of items.
+Unlike arrays in other languages, arrays here are dynamic, just like vectors in C++.
+Small tip if you don't know: Arrays are 0-indexed, which means that the first element of the array is at index 0, and the last element is at index n-1, where n is the size of the array.*/
+arr = array 1 2 3 4 5 // Array creation
+print (arr.at 0) // Accessing elements of array, should print 1
+print (arr.at 3) // Should print 4
+print arr // You can also print the whole array
+
+
+
+/* Arrays can be variable. The elements can be changed like so:*/
+arr.push 123 // Adds 123 to the *end* of the array
+print arr // Should print 1 2 3 4 5 123
+arr.pop // Removes the last element of the array
+print arr // Should print 1 2 3 4 5
+arr.insert 2 -123 // Inserts -123 at index 2(which is the 3rd element of the array!)
+print arr // Should print 1 2 -123 3 4 5
+arr.pop_at 3 // Removes the element at index 3(which is the 4th element of the array!)
+print arr // Should print 1 2 -123 4 5
+arr.clear // Removes all elements of the array
+print arr // Should print no elements
+arr.push 6 7 8 9 10 // Adds 6 7 8 9 10 to the end of the array
+
+
+
+/* Sometimes, you may want to do something with each element of the array. For that, you can use the while loop.*/
+i = 0
+size = call arr.get_size // Umm, the keyword "call" does nothing but declares that is it a call, rather than passing the function to the variable.
+while true:
+    puts (arr.at i) // "puts" shows the output, but without a newline, and will not show immediately, but after the a "print" appears
+    i = i.add 1
+    if i.ne size:
+        puts " and then " // This is to print a space between the elements
+    else:
+        print " then end!"
+        break
+/*Try to figure this code out!*/
+
+
+
+/* Another data structure is the pair. A pair is a container that stores two elements. A pair can be cerate simple by "x::y", where x and y are the elements.*/
+p = 1::2 // Creates a pair with 1 and 2
+print p
+print "Left is " p.left // Prints the left element of the pair
+print "Right is " p.right // Prints the right element of the pair
+/*Pretty simple, right?*/
+
+
+
+/* Another data structure is the hashmap. A hashmap is a container that stores as many key-value pairs. A hashmap can be created by using multiple pairs:*/
+hashm = hashmap 1::2 3::4 5::6 // Creates a hashmap with 3 pairs
+print hashm
+
+
+
+/* The hashmap takes advantage of accessing muliple pairs by using their key(or left element) quickly. For example:*/
+print (hashm.at 1) // Prints the value of the pair with key 1
+print (hashm.at 3) // Prints the value of the pair with key 3
+/*This is much faster than using a loop to find the pair with the key.*/
+
+
+
+/* The hashmap can also be "done something to each element", or as we say "iterated".*/
+i = 0
+size = call hashm.get_size
+keys = call hashm.get_keys // Gets all the keys of the hashmap to be iterated
+print "Keys are: " keys
+print "Values are..."
+while true:
+    value = hashm.at (keys.at i) // Get the value of the pair with the key at index i
+    puts value
+    i = i.add 1
+    if i.ne size:
+        puts " and then "
+    else:
+        print " then end!"
+        break
+/*By running these you may have noticed, that the keys are not in order. This is because the hashmap is not ordered, which helps it to be faster.*/
+
+
+
+/* There are still advanced usages of these, and we'll talk about them very soon!*/

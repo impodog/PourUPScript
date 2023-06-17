@@ -54,6 +54,15 @@ namespace pups::library::builtins::numbers {
             else
                 return value != 0;
         }
+
+        [[nodiscard]] size_t hash() const noexcept override {
+            return std::hash<Arithmetic>()(value);
+        }
+
+        [[nodiscard]] size_t equal(const ObjectPtr &object) const noexcept override {
+            auto ptr = std::dynamic_pointer_cast<Number>(object);
+            return ptr && value == ptr->value;
+        }
     };
 
     template<typename Arithmetic>
@@ -74,6 +83,10 @@ namespace pups::library::builtins::numbers {
     using NumCoreRef = const NumCore<Arithmetic> &;
 
     extern ObjectPtr True, False;
+
+    using IntType = NumType<int>;
+    using FloatType = NumType<float>;
+    using BoolType = NumType<bool>;
 
     void init(Constants &constants);
 }

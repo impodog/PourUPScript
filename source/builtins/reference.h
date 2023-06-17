@@ -11,7 +11,7 @@ namespace pups::library::builtins::reference {
     using namespace function;
 
     class Reference : public Object {
-        using ObjectPtrPtr = std::shared_ptr<ObjectPtr>;
+        using ObjectPtrPtr = ObjectPtr *;
         ObjectPtrPtr m_ref;
     protected:
     public:

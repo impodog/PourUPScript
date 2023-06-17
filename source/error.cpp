@@ -42,4 +42,10 @@ namespace pups::library {
     }
 
     ValueError::ValueError(const std::string &s) : Error(s) {}
+
+    std::string OutOfBoundError::error_name() const noexcept {
+        return "OutOfBoundError";
+    }
+
+    OutOfBoundError::OutOfBoundError(const std::string &s) : Error(s) {}
 }
