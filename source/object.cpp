@@ -24,7 +24,11 @@ namespace pups::library {
     }
 
     std::string Object::str() const noexcept {
-        return "<Object:" + std::to_string(m_count) + ">";
+        return "<" + type_name() + ":" + std::to_string(m_count) + " at " + to_string(this) + ">";
+    }
+
+    std::string Object::repr() const noexcept {
+        return str();
     }
 
     bool Object::condition() const noexcept {
@@ -32,7 +36,7 @@ namespace pups::library {
     }
 
     std::string Object::type_name() const noexcept {
-        return "o";
+        return "object";
     }
 
     size_t Object::hash() const noexcept {
@@ -51,8 +55,8 @@ namespace pups::library {
         return lhs->equal(rhs);
     }
 
-    std::string Pending::str() const noexcept {
-        return "<Object:Pending>";
+    std::string Pending::type_name() const noexcept {
+        return "pending";
     }
 
     bool Pending::condition() const noexcept {

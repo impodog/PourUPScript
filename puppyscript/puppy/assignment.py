@@ -1,5 +1,5 @@
 import re
-from .ids import next_name, with_cmd, moveTo, with_stmt_line, stmt_add_brc, WORD, INDENT
+from .ids import next_name, with_cmd, moveTo, with_stmt_line, stmt_add_brc, is_word, refTo, del_cmd, WORD, INDENT
 
 
 class Assignment:
@@ -20,8 +20,16 @@ class Assignment:
                 if prev is not None and prev.group(1) == tmp.group(3):
                     result[-1] = tmp.group(1) + moveTo + " " + tmp.group(2)
                 else:
-                    result.append(with_stmt_line(tmp.group(1), tmp.group(3)))
-                    result.append("%s %s" % (tmp.group(1) + moveTo, tmp.group(2)))
+                    if is_word(tmp.group(2)):
+                        result.append(with_stmt_line(tmp.group(1), tmp.group(3)))
+                        result.append("%s %s" % (tmp.group(1) + moveTo, tmp.group(2)))
+                    else:
+                        new_name = next_name("ASL")
+                        result.append("%s %s" % (tmp.group(1) + refTo, tmp.group(2)))
+                        result.append("%s %s" % (tmp.group(1) + moveTo, new_name))
+                        result.append(with_stmt_line(tmp.group(1), tmp.group(3)))
+                        result.append("%s %s.data" % (tmp.group(1) + moveTo, new_name))
+                        result.append("%s %s" % (tmp.group(1) + del_cmd, new_name))
         self.content = "\n".join(result[1:])
 
     def scan_import(self):

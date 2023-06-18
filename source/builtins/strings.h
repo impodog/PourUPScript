@@ -19,10 +19,12 @@ namespace pups::library::builtins::strings {
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
+        [[nodiscard]] std::string str() const noexcept override;
+
+        std::string repr() const noexcept override;
+
         FunctionCore get_method(const Id &name) override;
 
-
-        [[nodiscard]] std::string str() const noexcept override;
 
         [[nodiscard]] std::string &data() noexcept;
 

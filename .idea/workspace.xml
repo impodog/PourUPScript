@@ -22,36 +22,23 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.6.0&#10;Add data structures as well as their tutorial">
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/puppyscript/puppy/assignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/assignment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/brackets.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/brackets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/ids.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/ids.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_array.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_array.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_array.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_array.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_base.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_base.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_pair.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_pair.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_pair.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_pair.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/containers/containers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/containers.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/reference.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/reference.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/reference.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/reference.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/strings.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/strings.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/syntax.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +124,6 @@
     </configuration>
     <configuration name="pups_Lib_Tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib_Tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib_Tests">
       <method v="2">
-        <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Puppyscript-Keep-Temp" />
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
@@ -194,7 +180,7 @@
       <workItem from="1686953127121" duration="1196000" />
       <workItem from="1686958288627" duration="25456000" />
       <workItem from="1686998831547" duration="3233000" />
-      <workItem from="1687043093097" duration="8354000" />
+      <workItem from="1687043093097" duration="11869000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -294,7 +280,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687002072582</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!">
+      <created>1687051864745</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1687051864745</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +315,8 @@
     <MESSAGE value="v0.5.0&#10;Better finding logic(extern, auto upfind)" />
     <MESSAGE value="Upload cmake config" />
     <MESSAGE value="v0.6.0&#10;Add data structures as well as their tutorial" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.6.0&#10;Add data structures as well as their tutorial" />
+    <MESSAGE value="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

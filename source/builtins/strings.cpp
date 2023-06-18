@@ -3,6 +3,7 @@
 //
 
 #include "strings.h"
+#include "containers/containers.h"
 
 #include <utility>
 
@@ -23,15 +24,19 @@ namespace pups::library::builtins::strings {
         }
     }
 
+    std::string String::str() const noexcept {
+        return m_data;
+    }
+
+    std::string String::repr() const noexcept {
+        return "\"" + m_data + "\"";
+    }
+
     FunctionCore String::get_method(const Id &name) {
         const auto &func = string_functions.at(name);
         return [this, &func](FunctionArgs &args, Map *map) -> ObjectPtr {
             return func(*this, args, map);
         };
-    }
-
-    std::string String::str() const noexcept {
-        return m_data;
     }
 
     std::string &String::data() noexcept {
@@ -112,10 +117,61 @@ namespace pups::library::builtins::strings {
         };
     }
 
-    ObjectPtr repr_of(FunctionArgs &args, Map *map) {
+    ObjectPtr string_size(String &str, FunctionArgs &args, Map *map) {
+        if (!args.empty())
+            map->throw_error(std::make_shared<ArgumentError>("String.size requires no arguments."));
+        else
+            return std::make_shared<numbers::IntType>(str.data().size());
+        return pending;
+    }
+
+    ObjectPtr string_at(String &str, FunctionArgs &args, Map *map) {
+        if (args.size() != 1)
+            map->throw_error(std::make_shared<ArgumentError>("String.at requires one only argument."));
+        else {
+            {
+                auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
+                if (ptr) {
+                    try {
+                        std::string s;
+                        s.push_back(str.data().at(ptr->value));
+                        return std::make_shared<String>(s);
+                    } catch (const std::out_of_range &) {
+                        map->throw_error(std::make_shared<OutOfBoundError>(
+                                "String.at is out of bounds with index " + ptr->repr() + " within str " + str.repr() +
+                                "."));
+                        return pending;
+                    }
+                }
+            }
+            {
+                auto ptr = std::dynamic_pointer_cast<containers::Pair>(*args.front());
+                if (ptr) {
+                    auto left = std::dynamic_pointer_cast<numbers::IntType>(ptr->left);
+                    auto right = std::dynamic_pointer_cast<numbers::IntType>(ptr->right);
+                    if (left && right)
+                        return std::make_shared<String>(str.data().substr(left->value, right->value - left->value));
+                }
+            }
+            map->throw_error(std::make_shared<TypeError>(
+                    "String.at requires an integer or an integer pair instead of" + args.front()->get()->repr() + '.'));
+        }
+        return pending;
+    }
+
+    ObjectPtr str_of(FunctionArgs &args, Map *map) {
         std::string result;
         while (!args.empty()) {
             result.append(args.front()->get()->str());
+            args.pop();
+        }
+        return std::make_shared<String>(result);
+    }
+
+    ObjectPtr repr_of(FunctionArgs &args, Map *map) {
+        std::string result;
+        while (!args.empty()) {
+            result.append(args.front()->get()->repr());
             args.pop();
         }
         return std::make_shared<String>(result);
@@ -130,7 +186,7 @@ namespace pups::library::builtins::strings {
         return std::make_shared<String>(result.substr(0, result.size() - 1));
     }
 
-    Id id_repr_of{"", "repr_of"}, id_typename_of{"", "typename_of"};
+    Id id_str_of{"", "str_of"}, id_repr_of{"", "repr_of"}, id_typename_of{"", "typename_of"};
 #define STR_CMP(op)str_cmp([](std::string &lhs, std::string &rhs) {return lhs op rhs;})
     const StringFuncMap string_functions = {
             {Id{"", "gt"}, STR_CMP(>)},
@@ -139,11 +195,14 @@ namespace pups::library::builtins::strings {
             {Id{"", "le"}, STR_CMP(<=)},
             {Id{"", "eq"}, STR_CMP(==)},
             {Id{"", "ne"}, STR_CMP(!=)},
-            {Id{"", "toi"}, string_to<int>},
-            {Id{"", "tof"}, string_to<float>},
-            {Id{"", "add"}, string_function([](const std::string &lhs, const std::string &rhs) -> std::string {
+            {Id{"", "toi"},      string_to<int>},
+            {Id{"", "tof"},      string_to<float>},
+            {Id{"", "add"},      string_function([](const std::string &lhs, const std::string &rhs) -> std::string {
                 return lhs + rhs;
-            })}
+            })},
+            {Id{"", "get_size"}, string_size},
+            {Id{"", "at"},       string_at},
+            {Id{"", "get"},       string_at}
     };
 #undef STR_CMP
 
@@ -153,6 +212,7 @@ namespace pups::library::builtins::strings {
             constants.add(template_name(name, {name_string}), std::make_shared<Function>(core));
         };
         */
+        constants.add(id_str_of, std::make_shared<Function>(str_of));
         constants.add(id_repr_of, std::make_shared<Function>(repr_of));
         constants.add(id_typename_of, std::make_shared<Function>(typename_of));
     }

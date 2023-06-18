@@ -18,7 +18,7 @@ namespace pups::library::builtins::containers {
     std::string Array::str() const noexcept {
         std::string result = type_name() + "{";
         for (const auto &val: data)
-            result.append(val->str()).append(", ");
+            result.append(val->repr()).append(", ");
         if (!data.empty())
             result = result.substr(0, result.size() - 2);
         result.push_back('}');

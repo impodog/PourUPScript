@@ -46,6 +46,8 @@ namespace pups::library {
 
         [[nodiscard]] virtual std::string str() const noexcept;
 
+        [[nodiscard]] virtual std::string repr() const noexcept;
+
         [[nodiscard]] virtual bool condition() const noexcept;
 
         [[nodiscard]] virtual std::string type_name() const noexcept;
@@ -69,7 +71,7 @@ namespace pups::library {
     public:
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        [[nodiscard]] std::string str() const noexcept override;
+        [[nodiscard]] std::string type_name() const noexcept override;
 
         [[nodiscard]] bool condition() const noexcept override;
     };

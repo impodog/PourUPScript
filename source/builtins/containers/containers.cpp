@@ -37,11 +37,11 @@ namespace pups::library::builtins::containers {
                     result = container.pop_at(ptr->value);
                 } catch (const std::out_of_range &) {
                     map->throw_error(std::make_shared<TypeError>(
-                            "Container.pop_at cannot find value at " + ptr->str() + "."));
+                            "Container.pop_at cannot find value at " + ptr->repr() + "."));
                 }
             else
                 map->throw_error(std::make_shared<TypeError>(
-                        "Container.pop_at requires integers. Value " + args.front()->get()->str() + " skipped."));
+                        "Container.pop_at requires integers. Value " + args.front()->get()->repr() + " skipped."));
             args.pop();
         }
         return result;
@@ -87,7 +87,7 @@ namespace pups::library::builtins::containers {
                 } catch (const std::out_of_range &exc) {
                     map->throw_error(
                             std::make_shared<OutOfBoundError>(
-                                    "Container.at out of bounds with value " + ptr->str() + "."));
+                                    "Container.at out of bounds with value " + ptr->repr() + "."));
                 }
             } else
                 map->throw_error(
@@ -110,7 +110,7 @@ namespace pups::library::builtins::containers {
                     return container.data.at(ptr);
             } catch (const std::out_of_range &exc) {
                 map->throw_error(
-                        std::make_shared<OutOfBoundError>("Container.at out of bounds with key " + ptr->str() + "."));
+                        std::make_shared<OutOfBoundError>("Container.at out of bounds with key " + ptr->repr() + "."));
             }
         }
         return pending;

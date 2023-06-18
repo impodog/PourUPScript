@@ -29,6 +29,7 @@ namespace pups::library::builtins::reference {
         return REF_TYPE_NAME;
     }
 
+
     TakeReferenceOf::TakeReferenceOf() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.size() != 1)
             map->throw_error(std::make_shared<ArgumentError>("For taking reference, one only argument is required."));

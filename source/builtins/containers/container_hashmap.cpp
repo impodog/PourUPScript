@@ -17,7 +17,7 @@ namespace pups::library::builtins::containers {
     std::string HashMap::str() const noexcept {
         std::string result = type_name() + "{";
         for (const auto &pair: data)
-            result.append(pair.first->str()).append(": ").append(pair.second->str()).append(", ");
+            result.append(pair.first->repr()).append(": ").append(pair.second->repr()).append(", ");
         if (!data.empty())
             result = result.substr(0, result.size() - 2);
         return result + "}";

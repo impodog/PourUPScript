@@ -123,6 +123,8 @@ namespace pups::library {
 
     // Generates a different, minimal id each time.
     Id generate_id();
+
+    std::string to_string(const void *ptr);
 }
 
 #endif //PUPS_EZN_SYNTAX_H

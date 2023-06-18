@@ -37,7 +37,8 @@ namespace pups::library {
                     m_id.push_back(c);
                     if (is_qualifier(c)) {
                         if (!is_dotted)
-                            throw std::runtime_error("Unexpected qualifier: " + std::to_string(c) + " in id \"" + qual_id + "\"");
+                            throw std::runtime_error(
+                                    "Unexpected qualifier: " + std::to_string(c) + " in id \"" + qual_id + "\"");
                     } else
                         is_dotted = false;
                     if (c == '.')
@@ -313,5 +314,11 @@ namespace pups::library {
             return prev;
         }, peek);
         return block;
+    }
+
+    std::string to_string(const void *ptr) {
+        std::ostringstream out;
+        out << std::hex << ptr;
+        return out.str();
     }
 }

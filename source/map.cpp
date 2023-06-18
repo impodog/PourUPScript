@@ -63,6 +63,8 @@ namespace pups::library {
 
     void Map::copy_signs_from(Map *map) {
         signs.break_sign = map->signs.break_sign;
+        if (map->m_upsearch_map != map)
+            m_return = map->get_return();
     }
 
     Map::~Map() {
@@ -206,7 +208,7 @@ namespace pups::library {
     }
 
     ObjectPtr &Object::find(const Id &name, Map *map) {
-        map->throw_error(std::make_shared<IdError>("Object " + str() + " cannot find name \"" + name.str() + "\"."));
+        map->throw_error(std::make_shared<IdError>("Object " + repr() + " cannot find name \"" + name.str() + "\"."));
         return pending;
     }
 
