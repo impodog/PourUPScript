@@ -28,7 +28,7 @@ namespace pups::library {
 
     bool Control::next_id() {
         //std::cout << cur_id->str() << std::endl;
-        if (!cur_id->empty()) {
+        if (!cur_id->empty() && map->can_run()) {
             if (cur_id->is_id()) {
                 map->put(map->find(*cur_id->id(), map.get()), map.get());
             } else {

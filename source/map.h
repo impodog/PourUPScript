@@ -76,6 +76,8 @@ namespace pups::library {
         void copy_objects_from(Map *map);
 
         size_t count_depth() const noexcept;
+
+        bool can_run() const noexcept;
     };
 
     // This saves the number of errors reported. Can be freely set to 0.

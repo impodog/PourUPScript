@@ -90,19 +90,15 @@ namespace pups::library {
         if (m_deepest != this)
             return m_deepest->put(object, m_deepest);
         else {
-            if (!m_return && !signs.break_sign) {
-                /* when map is returned or broken,
-                * the map skips all the statements below*/
-                if (m_base) {
-                    auto ptr = m_base->put(object, this);
-                    if (ptr) // when returning nullptr, m_base stays the same
-                        m_base = ptr;
-                } else {
-                    m_base = object;
-                }
+            if (m_base) {
+                auto ptr = m_base->put(object, this);
+                if (ptr) // when returning nullptr, m_base stays the same
+                    m_base = ptr;
+            } else {
+                m_base = object;
             }
-            return nullptr;
         }
+        return nullptr;
     }
 
     ObjectPtr &Map::find(const Id &name, Map *map) {
@@ -205,6 +201,10 @@ namespace pups::library {
             map = map->m_sub_map;
         }
         return result;
+    }
+
+    bool Map::can_run() const noexcept {
+        return !m_return && !signs.break_sign;
     }
 
     ObjectPtr &Object::find(const Id &name, Map *map) {

@@ -22,23 +22,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!">
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/assignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/assignment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/brackets.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/brackets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/ids.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/ids.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_array.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_array.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/containers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/containers.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/reference.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/reference.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/strings.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/strings.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/syntax.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +169,7 @@
       <workItem from="1686953127121" duration="1196000" />
       <workItem from="1686958288627" duration="25456000" />
       <workItem from="1686998831547" duration="3233000" />
-      <workItem from="1687043093097" duration="11869000" />
+      <workItem from="1687043093097" duration="13242000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -287,7 +276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687051864745</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions">
+      <created>1687056420319</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1687056420319</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,7 +312,8 @@
     <MESSAGE value="Upload cmake config" />
     <MESSAGE value="v0.6.0&#10;Add data structures as well as their tutorial" />
     <MESSAGE value="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!" />
+    <MESSAGE value="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
