@@ -10,10 +10,12 @@
 
 namespace pups {
     // Link commonly used classes and functions
-    using library::Id, library::Map, library::Object, library::Error, library::Constants, library::Control;
-    using library::builtins::function::Function;
+    using library::Id, library::Map, library::Object, library::ObjectPtr, library::Error, library::Constants, library::Control;
+    using library::builtins::function::Function, library::builtins::reference::Reference;
     using library::builtins::numbers::Number, library::builtins::strings::String;
-    constexpr const auto &init_builtins = library::builtins::init;
+    using library::builtins::containers::Array, library::builtins::containers::Pair, library::builtins::containers::HashMap;
+    using library::pending;
+    using library::builtins::init;
 }
 
 #endif //PUPS_LIB_TESTS_PUPS_H

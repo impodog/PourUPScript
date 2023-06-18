@@ -2,6 +2,7 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 #include "pups.h"
+#include "modules/std/std.h"
 #include <cstring>
 #include <iostream>
 #include <filesystem>
@@ -38,7 +39,8 @@ int main() {
 
     //  Run the program
     pups::Constants constants(const_path); // Load necessary constants from the file
-    pups::init_builtins(constants); // Init built-ins by adding them to constants
+    pups::init(constants); // Init built-ins by adding them to constants
+    pups::modules::std::init(constants); // Init standard modules
     pups::Control control(pups_path, constants); // Creating the main file control by using the constants
     control.run(); // Run the whole file
     return 0;

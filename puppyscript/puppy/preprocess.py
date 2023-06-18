@@ -72,8 +72,22 @@ class Preprocess:
     def predefined(self):
         ...
 
+    def scan_includes(self):
+        results = re.findall(r"(#include\s+(.+))", self.content)
+        for result in results:
+            file = result[1]
+            if not file.endswith(".puppy"):
+                file = file + ".puppy"
+            try:
+                with open(file, "r", encoding="utf-8") as f:
+                    content = f.read()
+            except:
+                with open("./include/" + file, "r", encoding="utf-8") as f:
+                    content = f.read()
+            self.content = self.content.replace(result[0], content)
+
     def scan_defines(self):
-        results = re.findall(r"^#define\s*(.+?)\s*=\s*(.+)\s*", self.content)
+        results = re.findall(r"^#define\s+(.+?)\s*=\s*(.+)\s*", self.content)
         for result in results:
             tmp = Command(result[0], result[1])
             for cmd in self.commands:
@@ -92,6 +106,7 @@ class Preprocess:
     def work(self, output_name: str) -> str:
         self.remove_comments()
         self.fix_line_continue()
+        self.scan_includes()
         self.predefined()
         self.scan_defines()
         self.remove_prep_lines()

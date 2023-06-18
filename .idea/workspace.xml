@@ -22,12 +22,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions">
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.6.4&#10;Fix a problem where broken or returned maps can still find variables.">
+      <change afterPath="$PROJECT_DIR$/include/random.puppy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/std/random.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/std/random.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/std/std.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/std/std.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups.h" beforeDir="false" afterPath="$PROJECT_DIR$/pups.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +113,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="pups_Lib" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -169,7 +181,8 @@
       <workItem from="1686953127121" duration="1196000" />
       <workItem from="1686958288627" duration="25456000" />
       <workItem from="1686998831547" duration="3233000" />
-      <workItem from="1687043093097" duration="13242000" />
+      <workItem from="1687043093097" duration="14512000" />
+      <workItem from="1687064839091" duration="2609000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -283,7 +296,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687056420319</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="v0.6.4&#10;Fix a problem where broken or returned maps can still find variables.">
+      <created>1687057528963</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1687057528963</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +333,8 @@
     <MESSAGE value="v0.6.0&#10;Add data structures as well as their tutorial" />
     <MESSAGE value="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!" />
     <MESSAGE value="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions" />
+    <MESSAGE value="v0.6.4&#10;Fix a problem where broken or returned maps can still find variables." />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.6.4&#10;Fix a problem where broken or returned maps can still find variables." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

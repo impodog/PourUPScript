@@ -20,10 +20,17 @@ set(source_files source/const.h
         source/builtins/map_open.cpp source/builtins/map_open.h
         source/builtins/builtin_func.cpp source/builtins/builtin_func.h
         source/builtins/reference.cpp source/builtins/reference.h
-        pups.h source/builtins/containers/containers.cpp source/builtins/containers/containers.h source/builtins/containers/container_array.cpp source/builtins/containers/container_array.h source/builtins/containers/container_base.cpp source/builtins/containers/container_base.h source/builtins/containers/container_pair.cpp source/builtins/containers/container_pair.h source/builtins/containers/container_hashmap.cpp source/builtins/containers/container_hashmap.h)
+        pups.h source/builtins/containers/containers.cpp source/builtins/containers/containers.h
+        source/builtins/containers/container_array.cpp source/builtins/containers/container_array.h
+        source/builtins/containers/container_base.cpp source/builtins/containers/container_base.h
+        source/builtins/containers/container_pair.cpp source/builtins/containers/container_pair.h
+        source/builtins/containers/container_hashmap.cpp source/builtins/containers/container_hashmap.h)
+
+set(std_files modules/std/std.h modules/std/std.cpp
+        modules/std/random.cpp modules/std/random.h)
 
 add_library(pups_Lib ${source_files})
 
 project(pups_Lib_Tests)
 
-add_executable(pups_Lib_Tests test.cpp ${source_files})
+add_executable(pups_Lib_Tests test.cpp ${source_files} ${std_files})
