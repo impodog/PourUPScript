@@ -23,6 +23,7 @@ namespace pups::library {
     protected:
         static size_t static_count;
     public:
+        using ObjectMap = IdMap<ObjectPtr>;
         size_t m_count;
 
         Object();
@@ -32,7 +33,7 @@ namespace pups::library {
         virtual ObjectPtr put(ObjectPtr &object, Map *map) = 0;
 
         // Get an object from this as in "[this].name"
-        virtual ObjectPtr &find(const Id &name, Map *map, bool *reput_this);
+        virtual ObjectPtr &find(const Id &name, Map *map);
 
         // Mark an end of this line. The return value is stored in Map::m_temp.
         virtual ObjectPtr end_of_line(Map *map);
@@ -53,6 +54,8 @@ namespace pups::library {
 
         virtual size_t equal(const ObjectPtr &object) const noexcept;
     };
+
+    using ObjectMap = Object::ObjectMap;
 
     struct ObjectHash {
         size_t operator()(const ObjectPtr &object) const;

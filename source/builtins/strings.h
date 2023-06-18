@@ -11,24 +11,15 @@
 namespace pups::library::builtins::strings {
     using namespace function;
 
-    class String : public Object {
+    class String : public HasMethods {
         std::string m_data;
-        ObjectPtr eq_function = std::make_shared<Function>([this](FunctionArgs &args, Map *map) -> ObjectPtr {
-            if (args.size() != 1)
-                map->throw_error(std::make_shared<ArgumentError>("String.eq requires one single argument"));
-            else {
-                auto ptr = std::dynamic_pointer_cast<String>(*args.front());
-                if (ptr)
-                    return this->data() == ptr->data() ? numbers::True : numbers::False;
-                else
-                    map->throw_error(std::make_shared<ArgumentError>("String.eq requires a string argument"));
-            }
-            return pending;
-        });
+        ObjectMap used_functions;
     public:
         explicit String(std::string data);
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
+
+        FunctionCore get_method(const Id &name) override;
 
 
         [[nodiscard]] std::string str() const noexcept override;
@@ -43,6 +34,10 @@ namespace pups::library::builtins::strings {
 
         [[nodiscard]] size_t equal(const ObjectPtr &object) const noexcept override;
     };
+
+    using StringFuncCore = std::function<ObjectPtr(String &, FunctionArgs &, Map *)>;
+    using StringFuncMap = IdMap<StringFuncCore>;
+    extern const StringFuncMap string_functions;
 
     void init(Constants &constants);
 }

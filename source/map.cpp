@@ -53,10 +53,7 @@ namespace pups::library {
             if (tmp) {
                 object = &tmp->single_find(Id{parts.front()});
             } else {
-                bool reput_this = false;
-                auto next = &object->get()->find(Id{parts.front()}, this, &reput_this);
-                if (reput_this)
-                    map->m_pending_put.emplace(*next, *object);
+                auto next = &object->get()->find(Id{parts.front()}, this);
                 object = next;
             }
             parts.pop();
@@ -95,16 +92,10 @@ namespace pups::library {
                 /* when map is returned or broken,
                 * the map skips all the statements below*/
                 if (m_base) {
-                    while (!m_pending_put.empty())
-                        m_pending_put.pop();
                     auto ptr = m_base->put(object, this);
                     if (ptr) // when returning nullptr, m_base stays the same
                         m_base = ptr;
                 } else {
-                    while (!m_pending_put.empty()) {
-                        m_pending_put.front().first->put(m_pending_put.front().second, this);
-                        m_pending_put.pop();
-                    }
                     m_base = object;
                 }
             }
@@ -112,7 +103,7 @@ namespace pups::library {
         }
     }
 
-    ObjectPtr &Map::find(const Id &name, Map *map, bool *reput_this) {
+    ObjectPtr &Map::find(const Id &name, Map *map) {
         //std::cout << "FINDING " << name.str() << std::endl;
         auto parts = name.split_by('.');
         if (parts.size() == 1)
@@ -134,7 +125,7 @@ namespace pups::library {
     }
 
     void Map::set_object(const Id &name, const ObjectPtr &object) {
-        find(name, this, nullptr) = object;
+        find(name, this) = object;
     }
 
     ObjectPtr Map::end_of_line(Map *map) {
@@ -144,9 +135,6 @@ namespace pups::library {
         }
         while (!m_memory_stack.empty())
             m_memory_stack.pop();
-        while (!m_pending_put.empty()) {
-            m_pending_put.pop();
-        }
         return pending;
     }
 
@@ -217,11 +205,9 @@ namespace pups::library {
         return result;
     }
 
-    ObjectPtr &Object::find(const Id &name, Map *map, bool *reput_this) {
-        auto true_name = template_name(name.str(), {type_name()});
-        if (reput_this)
-            *reput_this = true;
-        return map->single_find(true_name);
+    ObjectPtr &Object::find(const Id &name, Map *map) {
+        map->throw_error(std::make_shared<IdError>("Object " + str() + " cannot find name \"" + name.str() + "\"."));
+        return pending;
     }
 
     void Map::Signs::set_break_sign(ObjectPtr object) {

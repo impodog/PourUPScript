@@ -40,4 +40,18 @@ namespace pups::library::builtins::function {
     void init(Constants &constants) {
 
     }
+
+    ObjectPtr &HasMethods::find(const Id &name, Map *map) {
+        try {
+            return used_functions.at(name);
+        } catch (const std::out_of_range &) {
+            try {
+                auto func = std::make_shared<Function>(get_method(name));
+                used_functions.insert({name, func});
+                return used_functions.at(name);
+            } catch (const std::out_of_range &) {
+                return Object::find(name, map);
+            }
+        }
+    }
 }

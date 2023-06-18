@@ -22,7 +22,37 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.6.0&#10;Add data structures as well as their tutorial" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.6.0&#10;Add data structures as well as their tutorial">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/assignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/assignment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_array.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_array.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_array.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_array.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_base.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_base.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_hashmap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_pair.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_pair.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_pair.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_pair.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/containers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/containers.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/inline_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/inline_func.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/numbers.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/numbers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/reference.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/reference.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/reference.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/reference.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/strings.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/strings.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/strings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,33 +91,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "development",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/workspace/Cpp/Tool/PourUPScript",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CPPToolchains",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/workspace/Cpp/Tool/PourUPScript&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "ObjectiveC"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;ObjectiveC&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\workspace\Cpp\Tool\PourUPScript\source\builtins\containers" />
@@ -96,11 +126,6 @@
   </component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
     <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -169,6 +194,7 @@
       <workItem from="1686953127121" duration="1196000" />
       <workItem from="1686958288627" duration="25456000" />
       <workItem from="1686998831547" duration="3233000" />
+      <workItem from="1687043093097" duration="8354000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>

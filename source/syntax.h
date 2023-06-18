@@ -16,7 +16,7 @@ namespace pups::library {
 
         explicit Id(std::string qual, std::string id);
 
-        explicit Id(const std::string& qual_id);
+        explicit Id(const std::string &qual_id);
 
         [[nodiscard]] const std::string &qual() const;
 
@@ -109,6 +109,9 @@ namespace pups::library {
 
         [[nodiscard]] std::string str() const noexcept;
     };
+
+    template<typename ValueType>
+    using IdMap = std::unordered_map<Id, ValueType, Id::hash>;
 
     IdFile read_file(const path &path);
 

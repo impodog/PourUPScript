@@ -6,6 +6,7 @@
 #define PUPS_LIB_TESTS_INLINE_FUNC_H
 
 #include "function.h"
+#include "containers/containers.h"
 
 namespace pups::library::builtins::inline_func {
     using namespace function;
@@ -13,6 +14,7 @@ namespace pups::library::builtins::inline_func {
     class Arguments final : public Object {
     protected:
         FunctionArgs args;
+        bool packet_mode = false;
     public:
         explicit Arguments(FunctionArgs args);
 

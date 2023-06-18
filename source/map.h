@@ -8,15 +8,12 @@
 #include "error.h"
 
 namespace pups::library {
-    using ObjectMap = std::unordered_map<Id, ObjectPtr, Id::hash>;
-
     class Map : public Object {
     protected:
         std::queue<ErrorPtr> m_errors;
         ObjectMap m_map;
         ObjectPtr m_base, m_return, m_temp;
         std::stack<ObjectPtr> m_memory_stack;
-        std::queue<std::pair<ObjectPtr, ObjectPtr>> m_pending_put;
         std::string m_execute_string;
 
         using MapBarePtr = Map *;
@@ -54,7 +51,7 @@ namespace pups::library {
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        ObjectPtr &find(const Id &name, Map *map, bool *reput_this) override;
+        ObjectPtr &find(const Id &name, Map *map) override;
 
         ObjectPtr end_of_line(Map *map) override;
 

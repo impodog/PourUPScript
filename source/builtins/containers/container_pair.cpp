@@ -15,12 +15,18 @@ namespace pups::library::builtins::containers {
         return type_name() + "{" + left->str() + ", " + right->str() + "}";
     }
 
-    ObjectPtr &Pair::find(const Id &name, Map *map, bool *reput_this) {
+    ObjectPtr &Pair::find(const Id &name, Map *map) {
         if (name == "left")
             return left;
         if (name == "right")
             return right;
-        return ContainerBase::find(name, map, reput_this);
+        return ContainerBase::find(name, map);
+    }
+
+    FunctionCore Pair::get_method(const Id &name) {
+        return [](FunctionArgs &args, Map *) -> ObjectPtr {
+            return pending;
+        };
     }
 
     PairInit::PairInit() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {

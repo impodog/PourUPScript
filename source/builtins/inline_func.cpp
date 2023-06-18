@@ -5,7 +5,9 @@
 #include "inline_func.h"
 
 namespace pups::library::builtins::inline_func {
-    Id id_arg_catch{"", "param"};
+    constexpr const char *name_packet = "pack";
+    Id id_arg_catch{"", "param"}, id_param_packet{"", name_packet};
+    ObjectPtr sym_packet = std::make_shared<Symbol>(name_packet);
 
     Arguments::Arguments(FunctionArgs args) : args(std::move(args)) {
 
@@ -15,8 +17,21 @@ namespace pups::library::builtins::inline_func {
         if (args.empty())
             map->throw_error(std::make_shared<ArgumentError>("Not enough arguments given."));
         else {
-            object = *args.front();
-            args.pop();
+            if (object.get() == sym_packet.get())
+                packet_mode = true;
+            else {
+                if (packet_mode) {
+                    std::vector<ObjectPtr> array;
+                    while (!args.empty()) {
+                        array.push_back(*args.front());
+                        args.pop();
+                    }
+                    object = std::make_shared<containers::Array>(array);
+                } else {
+                    object = *args.front();
+                    args.pop();
+                }
+            }
         }
         return nullptr;
     }
@@ -58,7 +73,10 @@ namespace pups::library::builtins::inline_func {
 
     }
 
+    Id id_funcInit{"", "func"};
+
     void init(Constants &constants) {
-        constants.add(Id{"", "func"}, std::make_shared<InlineFunc_Init>());
+        constants.add(id_funcInit, std::make_shared<InlineFunc_Init>());
+        constants.add(id_param_packet, sym_packet);
     }
 }

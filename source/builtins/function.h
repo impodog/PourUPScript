@@ -24,6 +24,16 @@ namespace pups::library::builtins::function {
 
         std::string type_name() const noexcept override;
     };
+
+    class HasMethods : public Object {
+    protected:
+        ObjectMap used_functions;
+
+    public:
+        ObjectPtr &find(const Id &name, Map *map) override;
+
+        virtual FunctionCore get_method(const Id &name) = 0;
+    };
 }
 
 #endif //PUPS_LIB_TESTS_FUNCTION_H

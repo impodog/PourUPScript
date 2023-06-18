@@ -64,6 +64,13 @@ namespace pups::library::builtins::containers {
         data.insert(data.cbegin() + static_cast<long long>(pos), obj);
     }
 
+    FunctionCore Array::get_method(const Id &name) {
+        const auto &func = array_cores.at(name);
+        return [this, &func](FunctionArgs &args, Map *map) -> ObjectPtr {
+            return func(*this, args, map);
+        };
+    }
+
     ArrayInit::ArrayInit() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         return std::make_shared<Array>(args);
     }) {}

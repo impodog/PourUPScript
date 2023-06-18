@@ -2,8 +2,17 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 #include "pups.h"
+#include <cstring>
 #include <iostream>
 #include <filesystem>
+
+#ifdef _WIN32
+constexpr const char *test_folder = ".\\test\\";
+#else
+constexpr const char *test_folder = "./test/";
+#endif
+constexpr const char *desired_suffix = ".puppy";
+constexpr const size_t suffix_len = 6;
 
 int main() {
     /* Example of running a simple program using PUPS
@@ -14,8 +23,11 @@ int main() {
     // Load necessary files(you can ignore this)
     using std::filesystem::path;
     std::string filename;
-    std::cout << "Input your file to be executed:" << std::endl;
+    std::cout << "Input your file to be executed(under " << test_folder << "):" << std::endl;
     std::cin >> filename;
+    filename = test_folder + filename;
+    if (filename.size() < suffix_len || filename.substr(filename.size() - suffix_len, suffix_len) != ".puppy")
+        filename.append(desired_suffix);
     std::cout << "Compiling..." << std::endl;
     system(("python puppyscript/main.py " + filename).c_str());
     std::cout << "Running..." << std::endl;

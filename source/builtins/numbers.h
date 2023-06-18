@@ -27,7 +27,7 @@ namespace pups::library::builtins::numbers {
 #undef is_type
 
     template<typename Arithmetic>
-    class Number : public Object {
+    class Number : public HasMethods {
         static_assert(std::is_arithmetic<Arithmetic>::value, "Number type must be arithmetic.");
     public:
         Arithmetic value;
@@ -47,6 +47,8 @@ namespace pups::library::builtins::numbers {
         [[nodiscard]] std::string str() const noexcept override {
             return std::to_string(value);
         }
+
+        FunctionCore get_method(const pups::library::Id &name) override;
 
         [[nodiscard]] bool condition() const noexcept override {
             if constexpr (std::is_same<Arithmetic, bool>::value)
@@ -69,7 +71,9 @@ namespace pups::library::builtins::numbers {
     struct NumTypes {
         using NumberType = Number<Arithmetic>;
         using NumberPtr = std::shared_ptr<NumberType>;
-        using OperatorCore = std::function<ObjectPtr(const NumberPtr &, const NumberPtr &)>;
+        using OperatorCore = std::function<ObjectPtr(NumberType &, NumberType &)>;
+        using OperatorMap = IdMap<OperatorCore>;
+        static const OperatorMap operators;
     };
     template<typename Arithmetic>
     using NumType = typename NumTypes<Arithmetic>::NumberType;
@@ -81,6 +85,55 @@ namespace pups::library::builtins::numbers {
     using NumCore = typename NumTypes<Arithmetic>::OperatorCore;
     template<typename Arithmetic>
     using NumCoreRef = const NumCore<Arithmetic> &;
+
+    template<typename Arithmetic>
+    Arithmetic log(Arithmetic x, Arithmetic y) {
+        return log2(y) / log2(x);
+    }
+
+#define OP_FUNC_TYPED(op, return_type) [](NumType<Arithmetic> &lhs, NumType<Arithmetic> &rhs) -> ObjectPtr {\
+    return std::make_shared<NumType<return_type>>(static_cast<return_type>(lhs.value op rhs.value));\
+}
+#define OP_FUNC(op) OP_FUNC_TYPED(op, Arithmetic)
+#define OP_FUNC_CMP(op) OP_FUNC_TYPED(op, bool)
+#define BIN_FUNC_TYPED(op, return_type) [](NumType<Arithmetic> &lhs, NumType<Arithmetic> &rhs) -> ObjectPtr {\
+    return std::make_shared<NumType<return_type>>(static_cast<return_type>(op(lhs.value, rhs.value)));\
+}
+#define BIN_FUNC(op) BIN_FUNC_TYPED(op, Arithmetic)
+#define BIN_FUNC_CMP(op) BIN_FUNC_TYPED(op, bool)
+    template<typename Arithmetic>
+    const typename NumTypes<Arithmetic>::OperatorMap NumTypes<Arithmetic>::operators = {
+            {Id{"", "add"}, OP_FUNC(+)},
+            {Id{"", "sub"}, OP_FUNC(-)},
+            {Id{"", "mul"}, OP_FUNC(*)},
+            {Id{"", "div"}, OP_FUNC(/)},
+            {Id{"", "pow"}, BIN_FUNC(pow)},
+            {Id{"", "log"}, BIN_FUNC(log)},
+            {Id{"", "gt"},  OP_FUNC(>)},
+            {Id{"", "ge"},  OP_FUNC(>=)},
+            {Id{"", "lt"},  OP_FUNC(<)},
+            {Id{"", "le"},  OP_FUNC(<=)},
+            {Id{"", "eq"},  OP_FUNC(==)},
+            {Id{"", "ne"},  OP_FUNC(!=)},
+    };
+
+    template<typename Arithmetic>
+    FunctionCore Number<Arithmetic>::get_method(const Id &name) {
+        const auto &func = NumTypes<Arithmetic>::operators.at(name);
+        return [this, &func](FunctionArgs &args, Map *map) -> ObjectPtr {
+            if (args.size() != 1)
+                map->throw_error(std::make_shared<ArgumentError>("Number operator requires one only argument."));
+            else {
+                auto ptr = std::dynamic_pointer_cast<Number<Arithmetic>>(*args.front());
+                if (ptr)
+                    return func(*this, *ptr);
+                else
+                    map->throw_error(
+                            std::make_shared<TypeError>("Number operator requires numbers with the same type."));
+            }
+            return pending;
+        };
+    }
 
     extern ObjectPtr True, False;
 

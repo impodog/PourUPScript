@@ -30,7 +30,7 @@ namespace pups::library {
         //std::cout << cur_id->str() << std::endl;
         if (!cur_id->empty()) {
             if (cur_id->is_id()) {
-                map->put(map->find(*cur_id->id(), map.get(), nullptr), map.get());
+                map->put(map->find(*cur_id->id(), map.get()), map.get());
             } else {
                 Id id = generate_id();
                 ObjectPtr object = std::make_shared<LongStr>(cur_id->idFile());

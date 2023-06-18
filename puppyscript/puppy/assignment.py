@@ -12,7 +12,7 @@ class Assignment:
     def scan_assign(self):
         result: list[str] = [""]
         for line in self.content.split("\n"):
-            tmp = re.fullmatch(rf"(\s*)({WORD})\s*=\s*(.+?)\s*", line)
+            tmp = re.fullmatch(rf"(\s*)(.+?)\s*=\s*(.+?)\s*", line)
             if tmp is None:
                 result.append(line)
             else:

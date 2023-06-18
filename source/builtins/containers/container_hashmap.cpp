@@ -53,6 +53,13 @@ namespace pups::library::builtins::containers {
         return data.size();
     }
 
+    FunctionCore HashMap::get_method(const Id &name) {
+        const auto &func = hashmap_cores.at(name);
+        return [this, &func](FunctionArgs &args, Map *map) -> ObjectPtr {
+            return func(*this, args, map);
+        };
+    }
+
     HashMapInit::HashMapInit() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         return std::make_shared<HashMap>(args);
     }) {}

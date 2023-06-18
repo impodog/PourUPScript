@@ -37,12 +37,16 @@ namespace pups::library::builtins::containers {
         [[nodiscard]] size_t size() const noexcept;
 
         void insert_at(const ObjectPtr &obj, size_t pos);
+
+        FunctionCore get_method(const Id &name) override;
     };
 
     class ArrayInit : public Function {
     public:
         ArrayInit();
     };
+
+    extern const ContainerCoreMap<Array> array_cores;
 }
 
 #endif //PUPS_LIB_TESTS_CONTAINER_ARRAY_H

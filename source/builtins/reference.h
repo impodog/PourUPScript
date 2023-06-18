@@ -19,7 +19,7 @@ namespace pups::library::builtins::reference {
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        ObjectPtr &find(const Id &name, Map *map, bool *reput_this) override;
+        ObjectPtr &find(const Id &name, Map *map) override;
 
         [[nodiscard]] std::string type_name() const noexcept override;
     };

@@ -23,6 +23,13 @@ namespace pups::library::builtins::strings {
         }
     }
 
+    FunctionCore String::get_method(const Id &name) {
+        const auto &func = string_functions.at(name);
+        return [this, &func](FunctionArgs &args, Map *map) -> ObjectPtr {
+            return func(*this, args, map);
+        };
+    }
+
     std::string String::str() const noexcept {
         return m_data;
     }
@@ -48,64 +55,58 @@ namespace pups::library::builtins::strings {
         return ptr && m_data == ptr->m_data;
     }
 
-#define s_func(op) [](FunctionArgs &args, Map *map) -> ObjectPtr {\
-    const std::string *str = nullptr;\
-    while (!args.empty()) {\
-        auto ptr = std::dynamic_pointer_cast<String>(*args.front());\
-        if (ptr) {\
-            if (str) {\
-                if (!(*str op ptr->data()))\
-                    return numbers::False;\
-            } else\
-                str = &ptr->data();\
-        } else\
-            map->throw_error(std::make_shared<TypeError>("Incorrect call of type on STR.eq."));\
-        args.pop();\
-    }\
-    return numbers::True;\
-}
+    using StringCompare = std::function<bool(std::string &, std::string &)>;
+
+    StringFuncCore str_cmp(const StringCompare &cmp) {
+        return [cmp](String &str, FunctionArgs &args, Map *map) -> ObjectPtr {
+            auto &str_data = str.data();
+            while (!args.empty()) {
+                auto ptr = std::dynamic_pointer_cast<String>(*args.front());
+                if (ptr) {
+                    if (!cmp(str_data, ptr->data()))
+                        return numbers::False;
+                } else
+                    map->throw_error(std::make_shared<TypeError>("Incorrect call of type on String.compare ."));
+                args.pop();
+            }
+            return numbers::True;
+        };
+    }
+
 
     template<typename Arithmetic>
-    ObjectPtr string_to(FunctionArgs &args, Map *map) {
-        if (args.size() == 1) {
-            auto ptr = std::dynamic_pointer_cast<String>(*args.front());
-            if (ptr) {
-                Arithmetic x;
-                try {
-                    if constexpr (std::is_same<Arithmetic, int>::value)
-                        x = std::stoi(ptr->data());
-                    else if constexpr (std::is_same<Arithmetic, float>::value)
-                        x = std::stof(ptr->data());
-                    else if constexpr (std::is_same<Arithmetic, bool>::value)
-                        x = ptr->data() == "true";
-                } catch (const std::invalid_argument &) {
-                    map->throw_error(std::make_shared<ValueError>(
-                            "Invalid value \"" + ptr->data() + "\" for string conversion."));
-                    return pending;
-                }
-                return std::make_shared<numbers::NumType<Arithmetic>>(x);
-            } else
-                map->throw_error(std::make_shared<TypeError>("String conversion requires a string."));
-        } else
+    ObjectPtr string_to(String &str, FunctionArgs &args, Map *map) {
+        if (!args.empty())
             map->throw_error(
                     std::make_shared<ArgumentError>(
                             "String conversion method does not require addition arguments."));
-        return pending;
+        Arithmetic x;
+        try {
+            if constexpr (std::is_same<Arithmetic, int>::value)
+                x = std::stoi(str.data());
+            else if constexpr (std::is_same<Arithmetic, float>::value)
+                x = std::stof(str.data());
+            else if constexpr (std::is_same<Arithmetic, bool>::value)
+                x = str.data() == "true";
+        } catch (const std::invalid_argument &) {
+            map->throw_error(std::make_shared<ValueError>(
+                    "Invalid value \"" + str.data() + "\" for string conversion."));
+            return pending;
+        }
+        return std::make_shared<numbers::NumType<Arithmetic>>(x);
     }
 
-    FunctionCore string_function(const std::function<std::string(const std::string &, const std::string &)> &core) {
-        return [core](FunctionArgs &args, Map *map) -> ObjectPtr {
-            if (args.size() != 2)
-                map->throw_error(std::make_shared<ArgumentError>("String operators requires two only arguments."));
+    StringFuncCore string_function(const std::function<std::string(const std::string &, const std::string &)> &core) {
+        return [core](String &str, FunctionArgs &args, Map *map) -> ObjectPtr {
+            if (args.size() != 1)
+                map->throw_error(std::make_shared<ArgumentError>("String operators requires one only argument."));
             else {
-                auto lhs = std::dynamic_pointer_cast<String>(*args.front());
-                args.pop();
                 auto rhs = std::dynamic_pointer_cast<String>(*args.front());
                 args.pop();
-                if (lhs && rhs)
-                    return std::make_shared<String>(core(lhs->data(), rhs->data()));
+                if (rhs)
+                    return std::make_shared<String>(core(str.data(), rhs->data()));
                 else
-                    map->throw_error(std::make_shared<TypeError>("String operators require two string arguments."));
+                    map->throw_error(std::make_shared<TypeError>("String operators require one string argument."));
             }
             return pending;
         };
@@ -130,24 +131,29 @@ namespace pups::library::builtins::strings {
     }
 
     Id id_repr_of{"", "repr_of"}, id_typename_of{"", "typename_of"};
+#define STR_CMP(op)str_cmp([](std::string &lhs, std::string &rhs) {return lhs op rhs;})
+    const StringFuncMap string_functions = {
+            {Id{"", "gt"}, STR_CMP(>)},
+            {Id{"", "ge"}, STR_CMP(>=)},
+            {Id{"", "lt"}, STR_CMP(<)},
+            {Id{"", "le"}, STR_CMP(<=)},
+            {Id{"", "eq"}, STR_CMP(==)},
+            {Id{"", "ne"}, STR_CMP(!=)},
+            {Id{"", "toi"}, string_to<int>},
+            {Id{"", "tof"}, string_to<float>},
+            {Id{"", "add"}, string_function([](const std::string &lhs, const std::string &rhs) -> std::string {
+                return lhs + rhs;
+            })}
+    };
+#undef STR_CMP
 
     void init(Constants &constants) {
+        /*
         static const auto add_s_func = [&constants](const std::string &name, const FunctionCore &core) {
             constants.add(template_name(name, {name_string}), std::make_shared<Function>(core));
         };
+        */
         constants.add(id_repr_of, std::make_shared<Function>(repr_of));
         constants.add(id_typename_of, std::make_shared<Function>(typename_of));
-        add_s_func("gt", s_func(>));
-        add_s_func("ge", s_func(>=));
-        add_s_func("lt", s_func(<));
-        add_s_func("le", s_func(<=));
-        add_s_func("eq", s_func(==));
-        add_s_func("ne", s_func(!=));
-        add_s_func("toi", string_to<int>);
-        add_s_func("tof", string_to<float>);
-        add_s_func("bool", string_to<bool>);
-        add_s_func("add", string_function([](const std::string &lhs, const std::string &rhs) -> std::string {
-            return lhs + rhs;
-        }));
     }
 }

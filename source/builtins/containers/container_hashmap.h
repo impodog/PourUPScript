@@ -31,12 +31,16 @@ namespace pups::library::builtins::containers {
         void clear() noexcept;
 
         [[nodiscard]] size_t size() const noexcept;
+
+        FunctionCore get_method(const pups::library::Id &name) override;
     };
 
     class HashMapInit : public Function {
     public:
         HashMapInit();
     };
+
+    extern const ContainerCoreMap<HashMap> hashmap_cores;
 }
 
 #endif //PUPS_LIB_TESTS_CONTAINER_HASHMAP_H
