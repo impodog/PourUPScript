@@ -54,7 +54,7 @@ namespace pups::library::builtins::containers {
                     std::make_shared<ArgumentError>("Container.pop_key(or simply .pop) requires one only argument"));
         else {
             auto result = container.pop(*args.front());
-            if (result.get() == pending.get())
+            if (is_pending(result))
                 map->throw_error(std::make_shared<OutOfBoundError>(
                         "Container.pop_key(or simply .pop) cannot find the desired key."));
             return result;

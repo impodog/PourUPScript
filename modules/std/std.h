@@ -5,10 +5,14 @@
 #ifndef PUPS_LIB_TESTS_STD_H
 #define PUPS_LIB_TESTS_STD_H
 
-#include "random.h"
+#include "../../pups.h"
 
-namespace pups::modules::std {
+namespace pups::modules::pups_std {
+    constexpr pups::library::cstr STD_NAME = "__std_";
+
     void init(Constants &constants);
+
+    Id get_std_func_name(const std::string &name);
 }
 
 #endif //PUPS_LIB_TESTS_STD_H

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-PUPS is a scripting language that uses the abstract class as the base for all imaginable objects - PUPS::ObjectBase.
+PUPS is a scripting language that uses the abstract class as the base for all imaginable objects - Object.
 
 The idea takes after SmallTalk, where everything is an object, and calls are done by sending messages to objects.
 

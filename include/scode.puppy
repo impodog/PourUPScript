@@ -1,0 +1,5 @@
+#ifnset __std_scode_load
+#set __std_scode_load
+map scode:
+    __std_scode_load
+#end

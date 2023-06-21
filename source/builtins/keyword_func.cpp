@@ -49,7 +49,7 @@ namespace pups::library::builtins::keyword_func {
             ObjectPtr break_v = pending;
             sub_map = std::make_shared<Map>(map, true);
             Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
-            while (break_v == pending || (break_v->condition() ^ require_false)) {
+            while (is_pending(break_v) || (break_v->condition() ^ require_false)) {
                 control.run();
                 break_v = sub_map->signs.break_sign;
                 if (break_v == nullptr) break_v = pending;

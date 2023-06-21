@@ -47,7 +47,7 @@ namespace pups::modules::random {
     }
 
     ObjectPtr random_float(FunctionArgs &args, Map *map) {
-        using EngineType = std::uniform_real_distribution<float>;
+        using EngineType = std::uniform_real_distribution<pups::library::pups_float>;
         std::shared_ptr<numbers::FloatType> first, second;
         EngineType engine;
         switch (args.size()) {
@@ -60,7 +60,7 @@ namespace pups::modules::random {
                     engine = EngineType{0, first->value};
                 else {
                     map->throw_error(
-                            std::make_shared<library::TypeError>("Randomizing int should receive int arguments."));
+                            std::make_shared<library::TypeError>("Randomizing float should receive float arguments."));
                     return pending;
                 }
                 break;
@@ -69,15 +69,16 @@ namespace pups::modules::random {
                 args.pop();
                 second = std::dynamic_pointer_cast<numbers::FloatType>(*args.front());
                 args.pop();
-                if (!(first && second)) {
+                if (first && second) {
+                    if (first->value > second->value)
+                        swap(first, second);
+                    engine = EngineType{first->value, second->value};
+                    break;
+                } else {
                     map->throw_error(
-                            std::make_shared<library::TypeError>("Randomizing int should receive int arguments."));
+                            std::make_shared<library::TypeError>("Randomizing float should receive float arguments."));
                     return pending;
                 }
-                if (first->value > second->value)
-                    swap(first, second);
-                engine = EngineType{first->value, second->value};
-                break;
             default:
                 map->throw_error(std::make_shared<library::ArgumentError>(
                         "Randomizing float should receive none, one or two arguments."));
@@ -87,7 +88,6 @@ namespace pups::modules::random {
     }
 
     Id id_random_int{"", "rand_int"}, id_random_float{"", "rand_float"};
-    Id id_random{"", "__std_random_load"};
 
     ObjectPtr random_load(FunctionArgs &args, Map *map) {
         map->add_object(id_random_int, std::make_shared<Function>(random_int));
@@ -96,6 +96,8 @@ namespace pups::modules::random {
     }
 
     void init(pups::Constants &constants) {
-        constants.add(id_random, std::make_shared<Function>(random_load));
+        auto random_func = std::make_shared<Function>(random_load);
+        constants.add(pups_std::get_std_func_name("random"), random_func);
+        constants.add(module_link_name("random"), random_func);
     }
 }

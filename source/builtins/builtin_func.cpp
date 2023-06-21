@@ -51,12 +51,25 @@ namespace pups::library::builtins::builtin_func {
 
     }
 
-    Id id_inputs{"", "inputs"}, id_print{"", "print"}, id_puts{"", "puts"}, id_call{"", "call"};
+    IsDefined::IsDefined() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+        if (args.empty()) {
+            map->throw_error(std::make_shared<ArgumentError>("is_def function requires at least one argument"));
+            return numbers::False;
+        }
+        while (!args.empty())
+            if (is_pending(*args.front()))
+                return numbers::False;
+        return numbers::True;
+    }) {}
+
+    Id id_inputs{"", "inputs"}, id_print{"", "print"}, id_puts{"", "puts"}, id_call{"", "call"},
+            id_isDefined{"", "is_def"};
 
     void init(Constants &constants) {
         constants.add(id_inputs, std::make_shared<Inputs>());
         constants.add(id_print, std::make_shared<Print>());
         constants.add(id_puts, std::make_shared<Puts>());
         constants.add(id_call, std::make_shared<Call>());
+        constants.add(id_isDefined, std::make_shared<IsDefined>());
     }
 }

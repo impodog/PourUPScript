@@ -1,0 +1,44 @@
+/* In this file, we go through the ways to create a module, or an extension to the source file.*/
+
+
+/* Let's see the simplest way of modules, which is including a file.
+Include is a preprocessor directive, which means that it is executed before the compilation of the code.
+Include copies the content of the file to the place where it is called.
+
+To make it easier, let's create a file called "module.puppy" and write the following code in it:
+
+print "Hello, I am a module!"
+moduleVar = 5
+func moduleFunc:
+    print "Now entering the function!"
+
+*/
+#include module
+// This is how we include a file. Note that we don't need to write the extension of the file.
+print moduleVar
+moduleFunc
+
+
+
+/* The second way of creating a module is using the compiled PUPS file.
+This requires you to compile the file first, and then "import" it by using "imp" keyword.
+Let's assume you have already compiled "module.puppy" into "module.pups".
+*/
+// This is how we import a compiled PUPS file. The path is relative to where the program is executed.
+imp "module.pups" as module  // "as" keyword is almost always used when importing a module(not linked), since you need to give it a name.
+// Also, the file must be a string, so you need to put it in quotes, unlike the "include" keyword.
+print module.moduleVar // To access modules, we use the dot operator.
+module.moduleFunc
+
+
+
+/* There are also standard libraries to choose from. Here we use the "random" and "convert" library as an example.*/
+// A standard library can be use by two ways: "include" and "imp". They does the same, but has different meanings.
+#include random
+// This is ok!
+imp "convert"
+// This is also ok! Choose one of them for a single standard library though.
+// Note that when importing standard libraries, we don't really care about the file path, but the "module link" it gives.
+f = random.rand_float 3.0 8.0 // Now we can use the functions in the library.
+print f
+print (convert.round f)

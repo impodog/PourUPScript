@@ -18,7 +18,7 @@ func makeHello:
     nameRef.data = {expr "Hello, " + nameRef.data + "!"}
 makeHello myNameRef // The function is called here with the reference passed
 print myName // Now myName is changed by the function
-del myNameRef // Deleting the reference after use is a good habit to prevent memory isuues
+del myNameRef // Deleting the reference after use is a good habit to prevent memory issues
 
 
 

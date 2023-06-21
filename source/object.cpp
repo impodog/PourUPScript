@@ -85,4 +85,12 @@ namespace pups::library {
             name.append("_" + obj);
         return Id{"", name};
     }
+
+    Id module_link_name(const std::string &name) {
+        return Id{"", MODULE_LINK + name};
+    }
+
+    bool is_pending(const ObjectPtr &object) noexcept {
+        return object.get() == pending.get();
+    }
 }

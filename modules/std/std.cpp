@@ -3,9 +3,18 @@
 //
 
 #include "std.h"
+#include "random.h"
+#include "convert.h"
+#include "string_code.h"
 
-namespace pups::modules::std {
+namespace pups::modules::pups_std {
     void init(Constants &constants) {
         random::init(constants);
+        convert::init(constants);
+        string_code::init(constants);
+    }
+
+    Id get_std_func_name(const std::string &name) {
+        return Id{"", STD_NAME + name + "_load"};
     }
 }

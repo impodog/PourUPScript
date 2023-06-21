@@ -40,7 +40,7 @@ int main() {
     //  Run the program
     pups::Constants constants(const_path); // Load necessary constants from the file
     pups::init(constants); // Init built-ins by adding them to constants
-    pups::modules::std::init(constants); // Init standard modules
+    pups::modules::pups_std::init(constants); // Init standard modules
     pups::Control control(pups_path, constants); // Creating the main file control by using the constants
     control.run(); // Run the whole file
     return 0;

@@ -5,7 +5,7 @@
 #ifndef PUPS_LIB_TESTS_RANDOM_H
 #define PUPS_LIB_TESTS_RANDOM_H
 
-#include "../../pups.h"
+#include "std.h"
 
 namespace pups::modules::random {
     void init(Constants &constants);

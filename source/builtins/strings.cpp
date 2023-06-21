@@ -87,11 +87,11 @@ namespace pups::library::builtins::strings {
                             "String conversion method does not require addition arguments."));
         Arithmetic x;
         try {
-            if constexpr (std::is_same<Arithmetic, int>::value)
+            if constexpr (std::is_same<Arithmetic, pups_int>::value)
                 x = std::stoi(str.data());
-            else if constexpr (std::is_same<Arithmetic, float>::value)
+            else if constexpr (std::is_same<Arithmetic, pups_float>::value)
                 x = std::stof(str.data());
-            else if constexpr (std::is_same<Arithmetic, bool>::value)
+            else if constexpr (std::is_same<Arithmetic, pups_bool>::value)
                 x = str.data() == "true";
         } catch (const std::invalid_argument &) {
             map->throw_error(std::make_shared<ValueError>(
@@ -195,8 +195,8 @@ namespace pups::library::builtins::strings {
             {Id{"", "le"}, STR_CMP(<=)},
             {Id{"", "eq"}, STR_CMP(==)},
             {Id{"", "ne"}, STR_CMP(!=)},
-            {Id{"", "toi"},      string_to<int>},
-            {Id{"", "tof"},      string_to<float>},
+            {Id{"", "toi"},      string_to<pups_int>},
+            {Id{"", "tof"},      string_to<pups_float>},
             {Id{"", "add"},      string_function([](const std::string &lhs, const std::string &rhs) -> std::string {
                 return lhs + rhs;
             })},

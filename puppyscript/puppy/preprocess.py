@@ -53,6 +53,20 @@ class Preprocess:
                 break
             self.content = self.content[:result.start(0)] + new + self.content[result.end(0):]
 
+    def scan_includes(self):
+        results = re.findall(r"(#include\s+(.+))", self.content)
+        for result in results:
+            file = result[1]
+            if not file.endswith(".puppy"):
+                file = file + ".puppy"
+            try:
+                with open(file, "r", encoding="utf-8") as f:
+                    content = f.read()
+            except:
+                with open("./include/" + file, "r", encoding="utf-8") as f:
+                    content = f.read()
+            self.content = self.content.replace(result[0], content)
+
     def remove_comments(self):
         self.content = re.sub(r"/\*.*?\*/", "", self.content, flags=re.S)
         self.content = re.sub(r"//.+\n", "\n", self.content)
@@ -72,22 +86,40 @@ class Preprocess:
     def predefined(self):
         ...
 
-    def scan_includes(self):
-        results = re.findall(r"(#include\s+(.+))", self.content)
-        for result in results:
-            file = result[1]
-            if not file.endswith(".puppy"):
-                file = file + ".puppy"
-            try:
-                with open(file, "r", encoding="utf-8") as f:
-                    content = f.read()
-            except:
-                with open("./include/" + file, "r", encoding="utf-8") as f:
-                    content = f.read()
-            self.content = self.content.replace(result[0], content)
+    def scan_setting(self):
+        result = list()
+        sets = set()
+        env = True
+        for line in self.content.split("\n"):
+            if line.startswith("#set"):
+                tmp = re.fullmatch(r"#set\s*(.*)", line)
+                if tmp is None:
+                    raise RuntimeError("#set command got incorrect args")
+                for name in tmp.group(1).split(" "):
+                    if len(name) > 0 and not name.isspace():
+                        sets.add(name)
+            elif line.startswith("#ifset"):
+                tmp = re.fullmatch(r"#ifset\s*(.*)", line)
+                if tmp is None:
+                    raise RuntimeError("#ifset command got incorrect args")
+                for name in tmp.group(1).split(" "):
+                    if len(name) > 0 and not name.isspace():
+                        env = env and name in sets
+            elif line.startswith("#ifnset"):
+                tmp = re.fullmatch(r"#ifnset\s*(.*)", line)
+                if tmp is None:
+                    raise RuntimeError("#ifnset command got incorrect args")
+                for name in tmp.group(1).split(" "):
+                    if len(name) > 0 and not name.isspace():
+                        env = env and name not in sets
+            elif line.startswith("#end"):
+                env = True
+            elif env:
+                result.append(line)
+        self.content = "\n".join(result)
 
     def scan_defines(self):
-        results = re.findall(r"^#define\s+(.+?)\s*=\s*(.+)\s*", self.content)
+        results = re.findall(r"#define\s+(.+?)\s*=\s*(.+)\s*", self.content)
         for result in results:
             tmp = Command(result[0], result[1])
             for cmd in self.commands:
@@ -104,9 +136,10 @@ class Preprocess:
         self.content = tmp
 
     def work(self, output_name: str) -> str:
+        self.scan_includes()
         self.remove_comments()
         self.fix_line_continue()
-        self.scan_includes()
+        self.scan_setting()
         self.predefined()
         self.scan_defines()
         self.remove_prep_lines()

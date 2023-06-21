@@ -102,6 +102,10 @@ namespace pups::library {
     using LongStrPtr = std::shared_ptr<LongStr>;
 
     Id template_name(std::string name, const std::vector<std::string> &templates);
+
+    Id module_link_name(const std::string &name);
+
+    bool is_pending(const ObjectPtr &object) noexcept;
 }
 
 

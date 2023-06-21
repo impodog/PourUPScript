@@ -25,6 +25,40 @@ namespace pups::library::builtins::map_open {
             }
     ) {}
 
+    ObjectPtr open_module_link(const std::string &name, Map *map) {
+        auto tmp_name = module_link_name(name);
+        auto result = map->find(tmp_name, map);
+        if (is_pending(result))
+            throw std::invalid_argument("Module link not found.");
+        else {
+            auto ptr = std::dynamic_pointer_cast<Function>(result);
+            if (ptr) {
+                MapPtr new_map = std::make_shared<Map>(map, false);
+                map->add_object(Id{"", name}, new_map);
+                ptr->end_of_line(new_map.get());
+                map->set_child(nullptr);
+                return new_map;
+            } else
+                map->throw_error(
+                        std::make_shared<TypeError>("Module link \"" + tmp_name.str() + "\" is not a function."));
+            return pending;
+        }
+    }
+
+    ObjectPtr open_file(const std::string &name, Map *map) {
+        path p = name;
+        if (std::filesystem::exists(p)) {
+            path const_path = p.parent_path().append(p.stem().string() + ".con");
+            Constants constants(const_path);
+            Control control(p, constants, map, false);
+            control.run();
+            return control.map;
+        } else {
+            map->throw_error(std::make_shared<FileNotFoundError>("File \"" + name + "\" is not found."));
+            return pending;
+        }
+    }
+
     ModuleOpen::ModuleOpen() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.size() != 1) {
             map->throw_error(std::make_shared<ArgumentError>("Module opening must find one only string argument."));
@@ -32,16 +66,10 @@ namespace pups::library::builtins::map_open {
         }
         auto ptr = std::dynamic_pointer_cast<strings::String>(*args.front());
         if (ptr) {
-            path p = ptr->data();
-            if (std::filesystem::exists(p)) {
-                path const_path = p.parent_path().append(p.stem().string() + ".con");
-                Constants constants(const_path);
-                Control control(p, constants, map, false);
-                control.run();
-                return control.map;
-            } else {
-                map->throw_error(std::make_shared<FileNotFoundError>("File \"" + ptr->data() + "\" is not found."));
-                return pending;
+            try {
+                return open_module_link(ptr->data(), map);
+            } catch (const std::invalid_argument &) {
+                return open_file(ptr->data(), map);
             }
         } else {
             map->throw_error(std::make_shared<ArgumentError>("Module opening must find a string argument."));

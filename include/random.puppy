@@ -1,2 +1,5 @@
+#ifnset __std_random_load
+#set __std_random_load
 map random:
     __std_random_load
+#end

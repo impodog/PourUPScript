@@ -14,11 +14,11 @@ namespace pups::library::builtins::numbers {
 
     template<typename Arithmetic>
     constexpr const char *type_name_of_arith() noexcept {
-        if constexpr (is_type(int))
+        if constexpr (is_type(pups_int))
             return "int";
-        else if constexpr (is_type(float))
+        else if constexpr (is_type(pups_float))
             return "float";
-        else if constexpr (is_type(bool))
+        else if constexpr (is_type(pups_bool))
             return "bool";
         else
             static_assert(is_type(int), "Type is not supported");
@@ -137,9 +137,9 @@ namespace pups::library::builtins::numbers {
 
     extern ObjectPtr True, False;
 
-    using IntType = NumType<int>;
-    using FloatType = NumType<float>;
-    using BoolType = NumType<bool>;
+    using IntType = NumType<pups_int>;
+    using FloatType = NumType<pups_float>;
+    using BoolType = NumType<pups_bool>;
 
     void init(Constants &constants);
 }

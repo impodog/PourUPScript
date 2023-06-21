@@ -42,7 +42,8 @@ class Extract:
             if is_negative:
                 value = "-" + value
             self.extracted[name] = eval(value)
-            self.content = re.sub((('()' if is_negative else r'([^-\w])') + r"%s(\b)") % value, r"\1%s\2" % name,
+            self.content = re.sub(((r'([^.\w])' if is_negative else r'([^.\-\w])') + r"%s(\b)") % value,
+                                  r"\1%s\2" % name,
                                   self.content)
 
     def extract_string(self):
@@ -60,7 +61,7 @@ class Extract:
                 if need_add_backslash(tmp[-1]):
                     tmp += "\\\\"
             self.extracted[name] = eval('"' + tmp + '"').replace("\n", "\\n")
-            self.content = self.content.replace('"%s"' % value, name)
+            self.content = self.content.replace('"%s"' % value, name, 1)
         self.content = self.content[1:]
 
     def make_extraction(self):

@@ -30,6 +30,11 @@ namespace pups::library::builtins::builtin_func {
         Call();
     };
 
+    class IsDefined: public Function {
+    public:
+        IsDefined();
+    };
+
     void init(Constants &constants);
 }
 
