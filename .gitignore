@@ -10,4 +10,8 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 cmake-build-*
+build/
 test/
+**/__pycache__
+.cache/
+.vscode/

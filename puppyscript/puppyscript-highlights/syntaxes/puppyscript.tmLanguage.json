@@ -6,6 +6,9 @@
 			"include": "#keywords"
 		},
 		{
+			"include": "#preprocess"
+		},
+		{
 			"include": "#strings"
 		},
 		{
@@ -18,7 +21,11 @@
 	"repository": {
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(map|func|param|pack|ret|extern|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|array|pair|hashmap|del|pop|#define|#include)\\b"
+			"match": "\\b(map|func|param|pack|ret|extern|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|array|pair|hashmap|del|pop)\\b"
+		},
+		"preprocess": {
+			"name": "keyword.control.puppyscript",
+			"match": "#(define|include)(.*?)\\n"
 		},
 		"strings": {
 			"name": "string.quoted.double.puppyscript",

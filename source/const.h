@@ -2,8 +2,8 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 
-#ifndef PUPS_EZN_CONST_H
-#define PUPS_EZN_CONST_H
+#ifndef PUPS_CONST_H
+#define PUPS_CONST_H
 
 #include <string>
 #include <iostream>
@@ -28,4 +28,4 @@ namespace pups::library {
     using cstr = const char *;
 }
 
-#endif //PUPS_EZN_CONST_H
+#endif //PUPS_CONST_H
