@@ -2,8 +2,8 @@
 // Created by impodog on 6/17/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_CONTAINER_HASHMAP_H
-#define PUPS_LIB_TESTS_CONTAINER_HASHMAP_H
+#ifndef PUPS_LIB_CONTAINER_HASHMAP_H
+#define PUPS_LIB_CONTAINER_HASHMAP_H
 
 #include "container_base.h"
 #include "container_pair.h"
@@ -43,4 +43,4 @@ namespace pups::library::builtins::containers {
     extern const ContainerCoreMap<HashMap> hashmap_cores;
 }
 
-#endif //PUPS_LIB_TESTS_CONTAINER_HASHMAP_H
+#endif //PUPS_LIB_CONTAINER_HASHMAP_H

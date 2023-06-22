@@ -2,8 +2,8 @@
 // Created by impodog on 6/3/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_STRINGS_H
-#define PUPS_LIB_TESTS_STRINGS_H
+#ifndef PUPS_LIB_STRINGS_H
+#define PUPS_LIB_STRINGS_H
 
 #include "function.h"
 #include "numbers.h"
@@ -44,4 +44,4 @@ namespace pups::library::builtins::strings {
     void init(Constants &constants);
 }
 
-#endif //PUPS_LIB_TESTS_STRINGS_H
+#endif //PUPS_LIB_STRINGS_H

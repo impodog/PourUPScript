@@ -2,8 +2,8 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_CONTROL_H
-#define PUPS_LIB_TESTS_CONTROL_H
+#ifndef PUPS_LIB_CONTROL_H
+#define PUPS_LIB_CONTROL_H
 
 #include "constants.h"
 
@@ -35,4 +35,4 @@ namespace pups::library {
     };
 }
 
-#endif //PUPS_LIB_TESTS_CONTROL_H
+#endif //PUPS_LIB_CONTROL_H

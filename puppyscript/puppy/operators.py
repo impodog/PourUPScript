@@ -83,10 +83,16 @@ class Operators:
 
     def scan_pairs(self):
         self.content = re.sub(rf"({WORD})\s*::\s*({WORD})", r"(pair \1 \2)", self.content)
+        
+        
+    def scan_ranges(self):
+        self.content = re.sub(rf"({WORD})\s*->\s*({WORD})\s*\|\s*({WORD})", r"(range \1 \2 \3)", self.content)
+        self.content = re.sub(rf"({WORD})\s*->\s*({WORD})", r"(range \1 \2)", self.content)
 
     def work(self, output_name: str):
         self.scan_operators()
         self.scan_pairs()
+        self.scan_ranges()
         output = output_name + ".no_op"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)

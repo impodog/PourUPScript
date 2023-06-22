@@ -2,8 +2,8 @@
 // Created by impodog on 6/17/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_CONTAINER_BASE_H
-#define PUPS_LIB_TESTS_CONTAINER_BASE_H
+#ifndef PUPS_LIB_CONTAINER_BASE_H
+#define PUPS_LIB_CONTAINER_BASE_H
 
 #include "../function.h"
 #include "../reference.h"
@@ -25,4 +25,4 @@ namespace pups::library::builtins::containers {
     using ContainerCoreMap = IdMap<ContainerOperatorCore<Container>>;
 }
 
-#endif //PUPS_LIB_TESTS_CONTAINER_BASE_H
+#endif //PUPS_LIB_CONTAINER_BASE_H

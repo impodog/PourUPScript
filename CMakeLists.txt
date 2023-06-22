@@ -24,7 +24,8 @@ set(source_files source/const.h
         source/builtins/containers/container_array.cpp source/builtins/containers/container_array.h
         source/builtins/containers/container_base.cpp source/builtins/containers/container_base.h
         source/builtins/containers/container_pair.cpp source/builtins/containers/container_pair.h
-        source/builtins/containers/container_hashmap.cpp source/builtins/containers/container_hashmap.h)
+        source/builtins/containers/container_hashmap.cpp source/builtins/containers/container_hashmap.h
+        source/builtins/ranges/ranges.cpp source/builtins/ranges/ranges.h)
 
 set(std_files modules/std/std.h modules/std/std.cpp
         modules/std/random.cpp modules/std/random.h

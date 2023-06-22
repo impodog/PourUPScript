@@ -2,8 +2,8 @@
 // Created by impodog on 6/3/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_MAP_OPEN_H
-#define PUPS_LIB_TESTS_MAP_OPEN_H
+#ifndef PUPS_LIB_MAP_OPEN_H
+#define PUPS_LIB_MAP_OPEN_H
 
 #include "function.h"
 
@@ -28,4 +28,4 @@ namespace pups::library::builtins::map_open {
     void init(Constants &constants);
 }
 
-#endif //PUPS_LIB_TESTS_MAP_OPEN_H
+#endif //PUPS_LIB_MAP_OPEN_H

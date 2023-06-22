@@ -2,8 +2,8 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_NUMBERS_H
-#define PUPS_LIB_TESTS_NUMBERS_H
+#ifndef PUPS_LIB_NUMBERS_H
+#define PUPS_LIB_NUMBERS_H
 
 #include "function.h"
 
@@ -143,4 +143,4 @@ namespace pups::library::builtins::numbers {
 
     void init(Constants &constants);
 }
-#endif //PUPS_LIB_TESTS_NUMBERS_H
+#endif //PUPS_LIB_NUMBERS_H

@@ -2,8 +2,8 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_MAP_H
-#define PUPS_LIB_TESTS_MAP_H
+#ifndef PUPS_LIB_MAP_H
+#define PUPS_LIB_MAP_H
 
 #include "error.h"
 
@@ -88,4 +88,4 @@ namespace pups::library {
     extern size_t err_count;
 }
 
-#endif //PUPS_LIB_TESTS_MAP_H
+#endif //PUPS_LIB_MAP_H

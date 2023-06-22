@@ -25,6 +25,50 @@ class Structure:
                 result.append("%s %s" % (tmp.group(1) + with_cmd, "true"))
                 result.append(tmp.group(1) + "elif:")
         self.content = "\n".join(result)
+    
+    def scan_for(self):
+        result = list()
+        for_name:tuple[str,str,str] = None
+        outer_indent = inner_indent = None
+        succeeded = False
+        for line in self.content.split("\n"):
+            if for_name is None:
+                tmp = re.fullmatch(rf"(\s*)for\s+(.+?)\s*,\s*(.+?)\s*,\s*(.+?)\s*:\s*", line)
+                if tmp is not None:
+                    outer_indent = tmp.group(1)
+                    for_name =  (tmp.group(2), tmp.group(3), tmp.group(4))
+                tmp = re.fullmatch(rf"(\s*)for\s+({WORD})\s+in\s+(.+?):\s*", line)
+                if tmp is not None:
+                    outer_indent = tmp.group(1)
+                    tmp_name = next_name("FOR")
+                    result.append(outer_indent + tmp_name + " = " + tmp.group(3))
+                    for_name = (tmp.group(2) + " = call " + tmp_name + ".beg",
+                                "call " + tmp_name + ".cond",
+                                tmp.group(2) + " = call " + tmp_name + ".next")
+                if for_name is not None:
+                    succeeded = True
+                    result.append(outer_indent + for_name[0])
+                    result.append(outer_indent + "while " + for_name[1] + ":")
+                    continue
+                result.append(line)
+            else:
+                cur_indent = firsts(line)
+                if inner_indent is None:
+                    inner_indent = cur_indent
+                else:
+                    if len(cur_indent) < len(inner_indent):
+                        result.append(inner_indent + for_name[2])
+                        for_name = None
+                        outer_indent = inner_indent = None
+                result.append(line)
+        self.content = "\n".join(result)
+        return succeeded
+
+    def scan_all_for(self):
+        while self.scan_for():
+            ...
+                    
+                
 
     def scan_while(self):
         result = list()
@@ -118,6 +162,7 @@ class Structure:
 
     def work(self, output_name: str) -> str:
         self.scan_if()
+        self.scan_all_for()
         self.scan_all_while()
         self.scan_all_extern()
         self.scan_returns()

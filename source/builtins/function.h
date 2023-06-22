@@ -2,8 +2,8 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_FUNCTION_H
-#define PUPS_LIB_TESTS_FUNCTION_H
+#ifndef PUPS_LIB_FUNCTION_H
+#define PUPS_LIB_FUNCTION_H
 
 #include "../control.h"
 
@@ -36,4 +36,4 @@ namespace pups::library::builtins::function {
     };
 }
 
-#endif //PUPS_LIB_TESTS_FUNCTION_H
+#endif //PUPS_LIB_FUNCTION_H

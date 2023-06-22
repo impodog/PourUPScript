@@ -18,5 +18,6 @@ namespace pups::library::builtins {
         builtin_func::init(constants);
         reference::init(constants);
         containers::init(constants);
+        ranges::init(constants);
     }
 }

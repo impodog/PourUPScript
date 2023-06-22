@@ -2,8 +2,8 @@
 // Created by impodog on 6/17/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_CONTAINER_PAIR_H
-#define PUPS_LIB_TESTS_CONTAINER_PAIR_H
+#ifndef PUPS_LIB_CONTAINER_PAIR_H
+#define PUPS_LIB_CONTAINER_PAIR_H
 
 #include "container_base.h"
 
@@ -29,4 +29,4 @@ namespace pups::library::builtins::containers {
     };
 }
 
-#endif //PUPS_LIB_TESTS_CONTAINER_PAIR_H
+#endif //PUPS_LIB_CONTAINER_PAIR_H

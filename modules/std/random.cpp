@@ -87,11 +87,37 @@ namespace pups::modules::random {
         return std::make_shared<numbers::FloatType>(engine(device));
     }
 
-    Id id_random_int{"", "rand_int"}, id_random_float{"", "rand_float"};
+    ObjectPtr random_choose_from(FunctionArgs &args, Map *map) {
+        size_t pos = device() % args.size(), i = 0;
+        while (!args.empty()) {
+            if (i++ == pos)
+                return *args.front();
+            args.pop();
+        }
+        throw std::runtime_error("random.choose_from UNEXPECTED CODE PATH");;
+    }
+
+    ObjectPtr random_choice(FunctionArgs &args, Map *map) {
+        if (args.size() != 1)
+            map->throw_error(std::make_shared<library::ArgumentError>("random.choice requires one only argument."));
+        else {
+            auto ptr = std::dynamic_pointer_cast<containers::Array>(*args.front());
+            if (ptr)
+                return ptr->data.at(device() % ptr->data.size());
+            else
+                map->throw_error(std::make_shared<library::TypeError>("random.choice requires an array argument."));
+        }
+        return pending;
+    }
+
+    Id id_random_int{"", "rand_int"}, id_random_float{"", "rand_float"},
+        id_random_choose_from{"", "choose_from"}, id_random_choice{"", "choice"};
 
     ObjectPtr random_load(FunctionArgs &args, Map *map) {
         map->add_object(id_random_int, std::make_shared<Function>(random_int));
         map->add_object(id_random_float, std::make_shared<Function>(random_float));
+        map->add_object(id_random_choose_from, std::make_shared<Function>(random_choose_from));
+        map->add_object(id_random_choice, std::make_shared<Function>(random_choice));
         return pending;
     }
 

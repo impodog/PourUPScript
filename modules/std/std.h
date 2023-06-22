@@ -2,8 +2,8 @@
 // Created by impodog on 6/18/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_STD_H
-#define PUPS_LIB_TESTS_STD_H
+#ifndef PUPS_LIB_STD_H
+#define PUPS_LIB_STD_H
 
 #include "../../pups.h"
 
@@ -15,4 +15,4 @@ namespace pups::modules::pups_std {
     Id get_std_func_name(const std::string &name);
 }
 
-#endif //PUPS_LIB_TESTS_STD_H
+#endif //PUPS_LIB_STD_H

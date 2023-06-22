@@ -2,8 +2,8 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_ERROR_H
-#define PUPS_LIB_TESTS_ERROR_H
+#ifndef PUPS_LIB_ERROR_H
+#define PUPS_LIB_ERROR_H
 
 #include "object.h"
 
@@ -73,4 +73,4 @@ namespace pups::library {
     };
 }
 
-#endif //PUPS_LIB_TESTS_ERROR_H
+#endif //PUPS_LIB_ERROR_H

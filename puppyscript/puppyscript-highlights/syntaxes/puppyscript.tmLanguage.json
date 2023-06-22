@@ -25,7 +25,7 @@
 		},
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(map|enter|func|param|pack|ret|ext|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|array|pair|hashmap|del|pop)\\b"
+			"match": "\\b(map|enter|func|param|pack|ret|ext|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|array|pair|hashmap|del|pop|for)\\b"
 		},
 		"strings": {
 			"name": "string.quoted.double.puppyscript",

@@ -2,8 +2,8 @@
 // Created by impodog on 6/3/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_QUALIFIERS_H
-#define PUPS_LIB_TESTS_QUALIFIERS_H
+#ifndef PUPS_LIB_QUALIFIERS_H
+#define PUPS_LIB_QUALIFIERS_H
 
 #include "../control.h"
 
@@ -19,4 +19,4 @@ namespace pups::library::builtins::qualifiers {
     };
 }
 
-#endif //PUPS_LIB_TESTS_QUALIFIERS_H
+#endif //PUPS_LIB_QUALIFIERS_H

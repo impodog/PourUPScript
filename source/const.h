@@ -19,12 +19,15 @@
 #include <functional>
 #include <sstream>
 
+#define sign_of(x) (x>0 ? 1 : (x<0 ? -1 : 0))
+#define sign_sub(x, y) (x>y ? 1 : (x<y ? -1 : 0))
+
 namespace pups::library {
     using std::filesystem::path;
     using cstr = const char *;
 
     constexpr cstr
-            PUPS_LIB_VERSION = "0.7.2",
+            PUPS_LIB_VERSION = "0.8.0",
             RESERVED = "_R_",
             MODULE_LINK = "_ML_";
     constexpr const char segment_symbol = '%';

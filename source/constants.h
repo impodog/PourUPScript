@@ -2,8 +2,8 @@
 // Created by impodog on 6/3/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_CONSTANTS_H
-#define PUPS_LIB_TESTS_CONSTANTS_H
+#ifndef PUPS_LIB_CONSTANTS_H
+#define PUPS_LIB_CONSTANTS_H
 
 #include "map.h"
 
@@ -46,4 +46,4 @@ namespace pups::library {
     };
 }
 
-#endif //PUPS_LIB_TESTS_CONSTANTS_H
+#endif //PUPS_LIB_CONSTANTS_H

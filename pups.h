@@ -2,8 +2,8 @@
 // Created by impodog on 6/11/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_PUPS_H
-#define PUPS_LIB_TESTS_PUPS_H
+#ifndef PUPS_LIB_PUPS_H
+#define PUPS_LIB_PUPS_H
 
 #include "source/control.h"
 #include "source/builtins/builtins.h"
@@ -18,4 +18,4 @@ namespace pups {
     using library::builtins::init, library::module_link_name;
 }
 
-#endif //PUPS_LIB_TESTS_PUPS_H
+#endif //PUPS_LIB_PUPS_H

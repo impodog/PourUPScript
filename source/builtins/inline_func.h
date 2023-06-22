@@ -2,8 +2,8 @@
 // Created by Dogs-Cute on 5/28/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_INLINE_FUNC_H
-#define PUPS_LIB_TESTS_INLINE_FUNC_H
+#ifndef PUPS_LIB_INLINE_FUNC_H
+#define PUPS_LIB_INLINE_FUNC_H
 
 #include "function.h"
 #include "containers/containers.h"
@@ -40,4 +40,4 @@ namespace pups::library::builtins::inline_func {
     void init(Constants &constants);
 }
 
-#endif //PUPS_LIB_TESTS_INLINE_FUNC_H
+#endif //PUPS_LIB_INLINE_FUNC_H

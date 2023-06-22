@@ -2,8 +2,8 @@
 // Created by impodog on 6/10/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_REFERENCE_H
-#define PUPS_LIB_TESTS_REFERENCE_H
+#ifndef PUPS_LIB_REFERENCE_H
+#define PUPS_LIB_REFERENCE_H
 
 #include "function.h"
 
@@ -32,4 +32,4 @@ namespace pups::library::builtins::reference {
     void init(Constants &constants);
 }
 
-#endif //PUPS_LIB_TESTS_REFERENCE_H
+#endif //PUPS_LIB_REFERENCE_H

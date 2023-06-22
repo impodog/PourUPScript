@@ -38,5 +38,6 @@ namespace pups::modules::type_judge {
         auto type_judge_func = std::make_shared<Function>(type_judge_load);
         constants.add(pups_std::get_std_func_name("tpjudge"), type_judge_func);
         constants.add(module_link_name("tpjudge"), type_judge_func);
+        
     }
 }
