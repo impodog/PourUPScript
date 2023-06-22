@@ -1,0 +1,69 @@
+/* In this file, we learn an extension to while loop --- for loop.
+For loop groups some parts of while loop together, to make tidier code.*/
+
+
+
+/* This is a for loop as a compound while loop. It can be written like so:*/
+for i=0, i.lt 5, i=i.add 1:
+    print "Now i is " i
+/* The for loop is followed by three parts separated by two commas. It has the form:
+for (init), (condition), (update):
+    ...
+
+And it will be equally translated into:
+(init)
+while (condition):
+    ...
+    (update)
+
+As you can see, this form makes it easier to organize the loop by putting the necessary parts together.
+*/
+
+
+
+/* For loops can also be written in another form --- range form, which is clearer for number iterations.*/
+for j in range 4:
+    print "Now j is " j
+/* This does the same as "for j=0, j.lt 4, j=j.add 1", except for using the built-in class "range"
+The loop is actually translated to something like this:
+
+r = range 4
+j = call r.beg
+while call r.cond:
+    print "Now j is " j
+    j = call r.next
+
+Now the range will automatically give out "false" when the range is used out.
+*/
+
+
+
+/* Ranges are powerful, for that you can change when it will start, end, and even how much to add each iteration.
+Ranges can be initialized in three forms:
+range (end)
+range (begin) (end)
+range (begin) (end) (step)
+begin is defaulted to 0 and step is defaulted to 1 or -1
+*/
+for k in range 10 3: // Reversed ranges' step length is -1 by default
+    print "Now k is " k
+for l in range 4 20 7:
+    print "Now l is " l
+
+
+
+/* One last thing for pretty code lovers, ranges, like pair, also have their special symbol:
+To define a default-step range, you can use (begin)->(end)
+To add steps to it, you can use (begin)->(end)|(step)
+But a small tip, don't use these with complex statements, since they are just macros.*/
+print "Let's do a count down:"
+for countDown in 10 -> -1: // -1 is excluded, so it will stop at 0
+    print countDown
+
+// Ranges can also be used in iterating arrays (VERY RECOMMENDED!)
+// Actually, these are replacements of the old while iterations
+print "The odd numbers in the array:"
+arr = array 1 2 3 4 5 6 7 8 9
+size = call arr.get_size
+for i in 0->size|2: // Odd numbers only
+    print (arr.get i)

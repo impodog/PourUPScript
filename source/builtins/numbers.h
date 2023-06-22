@@ -45,7 +45,10 @@ namespace pups::library::builtins::numbers {
         }
 
         [[nodiscard]] std::string str() const noexcept override {
-            return std::to_string(value);
+            if constexpr (std::is_same<Arithmetic, bool>::value)
+                return value ? "true" : "false";
+            else
+                return std::to_string(value);
         }
 
         FunctionCore get_method(const pups::library::Id &name) override;

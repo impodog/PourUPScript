@@ -1,0 +1,5 @@
+#ifnset __std_memory_load
+#set __std_memory_load
+map memory:
+    __std_memory_load
+#end

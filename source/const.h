@@ -27,7 +27,7 @@ namespace pups::library {
     using cstr = const char *;
 
     constexpr cstr
-            PUPS_LIB_VERSION = "0.8.0",
+            PUPS_LIB_VERSION = "0.8.1",
             RESERVED = "_R_",
             MODULE_LINK = "_ML_";
     constexpr const char segment_symbol = '%';

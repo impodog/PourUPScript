@@ -7,6 +7,7 @@
 #include "convert.h"
 #include "string_code.h"
 #include "type_judge.h"
+#include "memory.h"
 
 namespace pups::modules::pups_std {
     void init(Constants &constants) {
@@ -14,6 +15,7 @@ namespace pups::modules::pups_std {
         convert::init(constants);
         string_code::init(constants);
         type_judge::init(constants);
+        memory::init(constants);
     }
 
     Id get_std_func_name(const std::string &name) {
