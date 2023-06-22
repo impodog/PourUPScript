@@ -27,7 +27,10 @@ set(source_files source/const.h
         source/builtins/containers/container_hashmap.cpp source/builtins/containers/container_hashmap.h)
 
 set(std_files modules/std/std.h modules/std/std.cpp
-        modules/std/random.cpp modules/std/random.h modules/std/convert.cpp modules/std/convert.h modules/std/string_code.cpp modules/std/string_code.h)
+        modules/std/random.cpp modules/std/random.h
+        modules/std/convert.cpp modules/std/convert.h
+        modules/std/string_code.cpp modules/std/string_code.h
+        modules/std/type_judge.cpp modules/std/type_judge.h)
 
 add_library(pups_Lib ${source_files})
 

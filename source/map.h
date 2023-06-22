@@ -55,6 +55,8 @@ namespace pups::library {
 
         ObjectPtr end_of_line(Map *map) override;
 
+        std::string type_name() const noexcept override;
+
         void throw_error(const ErrorPtr &error);
 
         void add_object(const Id &name, const ObjectPtr &object = pending);
@@ -78,6 +80,8 @@ namespace pups::library {
         size_t count_depth() const noexcept;
 
         bool can_run() const noexcept;
+
+        const ObjectMap &get_all_objects() const noexcept;
     };
 
     // This saves the number of errors reported. Can be freely set to 0.

@@ -80,7 +80,7 @@ class Structure:
                         line = re.sub(r"([^\w.])%s(\b)" % name, r"\1&%s\2" % name, line)
                 result.append(line)
             else:
-                tmp = re.match(r"(\s*)extern\s+(.*)", line)
+                tmp = re.match(r"(\s*)ext\s+(.*)", line)
                 if tmp is None:
                     result.append(line)
                 else:
@@ -94,7 +94,7 @@ class Structure:
         return succeeded
 
     def scan_all_extern(self):
-        self.content = re.sub(rf"(\s*)extern\s+({WORD})\s*=\s*(.+)", r"\1extern \2\1\2 = \3", self.content)
+        self.content = re.sub(rf"(\s*)ext\s+({WORD})\s*=\s*(.+)", r"\1ext \2\1\2 = \3", self.content)
         while self.scan_extern():
             ...
 

@@ -30,12 +30,12 @@ int main() {
     if (filename.size() < suffix_len || filename.substr(filename.size() - suffix_len, suffix_len) != ".puppy")
         filename.append(desired_suffix);
     std::cout << "Compiling..." << std::endl;
-    system(("python puppyscript/main.py " + filename).c_str());
-    std::cout << "Running..." << std::endl;
+    system(("python3 puppyscript/main.py " + filename).c_str());
     path filepath = filename;
     path const_path = filepath.parent_path().append(filepath.stem().string() + ".con");
     path pups_path = filepath.parent_path().append(filepath.stem().string() + ".pups");
     std::cout << "Constant Path = " << const_path << "; PUPS Path = " << pups_path << std::endl;
+    std::cout << "Running..." << std::endl;
 
     //  Run the program
     pups::Constants constants(const_path); // Load necessary constants from the file

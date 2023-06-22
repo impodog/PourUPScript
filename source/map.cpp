@@ -136,6 +136,10 @@ namespace pups::library {
         return pending;
     }
 
+    std::string Map::type_name() const noexcept {
+        return "map";
+    }
+
     // WARNING the result can be null
     ObjectPtr &Map::get_return() noexcept {
         return m_return;
@@ -205,6 +209,10 @@ namespace pups::library {
 
     bool Map::can_run() const noexcept {
         return !m_return && !signs.break_sign;
+    }
+
+    const ObjectMap &Map::get_all_objects() const noexcept {
+        return m_map;
     }
 
     ObjectPtr &Object::find(const Id &name, Map *map) {

@@ -56,9 +56,11 @@ namespace pups::library::builtins::builtin_func {
             map->throw_error(std::make_shared<ArgumentError>("is_def function requires at least one argument"));
             return numbers::False;
         }
-        while (!args.empty())
+        while (!args.empty()) {
             if (is_pending(*args.front()))
                 return numbers::False;
+            args.pop();
+        }
         return numbers::True;
     }) {}
 
