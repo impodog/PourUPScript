@@ -47,9 +47,7 @@ namespace pups::library::builtins::builtin_func {
                 map->throw_error(std::make_shared<TypeError>("Call function requires a Function."));
         }
         return pending;
-    }) {
-
-    }
+    }) {}
 
     IsDefined::IsDefined() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.empty()) {
@@ -64,8 +62,37 @@ namespace pups::library::builtins::builtin_func {
         return numbers::True;
     }) {}
 
+    TypenameCheck::TypenameCheck() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+        if (args.size() != 2)
+            map->throw_error(std::make_shared<ArgumentError>("TypenameCheck requires two only arguments."));
+        else {
+            const auto &first = *args.front();
+            args.pop();
+            auto name = std::dynamic_pointer_cast<strings::String>(*args.front());
+            args.pop();
+            if (name)
+                return first->type_name() == name->data() ? numbers::True : numbers::False;
+            else
+                map->throw_error(std::make_shared<TypeError>("TypenameCheck requires a string as the second argument."));
+        }
+        return numbers::False;
+    }) {}
+
+    Equal::Equal() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+        if (args.size() != 2)
+            map->throw_error(std::make_shared<ArgumentError>("Equal check requires two only arguments."));
+        else {
+            const auto &lhs = *args.front();
+            args.pop();
+            const auto &rhs = *args.front();
+            args.pop();
+            return lhs->equal(rhs) ? numbers::True : numbers::False;
+        }
+        return numbers::False;
+    }) {}
+
     Id id_inputs{"", "inputs"}, id_print{"", "print"}, id_puts{"", "puts"}, id_call{"", "call"},
-            id_isDefined{"", "is_def"};
+            id_isDefined{"", "is_def"}, id_typenameCheck{"", "tpchk"}, id_equal{"", "equal"};
 
     void init(Constants &constants) {
         constants.add(id_inputs, std::make_shared<Inputs>());
@@ -73,5 +100,7 @@ namespace pups::library::builtins::builtin_func {
         constants.add(id_puts, std::make_shared<Puts>());
         constants.add(id_call, std::make_shared<Call>());
         constants.add(id_isDefined, std::make_shared<IsDefined>());
+        constants.add(id_typenameCheck, std::make_shared<TypenameCheck>());
+        constants.add(id_equal, std::make_shared<Equal>());
     }
 }

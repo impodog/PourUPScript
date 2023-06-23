@@ -56,7 +56,7 @@ namespace pups::modules::convert {
         return pending;
     }
 
-    Id id_convert_int{"", "toi"}, id_convert_float{"", "tof"}, id_round_int{"", "round"};
+    Id id_convert_int{"", "ftoi"}, id_convert_float{"", "itof"}, id_round_int{"", "round"};
 
     ObjectPtr convert_load(FunctionArgs &args, Map *map) {
         map->add_object(id_convert_int, std::make_shared<Function>(convert_int));

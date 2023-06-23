@@ -76,7 +76,7 @@ namespace pups::library::builtins::keyword_func {
             return *args.front();
         else
             map->throw_error(
-                    std::make_shared<ArgumentError>("Explicit with requires one only non-pending argument."));
+                    std::make_shared<ValueError>("Explicit with requires one only non-pending argument."));
         return pending;
     }) {}
 

@@ -1,0 +1,30 @@
+PUPS Standard Library: random
+
+INTRO:
+
+Provides functions that behaves randomly.
+
+FUNCTIONS:
+
+.rand_int => int
+    Generates a random integer with range depending on std::random_device
+.rand_int int => int
+    Generates an integer between 0 and argument 1(including 0, not including argument 1)
+.rand_int int int => int
+    Generates an integer between argument 1 and argument 2(including argument 1, not including argument 2)
+
+.rand_float => float
+    Generates a random floating number with range depending on std::uniform_real_distribution
+.rand_float float => float
+    Generates an floating number between 0 and argument 1
+.rand_float float float => float
+    Generates an floating number between argument 1 and argument 2
+
+.choose_from obj... => obj
+    Randomly choose an object to return from all the arguments given.
+
+.choice array => obj
+    Randomly choose an element to return from the array given.
+
+.shuffle array => pending
+    Randomly re-arrange the array. Note that the changes are made in the array given.

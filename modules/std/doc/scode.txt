@@ -1,0 +1,23 @@
+PUPS Standard Library: scode
+
+INTRO:
+
+Works between strings and your PUPS code.
+
+FUNCTIONS:
+
+.find string => obj
+    Finds the object with the id defined by the argument.
+    Note that the return value is NOT linked to the origin. To find a reference, use "find_ref" instead.
+
+.find_ref string => ref
+    Finds the reference to the object with the id defined by the argument.
+    It is not a value, so use ".data" to access it.
+
+.format => string
+    Gets the formatted string of the current map. You should use "print" to show it.
+    This filters temporary items. To get everything, use "format_all" instead.
+
+.format_all => string
+    Gets the formatted string of the current map. You should use "print" to show it.
+    This gives the string of everything.

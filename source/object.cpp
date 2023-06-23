@@ -11,10 +11,6 @@ namespace pups::library {
 
     Object::Object() : m_count(static_count++) {}
 
-    ObjectPtr Object::end_of_line(Map *map) {
-        return pending;
-    }
-
     bool Object::is(const ObjectPtr &object) {
         return this == object.get();
     }

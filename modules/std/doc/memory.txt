@@ -1,0 +1,17 @@
+PUPS Standard Library: memory
+
+INTRO:
+
+Provides commonly used functions about pointers.
+
+FUNCTIONS:
+
+.swap obj obj => pending
+    Swaps the two objects by using the current pointers.
+    Do NOT use this with direct references to builtin objects, such as "pending" or "true".
+    This only swaps the current reference, other pointer-same objects are NOT affected.
+
+
+.same obj obj => bool
+    Returns if the two objects have the same pointer to some data.
+    To check equality of instances, use "obj.eq" or "equal obj obj" instead.

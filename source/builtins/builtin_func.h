@@ -35,6 +35,16 @@ namespace pups::library::builtins::builtin_func {
         IsDefined();
     };
 
+    class TypenameCheck: public Function {
+    public:
+        TypenameCheck();
+    };
+
+    class Equal: public Function {
+    public:
+        Equal();
+    };
+
     void init(Constants &constants);
 }
 

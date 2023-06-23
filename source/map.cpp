@@ -38,7 +38,7 @@ namespace pups::library {
     ObjectPtr &Map::single_find(const Id &name) {
         if (name.qual_has('~')) {
             remove_object(name);
-            return m_temp;
+            return pending;
         } else if (name.qual_has('&'))
             return bare_find(name);
         else
@@ -224,6 +224,10 @@ namespace pups::library {
 
     const ObjectMap &Map::get_all_objects() const noexcept {
         return m_map;
+    }
+
+    ObjectPtr Object::end_of_line(Map *map) {
+        return map->m_temp;
     }
 
     ObjectPtr &Object::find(const Id &name, Map *map) {

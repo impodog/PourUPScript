@@ -1,0 +1,16 @@
+PUPS Standard Library: tpjudge
+
+INTRO:
+
+Provides pointer-level type checking for some builtin types.
+
+FUNCTIONS:
+
+.is_int obj => bool
+    Returns if the object is integer.
+
+.is_float obj => bool
+    Returns if the object is floating number.
+
+.is_str obj => bool
+    Returns if the object is string.
