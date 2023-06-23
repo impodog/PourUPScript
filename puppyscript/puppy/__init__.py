@@ -4,6 +4,7 @@ from .operators import Operators
 from .brackets import Brackets
 from .assignment import Assignment
 from .structure import Structure
+from .formatting import Formatting
 import os
 
 
@@ -23,7 +24,11 @@ def script(file: str, output_name: str, keep_temp: bool):
     delete_temp()
     file = Assignment(file).work(output_name)
     delete_temp()
-    file = Brackets(file).work(output_name)
+    file = Brackets(file).work(output_name, 0)
+    delete_temp()
+    file = Formatting(file).work(output_name)
+    delete_temp()
+    file = Brackets(file).work(output_name, 1)
     delete_temp()
     with open(file, "r") as f:
         with open(output_name + ".pups", "w") as out:

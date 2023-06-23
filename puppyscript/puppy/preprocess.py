@@ -1,5 +1,5 @@
 import re
-from .ids import is_word, break_cmd
+from .ids import is_word, break_cmd, firsts
 
 
 class Command:
@@ -134,6 +134,30 @@ class Preprocess:
             if line.find("#") == -1:
                 tmp += line + "\n"
         self.content = tmp
+    
+    def fix_line_multi_statement(self):
+        result = list()
+        for line in self.content.split("\n"):
+            statements = line.split(';')
+            length = len(statements)
+            if length == 1:
+                result.append(line)
+            else:
+                indent = firsts(statements[0].rstrip())
+                for i in range(1, length):
+                    statements[i] = indent + statements[i].lstrip()
+                result.extend(statements)
+        self.content = "\n".join(result)
+    def fix_inline_block(self):
+        result = list()
+        for line in self.content.split("\n"):
+            tmp = re.fullmatch(r"(.*?[^:]:)([^:].*)", line)
+            if tmp is None or tmp.group(2).isspace():
+                result.append(line)
+            else:
+                result.append(tmp.group(1))
+                result.append("\t" + tmp.group(2))
+        self.content = "\n".join(result)
 
     def work(self, output_name: str) -> str:
         self.scan_includes()
@@ -143,6 +167,8 @@ class Preprocess:
         self.predefined()
         self.scan_defines()
         self.remove_prep_lines()
+        self.fix_line_multi_statement()
+        self.fix_inline_block()
         output = output_name + ".prep"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)

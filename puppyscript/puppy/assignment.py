@@ -29,7 +29,7 @@ class Assignment:
                         result.append("%s %s" % (tmp.group(1) + moveTo, new_name))
                         result.append(with_stmt_line(tmp.group(1), tmp.group(3)))
                         result.append("%s %s.data" % (tmp.group(1) + moveTo, new_name))
-                        result.append("%s %s" % (tmp.group(1) + del_cmd, new_name))
+                        result.append(tmp.group(1) + "~" + new_name)
         self.content = "\n".join(result[1:])
 
     def scan_import(self):

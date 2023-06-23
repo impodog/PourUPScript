@@ -18,8 +18,7 @@ class Structure:
                 if tmp is None:
                     result.append(line)
                 else:
-                    result.append("%s %s" % (tmp.group(1) + with_cmd,
-                                             stmt_add_brc(tmp.group(5))))
+                    result.append(with_stmt_line(tmp.group(1),tmp.group(5)))
                     result.append(tmp.group(1) + tmp.group(2) + ":")
             else:
                 result.append("%s %s" % (tmp.group(1) + with_cmd, "true"))
@@ -28,7 +27,7 @@ class Structure:
     
     def scan_for(self):
         result = list()
-        for_name:tuple[str,str,str] = None
+        for_name:tuple[str,str,str,str|None] = None
         outer_indent = inner_indent = None
         succeeded = False
         for line in self.content.split("\n"):
@@ -36,7 +35,7 @@ class Structure:
                 tmp = re.fullmatch(rf"(\s*)for\s+(.+?)\s*,\s*(.+?)\s*,\s*(.+?)\s*:\s*", line)
                 if tmp is not None:
                     outer_indent = tmp.group(1)
-                    for_name =  (tmp.group(2), tmp.group(3), tmp.group(4))
+                    for_name =  (tmp.group(2), tmp.group(3), tmp.group(4), None)
                 tmp = re.fullmatch(rf"(\s*)for\s+({WORD})\s+in\s+(.+?):\s*", line)
                 if tmp is not None:
                     outer_indent = tmp.group(1)
@@ -44,7 +43,8 @@ class Structure:
                     result.append(outer_indent + tmp_name + " = " + tmp.group(3))
                     for_name = (tmp.group(2) + " = call " + tmp_name + ".beg",
                                 "call " + tmp_name + ".cond",
-                                tmp.group(2) + " = call " + tmp_name + ".next")
+                                tmp.group(2) + " = call " + tmp_name + ".next",
+                                tmp_name)
                 if for_name is not None:
                     succeeded = True
                     result.append(outer_indent + for_name[0])
@@ -58,6 +58,8 @@ class Structure:
                 else:
                     if len(cur_indent) < len(inner_indent):
                         result.append(inner_indent + for_name[2])
+                        if for_name[3] is not None:
+                            result.append(outer_indent + "~" + for_name[3])
                         for_name = None
                         outer_indent = inner_indent = None
                 result.append(line)

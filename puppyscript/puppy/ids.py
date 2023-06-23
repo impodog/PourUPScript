@@ -23,7 +23,7 @@ def firsts(s: str, sub: str = "\t ") -> str:
     return result
 
 
-WORD = r"[\w.&]+"
+WORD = r"[\w.&$~]+"
 INDENT = r"[^\S\n]*"
 
 
@@ -51,3 +51,4 @@ ret = "ret"
 break_cmd = "break"
 refTo = "ref"
 del_cmd = "del"
+remove_cmd = "rm"

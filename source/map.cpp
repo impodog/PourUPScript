@@ -36,7 +36,10 @@ namespace pups::library {
     }
 
     ObjectPtr &Map::single_find(const Id &name) {
-        if (name.qual_has('&'))
+        if (name.qual_has('~')) {
+            remove_object(name);
+            return m_temp;
+        } else if (name.qual_has('&'))
             return bare_find(name);
         else
             return local_find(name);
@@ -124,6 +127,14 @@ namespace pups::library {
 
     void Map::set_object(const Id &name, const ObjectPtr &object) {
         find(name, this) = object;
+    }
+
+    void Map::remove_object(const Id &name) {
+        try {
+            m_map.erase(name);
+        } catch (const std::out_of_range &) {
+            throw_error(std::make_shared<IdError>("Cannot remove name \"" + name.str() + "\"."));
+        }
     }
 
     ObjectPtr Map::end_of_line(Map *map) {
@@ -232,16 +243,16 @@ namespace pups::library {
 
     ObjectPtr Pending::put(ObjectPtr &object, Map *map) {
         map->throw_error(std::make_shared<TypeError>("Putting into Pending is not allowed."));
-        return pending;
+        return nullptr;
     }
 
     ObjectPtr LongStr::put(ObjectPtr &object, Map *map) {
         map->throw_error(std::make_shared<TypeError>("Putting into LongStr is not allowed."));
-        return pending;
+        return nullptr;
     }
 
     ObjectPtr Symbol::put(ObjectPtr &object, Map *map) {
         map->throw_error(std::make_shared<TypeError>("Putting into Symbol \"" + m_name + "\" is not allowed."));
-        return pending;
+        return nullptr;
     }
 }

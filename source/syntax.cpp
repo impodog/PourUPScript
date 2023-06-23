@@ -14,7 +14,7 @@ namespace pups::library {
     Id id_args{"", "args"};
 
     bool is_qualifier(char c) {
-        return c == '$' || c == '&' || c == '%';
+        return c == '$' || c == '&' || c == '%' || c == '~';
     }
 
     Id::Id(std::string qual, std::string id) : m_qual(std::move(qual)), m_id(std::move(id)) {

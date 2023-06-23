@@ -46,6 +46,22 @@ namespace pups::library::builtins::ranges {
         }},
         {Id{"", "cond"}, [](Range &range, FunctionArgs &args, Map *map) -> ObjectPtr {
             return std::make_shared<numbers::NumType<pups_bool>>(range.is_ended());
+        }},
+        {Id{"", "has"}, [](Range &range, FunctionArgs &args, Map *map) -> ObjectPtr {
+            if (args.size() != 1)
+                map->throw_error(std::make_shared<ArgumentError>("range.has requires one only argument"));
+            else {
+                auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
+                if (ptr)
+                    return ((range.step>0 ? 
+                        (range.begin<=ptr->value && ptr->value<range.end)
+                        : (range.begin>=ptr->value && ptr->value>range.end)) &&
+                         (ptr->value-range.begin) % range.step == 0)
+                         ? numbers::True : numbers::False;
+                else
+                    map->throw_error(std::make_shared<TypeError>("range.has requires an integer"));
+            }
+            return pending;
         }}
     };
 
