@@ -6,6 +6,8 @@
 #include "strings.h"
 
 namespace pups::library::builtins::map_open {
+    std::unordered_map<std::string, MapPtr> opened_modules;
+
     MapOpen::MapOpen() : Function(
             [](FunctionArgs &args, Map *map) -> ObjectPtr {
                 if (args.empty() || !args.back()->get()->is_long_str()) {
@@ -26,6 +28,10 @@ namespace pups::library::builtins::map_open {
     ) {}
 
     ObjectPtr open_module_link(const std::string &name, Map *map) {
+        try {
+            return opened_modules.at(name);
+        } catch (const std::out_of_range &) {}
+
         auto tmp_name = module_link_name(name);
         auto result = map->find(tmp_name, map);
         if (is_pending(result))
@@ -37,6 +43,7 @@ namespace pups::library::builtins::map_open {
                 map->add_object(Id{"", name}, new_map);
                 ptr->end_of_line(new_map.get());
                 map->set_child(nullptr);
+                opened_modules.insert({name, new_map});
                 return new_map;
             } else
                 map->throw_error(

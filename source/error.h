@@ -71,6 +71,11 @@ namespace pups::library {
     public:
         explicit OutOfBoundError(const std::string &s);
     };
+
+    class PUPS_Exit final : public std::exception {
+    public:
+        PUPS_Exit();
+    };
 }
 
 #endif //PUPS_LIB_ERROR_H

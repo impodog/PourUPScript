@@ -55,6 +55,11 @@ namespace pups::library::builtins::keyword_func {
         Unmap();
     };
 
+    class Exit : public Function {
+    public:
+        Exit();
+    };
+
     void init(Constants &constants);
 }
 

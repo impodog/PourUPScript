@@ -48,4 +48,6 @@ namespace pups::library {
     }
 
     OutOfBoundError::OutOfBoundError(const std::string &s) : Error(s) {}
+
+    PUPS_Exit::PUPS_Exit() {}
 }

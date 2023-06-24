@@ -28,7 +28,7 @@
 		},
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(enter|param|pack|ret|ext|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call)\\b"
+			"match": "\\b(enter|param|pack|ret|ext|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call|exit)\\b"
 		},
 		"types": {
 			"name": "entity.name.type",

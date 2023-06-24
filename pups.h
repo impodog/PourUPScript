@@ -15,7 +15,7 @@ namespace pups {
     using library::builtins::numbers::Number, library::builtins::strings::String;
     using library::builtins::containers::Array, library::builtins::containers::Pair, library::builtins::containers::HashMap;
     using library::pending;
-    using library::builtins::init, library::module_link_name;
+    using library::builtins::init, library::module_link_name, library::PUPS_LIB_VERSION;
 }
 
 #endif //PUPS_LIB_PUPS_H
