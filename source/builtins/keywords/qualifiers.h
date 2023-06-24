@@ -5,7 +5,7 @@
 #ifndef PUPS_LIB_QUALIFIERS_H
 #define PUPS_LIB_QUALIFIERS_H
 
-#include "../control.h"
+#include "../../control.h"
 
 namespace pups::library::builtins::qualifiers {
     using QualifierCore = std::function<void(Map *map)>;

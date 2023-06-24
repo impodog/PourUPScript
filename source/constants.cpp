@@ -3,8 +3,8 @@
 //
 
 #include "constants.h"
-#include "builtins/numbers.h"
-#include "builtins/strings.h"
+#include "builtins/types/numbers.h"
+#include "builtins/types/strings.h"
 
 namespace pups::library {
     constexpr cstr sym_name_assign = "assign",
@@ -130,9 +130,21 @@ namespace pups::library {
         for (auto &constant: constants) {
             map->add_object(constant.first, constant.second);
         }
+        for (auto &sub_const: sub_consts) {
+            MapPtr sub_map = std::make_shared<Map>(map, false);
+            map->set_child(nullptr);
+            sub_const.second->export_to(sub_map.get());
+            map->add_object(sub_const.first, sub_map);
+        }
     }
 
     void Constants::add(const Id &id, const ObjectPtr &object) {
         constants.insert({id, object});
+    }
+
+    Constants &Constants::new_sub_const(const Id &id) {
+        auto result = std::make_shared<Constants>(std::initializer_list<path>{});
+        sub_consts.insert({id, result});
+        return *result;
     }
 }

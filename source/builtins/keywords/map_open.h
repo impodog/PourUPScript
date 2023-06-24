@@ -5,7 +5,7 @@
 #ifndef PUPS_LIB_MAP_OPEN_H
 #define PUPS_LIB_MAP_OPEN_H
 
-#include "function.h"
+#include "../function.h"
 
 namespace pups::library::builtins::map_open {
     using namespace function;

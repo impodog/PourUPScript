@@ -24,20 +24,13 @@ namespace pups::modules::type_judge {
         return pending;
     }
 
+    Id id_tpjudge{"", "tpjudge"};
     Id id_is_int{"", "is_int"}, id_is_float{"", "is_float"}, id_is_str{"", "is_str"};
 
-    ObjectPtr type_judge_load(FunctionArgs &args, Map *map) {
-        map->add_object(id_is_int, std::make_shared<Function>(judge_obj_func<numbers::IntType>));
-        map->add_object(id_is_float, std::make_shared<Function>(judge_obj_func<numbers::FloatType>));
-        map->add_object(id_is_str, std::make_shared<Function>(judge_obj_func<String>));
-        return pending;
-    }
-
-
     void init(Constants &constants) {
-        auto type_judge_func = std::make_shared<Function>(type_judge_load);
-        constants.add(pups_std::get_std_func_name("tpjudge"), type_judge_func);
-        constants.add(module_link_name("tpjudge"), type_judge_func);
-        
+        auto &tpjudge = constants.new_sub_const(id_tpjudge);
+        tpjudge.add(id_is_int, std::make_shared<Function>(judge_obj_func<numbers::IntType>));
+        tpjudge.add(id_is_float, std::make_shared<Function>(judge_obj_func<numbers::FloatType>));
+        tpjudge.add(id_is_str, std::make_shared<Function>(judge_obj_func<String>));
     }
 }

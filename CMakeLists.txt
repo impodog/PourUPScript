@@ -9,17 +9,17 @@ set(source_files source/const.h
         source/map.cpp source/map.h
         source/control.cpp source/control.h
         source/error.cpp source/error.h
-        source/builtins/numbers.cpp source/builtins/numbers.h
+        source/builtins/types/numbers.cpp source/builtins/types/numbers.h
         source/builtins/function.cpp source/builtins/function.h
         source/builtins/builtins.h source/builtins/builtins.cpp
-        source/builtins/inline_func.cpp source/builtins/inline_func.h
-        source/builtins/keyword_func.cpp source/builtins/keyword_func.h
+        source/builtins/keywords/inline_func.cpp source/builtins/keywords/inline_func.h
+        source/builtins/keywords/keyword_func.cpp source/builtins/keywords/keyword_func.h
         source/constants.cpp source/constants.h
-        source/builtins/strings.cpp source/builtins/strings.h
-        source/builtins/qualifiers.cpp source/builtins/qualifiers.h
-        source/builtins/map_open.cpp source/builtins/map_open.h
-        source/builtins/builtin_func.cpp source/builtins/builtin_func.h
-        source/builtins/reference.cpp source/builtins/reference.h
+        source/builtins/types/strings.cpp source/builtins/types/strings.h
+        source/builtins/keywords/qualifiers.cpp source/builtins/keywords/qualifiers.h
+        source/builtins/keywords/map_open.cpp source/builtins/keywords/map_open.h
+        source/builtins/keywords/builtin_func.cpp source/builtins/keywords/builtin_func.h
+        source/builtins/types/reference.cpp source/builtins/types/reference.h
         pups.h source/builtins/containers/containers.cpp source/builtins/containers/containers.h
         source/builtins/containers/container_array.cpp source/builtins/containers/container_array.h
         source/builtins/containers/container_base.cpp source/builtins/containers/container_base.h

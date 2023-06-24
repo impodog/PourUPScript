@@ -5,8 +5,8 @@
 #ifndef PUPS_LIB_INLINE_FUNC_H
 #define PUPS_LIB_INLINE_FUNC_H
 
-#include "function.h"
-#include "containers/containers.h"
+#include "../function.h"
+#include "../containers/containers.h"
 
 namespace pups::library::builtins::inline_func {
     using namespace function;

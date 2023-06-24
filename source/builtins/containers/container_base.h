@@ -6,8 +6,8 @@
 #define PUPS_LIB_CONTAINER_BASE_H
 
 #include "../function.h"
-#include "../reference.h"
-#include "../numbers.h"
+#include "../types/reference.h"
+#include "../types/numbers.h"
 
 namespace pups::library::builtins::containers {
     using namespace function;

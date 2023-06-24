@@ -3,8 +3,8 @@
 //
 
 #include "keyword_func.h"
-#include "numbers.h"
-#include "strings.h"
+#include "../types/numbers.h"
+#include "../types/strings.h"
 
 namespace pups::library::builtins::keyword_func {
 

@@ -23,7 +23,9 @@ namespace pups::library {
                 {"float", stat_float},
                 {"str",   stat_str}
         };
+        using SubConstMap = IdMap<std::shared_ptr<Constants>>;
         ObjectMap constants;
+        SubConstMap sub_consts;
 
         void run_line(const std::string &line);
 
@@ -43,6 +45,8 @@ namespace pups::library {
         void export_to(Map *map);
 
         void add(const Id &id, const ObjectPtr &object);
+
+        Constants &new_sub_const(const Id &id);
     };
 }
 

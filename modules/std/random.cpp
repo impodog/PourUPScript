@@ -118,30 +118,25 @@ namespace pups::modules::random {
             auto ptr = std::dynamic_pointer_cast<containers::Array>(*args.front());
             if (ptr) {
                 size_t size = ptr->size();
-                for (size_t i=0; i<size; i++)
-                    swap(ptr->data.at(i), ptr->data.at(device()%size));
+                for (size_t i = 0; i < size; i++)
+                    swap(ptr->data.at(i), ptr->data.at(device() % size));
             } else
                 map->throw_error(std::make_shared<library::TypeError>("random.shuffle requires an array argument."));
         }
         return pending;
     }
 
+    Id id_random{"", "random"};
     Id id_random_int{"", "rand_int"}, id_random_float{"", "rand_float"},
-        id_random_choose_from{"", "choose_from"}, id_random_choice{"", "choice"},
-        id_random_shuffle{"", "shuffle"};
-
-    ObjectPtr random_load(FunctionArgs &args, Map *map) {
-        map->add_object(id_random_int, std::make_shared<Function>(random_int));
-        map->add_object(id_random_float, std::make_shared<Function>(random_float));
-        map->add_object(id_random_choose_from, std::make_shared<Function>(random_choose_from));
-        map->add_object(id_random_choice, std::make_shared<Function>(random_choice));
-        map->add_object(id_random_shuffle, std::make_shared<Function>(random_shuffle));
-        return pending;
-    }
+            id_random_choose_from{"", "choose_from"}, id_random_choice{"", "choice"},
+            id_random_shuffle{"", "shuffle"};
 
     void init(pups::Constants &constants) {
-        auto random_func = std::make_shared<Function>(random_load);
-        constants.add(pups_std::get_std_func_name("random"), random_func);
-        constants.add(module_link_name("random"), random_func);
+        auto &random = constants.new_sub_const(id_random);
+        random.add(id_random_int, std::make_shared<Function>(random_int));
+        random.add(id_random_float, std::make_shared<Function>(random_float));
+        random.add(id_random_choose_from, std::make_shared<Function>(random_choose_from));
+        random.add(id_random_choice, std::make_shared<Function>(random_choice));
+        random.add(id_random_shuffle, std::make_shared<Function>(random_shuffle));
     }
 }

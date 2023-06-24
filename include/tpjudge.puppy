@@ -1,5 +1,0 @@
-#ifnset __std_tpjudge_load
-#set __std_tpjudge_load
-map tpjudge:
-    __std_tpjudge_load
-#end

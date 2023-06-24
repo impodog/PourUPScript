@@ -20,6 +20,7 @@ namespace pups::modules::memory {
         }
         return pending;
     }
+
     ObjectPtr memory_same(FunctionArgs &args, Map *map) {
         if (args.size() != 2)
             map->throw_error(std::make_shared<library::ArgumentError>("memory.same requires two only arguments."));
@@ -32,17 +33,13 @@ namespace pups::modules::memory {
         }
         return pending;
     }
+
+    Id id_memory{"", "memory"};
     Id id_memory_swap{"", "swap"}, id_memory_same{"", "same"};
 
-    ObjectPtr memory_load(FunctionArgs &args, Map *map) {
-        map->add_object(id_memory_swap, std::make_shared<Function>(memory_swap));
-        map->add_object(id_memory_same, std::make_shared<Function>(memory_same));
-        return pending;
-    }
-
     void init(pups::Constants &constants) {
-        auto memory_func = std::make_shared<Function>(memory_load);
-        constants.add(pups_std::get_std_func_name("memory"), memory_func);
-        constants.add(module_link_name("memory"), memory_func);
+        auto &memory = constants.new_sub_const(id_memory);
+        memory.add(id_memory_swap, std::make_shared<Function>(memory_swap));
+        memory.add(id_memory_same, std::make_shared<Function>(memory_same));
     }
 }

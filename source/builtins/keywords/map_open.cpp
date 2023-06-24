@@ -3,7 +3,7 @@
 //
 
 #include "map_open.h"
-#include "strings.h"
+#include "../types/strings.h"
 
 namespace pups::library::builtins::map_open {
     std::unordered_map<std::string, MapPtr> opened_modules;
@@ -73,11 +73,14 @@ namespace pups::library::builtins::map_open {
         }
         auto ptr = std::dynamic_pointer_cast<strings::String>(*args.front());
         if (ptr) {
+            /*
             try {
                 return open_module_link(ptr->data(), map);
             } catch (const std::invalid_argument &) {
                 return open_file(ptr->data(), map);
             }
+            */
+            return open_file(ptr->data(), map);
         } else {
             map->throw_error(std::make_shared<ArgumentError>("Module opening must find a string argument."));
             return pending;

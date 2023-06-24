@@ -33,11 +33,7 @@ module.moduleFunc
 
 
 /* There are also standard libraries to choose from. Here we use the "random" and "convert" library as an example.*/
-// A standard library can be use by two ways: "include" and "imp". They does the same, but has different meanings.
-#include random
-// This is ok!
-imp "convert"
-// This is also ok! Choose one of them for a single standard library though.
+// A standard library can be used when initialized in CPP code.
 // Note that when importing standard libraries, we don't really care about the file path, but the "module link" it gives.
 f = random.rand_float 3.0 8.0 // Now we can use the functions in the library.
 print f

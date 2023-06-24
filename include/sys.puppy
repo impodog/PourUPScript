@@ -1,5 +1,0 @@
-#ifnset __std_sys_load
-#set __std_sys_load
-map sys:
-    __std_sys_load
-#end

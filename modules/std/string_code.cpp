@@ -40,21 +40,16 @@ namespace pups::modules::string_code {
         return std::make_shared<String>(result);
     }
 
+    Id id_scode{"", "scode"};
     Id id_find{"", "find"}, id_find_ref{"", "find_ref"}
         , id_format{"", "format"}, id_format_all{"", "format_all"};
 
-    ObjectPtr string_code_load(FunctionArgs &args, Map *map) {
-        map->add_object(id_find, std::make_shared<Function>(find<false>));
-        map->add_object(id_find_ref, std::make_shared<Function>(find<true>));
-        map->add_object(id_format, std::make_shared<Function>(format_objects<false>));
-        map->add_object(id_format_all, std::make_shared<Function>(format_objects<true>));
-        return pending;
-    }
-
 
     void init(Constants &constants) {
-        auto string_code_func = std::make_shared<Function>(string_code_load);
-        constants.add(pups_std::get_std_func_name("scode"), string_code_func);
-        constants.add(module_link_name("scode"), string_code_func);
+        auto &scode = constants.new_sub_const(id_scode);
+        scode.add(id_find, std::make_shared<Function>(find<false>));
+        scode.add(id_find_ref, std::make_shared<Function>(find<true>));
+        scode.add(id_format, std::make_shared<Function>(format_objects<false>));
+        scode.add(id_format_all, std::make_shared<Function>(format_objects<true>));
     }
 }

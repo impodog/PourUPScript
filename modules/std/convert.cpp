@@ -56,18 +56,13 @@ namespace pups::modules::convert {
         return pending;
     }
 
+    Id id_convert{"", "convert"};
     Id id_convert_int{"", "ftoi"}, id_convert_float{"", "itof"}, id_round_int{"", "round"};
 
-    ObjectPtr convert_load(FunctionArgs &args, Map *map) {
-        map->add_object(id_convert_int, std::make_shared<Function>(convert_int));
-        map->add_object(id_convert_float, std::make_shared<Function>(convert_float));
-        map->add_object(id_round_int, std::make_shared<Function>(round_int));
-        return pending;
-    }
-
     void init(pups::Constants &constants) {
-        auto convert_func = std::make_shared<Function>(convert_load);
-        constants.add(pups_std::get_std_func_name("convert"), convert_func);
-        constants.add(module_link_name("convert"), convert_func);
+        auto &convert = constants.new_sub_const(id_convert);
+        convert.add(id_convert_int, std::make_shared<Function>(convert_int));
+        convert.add(id_convert_float, std::make_shared<Function>(convert_float));
+        convert.add(id_round_int, std::make_shared<Function>(round_int));
     }
 }

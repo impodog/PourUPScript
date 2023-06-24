@@ -1,0 +1,20 @@
+PUPS Standard Library: sys
+
+INTRO:
+
+Provides information about the PUPS system.
+
+VARIABLES:
+
+.version : string
+    The version string defined in source/const.cpp.
+
+FUNCTIONS:
+
+.is_toplevel => bool
+    Returns if the current map is at the top level(being executed directly in CPP code).
+    This is especially useful to avoid running the main function when testing other parts of the file.
+
+.ver_cmp string string => bool
+    Returns if the left version is greater than or equal to the right version.
+    Normally, you put sys.version on the left side and the minimal version on the right side.

@@ -4,7 +4,7 @@
 
 #ifndef PUPS_LIB_RANGES_H
 #define PUPS_LIB_RANGES_H
-#include "../numbers.h"
+#include "../types/numbers.h"
 
 namespace pups::library::builtins::ranges {
     using namespace function;

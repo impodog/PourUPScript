@@ -3,7 +3,7 @@
 //
 
 #include "builtin_func.h"
-#include "strings.h"
+#include "../types/strings.h"
 #include <iostream>
 
 namespace pups::library::builtins::builtin_func {

@@ -5,7 +5,7 @@
 #ifndef PUPS_LIB_BUILTIN_FUNC_H
 #define PUPS_LIB_BUILTIN_FUNC_H
 
-#include "function.h"
+#include "../function.h"
 
 namespace pups::library::builtins::builtin_func {
     using namespace function;

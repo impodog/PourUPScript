@@ -5,7 +5,7 @@
 #ifndef PUPS_LIB_REFERENCE_H
 #define PUPS_LIB_REFERENCE_H
 
-#include "function.h"
+#include "../function.h"
 
 namespace pups::library::builtins::reference {
     using namespace function;

@@ -1,5 +1,0 @@
-#ifnset __std_convert_load
-#set __std_convert_load
-map convert:
-    __std_convert_load
-#end

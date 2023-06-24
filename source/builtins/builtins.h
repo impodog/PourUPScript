@@ -6,14 +6,14 @@
 #define PUPS_LIB_BUILTINS_H
 
 #include "function.h"
-#include "numbers.h"
-#include "inline_func.h"
-#include "keyword_func.h"
-#include "strings.h"
-#include "map_open.h"
-#include "qualifiers.h"
-#include "builtin_func.h"
-#include "reference.h"
+#include "types/numbers.h"
+#include "keywords/inline_func.h"
+#include "keywords/keyword_func.h"
+#include "types/strings.h"
+#include "keywords/map_open.h"
+#include "keywords/qualifiers.h"
+#include "keywords/builtin_func.h"
+#include "types/reference.h"
 #include "containers/containers.h"
 #include "ranges/ranges.h"
 

@@ -5,7 +5,7 @@
 #ifndef PUPS_LIB_STRINGS_H
 #define PUPS_LIB_STRINGS_H
 
-#include "function.h"
+#include "../function.h"
 #include "numbers.h"
 
 namespace pups::library::builtins::strings {
