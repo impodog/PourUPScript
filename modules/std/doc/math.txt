@@ -1,0 +1,36 @@
+PUPS Standard Library: math
+
+INTRO:
+
+The library of math.
+
+VARIABLES:
+
+.pi : float
+    The pi value defined by C standards.
+
+.e : float
+    The e value defined by C standards.
+
+FUNCTIONS:
+
+.ftoi float => int
+    Converts a floating number to integer(downcast).
+
+.itof int => float
+    Converts an integer to an equal floating number.
+
+.round float => int
+    Converts a floating number to the nearest integer.
+
+.sin float => float
+.cos float => float
+.tan float => float
+
+.rad float => float
+    Convert an angle measured in degrees to radians.
+    Equals to value * pi / 180
+
+.deg float => float
+    Convert an angle measured in radians to degrees.
+    Equals to value * 180 / pi

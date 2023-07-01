@@ -1,3 +1,4 @@
+!! THIS LIBRARY IS DEPRECATED !!
 PUPS Standard Library: convert
 
 INTRO:
@@ -7,25 +8,10 @@ Converts between builtin type instances.
 FUNCTIONS:
 
 .ftoi float => int
-    Intro:
-        Converts a floating number to integer(downcast).
-    Examples:
-              Statement       |  Results
-        convert.ftoi 3.1415   |     3
-        convert.ftoi 5.6      |     5
-        convert.ftoi -1.92    |     -1
+    Converts a floating number to integer(downcast).
 
 .itof int => float
     Converts an integer to an equal floating number.
-    Examples:
-              Statement  |  Results
-        convert.itof 6   |    6.0
-        convert.itof -5  |    -5.0
 
 .round float => int
     Converts a floating number to the nearest integer.
-    Examples:
-              Statement       |  Results
-        convert.ftoi 3.1415   |     3
-        convert.ftoi 2.7      |     3
-        convert.ftoi -4.53    |     -5

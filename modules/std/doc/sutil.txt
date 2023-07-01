@@ -1,0 +1,13 @@
+PUPS Standard Library: sutil
+
+INTRO:
+
+String utilities. Some of them are taken from the string methods.
+
+FUNCTIONS:
+
+.stoi str => int
+    Converts a string to the integer it represents.
+
+.stof str => float
+    Converts a string to the floating number it represents.

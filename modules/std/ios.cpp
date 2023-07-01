@@ -139,7 +139,7 @@ namespace pups::modules::ios {
         }
 
         size_t hash() const noexcept override {
-            return std::hash<path_t>()(m_path);
+            return std::hash<std::string>()(std::filesystem::absolute(m_path).string());
         }
 
         size_t equal(const ObjectPtr &object) const noexcept override {
@@ -176,6 +176,13 @@ namespace pups::modules::ios {
         return std::make_shared<Path>(path.m_path.stem());
     }
 
+    ObjectPtr path_extn(Path &path, FunctionArgs &args, Map *map) {
+        if (!args.empty())
+            map->throw_error(
+                    std::make_shared<library::ArgumentError>("path.extn requires no arguments. Arguments ignored."));
+        return std::make_shared<Path>(path.m_path.extension());
+    }
+
     ObjectPtr path_abs(Path &path, FunctionArgs &args, Map *map) {
         if (!args.empty())
             map->throw_error(
@@ -209,6 +216,52 @@ namespace pups::modules::ios {
             map->throw_error(
                     std::make_shared<library::ArgumentError>("path.is_dir requires no arguments. Arguments ignored."));
         return std::make_shared<numbers::BoolType>(std::filesystem::is_directory(path.m_path));
+    }
+
+    ObjectPtr path_list_dir(Path &path, FunctionArgs &args, Map *map) {
+        if (!args.empty())
+            map->throw_error(
+                    std::make_shared<library::ArgumentError>(
+                            "path.list_dir requires no arguments. Arguments ignored."));
+        if (std::filesystem::is_directory(path.m_path)) {
+            std::vector<ObjectPtr> result;
+            for (auto const &entry: std::filesystem::directory_iterator(path.m_path))
+                result.push_back(std::make_shared<Path>(entry.path()));
+            return std::make_shared<containers::Array>(result);
+        } else
+            map->throw_error(std::make_shared<library::ValueError>(
+                    "path.list_dir requires a directory to list, " "instead of " + path.str() + "."));
+        return pending;
+    }
+
+    template<bool staged>
+    void list_recur(std::vector<ObjectPtr> &result, const path_t &path) {
+        if (std::filesystem::is_directory(path)) {
+            if constexpr (staged) {
+                auto arr = std::make_shared<containers::Array>();
+                for (auto const &entry: std::filesystem::directory_iterator(path))
+                    list_recur<staged>(arr->data, entry.path());
+                result.push_back(arr);
+            } else {
+                for (auto const &entry: std::filesystem::directory_iterator(path))
+                    list_recur<staged>(result, entry.path());
+            }
+        } else
+            result.push_back(std::make_shared<Path>(path));
+    }
+
+    template<bool staged>
+    ObjectPtr path_list_recur(Path &path, FunctionArgs &args, Map *map) {
+        if (!args.empty())
+            map->throw_error(
+                    std::make_shared<library::ArgumentError>(
+                            "path.list_recur requires no arguments. Arguments ignored."));
+        std::vector<ObjectPtr> result;
+        list_recur<staged>(result, path.m_path);
+        if constexpr (staged)
+            return result.front();
+        else
+            return std::make_shared<containers::Array>(result);
     }
 
     class FileInit : public Function {
@@ -259,9 +312,10 @@ namespace pups::modules::ios {
             id_fileWrite{"", "write"}, id_fileFlush{"", "flush"}, id_fileEndl{"", "endl"},
             id_fileReset{"", "reset"}, id_fileClose{"", "close"};
     Id id_pathInit{"", "path"};
-    Id id_pathAdd{"", "add"}, id_pathGetStr{"", "get_str"}, id_pathStem{"", "stem"},
+    Id id_pathAdd{"", "add"}, id_pathGetStr{"", "get_str"}, id_pathStem{"", "stem"}, id_pathExtn{"", "extn"},
             id_pathAbs{"", "abs"}, id_pathParent{"", "parent"}, id_pathExists{"", "exists"},
-            id_pathIsFile{"", "is_file"}, id_pathIsDir{"", "id_dir"};
+            id_pathIsFile{"", "is_file"}, id_pathIsDir{"", "id_dir"},
+            id_pathListDir{"", "list_dir"}, id_pathListRecur{"", "list_recur"}, id_pathListFiles{"", "list_files"};
 
     const FileFuncMap file_functions = {
             {id_fileRead,    file_read},
@@ -273,14 +327,18 @@ namespace pups::modules::ios {
             {id_fileClose,   file_close}
     };
     const PathFuncMap path_functions = {
-            {id_pathAdd,    path_add},
-            {id_pathGetStr, path_get_str},
-            {id_pathStem,   path_stem},
-            {id_pathAbs,    path_abs},
-            {id_pathParent, path_parent},
-            {id_pathExists, path_exists},
-            {id_pathIsFile, path_is_file},
-            {id_pathIsDir,  path_is_dir}
+            {id_pathAdd,       path_add},
+            {id_pathGetStr,    path_get_str},
+            {id_pathStem,      path_stem},
+            {id_pathExtn,      path_extn},
+            {id_pathAbs,       path_abs},
+            {id_pathParent,    path_parent},
+            {id_pathExists,    path_exists},
+            {id_pathIsFile,    path_is_file},
+            {id_pathIsDir,     path_is_dir},
+            {id_pathListDir,   path_list_dir},
+            {id_pathListRecur, path_list_recur<true>},
+            {id_pathListFiles, path_list_recur<false>}
     };
 
     void init(Constants &constants) {

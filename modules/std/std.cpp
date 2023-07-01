@@ -4,22 +4,24 @@
 
 #include "std.h"
 #include "random.h"
-#include "convert.h"
 #include "string_code.h"
 #include "type_judge.h"
 #include "memory.h"
 #include "sys.h"
 #include "ios.h"
+#include "sutil.h"
+#include "pupsmath.h"
 
 namespace pups::modules::pups_std {
     void init(Constants &constants) {
         random::init(constants);
-        convert::init(constants);
         string_code::init(constants);
         type_judge::init(constants);
         memory::init(constants);
         sys::init(constants);
         ios::init(constants);
+        sutil::init(constants);
+        math::init(constants);
     }
 
     Id get_std_func_name(const std::string &name) {

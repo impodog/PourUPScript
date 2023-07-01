@@ -78,7 +78,7 @@ namespace pups::library::builtins::strings {
         };
     }
 
-
+    /*
     template<typename Arithmetic>
     ObjectPtr string_to(String &str, FunctionArgs &args, Map *map) {
         if (!args.empty())
@@ -100,6 +100,7 @@ namespace pups::library::builtins::strings {
         }
         return std::make_shared<numbers::NumType<Arithmetic>>(x);
     }
+    */
 
     StringFuncCore string_function(const std::function<std::string(const std::string &, const std::string &)> &core) {
         return [core](String &str, FunctionArgs &args, Map *map) -> ObjectPtr {
@@ -203,8 +204,6 @@ namespace pups::library::builtins::strings {
             {Id{"", "le"}, STR_CMP(<=)},
             {Id{"", "eq"}, STR_CMP(==)},
             {Id{"", "ne"}, STR_CMP(!=)},
-            {Id{"", "toi"},      string_to<pups_int>},
-            {Id{"", "tof"},      string_to<pups_float>},
             {Id{"", "add"},      string_function([](const std::string &lhs, const std::string &rhs) -> std::string {
                 return lhs + rhs;
             })},

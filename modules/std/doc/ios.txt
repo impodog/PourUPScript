@@ -1,0 +1,83 @@
+PUPS Standard Library: ios
+
+INTRO:
+
+Provides a file i/o system.
+
+FUNCTIONS:
+
+.open str/.Path => .File
+    Open a file at path. The argument can be either a string or a path object.
+
+.path str => .Path
+    Creates a new path object by the string.
+
+CLASSES:
+
+.File
+    .read obj... => pending
+        Read string into one object each.
+        Every object gets a new string created.
+        If the file hits eof, the rest of the object will be assigned with pending.
+    
+    .read_all => str
+        Read all the content inside a file and return the string.
+    
+    .write obj... => pending
+        Write the string join by objects given(equals to "str_of obj...") into the stream.
+        Note that the written contents are not changed, until you use ".flush" or ".endl".
+    
+    .flush => pending
+        Flush the stream(output the stream into the file).
+        This is called after using ".write", and you want to save changes immediately.
+    
+    .endl => pending
+        Append a end line character, then flush the stream(see ".flush").
+
+    .reset => pending
+        Clear all the existing contents in the original file, and reopen the file.
+        Note that this is not done when you've just created a new file object.
+    
+    .close => pending
+        Close the file stream. Later, you may not access the file from this object and its weak references.
+
+.Path
+    .add str => .Path
+        Return a new path containing the original path appended with the deeper str.
+        This takes the original as a directory, and add it with another directory, or a file inside.
+    
+    .get_str => str
+        Return the string kept by path object.
+    
+    .stem => .Path
+        Return everything in this path except the extension of the file.
+
+    .extn => .Path
+        Return the extension of the file. It is awkward to return as a path though.
+
+    .abs => .Path
+        Return the absolute path.
+    
+    .parent => .Path
+        Return the parent directory of original path.
+
+    .exists => bool
+        Return if the path exists according to the system.
+    
+    .is_file => bool
+        Return if the path leads to a file.
+
+    .is_dir => bool
+        Return if the path leads to a directory.
+
+    .list_dir => array[.Path...]
+        Return all the files and directories under this directory.
+        If it is not a directory, throw a ValueError.
+
+    .list_recur => array[array[...] | .Path ...] | .Path
+        Return the structure of files represented as array of the directory.
+        Specially, if the path is a file, the path object itself is returned.
+    
+    .list_files => array[.Path...]
+        Return all the files, found recursively, under the current directory.
+        Specially, if the path is a file, an array containing only the path object itself is returned.

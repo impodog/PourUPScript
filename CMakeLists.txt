@@ -29,11 +29,13 @@ set(source_files source/const.h
 
 set(std_files modules/std/std.h modules/std/std.cpp
         modules/std/random.cpp modules/std/random.h
-        modules/std/convert.cpp modules/std/convert.h
         modules/std/string_code.cpp modules/std/string_code.h
         modules/std/type_judge.cpp modules/std/type_judge.h
         modules/std/memory.cpp modules/std/memory.h
-        modules/std/sys.cpp modules/std/sys.h modules/std/ios.cpp modules/std/ios.h)
+        modules/std/sys.cpp modules/std/sys.h
+        modules/std/ios.cpp modules/std/ios.h
+        modules/std/sutil.cpp modules/std/sutil.h
+        modules/std/pupsmath.cpp modules/std/pupsmath.h)
 
 add_library(pups_Lib ${source_files})
 
