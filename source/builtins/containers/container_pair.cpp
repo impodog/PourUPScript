@@ -34,9 +34,9 @@ namespace pups::library::builtins::containers {
             map->throw_error(std::make_shared<ArgumentError>("Pair initialization requires two only arguments"));
         else {
             auto &left = *args.front();
-            args.pop();
+            args.pop_front();
             auto &right = *args.front();
-            args.pop();
+            args.pop_front();
             return std::make_shared<Pair>(left, right);
         }
         return pending;

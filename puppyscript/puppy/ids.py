@@ -52,3 +52,5 @@ break_cmd = "break"
 refTo = "ref"
 del_cmd = "del"
 remove_cmd = "rm"
+
+rules = dict()

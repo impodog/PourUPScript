@@ -101,6 +101,12 @@ namespace pups::library {
 
     using LongStrPtr = std::shared_ptr<LongStr>;
 
+    template<typename ObjectType>
+    std::shared_ptr<ObjectType> cast(const ObjectPtr &object) {
+        static_assert(std::is_base_of<Object, ObjectType>::value, "Object casting requires a object type.");
+        return std::dynamic_pointer_cast<ObjectType>(object);
+    }
+
     Id template_name(std::string name, const std::vector<std::string> &templates);
 
     Id module_link_name(const std::string &name);

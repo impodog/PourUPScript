@@ -15,7 +15,7 @@ namespace pups::library::builtins::strings {
     }
 
     ObjectPtr String::put(ObjectPtr &object, Map *map) {
-        auto ptr = std::dynamic_pointer_cast<String>(object);
+        auto ptr = cast<String>(object);
         if (ptr) {
             return std::make_shared<String>(m_data + ptr->m_data);
         } else {
@@ -56,7 +56,7 @@ namespace pups::library::builtins::strings {
     }
 
     size_t String::equal(const ObjectPtr &object) const noexcept {
-        auto ptr = std::dynamic_pointer_cast<String>(object);
+        auto ptr = cast<String>(object);
         return ptr && m_data == ptr->m_data;
     }
 
@@ -66,13 +66,13 @@ namespace pups::library::builtins::strings {
         return [cmp](String &str, FunctionArgs &args, Map *map) -> ObjectPtr {
             auto &str_data = str.data();
             while (!args.empty()) {
-                auto ptr = std::dynamic_pointer_cast<String>(*args.front());
+                auto ptr = cast<String>(*args.front());
                 if (ptr) {
                     if (!cmp(str_data, ptr->data()))
                         return numbers::False;
                 } else
                     map->throw_error(std::make_shared<TypeError>("Incorrect call of type on String.compare ."));
-                args.pop();
+                args.pop_front();
             }
             return numbers::True;
         };
@@ -106,8 +106,8 @@ namespace pups::library::builtins::strings {
             if (args.size() != 1)
                 map->throw_error(std::make_shared<ArgumentError>("String operators requires one only argument."));
             else {
-                auto rhs = std::dynamic_pointer_cast<String>(*args.front());
-                args.pop();
+                auto rhs = cast<String>(*args.front());
+                args.pop_front();
                 if (rhs)
                     return std::make_shared<String>(core(str.data(), rhs->data()));
                 else
@@ -130,7 +130,7 @@ namespace pups::library::builtins::strings {
             map->throw_error(std::make_shared<ArgumentError>("String.at requires one only argument."));
         else {
             {
-                auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
+                auto ptr = cast<numbers::IntType>(*args.front());
                 if (ptr) {
                     try {
                         std::string s;
@@ -145,10 +145,10 @@ namespace pups::library::builtins::strings {
                 }
             }
             {
-                auto ptr = std::dynamic_pointer_cast<containers::Pair>(*args.front());
+                auto ptr = cast<containers::Pair>(*args.front());
                 if (ptr) {
-                    auto left = std::dynamic_pointer_cast<numbers::IntType>(ptr->left);
-                    auto right = std::dynamic_pointer_cast<numbers::IntType>(ptr->right);
+                    auto left = cast<numbers::IntType>(ptr->left);
+                    auto right = cast<numbers::IntType>(ptr->right);
                     if (left && right)
                         return std::make_shared<String>(str.data().substr(left->value, right->value - left->value));
                 }
@@ -159,29 +159,37 @@ namespace pups::library::builtins::strings {
         return pending;
     }
 
-    ObjectPtr str_of(FunctionArgs &args, Map *map) {
+    std::string str_of(FunctionArgs &args) {
         std::string result;
         while (!args.empty()) {
             result.append(args.front()->get()->str());
-            args.pop();
+            args.pop_front();
         }
-        return std::make_shared<String>(result);
+        return result;
     }
 
-    ObjectPtr repr_of(FunctionArgs &args, Map *map) {
+    ObjectPtr str_of_wrapped(FunctionArgs &args, Map *map) {
+        return std::make_shared<String>(str_of(args));
+    }
+
+    std::string repr_of(FunctionArgs &args) {
         std::string result;
         while (!args.empty()) {
             result.append(args.front()->get()->repr());
-            args.pop();
+            args.pop_front();
         }
-        return std::make_shared<String>(result);
+        return result;
+    }
+
+    ObjectPtr repr_of_wrapped(FunctionArgs &args, Map *map) {
+        return std::make_shared<String>(repr_of(args));
     }
 
     ObjectPtr typename_of(FunctionArgs &args, Map *map) {
         std::string result;
         while (!args.empty()) {
             result.append(args.front()->get()->type_name()).push_back('_');
-            args.pop();
+            args.pop_front();
         }
         return std::make_shared<String>(result.substr(0, result.size() - 1));
     }
@@ -202,7 +210,7 @@ namespace pups::library::builtins::strings {
             })},
             {Id{"", "get_size"}, string_size},
             {Id{"", "at"},       string_at},
-            {Id{"", "get"},       string_at}
+            {Id{"", "get"},      string_at}
     };
 #undef STR_CMP
 
@@ -212,8 +220,8 @@ namespace pups::library::builtins::strings {
             constants.add(template_name(name, {name_string}), std::make_shared<Function>(core));
         };
         */
-        constants.add(id_str_of, std::make_shared<Function>(str_of));
-        constants.add(id_repr_of, std::make_shared<Function>(repr_of));
+        constants.add(id_str_of, std::make_shared<Function>(str_of_wrapped));
+        constants.add(id_repr_of, std::make_shared<Function>(repr_of_wrapped));
         constants.add(id_typename_of, std::make_shared<Function>(typename_of));
     }
 }

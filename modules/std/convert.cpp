@@ -5,15 +5,12 @@
 #include "convert.h"
 
 namespace pups::modules::convert {
-    using namespace library::builtins::function;
-    using namespace pups::library::builtins;
-
     ObjectPtr convert_int(FunctionArgs &args, Map *map) {
         if (args.size() != 1)
             map->throw_error(
                     std::make_shared<pups::library::ArgumentError>("Converting to int requires one only argument."));
         else {
-            auto ptr = std::dynamic_pointer_cast<numbers::FloatType>(*args.front());
+            auto ptr = cast<numbers::FloatType>(*args.front());
             if (ptr) {
                 return std::make_shared<numbers::IntType>(
                         static_cast<library::pups_int>(ptr->value));
@@ -29,7 +26,7 @@ namespace pups::modules::convert {
             map->throw_error(
                     std::make_shared<pups::library::ArgumentError>("Converting to float requires one only argument."));
         else {
-            auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
+            auto ptr = cast<numbers::IntType>(*args.front());
             if (ptr) {
                 return std::make_shared<numbers::FloatType>(
                         static_cast<library::pups_float>(ptr->value));
@@ -45,7 +42,7 @@ namespace pups::modules::convert {
             map->throw_error(
                     std::make_shared<pups::library::ArgumentError>("Rounding to int requires one only argument."));
         else {
-            auto ptr = std::dynamic_pointer_cast<numbers::FloatType>(*args.front());
+            auto ptr = cast<numbers::FloatType>(*args.front());
             if (ptr) {
                 return std::make_shared<numbers::IntType>(
                         std::llround(ptr->value));

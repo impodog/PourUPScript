@@ -4,6 +4,18 @@
 
 #include "containers.h"
 
+namespace pups::library {
+    void Map::unpack_array(ObjectPtr &object) {
+        auto ptr = cast<builtins::containers::Array>(object);
+        if (ptr) {
+            for (auto &element: ptr->data)
+                m_unpacked.push(&element);
+        } else
+            throw_error(
+                    std::make_shared<TypeError>(
+                            "Cannot unpack object " + object->repr() + " since it's not an array."));
+    }
+}
 namespace pups::library::builtins::containers {
 
     template<typename Container>
@@ -31,7 +43,7 @@ namespace pups::library::builtins::containers {
     ObjectPtr container_pop_at(Container &container, FunctionArgs &args, Map *map) {
         ObjectPtr result;
         while (!args.empty()) {
-            auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
+            auto ptr = cast<numbers::IntType>(*args.front());
             if (ptr)
                 try {
                     result = container.pop_at(ptr->value);
@@ -42,7 +54,7 @@ namespace pups::library::builtins::containers {
             else
                 map->throw_error(std::make_shared<TypeError>(
                         "Container.pop_at requires integers. Value " + args.front()->get()->repr() + " skipped."));
-            args.pop();
+            args.pop_front();
         }
         return result;
     }
@@ -77,7 +89,7 @@ namespace pups::library::builtins::containers {
             map->throw_error(
                     std::make_shared<ArgumentError>("Container.at requires one only argument."));
         } else {
-            auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
+            auto ptr = cast<numbers::IntType>(*args.front());
             if (ptr) {
                 try {
                     if constexpr (return_reference)
@@ -126,12 +138,12 @@ namespace pups::library::builtins::containers {
 
     template<typename Container>
     ObjectPtr container_insert(Container &container, FunctionArgs &args, Map *map) {
-        auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
-        args.pop();
+        auto ptr = cast<numbers::IntType>(*args.front());
+        args.pop_front();
         if (ptr) {
             while (!args.empty()) {
                 container.insert_at(*args.front(), ptr->value);
-                args.pop();
+                args.pop_front();
             }
         } else
             map->throw_error(
@@ -152,16 +164,16 @@ namespace pups::library::builtins::containers {
     Id id_arrayInit{"", "array"}, id_pairInit{"", "pair"}, id_hashmapInit{"", "hashmap"};
 
     const ContainerCoreMap<Array> array_cores = {
-            {Id{"", "add"}, container_push<Array>},
-            {Id{"", "pop"}, container_pop_back<Array>},
-            {Id{"", "pop_at"}, container_pop_at<Array>},
-            {Id{"", "clear"}, container_clear<Array>},
-            {Id{"", "at"}, container_at_index<Array, false>},
-            {Id{"", "at_ref"}, container_at_index<Array, true>},
-            {Id{"", "get"}, container_at_index<Array, false>},
-            {Id{"", "get_ref"}, container_at_index<Array, true>},
+            {Id{"", "add"},      container_push<Array>},
+            {Id{"", "pop"},      container_pop_back<Array>},
+            {Id{"", "pop_at"},   container_pop_at<Array>},
+            {Id{"", "clear"},    container_clear<Array>},
+            {Id{"", "at"},       container_at_index<Array, false>},
+            {Id{"", "at_ref"},   container_at_index<Array, true>},
+            {Id{"", "get"},      container_at_index<Array, false>},
+            {Id{"", "get_ref"},  container_at_index<Array, true>},
             {Id{"", "get_size"}, container_size<Array>},
-            {Id{"", "insert"}, container_insert<Array>},
+            {Id{"", "insert"},   container_insert<Array>},
     };
     const ContainerCoreMap<HashMap> hashmap_cores = {
             {Id{"", "add"},      container_push<HashMap>},

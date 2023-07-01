@@ -8,7 +8,7 @@
 #include "../control.h"
 
 namespace pups::library::builtins::function {
-    using FunctionArgs = std::queue<ObjectPtr *>;
+    using FunctionArgs = std::deque<ObjectPtr *>;
     using FunctionParams = std::vector<Id>;
     using FunctionCore = std::function<ObjectPtr(FunctionArgs &, Map *)>;
 

@@ -1,12 +1,9 @@
 #include "type_judge.h"
 
 namespace pups::modules::type_judge {
-    using namespace library::builtins::function;
-    using namespace pups::library::builtins;
-
     template<typename JudgeType>
     bool judge(const ObjectPtr &object) {
-        auto ptr = std::dynamic_pointer_cast<JudgeType>(object);
+        auto ptr = cast<JudgeType>(object);
         return ptr != nullptr;
     }
 

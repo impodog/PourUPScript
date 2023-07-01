@@ -24,12 +24,12 @@ namespace pups::library::builtins::inline_func {
                     std::vector<ObjectPtr> array;
                     while (!args.empty()) {
                         array.push_back(*args.front());
-                        args.pop();
+                        args.pop_front();
                     }
                     object = std::make_shared<containers::Array>(array);
                 } else {
                     object = *args.front();
-                    args.pop();
+                    args.pop_front();
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace pups::library::builtins::inline_func {
                         static_link = nullptr;
                     *args.front() = std::make_shared<InlineFunc>(
                             *std::static_pointer_cast<LongStr>(*args.back())->ids(), static_link);
-                    args.pop();
+                    args.pop_front();
                 }
                 return pending;
             }) {

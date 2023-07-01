@@ -13,10 +13,10 @@ namespace pups::library::builtins::function {
 
     ObjectPtr Function::put(ObjectPtr &object, Map *map) {
         try {
-            m_args.at(map).push(&object);
+            m_args.at(map).push_back(&object);
         } catch (const std::out_of_range &) {
             m_args.insert({map, {}});
-            m_args.at(map).push(&object);
+            m_args.at(map).push_back(&object);
         }
         return nullptr;
     }

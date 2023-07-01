@@ -21,7 +21,7 @@ namespace pups::library::builtins::map_open {
                 control.run();
                 while (args.size() != 1) {
                     *args.front() = sub_map;
-                    args.pop();
+                    args.pop_front();
                 }
                 return sub_map;
             }
@@ -37,7 +37,7 @@ namespace pups::library::builtins::map_open {
         if (is_pending(result))
             throw std::invalid_argument("Module link not found.");
         else {
-            auto ptr = std::dynamic_pointer_cast<Function>(result);
+            auto ptr = cast<Function>(result);
             if (ptr) {
                 MapPtr new_map = std::make_shared<Map>(map, false);
                 map->add_object(Id{"", name}, new_map);
@@ -71,7 +71,7 @@ namespace pups::library::builtins::map_open {
             map->throw_error(std::make_shared<ArgumentError>("Module opening must find one only string argument."));
             return pending;
         }
-        auto ptr = std::dynamic_pointer_cast<strings::String>(*args.front());
+        auto ptr = cast<strings::String>(*args.front());
         if (ptr) {
             /*
             try {
@@ -82,7 +82,7 @@ namespace pups::library::builtins::map_open {
             */
             return open_file(ptr->data(), map);
         } else {
-            map->throw_error(std::make_shared<ArgumentError>("Module opening must find a string argument."));
+            map->throw_error(std::make_shared<TypeError>("Module opening must find a string argument."));
             return pending;
         }
     }) {}
@@ -90,13 +90,13 @@ namespace pups::library::builtins::map_open {
     MapEnter::MapEnter() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.size() != 2) {
             map->throw_error(std::make_shared<ArgumentError>(
-                    "Map-enter statement must find a map argument and long string argument."));
+                    "Map-enter statement requires two arguments."));
             return pending;
         }
-        auto sub_map = std::dynamic_pointer_cast<Map>(*args.front());
-        args.pop();
-        auto ids = std::dynamic_pointer_cast<LongStr>(*args.front());
-        args.pop();
+        auto sub_map = cast<Map>(*args.front());
+        args.pop_front();
+        auto ids = cast<LongStr>(*args.front());
+        args.pop_front();
         if (sub_map && ids) {
             sub_map->get_parent()->set_child(sub_map.get());
             Control control(*ids->ids(), sub_map);
@@ -104,18 +104,53 @@ namespace pups::library::builtins::map_open {
             return sub_map;
             // Naturally the child would be cleaned up by Control
         } else {
-            map->throw_error(std::make_shared<ArgumentError>(
-                    "Map-enter statement must find a map argument and a long string argument."));
+            map->throw_error(std::make_shared<TypeError>(
+                    "Map-enter statement requires a map argument and a long string argument."));
             return pending;
         }
     }) {}
 
+    Catch::Catch() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+        if (args.empty()) {
+            map->throw_error(std::make_shared<ArgumentError>(
+                    "Catch statement requires at least one argument."));
+            return pending;
+        } else {
+            CatchRequirements required;
+            auto ids = cast<LongStr>(*args.back());
+            args.pop_back();
+            if (ids) {
+                while (!args.empty()) {
+                    auto ptr = cast<strings::String>(*args.front());
+                    if (ptr)
+                        required.insert(ptr->data());
+                    else
+                        map->throw_error(std::make_shared<TypeError>(
+                                "Catch statement requires string arguments instead of" + args.front()->get()->repr() +
+                                ". Argument ignored."));
+                    args.pop_front();
+                }
+                if (map->catch_by(required)) {
+                    MapPtr sub_map = std::make_shared<Map>(map, true);
+                    Control control(*ids->ids(), sub_map);
+                    control.run();
+                    return sub_map;
+                }
+            } else
+                map->throw_error(
+                        std::make_shared<TypeError>("Catch statement requires a long string argument in the back."));
+        }
+        return pending;
+    }) {}
 
-    Id id_mapOpen{"", "map"}, id_moduleOpen{"", "imp"}, id_mapEnter{"", "enter"};
+
+    Id id_mapOpen{"", "map"}, id_moduleOpen{"", "imp"}, id_mapEnter{"", "enter"}, id_catch{"", "catch"};
 
     void init(Constants &constants) {
         constants.add(id_mapOpen, std::make_shared<MapOpen>());
         constants.add(id_moduleOpen, std::make_shared<ModuleOpen>());
         constants.add(id_mapEnter, std::make_shared<MapEnter>());
+        constants.add(id_catch, std::make_shared<Catch>());
     }
+
 }

@@ -5,17 +5,14 @@
 #include "memory.h"
 
 namespace pups::modules::memory {
-    using namespace library::builtins::function;
-    using namespace pups::library::builtins;
-
     ObjectPtr memory_swap(FunctionArgs &args, Map *map) {
         if (args.size() != 2)
             map->throw_error(std::make_shared<library::ArgumentError>("memory.swap requires two only arguments."));
         else {
             auto first = args.front();
-            args.pop();
+            args.pop_front();
             auto second = args.front();
-            args.pop();
+            args.pop_front();
             first->swap(*second);
         }
         return pending;
@@ -26,9 +23,9 @@ namespace pups::modules::memory {
             map->throw_error(std::make_shared<library::ArgumentError>("memory.same requires two only arguments."));
         else {
             auto first = args.front();
-            args.pop();
+            args.pop_front();
             auto second = args.front();
-            args.pop();
+            args.pop_front();
             return first->get() == second->get() ? numbers::True : numbers::False;
         }
         return pending;

@@ -8,13 +8,16 @@
 #include "error.h"
 
 namespace pups::library {
+    using CatchRequirements = std::unordered_set<std::string>;
+
     class Map : public Object {
     protected:
-        std::queue<ErrorPtr> m_errors;
+        std::deque<ErrorPtr> m_errors;
         ObjectMap m_map;
         ObjectPtr m_base, m_return, m_temp;
         std::stack<ObjectPtr> m_memory_stack;
         std::string m_execute_string;
+        std::queue<ObjectPtr *> m_unpacked;
 
         using MapBarePtr = Map *;
 
@@ -30,6 +33,12 @@ namespace pups::library {
         ObjectPtr &staged_find(std::queue<std::string> &parts, Map *map = nullptr);
 
         void copy_signs_from(Map *map);
+
+        ObjectPtr map_put(ObjectPtr &object, Map *map);
+
+        ObjectPtr &map_find(const Id &name, Map *map);
+
+        void unpack_array(ObjectPtr &object); // This is implemented in containers.cpp
 
         friend class Object;
 
@@ -84,6 +93,8 @@ namespace pups::library {
         bool can_run() const noexcept;
 
         const ObjectMap &get_all_objects() const noexcept;
+
+        bool catch_by(CatchRequirements &required);
     };
 
     // This saves the number of errors reported. Can be freely set to 0.

@@ -11,7 +11,7 @@ namespace pups::library::builtins::keyword_func {
     MoveTo::MoveTo() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             *args.front() = map->get_temp();
-            args.pop();
+            args.pop_front();
         }
         return map->get_temp();
     }) {}
@@ -83,7 +83,7 @@ namespace pups::library::builtins::keyword_func {
     Pop::Pop() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             *args.front() = pending;
-            args.pop();
+            args.pop_front();
         }
         return pending;
     }) {}
@@ -91,7 +91,7 @@ namespace pups::library::builtins::keyword_func {
     Delete::Delete() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             args.front()->reset();
-            args.pop();
+            args.pop_front();
         }
         return pending;
     }) {}
@@ -108,9 +108,9 @@ namespace pups::library::builtins::keyword_func {
 
     Unmap::Unmap() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.empty())
-            args.push(&map->get_temp());
+            args.push_back(&map->get_temp());
         while (!args.empty()) {
-            auto ptr = std::dynamic_pointer_cast<Map>(*args.front());
+            auto ptr = cast<Map>(*args.front());
             if (ptr) {
                 map->copy_objects_from(ptr.get());
             } else {
@@ -118,7 +118,7 @@ namespace pups::library::builtins::keyword_func {
                         "Unmap function requires map arguments(if no are given, temp is used instead)."));
                 return pending;
             }
-            args.pop();
+            args.pop_front();
         }
         return pending;
     }) {}

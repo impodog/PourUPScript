@@ -5,9 +5,6 @@
 #include "sys.h"
 
 namespace pups::modules::sys {
-    using namespace pups::library::builtins::function;
-    using namespace pups::library::builtins;
-
     struct Version {
         int major, minor, bugfix;
 
@@ -54,10 +51,10 @@ namespace pups::modules::sys {
         if (args.size() != 2)
             map->throw_error(std::make_shared<library::ArgumentError>("sys.ver_cmp requires two only arguments."));
         else {
-            auto lhs = std::dynamic_pointer_cast<strings::String>(*args.front());
-            args.pop();
-            auto rhs = std::dynamic_pointer_cast<strings::String>(*args.front());
-            args.pop();
+            auto lhs = cast<strings::String>(*args.front());
+            args.pop_front();
+            auto rhs = cast<strings::String>(*args.front());
+            args.pop_front();
             if (lhs && rhs) {
                 try {
                     Version left{lhs->data()}, right{rhs->data()};

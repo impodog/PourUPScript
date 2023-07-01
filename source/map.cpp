@@ -36,13 +36,18 @@ namespace pups::library {
     }
 
     ObjectPtr &Map::single_find(const Id &name) {
-        if (name.qual_has('~')) {
+        ObjectPtr *result;
+        if (name.qual_has(remove_symbol)) {
             remove_object(name);
             return pending;
-        } else if (name.qual_has('&'))
-            return bare_find(name);
+        } else if (name.qual_has(public_symbol))
+            result = &bare_find(name);
         else
-            return local_find(name);
+            result = &local_find(name);
+
+        if (name.qual_has(unpack_symbol))
+            unpack_array(*result);
+        return *result;
     }
 
     ObjectPtr &Map::staged_find(std::queue<std::string> &parts, Map *map) {
@@ -52,7 +57,7 @@ namespace pups::library {
         MapPtr tmp;
         parts.pop(); // since the first is used, pop it
         while (!parts.empty()) {
-            tmp = std::dynamic_pointer_cast<Map>(*object);
+            tmp = cast<Map>(*object);
             if (tmp) {
                 object = &tmp->single_find(Id{parts.front()});
             } else {
@@ -70,12 +75,32 @@ namespace pups::library {
             m_return = map->get_return();
     }
 
+    ObjectPtr Map::map_put(ObjectPtr &object, Map *map) {
+        if (m_base) {
+            auto ptr = m_base->put(object, this);
+            if (ptr) // when returning nullptr, m_base stays the same
+                m_base = ptr;
+        } else {
+            m_base = object;
+        }
+        return nullptr;
+    }
+
+    ObjectPtr &Map::map_find(const Id &name, Map *map) {
+        auto parts = name.split_by('.');
+        if (parts.size() == 1)
+            return m_upsearch_map->single_find(name);
+        else
+            return m_upsearch_map->staged_find(parts, this);
+    }
+
+
     Map::~Map() {
         if (m_parent_map) {
             m_parent_map->m_sub_map = nullptr;
             while (!m_errors.empty()) {
-                m_parent_map->m_errors.push(m_errors.front());
-                m_errors.pop();
+                m_parent_map->m_errors.push_back(m_errors.front());
+                m_errors.pop_front();
             }
         } else
             report_errs();
@@ -91,14 +116,15 @@ namespace pups::library {
 
     ObjectPtr Map::put(ObjectPtr &object, Map *map) {
         if (m_deepest != this)
-            return m_deepest->put(object, m_deepest);
+            return m_deepest->map_put(object, m_deepest);
         else {
-            if (m_base) {
-                auto ptr = m_base->put(object, this);
-                if (ptr) // when returning nullptr, m_base stays the same
-                    m_base = ptr;
-            } else {
-                m_base = object;
+            if (m_unpacked.empty())
+                this->map_put(object, map);
+            else {
+                while (!m_unpacked.empty()) {
+                    this->map_put(*m_unpacked.front(), map);
+                    m_unpacked.pop();
+                }
             }
         }
         return nullptr;
@@ -106,15 +132,11 @@ namespace pups::library {
 
     ObjectPtr &Map::find(const Id &name, Map *map) {
         //std::cout << "FINDING " << name.str() << std::endl;
-        auto parts = name.split_by('.');
-        if (parts.size() == 1)
-            return m_upsearch_map->single_find(name);
-        else
-            return m_upsearch_map->staged_find(parts, this);
+        return m_deepest->map_find(name, map);
     }
 
     void Map::throw_error(const ErrorPtr &error) {
-        m_errors.push(error);
+        m_errors.push_back(error);
     }
 
     void Map::add_object(const Id &name, const ObjectPtr &object) {
@@ -194,7 +216,7 @@ namespace pups::library {
         while (!m_errors.empty()) {
             std::cout << m_errors.front()->get() << std::endl;
             err_count += 1;
-            m_errors.pop();
+            m_errors.pop_front();
         }
     }
 
@@ -224,6 +246,17 @@ namespace pups::library {
 
     const ObjectMap &Map::get_all_objects() const noexcept {
         return m_map;
+    }
+
+    bool Map::catch_by(CatchRequirements &required) {
+        if (!m_errors.empty()) {
+            auto &err = m_errors.back();
+            if (required.empty() || required.find(err->error_name()) != required.end()) {
+                m_errors.pop_front();
+                return true;
+            }
+        }
+        return false;
     }
 
     ObjectPtr Object::end_of_line(Map *map) {

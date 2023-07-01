@@ -13,7 +13,7 @@ namespace pups::library::builtins::builtin_func {
             std::string buf;
             std::cin >> buf;
             *args.front() = std::make_shared<strings::String>(buf);
-            args.pop();
+            args.pop_front();
         }
         return pending;
     }) {}
@@ -22,7 +22,7 @@ namespace pups::library::builtins::builtin_func {
     Print::Print() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             std::cout << args.front()->get()->str();
-            args.pop();
+            args.pop_front();
         }
         std::cout << std::endl;
         return pending;
@@ -31,7 +31,7 @@ namespace pups::library::builtins::builtin_func {
     Puts::Puts() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         while (!args.empty()) {
             std::cout << args.front()->get()->str();
-            args.pop();
+            args.pop_front();
         }
         return pending;
     }) {}
@@ -40,7 +40,7 @@ namespace pups::library::builtins::builtin_func {
         if (args.size() != 1)
             map->throw_error(std::make_shared<ArgumentError>("Call function requires one only argument."));
         else {
-            auto ptr = std::dynamic_pointer_cast<Function>(*args.front());
+            auto ptr = cast<Function>(*args.front());
             if (ptr)
                 return ptr->end_of_line(map);
             else
@@ -57,7 +57,7 @@ namespace pups::library::builtins::builtin_func {
         while (!args.empty()) {
             if (is_pending(*args.front()))
                 return numbers::False;
-            args.pop();
+            args.pop_front();
         }
         return numbers::True;
     }) {}
@@ -67,9 +67,9 @@ namespace pups::library::builtins::builtin_func {
             map->throw_error(std::make_shared<ArgumentError>("TypenameCheck requires two only arguments."));
         else {
             const auto &first = *args.front();
-            args.pop();
-            auto name = std::dynamic_pointer_cast<strings::String>(*args.front());
-            args.pop();
+            args.pop_front();
+            auto name = cast<strings::String>(*args.front());
+            args.pop_front();
             if (name)
                 return first->type_name() == name->data() ? numbers::True : numbers::False;
             else
@@ -83,9 +83,9 @@ namespace pups::library::builtins::builtin_func {
             map->throw_error(std::make_shared<ArgumentError>("Equal check requires two only arguments."));
         else {
             const auto &lhs = *args.front();
-            args.pop();
+            args.pop_front();
             const auto &rhs = *args.front();
-            args.pop();
+            args.pop_front();
             return lhs->equal(rhs) ? numbers::True : numbers::False;
         }
         return numbers::False;

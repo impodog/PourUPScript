@@ -5,15 +5,12 @@
 #include "string_code.h"
 
 namespace pups::modules::string_code {
-    using namespace library::builtins::function;
-    using namespace pups::library::builtins;
-
     template<bool is_ref>
     ObjectPtr find(FunctionArgs &args, Map *map) {
         if (args.size() != 1)
             map->throw_error(std::make_shared<library::ArgumentError>("Find function requires one only argument."));
         else {
-            auto ptr = std::dynamic_pointer_cast<String>(*args.front());
+            auto ptr = cast<String>(*args.front());
             if (ptr) {
                 if constexpr (is_ref)
                     return std::make_shared<reference::Reference>(&map->find(Id{ptr->data()}, map)); 

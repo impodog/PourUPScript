@@ -25,6 +25,11 @@ namespace pups::library::builtins::map_open {
         MapEnter();
     };
 
+    class Catch : public Function {
+    public:
+        Catch();
+    };
+
     void init(Constants &constants);
 }
 

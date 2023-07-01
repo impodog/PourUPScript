@@ -5,7 +5,7 @@
 #ifndef PUPS_LIB_STD_H
 #define PUPS_LIB_STD_H
 
-#include "../../pups.h"
+#include "../modules.h"
 
 namespace pups::modules::pups_std {
     constexpr pups::library::cstr STD_NAME = "__std_";

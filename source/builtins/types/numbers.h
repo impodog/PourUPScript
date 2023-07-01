@@ -65,7 +65,7 @@ namespace pups::library::builtins::numbers {
         }
 
         [[nodiscard]] size_t equal(const ObjectPtr &object) const noexcept override {
-            auto ptr = std::dynamic_pointer_cast<Number>(object);
+            auto ptr = cast<Number>(object);
             return ptr && value == ptr->value;
         }
     };

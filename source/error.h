@@ -12,12 +12,12 @@ namespace pups::library {
     protected:
         std::string m_error;
 
-        [[nodiscard]] virtual std::string error_name() const noexcept = 0;
-
     public:
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
         explicit Error(std::string s);
+
+        [[nodiscard]] virtual std::string error_name() const noexcept = 0;
 
         [[nodiscard]] std::string get() const noexcept;
     };
@@ -25,50 +25,44 @@ namespace pups::library {
     using ErrorPtr = std::shared_ptr<Error>;
 
     class TypeError : public Error {
-    protected:
+    public:
         [[nodiscard]] std::string error_name() const noexcept override;
 
-    public:
         explicit TypeError(const std::string &s);
     };
 
     class IdError : public Error {
-    protected:
+    public:
         [[nodiscard]] std::string error_name() const noexcept override;
 
-    public:
         explicit IdError(const std::string &s);
     };
 
     class ArgumentError : public Error {
-    protected:
+    public:
         [[nodiscard]] std::string error_name() const noexcept override;
 
-    public:
         explicit ArgumentError(const std::string &s);
     };
 
     class FileNotFoundError : public Error {
-    protected:
+    public:
         [[nodiscard]] std::string error_name() const noexcept override;
 
-    public:
         explicit FileNotFoundError(const std::string &s);
     };
 
     class ValueError : public Error {
-    protected:
+    public:
         [[nodiscard]] std::string error_name() const noexcept override;
 
-    public:
         explicit ValueError(const std::string &s);
     };
 
     class OutOfBoundError : public Error {
-    protected:
+    public:
         [[nodiscard]] std::string error_name() const noexcept override;
 
-    public:
         explicit OutOfBoundError(const std::string &s);
     };
 

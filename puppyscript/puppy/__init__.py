@@ -1,5 +1,6 @@
 from .preprocess import Preprocess
 from .extract import Extract
+from .mid_process import MidProcess
 from .operators import Operators
 from .brackets import Brackets
 from .assignment import Assignment
@@ -17,6 +18,8 @@ def script(file: str, output_name: str, keep_temp: bool):
 
     tmp = file = Preprocess(file).work(output_name)
     file = Extract(file).work(output_name)
+    delete_temp()
+    file = MidProcess(file).work(output_name)
     delete_temp()
     file = Operators(file).work(output_name)
     delete_temp()

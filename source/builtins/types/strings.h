@@ -41,6 +41,10 @@ namespace pups::library::builtins::strings {
     using StringFuncMap = IdMap<StringFuncCore>;
     extern const StringFuncMap string_functions;
 
+    std::string str_of(FunctionArgs &args);
+
+    std::string repr_of(FunctionArgs &args);
+
     void init(Constants &constants);
 }
 

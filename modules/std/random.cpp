@@ -7,8 +7,6 @@
 #include <numbers>
 
 namespace pups::modules::random {
-    using namespace pups::library::builtins::function;
-    using namespace pups::library::builtins;
     std::random_device device;
 
     template<typename Type>
@@ -25,15 +23,15 @@ namespace pups::modules::random {
             case 0:
                 return std::make_shared<numbers::IntType>(device());
             case 1:
-                first = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
+                first = cast<numbers::IntType>(*args.front());
                 if (first)
                     return std::make_shared<numbers::IntType>(device() % first->value);
                 break;
             case 2:
-                first = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
-                args.pop();
-                second = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
-                args.pop();
+                first = cast<numbers::IntType>(*args.front());
+                args.pop_front();
+                second = cast<numbers::IntType>(*args.front());
+                args.pop_front();
                 if (first->value > second->value)
                     swap(first, second);
                 if (first && second)
@@ -56,7 +54,7 @@ namespace pups::modules::random {
                 engine = EngineType{0, 1};
                 break;
             case 1:
-                first = std::dynamic_pointer_cast<numbers::FloatType>(*args.front());
+                first = cast<numbers::FloatType>(*args.front());
                 if (first)
                     engine = EngineType{0, first->value};
                 else {
@@ -66,10 +64,10 @@ namespace pups::modules::random {
                 }
                 break;
             case 2:
-                first = std::dynamic_pointer_cast<numbers::FloatType>(*args.front());
-                args.pop();
-                second = std::dynamic_pointer_cast<numbers::FloatType>(*args.front());
-                args.pop();
+                first = cast<numbers::FloatType>(*args.front());
+                args.pop_front();
+                second = cast<numbers::FloatType>(*args.front());
+                args.pop_front();
                 if (first && second) {
                     if (first->value > second->value)
                         swap(first, second);
@@ -93,7 +91,7 @@ namespace pups::modules::random {
         while (!args.empty()) {
             if (i++ == pos)
                 return *args.front();
-            args.pop();
+            args.pop_front();
         }
         throw std::runtime_error("random.choose_from UNEXPECTED CODE PATH");;
     }
@@ -102,7 +100,7 @@ namespace pups::modules::random {
         if (args.size() != 1)
             map->throw_error(std::make_shared<library::ArgumentError>("random.choice requires one only argument."));
         else {
-            auto ptr = std::dynamic_pointer_cast<containers::Array>(*args.front());
+            auto ptr = cast<containers::Array>(*args.front());
             if (ptr)
                 return ptr->data.at(device() % ptr->data.size());
             else
@@ -115,7 +113,7 @@ namespace pups::modules::random {
         if (args.size() != 1)
             map->throw_error(std::make_shared<library::ArgumentError>("random.shuffle requires one only argument."));
         else {
-            auto ptr = std::dynamic_pointer_cast<containers::Array>(*args.front());
+            auto ptr = cast<containers::Array>(*args.front());
             if (ptr) {
                 size_t size = ptr->size();
                 for (size_t i = 0; i < size; i++)

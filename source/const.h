@@ -18,6 +18,7 @@
 #include <valarray>
 #include <functional>
 #include <sstream>
+#include <unordered_set>
 
 #define sign_of(x) (x>0 ? 1 : (x<0 ? -1 : 0))
 #define sign_sub(x, y) (x>y ? 1 : (x<y ? -1 : 0))
@@ -27,10 +28,10 @@ namespace pups::library {
     using cstr = const char *;
 
     constexpr cstr
-            PUPS_LIB_VERSION = "0.9.0",
+            PUPS_LIB_VERSION = "0.10.0",
             RESERVED = "_R_",
             MODULE_LINK = "_ML_";
-    constexpr const char segment_symbol = '%';
+    constexpr const char remove_symbol = '~', public_symbol = '&', unpack_symbol = '%';
 
     using pups_int = long long;
     using pups_float = double;

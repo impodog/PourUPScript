@@ -51,7 +51,7 @@ namespace pups::library::builtins::ranges {
             if (args.size() != 1)
                 map->throw_error(std::make_shared<ArgumentError>("range.has requires one only argument"));
             else {
-                auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
+                auto ptr = cast<numbers::IntType>(*args.front());
                 if (ptr)
                     return ((range.step>0 ? 
                         (range.begin<=ptr->value && ptr->value<range.end)
@@ -67,8 +67,8 @@ namespace pups::library::builtins::ranges {
 
     RangeInit::RangeInit() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         const auto next_ptr = [&args]() {
-            auto ptr = std::dynamic_pointer_cast<numbers::IntType>(*args.front());
-            args.pop();
+            auto ptr = cast<numbers::IntType>(*args.front());
+            args.pop_front();
             if (ptr)
                 return ptr;
             else

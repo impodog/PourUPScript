@@ -25,10 +25,10 @@ namespace pups::library::builtins::containers {
 
     void HashMap::push_args(FunctionArgs &args) {
         while (!args.empty()) {
-            auto ptr = std::dynamic_pointer_cast<Pair>(*args.front());
+            auto ptr = cast<Pair>(*args.front());
             if (ptr)
                 data.insert({ptr->left, ptr->right});
-            args.pop();
+            args.pop_front();
         }
     }
 

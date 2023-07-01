@@ -1,5 +1,6 @@
 import re
-from .ids import next_name, with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, ret, refTo, WORD
+
+from .ids import next_name, with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, ret, WORD
 
 
 class Structure:
@@ -18,16 +19,16 @@ class Structure:
                 if tmp is None:
                     result.append(line)
                 else:
-                    result.append(with_stmt_line(tmp.group(1),tmp.group(5)))
+                    result.append(with_stmt_line(tmp.group(1), tmp.group(5)))
                     result.append(tmp.group(1) + tmp.group(2) + ":")
             else:
                 result.append("%s %s" % (tmp.group(1) + with_cmd, "true"))
                 result.append(tmp.group(1) + "elif:")
         self.content = "\n".join(result)
-    
+
     def scan_for(self):
         result = list()
-        for_name:tuple[str,str,str,str|None] = None
+        for_name: tuple[str, str, str, str | None] = None
         outer_indent = inner_indent = None
         succeeded = False
         for line in self.content.split("\n"):
@@ -35,7 +36,7 @@ class Structure:
                 tmp = re.fullmatch(rf"(\s*)for\s+(.+?)\s*,\s*(.+?)\s*,\s*(.+?)\s*:\s*", line)
                 if tmp is not None:
                     outer_indent = tmp.group(1)
-                    for_name =  (tmp.group(2), tmp.group(3), tmp.group(4), None)
+                    for_name = (tmp.group(2), tmp.group(3), tmp.group(4), None)
                 tmp = re.fullmatch(rf"(\s*)for\s+({WORD})\s+in\s+(.+?):\s*", line)
                 if tmp is not None:
                     outer_indent = tmp.group(1)
@@ -69,8 +70,6 @@ class Structure:
     def scan_all_for(self):
         while self.scan_for():
             ...
-                    
-                
 
     def scan_while(self):
         result = list()
@@ -126,7 +125,7 @@ class Structure:
                         line = re.sub(r"([^\w.])%s(\b)" % name, r"\1&%s\2" % name, line)
                 result.append(line)
             else:
-                tmp = re.match(r"(\s*)ext\s+(.*)", line)
+                tmp = re.match(r"(\s*)pub\s+(.*)", line)
                 if tmp is None:
                     result.append(line)
                 else:
@@ -140,7 +139,7 @@ class Structure:
         return succeeded
 
     def scan_all_extern(self):
-        self.content = re.sub(rf"(\s*)ext\s+({WORD})\s*=\s*(.+)", r"\1ext \2\1\2 = \3", self.content)
+        self.content = re.sub(rf"(\s*)pub\s+({WORD})\s*=\s*(.+)", r"\1ext \2\1\2 = \3", self.content)
         while self.scan_extern():
             ...
 

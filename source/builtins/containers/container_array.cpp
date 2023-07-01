@@ -28,7 +28,7 @@ namespace pups::library::builtins::containers {
     void Array::push_args(FunctionArgs &args) {
         while (!args.empty()) {
             data.push_back(*args.front());
-            args.pop();
+            args.pop_front();
         }
     }
 

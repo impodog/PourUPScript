@@ -1,5 +1,6 @@
 import re
-from .ids import is_word, break_cmd, firsts
+
+from .ids import is_word, firsts, rules
 
 
 class Command:
@@ -98,6 +99,13 @@ class Preprocess:
                 for name in tmp.group(1).split(" "):
                     if len(name) > 0 and not name.isspace():
                         sets.add(name)
+            elif line.startswith("#unset"):
+                tmp = re.fullmatch(r"#unset\s*(.*)", line)
+                if tmp is None:
+                    raise RuntimeError("#unset command got incorrect args")
+                for name in tmp.group(1).split(" "):
+                    if len(name) > 0 and not name.isspace():
+                        sets.remove(name)
             elif line.startswith("#ifset"):
                 tmp = re.fullmatch(r"#ifset\s*(.*)", line)
                 if tmp is None:
@@ -128,36 +136,33 @@ class Preprocess:
         for cmd in self.commands:
             self.content = cmd.sub(self.content)
 
+    def scan_rules(self):
+        for line in self.content.split("\n"):
+            tmp = re.fullmatch(r"#rule\s+(.+?)\s*=\s*(.+)\s*", line)
+            if tmp is not None:
+                name = tmp.group(1)
+                value = tmp.group(2)
+                match value:
+                    case "true":
+                        value = True
+                    case "false":
+                        value = False
+                    case "show":
+                        print("Value for rule \"%s\" is %s." % (name, rules[name]))
+                        return
+                    case _:
+                        value = eval(value)
+                if isinstance(value, (int, float, bool, str)):
+                    rules[name] = value
+                else:
+                    raise RuntimeError("Rule got incorrect value : %s" % value)
+
     def remove_prep_lines(self):
         tmp = str()
         for line in self.content.split("\n"):
             if line.find("#") == -1:
                 tmp += line + "\n"
         self.content = tmp
-    
-    def fix_line_multi_statement(self):
-        result = list()
-        for line in self.content.split("\n"):
-            statements = line.split(';')
-            length = len(statements)
-            if length == 1:
-                result.append(line)
-            else:
-                indent = firsts(statements[0].rstrip())
-                for i in range(1, length):
-                    statements[i] = indent + statements[i].lstrip()
-                result.extend(statements)
-        self.content = "\n".join(result)
-    def fix_inline_block(self):
-        result = list()
-        for line in self.content.split("\n"):
-            tmp = re.fullmatch(r"(.*?[^:]:)([^:].*)", line)
-            if tmp is None or tmp.group(2).isspace():
-                result.append(line)
-            else:
-                result.append(tmp.group(1))
-                result.append("\t" + tmp.group(2))
-        self.content = "\n".join(result)
 
     def work(self, output_name: str) -> str:
         self.scan_includes()
@@ -166,9 +171,8 @@ class Preprocess:
         self.scan_setting()
         self.predefined()
         self.scan_defines()
+        self.scan_rules()
         self.remove_prep_lines()
-        self.fix_line_multi_statement()
-        self.fix_inline_block()
         output = output_name + ".prep"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)
