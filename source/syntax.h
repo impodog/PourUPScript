@@ -112,6 +112,7 @@ namespace pups::library {
 
     template<typename ValueType>
     using IdMap = std::unordered_map<Id, ValueType, Id::hash>;
+    using IdSet = std::unordered_set<Id, Id::hash>;
 
     IdFile read_file(const path &path);
 

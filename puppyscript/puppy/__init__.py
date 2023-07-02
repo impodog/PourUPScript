@@ -2,9 +2,10 @@ from .preprocess import Preprocess
 from .extract import Extract
 from .mid_process import MidProcess
 from .operators import Operators
-from .brackets import Brackets
 from .assignment import Assignment
+from .type_format import TypeFormat
 from .structure import Structure
+from .brackets import Brackets
 from .formatting import Formatting
 import os
 
@@ -22,6 +23,8 @@ def script(file: str, output_name: str, keep_temp: bool):
     file = MidProcess(file).work(output_name)
     delete_temp()
     file = Operators(file).work(output_name)
+    delete_temp()
+    file = TypeFormat(file).work(output_name)
     delete_temp()
     file = Structure(file).work(output_name)
     delete_temp()

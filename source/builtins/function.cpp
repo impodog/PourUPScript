@@ -37,8 +37,8 @@ namespace pups::library::builtins::function {
         return "func";
     }
 
-    void init(Constants &constants) {
-
+    const FunctionCore &Function::get_core() const noexcept {
+        return m_core;
     }
 
     ObjectPtr &HasMethods::find(const Id &name, Map *map) {
@@ -54,4 +54,12 @@ namespace pups::library::builtins::function {
             }
         }
     }
+
+    void init(Constants &constants) {
+
+    }
+
+    ObjectPtr empty_func = std::make_shared<Function>([](FunctionArgs &args, Map *map) -> ObjectPtr {
+        return pending;
+    });
 }

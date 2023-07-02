@@ -28,11 +28,11 @@
 		},
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(enter|param|pack|ret|pub|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call|exit|catch)\\b"
+			"match": "\\b(with|enter|param|pack|ret|pub|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call|exit|catch|new|tid)\\b"
 		},
 		"types": {
 			"name": "entity.name.type",
-			"match": "\\b(map|func|range|array|pair|hashmap)\\b"
+			"match": "\\b(map|func|proc|range|array|pair|hashmap|type|class|attr|mth|stat)\\b"
 		},
 		"strings": {
 			"name": "string.quoted.double.puppyscript",

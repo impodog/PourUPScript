@@ -122,7 +122,7 @@ class Structure:
                     externals.clear()
                 elif cur_indent == indent:
                     for name in externals:
-                        line = re.sub(r"([^\w.])%s(\b)" % name, r"\1&%s\2" % name, line)
+                        line = re.sub(r"([^\w.&])%s(\b)" % name, r"\1&%s\2" % name, line)
                 result.append(line)
             else:
                 tmp = re.match(r"(\s*)pub\s+(.*)", line)
@@ -139,7 +139,7 @@ class Structure:
         return succeeded
 
     def scan_all_extern(self):
-        self.content = re.sub(rf"(\s*)pub\s+({WORD})\s*=\s*(.+)", r"\1ext \2\1\2 = \3", self.content)
+        self.content = re.sub(rf"(\s*)pub\s+({WORD})\s*=\s*(.+)", r"\1pub \2\1\2 = \3", self.content)
         while self.scan_extern():
             ...
 

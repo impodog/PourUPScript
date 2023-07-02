@@ -16,6 +16,8 @@
 #include "types/reference.h"
 #include "containers/containers.h"
 #include "ranges/ranges.h"
+#include "types/typing.h"
+#include "keywords/inline_typing.h"
 
 
 namespace pups::library::builtins {

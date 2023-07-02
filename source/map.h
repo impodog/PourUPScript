@@ -21,7 +21,8 @@ namespace pups::library {
 
         using MapBarePtr = Map *;
 
-        MapBarePtr m_sub_map = nullptr, m_parent_map = nullptr, m_deepest = this, m_global = this, m_upsearch_map = this;
+        MapBarePtr m_sub_map = nullptr, m_parent_map = nullptr, m_restore_map = nullptr,
+                m_deepest = this, m_global = this, m_upsearch_map = this;
 
         ObjectPtr &local_find(const Id &name);
 
@@ -34,9 +35,9 @@ namespace pups::library {
 
         void copy_signs_from(Map *map);
 
-        ObjectPtr map_put(ObjectPtr &object, Map *map);
+        void map_put(ObjectPtr &object, Map *map);
 
-        ObjectPtr &map_find(const Id &name, Map *map);
+        void map_end_of_line();
 
         void unpack_array(ObjectPtr &object); // This is implemented in containers.cpp
 
@@ -58,7 +59,13 @@ namespace pups::library {
 
         Map(Map *parent_map, bool allow_upsearch);
 
+        // When you need to switch parent map from far places(not under the local executing map),
+        // pass the local map as restore_map
+        Map(Map *parent_map, Map *restore_map, bool allow_upsearch);
+
         ObjectPtr put(ObjectPtr &object, Map *map) override;
+
+        ObjectPtr &map_find(const Id &name, Map *map);
 
         ObjectPtr &find(const Id &name, Map *map) override;
 
@@ -80,7 +87,10 @@ namespace pups::library {
 
         Map *get_parent() noexcept;
 
+        // Pass nullptr to unset the sub map, or a new map to set it.
         void set_child(Map *sub_map) noexcept;
+
+        void restore() noexcept;
 
         ObjectPtr &add_to_memory_stack(const ObjectPtr &object);
 

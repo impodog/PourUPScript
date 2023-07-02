@@ -44,6 +44,10 @@ def with_stmt_line(indent: str, var: str) -> str:
         return indent + var
 
 
+def word_last(word: str) -> str:
+    return word[word.rfind(".") + 1:]
+
+
 temp_id = "_R_TMP"
 with_cmd = "with"
 moveTo = "mov"

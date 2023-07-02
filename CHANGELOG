@@ -1,3 +1,8 @@
+v0.11.0
+- Add types and typing, and the corresponding compiler utility "class"
+- Add a new tutorial for types and classes
+- Fix the problem where inline functions switch maps incorrectly
+
 v0.10.1
 - Add listing for files and directories in ios
 - Add string utilities - sutil

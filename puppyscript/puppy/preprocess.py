@@ -72,6 +72,14 @@ class Preprocess:
         self.content = re.sub(r"/\*.*?\*/", "", self.content, flags=re.S)
         self.content = re.sub(r"//.+\n", "\n", self.content)
 
+    def remove_empty_lines(self):
+        result = list()
+        for line in self.content.split("\n"):
+            if len(line) > 0 and not line.isspace():
+                result.append(line)
+        result.append("")
+        self.content = "\n".join(result)
+
     def fix_line_continue(self):
         stack = str()
         result = str()
@@ -167,6 +175,7 @@ class Preprocess:
     def work(self, output_name: str) -> str:
         self.scan_includes()
         self.remove_comments()
+        self.remove_empty_lines()
         self.fix_line_continue()
         self.scan_setting()
         self.predefined()

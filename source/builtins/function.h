@@ -23,7 +23,13 @@ namespace pups::library::builtins::function {
         ObjectPtr end_of_line(Map *map) override;
 
         std::string type_name() const noexcept override;
+
+        const FunctionCore &get_core() const noexcept;
     };
+
+    using FunctionPtr = std::shared_ptr<Function>;
+
+    extern ObjectPtr empty_func;
 
     class HasMethods : public Object {
     protected:

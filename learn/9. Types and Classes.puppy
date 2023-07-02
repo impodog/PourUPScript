@@ -1,0 +1,71 @@
+/*In this file, we are going to learn the most powerful way to group variables and functions together in a single unit.*/
+
+
+/*But first, let's see what the base of class --- type is.
+A type is the model of a set of values. An "instance" is a special value of that type.*/
+
+type Dog:
+    attr "name" "age" // Attributes. These are variables that sre unique to each instance, but all instances have them.
+
+    // But by now, those unique values are not defined yet. We need to define them in the "constructor", or "init" method.
+    mth "init"
+    func init:
+        param self // Pay attention!! "self" is a special variable that refers to the instance itself. It is given automatically as long as this is a method.
+        param name age // You can also pass other variables to any methods like this.
+        self.name = name
+        self.age = age
+    
+    // Now, let's define the methods, or functions that belong to the instances.
+    mth "bark" // Methods. These are functions that are unique to each instance.
+    func bark:
+        param self
+        print "Woof! I am " self.name " and I am " self.age " years old."
+
+    
+    // Also, the type can hold variables that are shared by all instances, they are called "static variables".
+    // To create one of those, just do what you would do in a normal variable!
+    species = "Canis familiaris" // This is a static variable. It is shared by all instances of Dog.
+
+// Now, let's create an instance of Dog.
+myDog = new Dog "Pi" 3
+// But we still need to initialize it.
+myDog.init
+// Now, let's call the method.
+myDog.bark
+// And let's see the static variable.
+print "The dog's species is " myDog.species
+
+
+
+/* Now, as you see, the type always repeats "attr" or "mth". Isn't that annoying?
+So, we have a shortcut for that. Which is "class".
+Classes defaults everything you defined to be "attr" or "mth", so you don't have to type them again.
+However, to use static ones in a class, you need to use "stat" keyword.*/
+class Cat:
+    // This is a static variable.
+    stat species = "Felis catus"
+
+    // This is an attribute. Note that you don't need to wrap the name in quotes any more.
+    attr name
+
+    // This is a constructor. Note that we shouldn't use "param self" line in a class method, because it will be automatically generated.
+    func init:
+        param name
+        self.name = name
+
+    // This is a method. We still don't use "param self" line.
+    func meow:
+        print "Meow! I am " self.name " and I am a cat."
+
+    // We can also define static functions.
+    stat func purr:
+        print "Purr!"
+
+// Now, let's create an instance of Cat.
+myCat = new Cat
+myCat.init "Lars"
+// And let's call the method.
+myCat.meow
+// And let's see the static variable and function.
+print "The cat's species is " myCat.species
+myCat.purr

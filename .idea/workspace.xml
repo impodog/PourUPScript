@@ -22,18 +22,22 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.9.0&#10;Now libraries does not use the weird include and links.&#10;Grouped some of the builtin files">
-      <change afterPath="$PROJECT_DIR$/CHANGELOG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/puppyscript/puppy/mid_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/extract.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/extract.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/formatting.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/formatting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/ids.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/ids.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/structure.py" afterDir="false" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library">
+      <change afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/types/typing.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/builtins/types/typing.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn/2. Code Blocks.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/learn/2. Code Blocks.puppy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_func.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,6 +113,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -184,6 +193,7 @@
       <workItem from="1688130163471" duration="682000" />
       <workItem from="1688135583320" duration="112000" />
       <workItem from="1688167123522" duration="585000" />
+      <workItem from="1688191645994" duration="20635000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -319,7 +329,15 @@
       <option name="project" value="LOCAL" />
       <updated>1687610548030</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library">
+      <option name="closed" value="true" />
+      <created>1688199210640</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1688199210640</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -352,7 +370,8 @@
     <MESSAGE value="v0.6.4&#10;Fix a problem where broken or returned maps can still find variables." />
     <MESSAGE value="v0.7.0&#10;Add including libraries and std_random" />
     <MESSAGE value="v0.9.0&#10;Now libraries does not use the weird include and links.&#10;Grouped some of the builtin files" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.9.0&#10;Now libraries does not use the weird include and links.&#10;Grouped some of the builtin files" />
+    <MESSAGE value="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

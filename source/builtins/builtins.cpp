@@ -19,5 +19,7 @@ namespace pups::library::builtins {
         reference::init(constants);
         containers::init(constants);
         ranges::init(constants);
+        typing::init(constants);
+        inline_typing::init(constants);
     }
 }

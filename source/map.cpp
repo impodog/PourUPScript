@@ -75,7 +75,7 @@ namespace pups::library {
             m_return = map->get_return();
     }
 
-    ObjectPtr Map::map_put(ObjectPtr &object, Map *map) {
+    void Map::map_put(ObjectPtr &object, Map *map) {
         if (m_base) {
             auto ptr = m_base->put(object, this);
             if (ptr) // when returning nullptr, m_base stays the same
@@ -83,15 +83,15 @@ namespace pups::library {
         } else {
             m_base = object;
         }
-        return nullptr;
     }
 
-    ObjectPtr &Map::map_find(const Id &name, Map *map) {
-        auto parts = name.split_by('.');
-        if (parts.size() == 1)
-            return m_upsearch_map->single_find(name);
-        else
-            return m_upsearch_map->staged_find(parts, this);
+    void Map::map_end_of_line() {
+        if (m_base) {
+            m_temp = m_base->end_of_line(this);
+            m_base = nullptr;
+        }
+        while (!m_memory_stack.empty())
+            m_memory_stack.pop();
     }
 
 
@@ -114,20 +114,29 @@ namespace pups::library {
         m_parent_map->set_child(this);
     }
 
+    Map::Map(Map *parent_map, Map *restore_map, bool allow_upsearch) :
+            Map(parent_map, allow_upsearch) {
+        m_restore_map = restore_map;
+    }
+
     ObjectPtr Map::put(ObjectPtr &object, Map *map) {
-        if (m_deepest != this)
-            return m_deepest->map_put(object, m_deepest);
+        if (m_unpacked.empty())
+            m_deepest->map_put(object, m_deepest);
         else {
-            if (m_unpacked.empty())
-                this->map_put(object, map);
-            else {
-                while (!m_unpacked.empty()) {
-                    this->map_put(*m_unpacked.front(), map);
-                    m_unpacked.pop();
-                }
+            while (!m_unpacked.empty()) {
+                m_deepest->map_put(*m_unpacked.front(), m_deepest);
+                m_unpacked.pop();
             }
         }
         return nullptr;
+    }
+
+    ObjectPtr &Map::map_find(const Id &name, Map *map) {
+        auto parts = name.split_by('.');
+        if (parts.size() == 1)
+            return m_upsearch_map->single_find(name);
+        else
+            return m_upsearch_map->staged_find(parts, this);
     }
 
     ObjectPtr &Map::find(const Id &name, Map *map) {
@@ -160,12 +169,7 @@ namespace pups::library {
     }
 
     ObjectPtr Map::end_of_line(Map *map) {
-        if (m_deepest && m_deepest->m_base) {
-            m_deepest->m_temp = m_deepest->m_base->end_of_line(map);
-            m_deepest->m_base = nullptr;
-        }
-        while (!m_memory_stack.empty())
-            m_memory_stack.pop();
+        m_deepest->map_end_of_line();
         return pending;
     }
 
@@ -205,6 +209,13 @@ namespace pups::library {
             map = map->m_parent_map;
         }
         m_sub_map = sub_map;
+    }
+
+    void Map::restore() noexcept {
+        if (m_parent_map)
+            m_parent_map->set_child(nullptr);
+        if (m_restore_map)
+            m_restore_map->set_child(nullptr);
     }
 
     ObjectPtr &Map::add_to_memory_stack(const ObjectPtr &object) {
@@ -252,7 +263,7 @@ namespace pups::library {
         if (!m_errors.empty()) {
             auto &err = m_errors.back();
             if (required.empty() || required.find(err->error_name()) != required.end()) {
-                m_errors.pop_front();
+                m_errors.pop_back();
                 return true;
             }
         }

@@ -30,11 +30,8 @@ namespace pups::library::builtins::inline_func {
 
     public:
         InlineFunc(IdFile idFile, Map *m_static_link);
-    };
 
-    class InlineFunc_Init : public Function {
-    public:
-        InlineFunc_Init();
+        bool is_process() const noexcept;
     };
 
     void init(Constants &constants);

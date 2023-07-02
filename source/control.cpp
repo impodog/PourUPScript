@@ -22,12 +22,11 @@ namespace pups::library {
     }
 
     Control::~Control() {
-        if (map->get_parent())
-            map->get_parent()->set_child(nullptr);
+        map->restore();
     }
 
     bool Control::next_id() {
-        //std::cout << cur_id->str() << std::endl;
+        //std::cout << "ID " << cur_id->str() << std::endl;
         if (!cur_id->empty() && map->can_run()) {
             if (cur_id->is_id()) {
                 map->put(map->find(*cur_id->id(), map.get()), map.get());
