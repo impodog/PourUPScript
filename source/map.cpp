@@ -285,22 +285,26 @@ namespace pups::library {
     }
 
     ObjectPtr Error::put(ObjectPtr &object, Map *map) {
-        map->throw_error(std::make_shared<TypeError>("Putting into Error is not allowed."));
+        map->throw_error(std::make_shared<TypeError>("Putting " + object->repr() +
+                                                     " into an Error is not allowed."));
         return pending;
     }
 
     ObjectPtr Pending::put(ObjectPtr &object, Map *map) {
-        map->throw_error(std::make_shared<TypeError>("Putting into Pending is not allowed."));
+        map->throw_error(std::make_shared<TypeError>("Putting " + object->repr() +
+                                                     " into Pending is not allowed."));
         return nullptr;
     }
 
     ObjectPtr LongStr::put(ObjectPtr &object, Map *map) {
-        map->throw_error(std::make_shared<TypeError>("Putting into LongStr is not allowed."));
+        map->throw_error(std::make_shared<TypeError>("Putting " + object->repr() +
+                                                     " into LongStr is not allowed."));
         return nullptr;
     }
 
     ObjectPtr Symbol::put(ObjectPtr &object, Map *map) {
-        map->throw_error(std::make_shared<TypeError>("Putting into Symbol \"" + m_name + "\" is not allowed."));
+        map->throw_error(std::make_shared<TypeError>(
+                "Putting " + object->repr() + " into Symbol \"" + m_name + "\" is not allowed."));
         return nullptr;
     }
 }

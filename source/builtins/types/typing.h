@@ -20,14 +20,20 @@ namespace pups::library::builtins::typing {
     using InstancePtr = std::shared_ptr<Instance>;
 
     class Type : public Map {
+        struct hash {
+            size_t operator()(const TypePtr &type) const noexcept;
+        };
+
     protected:
+        using ParentSet = std::unordered_set<TypePtr>;
+        ParentSet m_parents;
         IdSet m_attr;
         MethodMap m_methods;
         std::string m_name;
     public:
         explicit Type(Map *parent);
 
-        ObjectPtr & find(const Id &name, Map *map) override;
+        ObjectPtr &find(const Id &name, Map *map) override;
 
         std::string type_name() const noexcept override;
 
@@ -36,6 +42,10 @@ namespace pups::library::builtins::typing {
         IdSet &get_attr() noexcept;
 
         MethodMap &get_methods() noexcept;
+
+        void inherit_from(const TypePtr &type) noexcept;
+
+        bool is_subtype(const TypePtr &type) const noexcept;
     };
 
     class Instance : public Object {
@@ -48,7 +58,7 @@ namespace pups::library::builtins::typing {
         explicit Instance(TypePtr type);
 
         // MUST CALL AFTER INITIALIZING!
-        void add_methods(const ObjectPtr &self);
+        void add_methods(const ObjectPtr &self, FunctionArgs &args, Map *map);
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
@@ -57,6 +67,8 @@ namespace pups::library::builtins::typing {
         ObjectPtr &find(const Id &name, Map *map) override;
 
         std::string type_name() const noexcept override;
+
+        TypePtr get_type() const noexcept;
     };
 
     class TypeInit : public Function {

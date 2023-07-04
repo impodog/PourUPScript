@@ -1,3 +1,8 @@
+v0.11.1
+- Add type inheritance, and subtype judgement.
+- Add 3 new tutorials.
+- Better typing syntax(new, inh).
+
 v0.11.0
 - Add types and typing, and the corresponding compiler utility "class"
 - Add a new tutorial for types and classes

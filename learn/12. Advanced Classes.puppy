@@ -1,0 +1,49 @@
+/* In this file, we go through the advanced details of classes.*/
+
+
+
+/* First, let's see an example.*/
+class Vehicle:
+    attr speed color
+
+    func init:
+        param speed, color
+        self.speed = speed
+        self.color = color
+    func called: // This is a method that is called implicitly when the object is used as if it is a function.
+        print "I am a vehicle."
+
+/* Now, we have a vehicle. But how do we specify what kind of vehicle it is?
+That's where inheritance comes in. It can be used to create a new class based on an existing class, with all the attributes and methods of the existing class.*/
+class Car inh Vehicle: // This is how you inherit a class. You can inherit multiple classes as well.
+    attr brand
+
+    func init: // Pay attention!! When you use the same name for a method, you "override" it. This means that the method in the parent class will not be used.
+        pub Vehicle // Also use "pub" to find "Vehicle"
+        param speed, color, brand
+        Vehicle.init self speed color // You'll need to call the init method of the parent class.
+        self.brand = brand
+
+myCar = new Car 100 "black" "Ford"
+myCar // This will call the "called" method of the Car class.
+
+
+
+/* We've also prepared some operations you can do with classes and their instance.*/
+
+carType = type_of myCar
+print "Type of myCar is " carType // Don't be scared if you see a weird name. It's just the pointer to the class.
+print "Typename of myCar is " (typename_of myCar) // This is the name of the class, which is "Car".
+
+print "Is myCar a Car? " (is_instance myCar Car) // is_instance is used to check if an object is an instance of a class.
+print "Is myCar a Vehicle? " (is_instance myCar Vehicle) // You can also check if an object is an instance of a parent class.
+print "Is carType subtype of Vehicle? " (is_subtype carType Vehicle) // is_subtype is used to check if a class is a subtype of another class.
+print "Is Vehicle a subtype of Car? " (is_subtype Vehicle Car) // Now, this is false, because Car is a subtype of Vehicle, not the other way around.
+
+
+
+/* And one final tip: classes can be changed at runtime.*/
+enter class Car:
+    func called:
+        print "I am a car."
+myCar // This will call the "called" method of the Car class.

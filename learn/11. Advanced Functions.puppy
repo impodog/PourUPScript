@@ -1,0 +1,38 @@
+/* In this file, we learn what are functions, and another important variant of it*/
+
+
+
+/* Yes, functions. They are important, as you need to group codes. But how do they work?
+When initializing functions, you always put a ":" symbol in back. This is to tell the interpreter that you are starting some code block.
+By using the name and the block, a function is made!
+
+But hang on, is that too simple a function?
+Functions also takes the pointer where the function is defined, so the next time you call the function, it will know where to go, and will not disturb the main code.*/
+map MyMap:
+    var = 0
+    func changeVar:
+        pub var
+        var = 1
+func output:
+    pub var MyMap
+    print "var is: " var " and MyMap.var is: " MyMap.var
+var = 3
+output
+MyMap.changeVar
+output
+/* So in this code you may see that MyMap.changeVar only does something to the map where it is created, not the global map.
+Functions record where they are.*/
+
+
+
+/* Now, let's learn about the variant of functions, which is called "processes".
+Processes are very similar to functions, but they are not recorded where they are.
+So, when you use processes, they will work at where you call them.*/
+enter MyMap:
+    var = 0
+    proc changeVar_Proc:
+        pub var
+        var = 1
+MyMap.changeVar_Proc // Now, the process is called, so it will change the var in the map where it is called, which is the global map.
+output
+// Warning: Don't use processes too much, unless you know what you are doing. They may cause unexpected results.*/

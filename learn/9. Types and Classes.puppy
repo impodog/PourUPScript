@@ -62,8 +62,7 @@ class Cat:
         print "Purr!"
 
 // Now, let's create an instance of Cat.
-myCat = new Cat
-myCat.init "Lars"
+myCat = new Cat "Lars"
 // And let's call the method.
 myCat.meow
 // And let's see the static variable and function.

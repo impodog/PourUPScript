@@ -1,0 +1,33 @@
+/* In this file, we learn more about using conditional blocks*/
+
+
+
+/* If blocks.
+If blocks actually uses the temporary field to check if the condition is true or false.
+After using an if block, another temporary field is created to check the next condition.
+Knowing that, we can even break if-else blocks
+*/
+a = random.rand_int 10
+a.lt 5 // This changes the temporary field
+if:
+    print "a is less than 5"
+    print "a is now" a
+a = a.add 1 // If doesn't matter whether you put some code between the if and else blocks or not
+else:
+    print "a is greater than or equal to 5"
+    print "a is now" a
+
+
+
+/* While blocks.
+While blocks can do repeated things, as we all know.
+
+But in loop, it checks by using the "break" statement WITH arguments. You heard that right.
+"break true" means to "continue" the loop, and "break false" means to "break" the loop.
+No break statements means to continue it endlessly.
+*/
+a = random.rand_int 100
+while:
+    print "a is now " a
+    a = a.sub 1
+    break (a.gt 0) // This means to continue the loop if a is greater than 0

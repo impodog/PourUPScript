@@ -8,6 +8,10 @@
 
 namespace pups::library::builtins::typing {
 
+    size_t Type::hash::operator()(const TypePtr &type) const noexcept {
+        return std::hash<std::string>()(type->m_name);
+    }
+
     Type::Type(Map *parent) : Map(parent, false) {}
 
     ObjectPtr &Type::find(const Id &name, Map *map) {
@@ -34,14 +38,25 @@ namespace pups::library::builtins::typing {
         return m_methods;
     }
 
-    Id id_call{"", "call"};
+    void Type::inherit_from(const TypePtr &type) noexcept {
+        m_parents.merge(type->m_parents);
+        m_parents.insert(type);
+        m_attr.merge(type->m_attr);
+        m_methods.merge(type->m_methods);
+    }
+
+    bool Type::is_subtype(const TypePtr &type) const noexcept {
+        return this == type.get() || m_parents.find(type) != m_parents.end();
+    }
+
+    Id id_call{"", "called"}, id_init_func{"", "init"};
 
     Instance::Instance(TypePtr type) : m_type(std::move(type)) {
         for (auto &name: m_type->get_attr())
             m_attr.insert({name, pending});
     }
 
-    void Instance::add_methods(const ObjectPtr &self) {
+    void Instance::add_methods(const ObjectPtr &self, FunctionArgs &args, Map *map) {
         m_self_ptr = self;
         for (auto &method: m_type->get_methods()) {
             auto func = cast<Function>(method.second);
@@ -53,6 +68,13 @@ namespace pups::library::builtins::typing {
                         }
                 )});
         }
+        auto init_func = cast<Function>(find(id_init_func, map));
+        if (init_func)
+            init_func->get_core()(args, map);
+        else if (!args.empty())
+            map->throw_error(std::make_shared<ArgumentError>(
+                    "No method \"" + id_init_func.str() + "\" found when initializing instance " + repr() +
+                    ", but " + std::to_string(args.size()) + " arguments are given."));
     }
 
     ObjectPtr Instance::put(ObjectPtr &object, Map *map) {
@@ -75,6 +97,10 @@ namespace pups::library::builtins::typing {
 
     std::string Instance::type_name() const noexcept {
         return m_type->get_name();
+    }
+
+    TypePtr Instance::get_type() const noexcept {
+        return m_type;
     }
 
     void init(Constants &constants) {

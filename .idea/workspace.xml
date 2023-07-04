@@ -22,23 +22,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library">
-      <change afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/types/typing.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/types/typing.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn/2. Code Blocks.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/learn/2. Code Blocks.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_func.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
-    </list>
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,12 +97,12 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -194,6 +178,7 @@
       <workItem from="1688135583320" duration="112000" />
       <workItem from="1688167123522" duration="585000" />
       <workItem from="1688191645994" duration="20635000" />
+      <workItem from="1688257593693" duration="16309000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -337,7 +322,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688199210640</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly">
+      <option name="closed" value="true" />
+      <created>1688276851374</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1688276851374</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,12 +364,29 @@
     <MESSAGE value="v0.7.0&#10;Add including libraries and std_random" />
     <MESSAGE value="v0.9.0&#10;Now libraries does not use the weird include and links.&#10;Grouped some of the builtin files" />
     <MESSAGE value="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library" />
+    <MESSAGE value="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/source/builtins/keywords/builtin_func.cpp</url>
+          <line>22</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="count_depth()" language="ObjectiveC" />
+        <watch expression="this-&gt;cur_id-&gt;m_id" />
+        <watch expression="this-&gt;m_base.get()-&gt;pups::library::builtins::function::Function" />
+        <watch expression="this-&gt;m_base.get()-&gt;pups::library::builtins::function::Function" />
+        <watch expression="ids.get()-&gt;m_idFile.get()-&gt;m_file[0]" />
+        <watch expression="this-&gt;m_type.get()" />
+        <watch expression="this-&gt;m_type" />
+        <watch expression="this-&gt;m_attr[0]" />
       </configuration>
     </watches-manager>
   </component>

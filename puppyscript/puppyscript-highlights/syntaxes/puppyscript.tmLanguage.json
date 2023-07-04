@@ -9,6 +9,9 @@
 			"include": "#keywords"
 		},
 		{
+			"include": "#variables"
+		},
+		{
 			"include": "#types"
 		},
 		{
@@ -28,7 +31,11 @@
 		},
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(with|enter|param|pack|ret|pub|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call|exit|catch|new|tid)\\b"
+			"match": "\\b(with|enter|param|pack|ret|pub|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call|exit|catch|new|tid|inh)\\b"
+		},
+		"variables": {
+			"name": "entity.name.variable",
+			"match": "\\b(self)\\b"
 		},
 		"types": {
 			"name": "entity.name.type",
