@@ -63,6 +63,7 @@ class TypeFormat:
         result = list()
         type_name = None
         inherit = None
+        entering = False
         outer_indent = inner_indent = None
         class_body = list()
         succeeded = False
@@ -83,6 +84,7 @@ class TypeFormat:
                 else:
                     succeeded = True
                     outer_indent = tmp.group(1)
+                    entering = tmp.group(2) is not None
                     type_name = tmp.group(3)
                     result.append(outer_indent + ("type " if tmp.group(2) is None else tmp.group(2)) + type_name + ":")
                     if tmp.group(4) is not None:
@@ -96,7 +98,8 @@ class TypeFormat:
             else:
                 if inner_indent is None:
                     inner_indent = cur_indent
-                    result.append(inner_indent + "tid " + self.create_string(type_name))
+                    if not entering:
+                        result.append(inner_indent + "tid " + self.create_string(type_name))
                     if inherit is not None:
                         result.append(inner_indent + "inh " + inherit)
                 if len(cur_indent) < len(inner_indent):

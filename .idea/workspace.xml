@@ -22,7 +22,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.11.1&#10;- Add type inheritance, and subtype judgement.&#10;- Add 3 new tutorials.&#10;- Better typing syntax(new, inh).">
+      <change afterPath="$PROJECT_DIR$/learn/challenges/1. Heart of Boolean.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/std/ios.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/ios.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/type_format.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/type_format.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -102,11 +107,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="pups_Lib" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -179,6 +179,8 @@
       <workItem from="1688167123522" duration="585000" />
       <workItem from="1688191645994" duration="20635000" />
       <workItem from="1688257593693" duration="16309000" />
+      <workItem from="1688458851657" duration="11739000" />
+      <workItem from="1688599368645" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -330,7 +332,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688276851374</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="v0.11.1&#10;- Add type inheritance, and subtype judgement.&#10;- Add 3 new tutorials.&#10;- Better typing syntax(new, inh).">
+      <option name="closed" value="true" />
+      <created>1688471688191</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1688471688191</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -365,28 +375,13 @@
     <MESSAGE value="v0.9.0&#10;Now libraries does not use the weird include and links.&#10;Grouped some of the builtin files" />
     <MESSAGE value="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library" />
     <MESSAGE value="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly" />
+    <MESSAGE value="v0.11.1&#10;- Add type inheritance, and subtype judgement.&#10;- Add 3 new tutorials.&#10;- Better typing syntax(new, inh)." />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.11.1&#10;- Add type inheritance, and subtype judgement.&#10;- Add 3 new tutorials.&#10;- Better typing syntax(new, inh)." />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/source/builtins/keywords/builtin_func.cpp</url>
-          <line>22</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
-        <watch expression="count_depth()" language="ObjectiveC" />
-        <watch expression="this-&gt;cur_id-&gt;m_id" />
-        <watch expression="this-&gt;m_base.get()-&gt;pups::library::builtins::function::Function" />
-        <watch expression="this-&gt;m_base.get()-&gt;pups::library::builtins::function::Function" />
-        <watch expression="ids.get()-&gt;m_idFile.get()-&gt;m_file[0]" />
-        <watch expression="this-&gt;m_type.get()" />
-        <watch expression="this-&gt;m_type" />
-        <watch expression="this-&gt;m_attr[0]" />
+        <watch expression="name" />
       </configuration>
     </watches-manager>
   </component>

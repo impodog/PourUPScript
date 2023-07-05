@@ -264,6 +264,15 @@ namespace pups::modules::ios {
             return std::make_shared<containers::Array>(result);
     }
 
+    ObjectPtr path_create(Path &path, FunctionArgs &args, Map *map) {
+        if (!args.empty())
+            map->throw_error(
+                    std::make_shared<library::ArgumentError>(
+                            "path.create requires no arguments. Arguments ignored."));
+        std::ofstream out{path.m_path};
+        return pending;
+    }
+
     class FileInit : public Function {
     public:
         FileInit() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
@@ -315,7 +324,8 @@ namespace pups::modules::ios {
     Id id_pathAdd{"", "add"}, id_pathGetStr{"", "get_str"}, id_pathStem{"", "stem"}, id_pathExtn{"", "extn"},
             id_pathAbs{"", "abs"}, id_pathParent{"", "parent"}, id_pathExists{"", "exists"},
             id_pathIsFile{"", "is_file"}, id_pathIsDir{"", "id_dir"},
-            id_pathListDir{"", "list_dir"}, id_pathListRecur{"", "list_recur"}, id_pathListFiles{"", "list_files"};
+            id_pathListDir{"", "list_dir"}, id_pathListRecur{"", "list_recur"}, id_pathListFiles{"", "list_files"},
+            id_pathCreate{"", "create"};
 
     const FileFuncMap file_functions = {
             {id_fileRead,    file_read},
@@ -338,7 +348,8 @@ namespace pups::modules::ios {
             {id_pathIsDir,     path_is_dir},
             {id_pathListDir,   path_list_dir},
             {id_pathListRecur, path_list_recur<true>},
-            {id_pathListFiles, path_list_recur<false>}
+            {id_pathListFiles, path_list_recur<false>},
+            {id_pathCreate,    path_create}
     };
 
     void init(Constants &constants) {

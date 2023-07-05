@@ -1,3 +1,7 @@
+v0.11.2
+- Now compiler will not repeat the type name when entering class
+- Add Path.create
+
 v0.11.1
 - Add type inheritance, and subtype judgement.
 - Add 3 new tutorials.
