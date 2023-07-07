@@ -1,3 +1,6 @@
+v0.11.3
+- Fix the problem that return value is not properly used in a while loop
+
 v0.11.2
 - Now compiler will not repeat the type name when entering class
 - Add Path.create

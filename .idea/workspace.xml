@@ -22,11 +22,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.11.1&#10;- Add type inheritance, and subtype judgement.&#10;- Add 3 new tutorials.&#10;- Better typing syntax(new, inh).">
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.11.2&#10;- Now compiler will not repeat the type name when entering class&#10;- Add Path.create">
       <change afterPath="$PROJECT_DIR$/learn/challenges/1. Heart of Boolean.puppy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/ios.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/ios.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/type_format.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/type_format.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/keyword_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/keyword_func.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,33 +65,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/workspace/Cpp/Tool/PourUPScript&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "development",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/workspace/Cpp/Tool/PourUPScript",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;ObjectiveC&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "ObjectiveC"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\workspace\Cpp\Tool\PourUPScript\source\builtins\keywords" />
@@ -180,7 +179,8 @@
       <workItem from="1688191645994" duration="20635000" />
       <workItem from="1688257593693" duration="16309000" />
       <workItem from="1688458851657" duration="11739000" />
-      <workItem from="1688599368645" duration="2000" />
+      <workItem from="1688599368645" duration="733000" />
+      <workItem from="1688737319794" duration="2599000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -340,7 +340,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688471688191</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="v0.11.2&#10;- Now compiler will not repeat the type name when entering class&#10;- Add Path.create">
+      <option name="closed" value="true" />
+      <created>1688599483476</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1688599483476</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,6 +359,17 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -376,9 +395,19 @@
     <MESSAGE value="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library" />
     <MESSAGE value="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly" />
     <MESSAGE value="v0.11.1&#10;- Add type inheritance, and subtype judgement.&#10;- Add 3 new tutorials.&#10;- Better typing syntax(new, inh)." />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.11.1&#10;- Add type inheritance, and subtype judgement.&#10;- Add 3 new tutorials.&#10;- Better typing syntax(new, inh)." />
+    <MESSAGE value="v0.11.2&#10;- Now compiler will not repeat the type name when entering class&#10;- Add Path.create" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.11.2&#10;- Now compiler will not repeat the type name when entering class&#10;- Add Path.create" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/source/builtins/keywords/keyword_func.cpp</url>
+          <line>43</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="name" />

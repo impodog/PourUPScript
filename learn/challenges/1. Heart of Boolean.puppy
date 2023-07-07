@@ -1,0 +1,41 @@
+/* CHALLENGE 1-1 : Creating the "not" function */
+func not:
+    // Code here!
+path = ios.path "dog.txt"
+if not (call path.exists):
+    print "It doesn't exist!"
+
+
+
+/* CHALLENGE 1-2 : Creating the "and" and "or" function */
+func and:
+    // Code here!
+func or:
+    // Code here!
+
+print "Here are two numbers:"
+#define RANDOM = (random.rand_int 10)
+a = RANDOM
+b = RANDOM
+print "They are " a " and " b "."
+if or (a.gt 5) (b.gt 5):
+    if and (a.gt 5) (b.gt 5):
+        print "They are all above 5!"
+    else:
+        print "One of them is above 5."
+else:
+    print "None of them is above 5."
+
+
+
+/* CHALLENGE 1-3 : Using packed arguments for booleans */
+func all:
+    param pack args
+    // Code here!
+
+args = call array
+for i in range RANDOM:
+    value = RANDOM
+    print "value is " value
+    args.add (value.gt 2)
+print "All values are greater than 2 is " (all %args)
