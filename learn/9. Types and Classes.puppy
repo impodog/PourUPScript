@@ -5,7 +5,7 @@
 A type is the model of a set of values. An "instance" is a special value of that type.*/
 
 type Dog:
-    attr "name" "age" // Attributes. These are variables that sre unique to each instance, but all instances have them.
+    attr "name" "age" // Attributes. These are variables that are unique to each instance, but all instances have them.
 
     // But by now, those unique values are not defined yet. We need to define them in the "constructor", or "init" method.
     mth "init"
@@ -22,9 +22,9 @@ type Dog:
         print "Woof! I am " self.name " and I am " self.age " years old."
 
     
-    // Also, the type can hold variables that are shared by all instances, they are called "static variables".
+    // Also, the type can hold variables that are shared by all instances, they are called "linked variables".
     // To create one of those, just do what you would do in a normal variable!
-    species = "Canis familiaris" // This is a static variable. It is shared by all instances of Dog.
+    species = "Canis familiaris" // This is a linked variable. It is shared by all instances of Dog.
 
 // Now, let's create an instance of Dog.
 myDog = new Dog "Pi" 3
@@ -32,7 +32,7 @@ myDog = new Dog "Pi" 3
 myDog.init
 // Now, let's call the method.
 myDog.bark
-// And let's see the static variable.
+// And let's see the linked variable.
 print "The dog's species is " myDog.species
 
 
@@ -40,10 +40,10 @@ print "The dog's species is " myDog.species
 /* Now, as you see, the type always repeats "attr" or "mth". Isn't that annoying?
 So, we have a shortcut for that. Which is "class".
 Classes defaults everything you defined to be "attr" or "mth", so you don't have to type them again.
-However, to use static ones in a class, you need to use "stat" keyword.*/
+However, to use linked ones in a class, you need to use "link" keyword.*/
 class Cat:
-    // This is a static variable.
-    stat species = "Felis catus"
+    // This is a linked variable.
+    link species = "Felis catus"
 
     // This is an attribute. Note that you don't need to wrap the name in quotes any more.
     attr name
@@ -57,14 +57,14 @@ class Cat:
     func meow:
         print "Meow! I am " self.name " and I am a cat."
 
-    // We can also define static functions.
-    stat func purr:
+    // We can also define linked functions.
+    link func purr:
         print "Purr!"
 
 // Now, let's create an instance of Cat.
 myCat = new Cat "Lars"
 // And let's call the method.
 myCat.meow
-// And let's see the static variable and function.
+// And let's see the linked variable and function.
 print "The cat's species is " myCat.species
 myCat.purr

@@ -1,3 +1,12 @@
+v0.11.4
+- Fix the problem of while exiting too early(caused by the previous fix)
+- Add support for empty strings
+- Now modules with the same path will only be created when it's the first time
+- Change keyword "stat" to "link"
+- Now you can catch all errors just by using one statement
+- Fix the NULL bug caused by hashmap.get_keys
+
+
 v0.11.3
 - Fix the problem that return value is not properly used in a while loop
 

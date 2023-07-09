@@ -72,31 +72,31 @@ namespace pups::library {
     void Constants::analyze_line(const std::string &line) {
         std::string front, back;
         split_trim(line, front, back);
-        if (!front.empty() && !back.empty())
-            try {
-                switch (stat) {
-                    case stat_none:
-                        std::cout << "Line \"" << line << "\" is skipped because no status is set." << std::endl;
-                        break;
-                    case stat_int:
-                        add(Id{"", front}, std::make_shared<builtins::numbers::IntType>(std::stoi(back)));
-                        break;
-                    case stat_float:
-                        add(Id{"", front}, std::make_shared<builtins::numbers::FloatType>(std::stof(back)));
-                        break;
-                    case stat_str:
-                        if (back.front() == '\\')
-                            back = back.substr(1);
-                        if (back.back() == '\\')
-                            back = back.substr(0, back.size() - 1);
-                        replace_all(back, "\\n", "\n");
-                        add(Id{"", front}, std::make_shared<builtins::strings::String>(back));
-                        break;
-                }
-            } catch (const std::invalid_argument &exception) {
-                throw std::runtime_error(
-                        "Cannot analyze constant file line: \"" + line + "\" as follows: " + exception.what());
+        if (front.empty()) return;
+        try {
+            switch (stat) {
+                case stat_none:
+                    std::cout << "Line \"" << line << "\" is skipped because no status is set." << std::endl;
+                    break;
+                case stat_int:
+                    add(Id{"", front}, std::make_shared<builtins::numbers::IntType>(std::stoi(back)));
+                    break;
+                case stat_float:
+                    add(Id{"", front}, std::make_shared<builtins::numbers::FloatType>(std::stof(back)));
+                    break;
+                case stat_str:
+                    if (back.front() == '\\')
+                        back = back.substr(1);
+                    if (back.back() == '\\')
+                        back = back.substr(0, back.size() - 1);
+                    replace_all(back, "\\n", "\n");
+                    add(Id{"", front}, std::make_shared<builtins::strings::String>(back));
+                    break;
             }
+        } catch (const std::invalid_argument &exception) {
+            throw std::runtime_error(
+                    "Cannot analyze constant file line: \"" + line + "\" as follows: " + exception.what());
+        }
     }
 
     Constants::Constants() :

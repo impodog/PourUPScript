@@ -17,6 +17,8 @@ namespace pups::library {
 
         explicit Control(const path &path, Constants &constants);
 
+        explicit Control(IdFile idFile, Constants &constants);
+
         explicit Control(const path &path, Constants &constants, Map *map, bool allow_upsearch);
 
         explicit Control(const IdFile &idFile, MapPtr map);

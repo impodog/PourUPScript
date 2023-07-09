@@ -4,10 +4,18 @@
 
 #include "control.h"
 
+#include <utility>
+
 namespace pups::library {
     Control::Control(const IdFile &idFile, MapPtr map) :
             idFile(idFile), cur_id(&idFile.get_id()), map(std::move(map)) {
 
+    }
+
+    Control::Control(IdFile idFile, Constants &constants) :
+            idFile(std::move(idFile)), cur_id(&this->idFile.get_id()),
+            global_map(std::make_shared<Map>()), map(std::make_shared<Map>(global_map.get(), false)) {
+        constants.export_to(global_map.get());
     }
 
     Control::Control(const path &path, Constants &constants) :

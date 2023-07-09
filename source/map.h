@@ -102,6 +102,8 @@ namespace pups::library {
 
         bool can_run() const noexcept;
 
+        bool can_run_while() const noexcept;
+
         const ObjectMap &get_all_objects() const noexcept;
 
         bool catch_by(CatchRequirements &required);

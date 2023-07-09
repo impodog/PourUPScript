@@ -52,7 +52,9 @@ class Extract:
         while True:
             result = re.search(r'[^\\]"(.*?[^\\])"', self.content)
             if result is None:
-                break
+                result = re.search(r'[^\\]"()"', self.content)
+                if result is None:
+                    break
             name = next_name("STR")
             value = result.group(1)
             tmp = value
@@ -61,7 +63,7 @@ class Extract:
                     tmp = "\\\\" + tmp
                 if need_add_backslash(tmp[-1]):
                     tmp += "\\\\"
-            self.extracted[name] = eval('"' + tmp + '"').replace("\n", "\\n")
+            self.extracted[name] = eval('"' + tmp + '"').replace("\n", "\\n").replace("\\\"", "\"")
             self.content = self.content.replace('"%s"' % value, name, 1)
         self.content = self.content[1:]
 

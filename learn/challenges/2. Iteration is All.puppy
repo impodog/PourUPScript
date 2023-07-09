@@ -1,0 +1,42 @@
+/* CHALLENGE 2-1 : Input a certain number of strings */
+#define RANDOM_FIRST = (random.rand_int 1 5)
+func input_n:
+    // Code here!
+n = RANDOM_FIRST
+print "Please input " n " numbers:"
+arr = input_n n
+for i in range n:
+    print "String #" i " is " (arr.at i)
+
+
+
+/* CHALLENGE 2-2 : Using function as parameters to do certain stuff */
+#define RANDOM_SECOND = (random.rand_int 10 20)
+func iter:
+    // Code here!
+func iter_example:
+    param v
+    ret v.add 1
+func iter_print:
+    // Code here!
+
+arr = call array
+for i in range RANDOM_SECOND:
+    arr.add RANDOM_SECOND
+iter arr iter_print
+iter arr iter_example
+print "Now array is " arr
+
+
+
+/* CHALLENGE 2-3 : Get the oldest person in the hashmap(if there are many of them, just output one) */
+#define RANDOM_THIRD = (random.rand_int 10 50)
+hm = call hashmap
+func oldest:
+    // Code here!
+hm.add "A"::RANDOM_THIRD
+hm.add "B"::RANDOM_THIRD
+hm.add "C"::RANDOM_THIRD
+hm.add "D"::RANDOM_THIRD
+hm.add "E"::RANDOM_THIRD
+print "Of all the people in " hm ", the oldest is " (call oldest) "."

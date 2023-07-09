@@ -255,17 +255,21 @@ namespace pups::library {
         return !m_return && !signs.break_sign;
     }
 
+    bool Map::can_run_while() const noexcept {
+        return !m_return;
+    }
+
     const ObjectMap &Map::get_all_objects() const noexcept {
         return m_map;
     }
 
     bool Map::catch_by(CatchRequirements &required) {
-        if (!m_errors.empty()) {
-            auto &err = m_errors.back();
-            if (required.empty() || required.find(err->error_name()) != required.end()) {
-                m_errors.pop_back();
+        while (!m_errors.empty()) {
+            if (required.empty() || required.find(m_errors.back()->error_name()) != required.end()) {
+                m_errors.clear();
                 return true;
             }
+            m_errors.pop_back();
         }
         return false;
     }

@@ -54,11 +54,16 @@ namespace pups::library::builtins::map_open {
 
     ObjectPtr open_file(const std::string &name, Map *map) {
         path p = name;
+        try {
+            return opened_modules.at(name);
+        } catch (const std::out_of_range &) {}
+
         if (std::filesystem::exists(p)) {
             path const_path = p.parent_path().append(p.stem().string() + ".con");
             Constants constants(const_path);
             Control control(p, constants, map, false);
             control.run();
+            opened_modules.insert({std::filesystem::absolute(p).string(), control.map});
             return control.map;
         } else {
             map->throw_error(std::make_shared<FileNotFoundError>("File \"" + name + "\" is not found."));

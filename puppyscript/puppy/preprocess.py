@@ -168,7 +168,7 @@ class Preprocess:
     def remove_prep_lines(self):
         tmp = str()
         for line in self.content.split("\n"):
-            if line.find("#") == -1:
+            if len(line) == 0 or line[0] != '#':
                 tmp += line + "\n"
         self.content = tmp
 

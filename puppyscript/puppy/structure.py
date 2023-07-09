@@ -114,23 +114,27 @@ class Structure:
         indent = -1
         externals = list()
         succeeded = False
+        pub_all = False
         for line in self.content.split("\n"):
             if indent != -1:
                 cur_indent = len(firsts(line))
                 if cur_indent < indent:
                     indent = -1
                     externals.clear()
-                elif cur_indent == indent:
+                    pub_all = False
+                elif pub_all or cur_indent == indent:
                     for name in externals:
                         line = re.sub(r"([^\w.&])%s(\b)" % name, r"\1&%s\2" % name, line)
                 result.append(line)
             else:
-                tmp = re.match(r"(\s*)pub\s+(.*)", line)
+                tmp = re.match(r"(\s*)pub(_all)?\s+(.*)", line)
                 if tmp is None:
                     result.append(line)
                 else:
                     indent = tmp.group(1)
-                    for name in tmp.group(2).split(" "):
+                    if tmp.group(2):
+                        pub_all = True
+                    for name in tmp.group(3).split(" "):
                         if len(name) > 0 and not name.isspace():
                             externals.append(name)
                     indent = len(indent)

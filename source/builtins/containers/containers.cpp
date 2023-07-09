@@ -156,8 +156,9 @@ namespace pups::library::builtins::containers {
         if (!args.empty())
             map->throw_error(std::make_shared<ArgumentError>("Container.get_keys requires no arguments"));
         std::vector<ObjectPtr> keys(container.size());
+        size_t i = 0;
         for (const auto &pair: container.data)
-            keys.push_back(pair.first);
+            keys[i++] = pair.first;
         return std::make_shared<Array>(keys);
     }
 

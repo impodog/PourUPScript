@@ -12,7 +12,7 @@ class Vehicle:
         self.color = color
     func called: // This is a method that is called implicitly when the object is used as if it is a function.
         print "I am a vehicle."
-
+ 
 /* Now, we have a vehicle. But how do we specify what kind of vehicle it is?
 That's where inheritance comes in. It can be used to create a new class based on an existing class, with all the attributes and methods of the existing class.*/
 class Car inh Vehicle: // This is how you inherit a class. You can inherit multiple classes as well.

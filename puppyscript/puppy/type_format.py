@@ -53,7 +53,7 @@ class TypeFormat:
         for line in body.split("\n"):
             cur_indent = firsts(line)
             if len(cur_indent) == len(indent):
-                tmp = re.fullmatch(r"(\s*)stat\s+(.+)", line)
+                tmp = re.fullmatch(r"(\s*)link\s+(.+)", line)
                 if tmp is not None:
                     line = tmp.group(1) + tmp.group(2)
             result.append(line)

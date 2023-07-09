@@ -55,7 +55,7 @@ namespace pups::library::builtins::keyword_func {
                 break_v = sub_map->signs.break_sign;
                 if (break_v == nullptr) break_v = pending;
 
-                if (!sub_map->can_run())
+                if (!sub_map->can_run_while())
                     break;
 
                 sub_map = std::make_shared<Map>(sub_map->get_parent(), true);
