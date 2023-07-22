@@ -27,11 +27,11 @@
 	"repository": {
 		"preprocess": {
 			"name": "keyword.control.puppyscript",
-			"match": "#(define|include|set|unset|ifset|ifnset|end|rule)\\s+(.*?)\\n"
+			"match": "#(define|undef|include|set|unset|ifset|ifnset|end|rule)\\s*(.*?)\\n"
 		},
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(with|enter|param|pack|ret|pub|pub_all|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call|exit|catch|new|tid|inh)\\b"
+			"match": "\\b(with|enter|param|pack|ret|pub|pub_all|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call|exit|catch|new|tid|inh|throw|pass|use)\\b"
 		},
 		"variables": {
 			"name": "entity.name.variable",

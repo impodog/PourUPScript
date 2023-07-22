@@ -26,11 +26,12 @@ namespace pups::library {
 
     Control::Control(const path &path, Constants &constants, Map *map, bool allow_upsearch) :
             idFile(read_file(path)), cur_id(&idFile.get_id()), map(std::make_shared<Map>(map, allow_upsearch)) {
-        constants.export_to(this->map.get());
+        constants.export_to(this->map->get_global());
     }
 
     Control::~Control() {
         map->restore();
+        map->push_up_errs();
     }
 
     bool Control::next_id() {

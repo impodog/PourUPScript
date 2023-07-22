@@ -31,6 +31,8 @@ namespace pups::library::builtins::map_open {
     };
 
     void init(Constants &constants);
+
+    void quit();
 }
 
 #endif //PUPS_LIB_MAP_OPEN_H

@@ -1,0 +1,23 @@
+#ifnset STD_CONVERT
+#set STD_CONVERT
+
+#include std/std.puppy
+#define CPP_CONVERT_LIB = convert
+#define STD_CONVERT_LIB = convert
+
+enter std:
+    __deprecated_warning "std/convert.puppy"
+
+    if is_def CPP_CONVERT_LIB:
+        use CPP_CONVERT_LIB as STD_CONVERT_LIB
+    else:
+        throw "When using script std/convert.puppy, library CPP_CONVERT_LIB cannot be found."
+        ret
+
+#ifnset STD_NO_ALIAS
+    use STD_CONVERT_LIB.ftoi
+    use STD_CONVERT_LIB.itof
+    use STD_CONVERT_LIB.round
+#end
+
+#end

@@ -1,6 +1,6 @@
 import re
 
-from .ids import next_name, with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, ret, WORD
+from .ids import next_name, with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, ret, WORD, word_last
 
 
 class Structure:
@@ -165,6 +165,19 @@ class Structure:
         self.content = re.sub(
             r"conti(\s*\n)", break_cmd + r" true\1", self.content)
 
+    def use_statements(self):
+        result = list()
+        for line in self.content.split("\n"):
+            tmp = re.match(rf"(\s*)use\s*({WORD})(\s+as\s+({WORD}))?\s*", line)
+            if tmp is None:
+                result.append(line)
+            else:
+                if tmp.group(4) is None:
+                    result.append(tmp.group(1) + word_last(tmp.group(2)) + " = " + tmp.group(2))
+                else:
+                    result.append(tmp.group(1) + tmp.group(4) + " = " + tmp.group(2))
+        self.content = "\n".join(result)
+
     def work(self, output_name: str) -> str:
         self.scan_if()
         self.scan_all_for()
@@ -172,6 +185,7 @@ class Structure:
         self.scan_all_extern()
         self.scan_returns()
         self.break_shortcuts()
+        self.use_statements()
         output = output_name + ".struct"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)

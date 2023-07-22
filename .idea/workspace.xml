@@ -23,9 +23,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.11.2&#10;- Now compiler will not repeat the type name when entering class&#10;- Add Path.create">
-      <change afterPath="$PROJECT_DIR$/learn/challenges/2. Iteration is All.puppy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/intro.puppy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/std/convert.puppy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/std/ios.puppy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/std/math.puppy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/std/memory.puppy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/std/std.puppy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/std/type_wrap.puppy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn/12. Advanced Classes.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/learn/12. Advanced Classes.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn/7. Modules.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/learn/7. Modules.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/formatting.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/formatting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/ids.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/ids.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups.h" beforeDir="false" afterPath="$PROJECT_DIR$/pups.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/keyword_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/keyword_func.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/keyword_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/keyword_func.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/map_open.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/map_open.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/map_open.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/map_open.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/types/typing.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/types/typing.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/error.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/error.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/error.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,33 +90,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "development",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/workspace/Cpp/Tool/PourUPScript",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/workspace/Cpp/Tool/PourUPScript&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "ObjectiveC"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;ObjectiveC&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\workspace\Cpp\Tool\PourUPScript\source\builtins\keywords" />
@@ -101,12 +126,12 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
-    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -189,6 +214,9 @@
       <workItem from="1688813023062" duration="2251000" />
       <workItem from="1688825471346" duration="314000" />
       <workItem from="1688825831411" duration="1998000" />
+      <workItem from="1689287760804" duration="2016000" />
+      <workItem from="1689422346132" duration="40000" />
+      <workItem from="1689935445597" duration="12497000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>

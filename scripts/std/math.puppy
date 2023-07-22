@@ -1,0 +1,28 @@
+#ifnset STD_MATH
+#set STD_MATH
+
+#include std/std.puppy
+#define CPP_MATH_LIB = math
+#define STD_MATH_LIB = math
+
+enter std:
+    if is_def CPP_MATH_LIB:
+        use CPP_MATH_LIB as STD_MATH_LIB
+    else:
+        throw "When using script std/math.puppy, library CPP_MATH_LIB cannot be found."
+        ret
+
+#ifnset STD_NO_ALIAS
+    use STD_MATH_LIB.pi
+    use STD_MATH_LIB.e
+    use STD_MATH_LIB.ftoi
+    use STD_MATH_LIB.itof
+    use STD_MATH_LIB.round
+    use STD_MATH_LIB.sin
+    use STD_MATH_LIB.cos
+    use STD_MATH_LIB.tan
+    use STD_MATH_LIB.rad
+    use STD_MATH_LIB.deg
+#end
+
+#end

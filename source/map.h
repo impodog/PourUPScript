@@ -30,7 +30,6 @@ namespace pups::library {
 
         ObjectPtr &single_find(const Id &name);
 
-        // Find objects from dotted stages. The map is used to "reput" caller
         ObjectPtr &staged_find(std::queue<std::string> &parts, Map *map = nullptr);
 
         void copy_signs_from(Map *map);
@@ -87,6 +86,8 @@ namespace pups::library {
 
         Map *get_parent() noexcept;
 
+        Map *get_global() noexcept;
+
         // Pass nullptr to unset the sub map, or a new map to set it.
         void set_child(Map *sub_map) noexcept;
 
@@ -95,6 +96,10 @@ namespace pups::library {
         ObjectPtr &add_to_memory_stack(const ObjectPtr &object);
 
         void report_errs();
+
+        void inherit_errs(Map *map);
+
+        void push_up_errs();
 
         void copy_objects_from(Map *map);
 

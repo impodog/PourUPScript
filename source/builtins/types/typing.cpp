@@ -7,6 +7,7 @@
 #include <utility>
 
 namespace pups::library::builtins::typing {
+    Id id_call{"", "called"}, id_init_func{"", "init"}, id_substitute{"", "__substitute"};
 
     size_t Type::hash::operator()(const TypePtr &type) const noexcept {
         return std::hash<std::string>()(type->m_name);
@@ -18,8 +19,19 @@ namespace pups::library::builtins::typing {
         try {
             return m_methods.at(name);
         } catch (const std::out_of_range &) {
-            return Map::find(name, map);
+            auto &result = Map::find(name, map);
+            if (!is_pending(result))
+                return result;
         }
+        return Map::find(id_substitute, map)->find(name, map);
+    }
+
+    std::string Type::str() const noexcept {
+        return m_name;
+    }
+
+    std::string Type::repr() const noexcept {
+        return "<" + type_name() + "[" + m_name + "]" + ":" + std::to_string(m_count) + " at " + to_string(this) + ">";
     }
 
     std::string Type::type_name() const noexcept {
@@ -48,8 +60,6 @@ namespace pups::library::builtins::typing {
     bool Type::is_subtype(const TypePtr &type) const noexcept {
         return this == type.get() || m_parents.find(type) != m_parents.end();
     }
-
-    Id id_call{"", "called"}, id_init_func{"", "init"};
 
     Instance::Instance(TypePtr type) : m_type(std::move(type)) {
         for (auto &name: m_type->get_attr())

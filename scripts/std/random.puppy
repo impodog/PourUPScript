@@ -1,0 +1,23 @@
+#ifnset STD_RANDOM
+#set STD_RANDOM
+
+#include std/std.puppy
+#define CPP_RANDOM_LIB = random
+#define STD_RANDOM_LIB = random
+
+enter std:
+    if is_def CPP_RANDOM_LIB:
+        use CPP_RANDOM_LIB as STD_RANDOM_LIB
+    else:
+        throw "When using script std/random.puppy, library CPP_RANDOM_LIB cannot be found."
+        ret
+
+#ifnset STD_NO_ALIAS
+    use STD_RANDOM_LIB.rand_int
+    use STD_RANDOM_LIB.rand_float
+    use STD_RANDOM_LIB.choose_from
+    use STD_RANDOM_LIB.choice
+    use STD_RANDOM_LIB.shuffle
+#end
+
+#end

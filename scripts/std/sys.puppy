@@ -1,0 +1,21 @@
+#ifnset STD_SYS
+#set STD_SYS
+
+#include std/std.puppy
+#define CPP_SYS_LIB = sys
+#define STD_SYS_LIB = sys
+
+enter std:
+    if is_def CPP_SYS_LIB:
+        use CPP_SYS_LIB as STD_SYS_LIB
+    else:
+        throw "When using script std/sys.puppy, library CPP_SYS_LIB cannot be found."
+        ret
+
+#ifnset STD_NO_ALIAS
+    use STR_SYS_LIB.version
+    use STR_SYS_LIB.is_toplevel
+    use STR_SYS_LIB.ver_cmp
+#end
+
+#end

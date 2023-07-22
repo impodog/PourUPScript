@@ -1,3 +1,9 @@
+v0.12.0
+- Add std scripts for wrapping the std module
+- Better including and preprocessing syntax
+- Now there is a "quit" function. Use it when you exit the pups environment
+- Fix some problems in tutorials, docs, and others
+
 v0.11.4
 - Fix the problem of while exiting too early(caused by the previous fix)
 - Add support for empty strings

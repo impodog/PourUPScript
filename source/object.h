@@ -22,6 +22,7 @@ namespace pups::library {
     class Object {
     protected:
         static size_t static_count;
+
     public:
         using ObjectMap = IdMap<ObjectPtr>;
         size_t m_count;

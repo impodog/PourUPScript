@@ -35,6 +35,10 @@ namespace pups::library::builtins::typing {
 
         ObjectPtr &find(const Id &name, Map *map) override;
 
+        std::string str() const noexcept override;
+
+        std::string repr() const noexcept override;
+
         std::string type_name() const noexcept override;
 
         std::string &get_name() noexcept;

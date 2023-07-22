@@ -18,6 +18,10 @@ namespace pups {
     using library::pending;
     using library::builtins::init, library::module_link_name, library::PUPS_LIB_VERSION;
     using library::cast;
+
+    inline void quit() {
+        library::builtins::map_open::quit();
+    }
 }
 
 #endif //PUPS_LIB_PUPS_H

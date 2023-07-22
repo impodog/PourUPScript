@@ -98,10 +98,7 @@ namespace pups::library {
     Map::~Map() {
         if (m_parent_map) {
             m_parent_map->m_sub_map = nullptr;
-            while (!m_errors.empty()) {
-                m_parent_map->m_errors.push_back(m_errors.front());
-                m_errors.pop_front();
-            }
+            push_up_errs();
         } else
             report_errs();
     }
@@ -193,6 +190,11 @@ namespace pups::library {
         return m_parent_map;
     }
 
+    Map *Map::get_global() noexcept {
+        return m_global;
+    }
+
+
     void Map::set_child(Map *sub_map) noexcept {
         bool is_null = sub_map == nullptr;
         Map *map = is_null ? this : sub_map, *deepest;
@@ -228,6 +230,22 @@ namespace pups::library {
             std::cout << m_errors.front()->get() << std::endl;
             err_count += 1;
             m_errors.pop_front();
+        }
+    }
+
+    void Map::inherit_errs(Map *map) {
+        while (!map->m_errors.empty()) {
+            m_errors.push_back(map->m_errors.front());
+            map->m_errors.pop_front();
+        }
+        if (m_parent_map && m_parent_map->m_sub_map != this) {
+            push_up_errs();
+        }
+    }
+
+    void Map::push_up_errs() {
+        if (m_parent_map) {
+            m_parent_map->inherit_errs(this);
         }
     }
 

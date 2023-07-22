@@ -47,7 +47,7 @@ namespace pups::modules::sutil {
     }
 
     Id id_sutil{"", "sutil"};
-    Id id_to_int{"", "toi"}, id_to_float{"", "tof"}, id_to_char{"", "toc"}, id_from_char{"", "c_tos"};
+    Id id_to_int{"", "stoi"}, id_to_float{"", "stof"}, id_to_char{"", "stoc"}, id_from_char{"", "ctos"};
 
     void init(Constants &constants) {
         auto &sutil = constants.new_sub_const(id_sutil);

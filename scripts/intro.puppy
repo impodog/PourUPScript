@@ -1,0 +1,28 @@
+// This is an example puppyscript script.
+// The puppyscript compiler should be able to find the scripts installed here, and treat them as includes.
+
+// To use a script, it is NOT recommended to put an include statement in the source file that will be directly used.
+// Instead, you may put it in another file, e.g. "scripts.puppy", and import the file using a statement.
+
+// To make a script, use the following template:
+
+#ifnset SCRIPT_ENTRY
+#set SCRIPT_ENTRY
+
+/*
+This function prints "Hello, world!" into stdout
+*/
+func say_hello:
+    print "Hello, world!"
+
+class Example:
+    func init:
+        print "Now an Example is inited!"
+
+print "Welcome to the world of scripts!"
+print "To use this script, you may do the following steps:"
+print "1. Try to write the statement \"say_hello\"!"
+print "2. Try to initialize an instance by \"instance = new Example\"!"
+print "3. Finally, open \"scripts/intro.puppy\" and take a look at how the file goes!"
+
+#end

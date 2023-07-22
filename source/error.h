@@ -66,6 +66,13 @@ namespace pups::library {
         explicit OutOfBoundError(const std::string &s);
     };
 
+    class ScriptError : public Error {
+    public:
+        [[nodiscard]] std::string error_name() const noexcept override;
+
+        explicit ScriptError(const std::string &s);
+    };
+
     class PUPS_Exit final : public std::exception {
     public:
         PUPS_Exit();

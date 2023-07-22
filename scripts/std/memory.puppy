@@ -1,0 +1,20 @@
+#ifnset STD_MEMORY
+#set STD_MEMORY
+
+#include std/std.puppy
+#define CPP_MEMORY_LIB = memory
+#define STD_MEMORY_LIB = memory
+
+enter std:
+    if is_def CPP_MEMORY_LIB:
+        use CPP_MEMORY_LIB as STD_MEMORY_LIB
+    else:
+        throw "When using script std/memory.puppy, library CPP_MEMORY_LIB cannot be found."
+        ret
+
+#ifnset STD_NO_ALIAS
+    use STD_MEMORY_LIB.swap
+    use STD_MEMORY_LIB.same
+#end
+
+#end

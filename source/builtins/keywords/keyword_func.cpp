@@ -130,10 +130,15 @@ namespace pups::library::builtins::keyword_func {
         throw PUPS_Exit();
     }) {}
 
+    Throw::Throw() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+        map->throw_error(std::make_shared<ScriptError>(strings::str_of(args)));
+        return pending;
+    }) {}
+
     Id id_moveTo{"", "mov"}, id_if{"", "if"}, id_elif{"", "elif"}, id_if_not{"", "if_not"}, id_elif_not{"", "elif_not"},
             id_whileTrue{"", "while"}, id_whileFalse{"", "while_not"}, id_return{"", "ret"},
             id_with{"", "with"}, id_pop{"", "pop_back"}, id_delete{"", "del"},
-            id_break{"", "break"}, id_unmap{"", "unmap"}, id_exit{"", "exit"};
+            id_break{"", "break"}, id_unmap{"", "unmap"}, id_exit{"", "exit"}, id_throw{"","throw"};
 
     void init(Constants &constants) {
         constants.add(id_moveTo, std::make_shared<MoveTo>());
@@ -150,5 +155,6 @@ namespace pups::library::builtins::keyword_func {
         constants.add(id_break, std::make_shared<Break>());
         constants.add(id_unmap, std::make_shared<Unmap>());
         constants.add(id_exit, std::make_shared<Exit>());
+        constants.add(id_throw, std::make_shared<Throw>());
     }
 }

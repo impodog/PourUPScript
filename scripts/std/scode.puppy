@@ -1,0 +1,22 @@
+#ifnset STD_SCODE
+#set STD_SCODE
+
+#include std/std.puppy
+#define CPP_SCODE_LIB = scode
+#define STD_SCODE_LIB = scode
+
+enter std:
+    if is_def CPP_SCODE_LIB:
+        use CPP_SCODE_LIB as STD_SCODE_LIB
+    else:
+        throw "When using script std/scode.puppy, library CPP_SCODE_LIB cannot be found."
+        ret
+
+#ifnset STD_NO_ALIAS
+    use STD_SCODE_LIB.find
+    use STD_SCODE_LIB.find_ref
+    use STD_SCODE_LIB.format
+    use STD_SCODE_LIB.format_all
+#end
+
+#end

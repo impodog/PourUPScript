@@ -49,5 +49,11 @@ namespace pups::library {
 
     OutOfBoundError::OutOfBoundError(const std::string &s) : Error(s) {}
 
-    PUPS_Exit::PUPS_Exit() {}
+    PUPS_Exit::PUPS_Exit() = default;
+
+    std::string ScriptError::error_name() const noexcept {
+        return "ScriptError";
+    }
+
+    ScriptError::ScriptError(const std::string &s) : Error(s) {}
 }

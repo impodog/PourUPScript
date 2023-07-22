@@ -1,0 +1,18 @@
+// This script is for map "std" declaration.
+// This is commonly included by other std scripts.
+#ifnset STD_MAP
+#set STD_MAP
+
+map std:
+    func what_is_this:
+        print \
+            "Welcome to the world of PuppyScript!\n" \
+            "This is a part of the standard PuppyScript library.\n" \
+            "This map is the container of functions, classes, and stuff.\n" \
+            "To use these, you will either need to #include scripts, or add some components in your C++ code.\n" \
+            "See some examples for help!"
+
+    func __deprecated_warning:
+        param file
+        print "WARNING from std library : File \"" file "\" is deprecrated. You should not include this file."
+#end

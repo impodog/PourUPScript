@@ -1,0 +1,22 @@
+#ifnset STD_SUTIL
+#set STD_SUTIL
+
+#include std/std.puppy
+#define CPP_SUTIL_LIB = sutil
+#define STD_SUTIL_LIB = sutil
+
+enter std:
+    if is_def CPP_SUTIL_LIB:
+        use CPP_SUTIL_LIB as STD_SUTIL_LIB
+    else:
+        throw "When using script std/sutil.puppy, library CPP_SUTIL_LIB cannot be found."
+        ret
+
+#ifnset STD_NO_ALIAS
+    use STR_SUTIL_LIB.stoi
+    use STR_SUTIL_LIB.stof
+    use STR_SUTIL_LIB.stoc
+    use STR_SUTIL_LIB.ctos
+#end
+
+#end

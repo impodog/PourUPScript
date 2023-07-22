@@ -43,5 +43,7 @@ int main() {
     pups::modules::pups_std::init(constants); // Init standard modules
     pups::Control control(pups_path, constants); // Creating the main file control by using the constants
     control.run(); // Run the whole file
+
+    pups::quit(); // This is necessary for erasing global variables
     return 0;
 }

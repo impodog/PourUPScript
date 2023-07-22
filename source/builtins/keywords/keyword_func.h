@@ -60,6 +60,11 @@ namespace pups::library::builtins::keyword_func {
         Exit();
     };
 
+    class Throw : public Function {
+    public:
+        Throw();
+    };
+
     void init(Constants &constants);
 }
 

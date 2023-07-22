@@ -13,8 +13,8 @@ func moduleFunc:
     print "Now entering the function!"
 
 */
-#include module
-// This is how we include a file. Note that we don't need to write the extension of the file.
+#include module.puppy
+// This is how we include a file.
 print moduleVar
 moduleFunc
 

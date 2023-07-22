@@ -1,3 +1,4 @@
+from .ids import set_module_name
 from .preprocess import Preprocess
 from .extract import Extract
 from .mid_process import MidProcess
@@ -16,6 +17,8 @@ def script(file: str, output_name: str, keep_temp: bool):
         if not keep_temp:
             os.remove(tmp)
         tmp = file
+
+    set_module_name("_" + os.path.split(output_name)[1].replace(".", "_") + "_")
 
     tmp = file = Preprocess(file).work(output_name)
     file = Extract(file).work(output_name)

@@ -1,0 +1,21 @@
+#ifnset STD_IOS
+#set STD_IOS
+
+#include std/std.puppy
+#define CPP_IOS_LIB = ios
+#define STD_IOS_LIB = ios
+
+enter std:
+    if is_def CPP_IOS_LIB:
+        use CPP_IOS_LIB as STD_IOS_LIB
+    else:
+        throw "When using script std/ios.puppy, library CPP_IOS_LIB cannot be found."
+        ret
+
+#ifnset STD_NO_ALIAS
+    use STD_IOS_LIB.open
+    use STD_IOS_LIB.path
+#end
+
+#undef CPP_IOS_LIB
+#end

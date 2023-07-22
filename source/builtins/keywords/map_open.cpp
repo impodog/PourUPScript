@@ -39,7 +39,7 @@ namespace pups::library::builtins::map_open {
         else {
             auto ptr = cast<Function>(result);
             if (ptr) {
-                MapPtr new_map = std::make_shared<Map>(map, false);
+                MapPtr new_map = std::make_shared<Map>(map->get_global(), false);
                 map->add_object(Id{"", name}, new_map);
                 ptr->end_of_line(new_map.get());
                 map->set_child(nullptr);
@@ -61,7 +61,7 @@ namespace pups::library::builtins::map_open {
         if (std::filesystem::exists(p)) {
             path const_path = p.parent_path().append(p.stem().string() + ".con");
             Constants constants(const_path);
-            Control control(p, constants, map, false);
+            Control control(p, constants, map->get_global(), false);
             control.run();
             opened_modules.insert({std::filesystem::absolute(p).string(), control.map});
             return control.map;
@@ -156,6 +156,10 @@ namespace pups::library::builtins::map_open {
         constants.add(id_moduleOpen, std::make_shared<ModuleOpen>());
         constants.add(id_mapEnter, std::make_shared<MapEnter>());
         constants.add(id_catch, std::make_shared<Catch>());
+    }
+
+    void quit() {
+        opened_modules.clear();
     }
 
 }

@@ -11,3 +11,9 @@ FUNCTIONS:
 
 .stof str => float
     Converts a string to the floating number it represents.
+
+.stoc str => int
+    Takes a one-character string and saves it as an integer.
+
+.ctos int => str
+    Converts a char int into a one-character string.

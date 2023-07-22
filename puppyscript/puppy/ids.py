@@ -11,7 +11,10 @@ def next_name(identifier: str) -> str:
         identifier += chr(count % 26 + 97)
         count //= 26
     _count += 1
-    return "_a" + identifier
+    if rules["module"]:
+        return "_a" + module_name + identifier
+    else:
+        return "_a" + identifier
 
 
 def firsts(s: str, sub: str = "\t ") -> str:
@@ -45,7 +48,12 @@ def with_stmt_line(indent: str, var: str) -> str:
 
 
 def word_last(word: str) -> str:
-    return word[word.rfind(".") + 1:]
+    return word[max(word.rfind("."), word.rfind("&")) + 1:]
+
+
+def set_module_name(name: str):
+    global module_name
+    module_name = name
 
 
 temp_id = "_R_TMP"
@@ -57,4 +65,8 @@ refTo = "ref"
 del_cmd = "del"
 remove_cmd = "rm"
 
-rules = dict()
+default_rules = {
+    "module": True
+}
+rules = default_rules.copy()
+module_name = ""

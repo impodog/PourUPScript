@@ -1,6 +1,6 @@
-import re
+import re, os
 
-from .ids import is_word, firsts, rules
+from .ids import is_word, firsts, rules, default_rules
 
 
 class Command:
@@ -39,11 +39,11 @@ class Command:
 
 
 class Preprocess:
-    commands: list[Command]
+    commands: dict[str, Command]
     content: str
 
     def __init__(self, file: str):
-        self.commands = list()
+        self.commands = dict()
         with open(file, "r", encoding="utf-8") as f:
             self.content = f.read()
 
@@ -55,18 +55,30 @@ class Preprocess:
             self.content = self.content[:result.start(0)] + new + self.content[result.end(0):]
 
     def scan_includes(self):
-        results = re.findall(r"(#include\s+(.+))", self.content)
-        for result in results:
-            file = result[1]
-            if not file.endswith(".puppy"):
-                file = file + ".puppy"
-            try:
-                with open(file, "r", encoding="utf-8") as f:
-                    content = f.read()
-            except:
-                with open("./include/" + file, "r", encoding="utf-8") as f:
-                    content = f.read()
-            self.content = self.content.replace(result[0], content)
+        while True:
+            result = list()
+            end_scanning = True
+            for line in self.content.split("\n"):
+                tmp = re.fullmatch(r"\s*#include\s+(.+)", line)
+                if tmp is None:
+                    result.append(line)
+                else:
+                    end_scanning = False
+                    file = tmp.group(1)
+                    try:
+                        with open(file, "r", encoding="utf-8") as f:
+                            content = f.read()
+                    except:
+                        try:
+                            with open("./include/" + file, "r", encoding="utf-8") as f:
+                                content = f.read()
+                        except:
+                            with open(os.path.join(os.path.split(__file__)[0], "../../scripts/") + file, "r", encoding="utf-8") as f:
+                                content = f.read()
+                    result.append(content)
+            self.content = "\n".join(result)
+            if end_scanning:
+                break
 
     def remove_comments(self):
         self.content = re.sub(r"/\*.*?\*/", "", self.content, flags=re.S)
@@ -86,7 +98,7 @@ class Preprocess:
         for line in self.content.split("\n"):
             tmp = line.rstrip()
             if tmp.endswith("\\"):
-                stack += tmp[:-1]
+                stack += tmp[:-1] + " "
             else:
                 result += stack + line + "\n"
                 stack = str()
@@ -99,55 +111,76 @@ class Preprocess:
         result = list()
         sets = set()
         env = True
+        stack = list()
         for line in self.content.split("\n"):
-            if line.startswith("#set"):
+            if line.startswith("#set") and env:
                 tmp = re.fullmatch(r"#set\s*(.*)", line)
                 if tmp is None:
                     raise RuntimeError("#set command got incorrect args")
                 for name in tmp.group(1).split(" "):
                     if len(name) > 0 and not name.isspace():
                         sets.add(name)
-            elif line.startswith("#unset"):
+            elif line.startswith("#unset") and env:
                 tmp = re.fullmatch(r"#unset\s*(.*)", line)
                 if tmp is None:
                     raise RuntimeError("#unset command got incorrect args")
                 for name in tmp.group(1).split(" "):
                     if len(name) > 0 and not name.isspace():
                         sets.remove(name)
-            elif line.startswith("#ifset"):
+            elif line.startswith("#ifset") and env:
                 tmp = re.fullmatch(r"#ifset\s*(.*)", line)
                 if tmp is None:
                     raise RuntimeError("#ifset command got incorrect args")
                 for name in tmp.group(1).split(" "):
                     if len(name) > 0 and not name.isspace():
-                        env = env and name in sets
-            elif line.startswith("#ifnset"):
+                        stack.append(name in sets)
+                        env = env and stack[-1]
+            elif line.startswith("#ifnset") and env:
                 tmp = re.fullmatch(r"#ifnset\s*(.*)", line)
                 if tmp is None:
                     raise RuntimeError("#ifnset command got incorrect args")
                 for name in tmp.group(1).split(" "):
                     if len(name) > 0 and not name.isspace():
-                        env = env and name not in sets
+                        stack.append(name not in sets)
+                        env = env and stack[-1]
             elif line.startswith("#end"):
-                env = True
+                stack.pop()
+                env = all(stack)
             elif env:
                 result.append(line)
         self.content = "\n".join(result)
 
     def scan_defines(self):
-        results = re.findall(r"#define\s+(.+?)\s*=\s*(.+)\s*", self.content)
-        for result in results:
-            tmp = Command(result[0], result[1])
-            for cmd in self.commands:
-                cmd.sub(tmp)
-            self.commands.append(tmp)
-        for cmd in self.commands:
-            self.content = cmd.sub(self.content)
+        result = list()
+        for line in self.content.split("\n"):
+            define = re.fullmatch(r"\s*#define\s+(.+?)\s*=\s*(.+)\s*", line)
+            undef = re.fullmatch(r"\s*#undef\s+(.+?)\s*", line)
+            if define is None:
+                if undef is None:
+                    for cmd in self.commands.values():
+                        line = cmd.sub(line)
+                    result.append(line)
+                else:
+                    for s in undef.group(1).split(" "):
+                        if len(s) > 0 and not s.isspace():
+                            try:
+                                self.commands.pop(s)
+                            except KeyError:
+                                ...
+            else:
+                new_cmd = Command(define.group(1), define.group(2))
+                for cmd in self.commands.values():
+                    cmd.sub(new_cmd)
+                self.commands[define.group(1)] = new_cmd
+        self.content = "\n".join(result)
 
     def scan_rules(self):
+        result = list()
         for line in self.content.split("\n"):
-            tmp = re.fullmatch(r"#rule\s+(.+?)\s*=\s*(.+)\s*", line)
-            if tmp is not None:
+            tmp = re.fullmatch(r"\s*#rule\s+(.+?)\s*=\s*(.+)\s*", line)
+            if tmp is None:
+                result.append(line)
+            else:
                 name = tmp.group(1)
                 value = tmp.group(2)
                 match value:
@@ -158,12 +191,15 @@ class Preprocess:
                     case "show":
                         print("Value for rule \"%s\" is %s." % (name, rules[name]))
                         return
+                    case "default":
+                        value = default_rules[name]
                     case _:
                         value = eval(value)
                 if isinstance(value, (int, float, bool, str)):
                     rules[name] = value
                 else:
                     raise RuntimeError("Rule got incorrect value : %s" % value)
+        self.content = "\n".join(result)
 
     def remove_prep_lines(self):
         tmp = str()
