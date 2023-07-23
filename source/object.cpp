@@ -9,7 +9,11 @@
 namespace pups::library {
     size_t Object::static_count = 0;
 
-    Object::Object() : m_count(static_count++) {}
+    FindError::FindError(const Object *sender, Id id) : sender(sender), id(std::move(id)) {}
+
+    Object::Object() : m_count(static_count++) {
+
+    }
 
     bool Object::is(const ObjectPtr &object) {
         return this == object.get();

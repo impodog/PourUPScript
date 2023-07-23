@@ -8,8 +8,9 @@ type Dog:
     attr "name" "age" // Attributes. These are variables that are unique to each instance, but all instances have them.
 
     // But by now, those unique values are not defined yet. We need to define them in the "constructor", or "init" method.
+    // The keyword "spec" is used to indicate that this is a special method. It is necessary for the interpreter to know that this is a constructor.
     mth "init"
-    func init:
+    spec func init:
         param self // Pay attention!! "self" is a special variable that refers to the instance itself. It is given automatically as long as this is a method.
         param name age // You can also pass other variables to any methods like this.
         self.name = name
@@ -49,7 +50,7 @@ class Cat:
     attr name
 
     // This is a constructor. Note that we shouldn't use "param self" line in a class method, because it will be automatically generated.
-    func init:
+    spec func init:
         param name
         self.name = name
 

@@ -66,7 +66,7 @@ namespace pups::library {
 
         ObjectPtr &map_find(const Id &name, Map *map);
 
-        ObjectPtr &find(const Id &name, Map *map) override;
+        ObjectPtr &source_find(const Id &name, Map *map) override;
 
         ObjectPtr end_of_line(Map *map) override;
 

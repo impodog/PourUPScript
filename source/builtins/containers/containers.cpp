@@ -19,9 +19,16 @@ namespace pups::library {
 namespace pups::library::builtins::containers {
 
     template<typename Container>
-    ObjectPtr container_push(Container &container, FunctionArgs &args, Map *map) {
+    ObjectPtr container_push_back(Container &container, FunctionArgs &args, Map *map) {
         auto result = *args.back();
-        container.push_args(args);
+        container.push_back_args(args);
+        return result;
+    }
+
+    template<typename Container>
+    ObjectPtr container_push_front(Container &container, FunctionArgs &args, Map *map) {
+        auto result = *args.front();
+        container.push_front_args(args);
         return result;
     }
 
@@ -37,6 +44,20 @@ namespace pups::library::builtins::containers {
             map->throw_error(std::make_shared<ArgumentError>(
                     "Container.pop_back(or simply .pop) does not require any arguments."));
         return back;
+    }
+
+    template<typename Container>
+    ObjectPtr container_pop_front(Container &container, FunctionArgs &args, Map *map) {
+        auto front = !container.empty() ? container.front() : pending;
+        if (container.empty())
+            map->throw_error(std::make_shared<ValueError>(
+                    "Container.pop_front cannot perform without elements."));
+        else
+            container.pop_front();
+        if (!args.empty())
+            map->throw_error(std::make_shared<ArgumentError>(
+                    "Container.pop_front does not require any arguments."));
+        return front;
     }
 
     template<typename Container>
@@ -162,10 +183,10 @@ namespace pups::library::builtins::containers {
         return std::make_shared<Array>(keys);
     }
 
-    Id id_arrayInit{"", "array"}, id_pairInit{"", "pair"}, id_hashmapInit{"", "hashmap"};
+    Id id_arrayInit{"", "array"}, id_pairInit{"", "pair"}, id_hashmapInit{"", "hashmap"}, id_dequeInit{"", "deque"};
 
     const ContainerCoreMap<Array> array_cores = {
-            {Id{"", "add"},      container_push<Array>},
+            {Id{"", "push"},      container_push_back<Array>},
             {Id{"", "pop"},      container_pop_back<Array>},
             {Id{"", "pop_at"},   container_pop_at<Array>},
             {Id{"", "clear"},    container_clear<Array>},
@@ -177,7 +198,7 @@ namespace pups::library::builtins::containers {
             {Id{"", "insert"},   container_insert<Array>},
     };
     const ContainerCoreMap<HashMap> hashmap_cores = {
-            {Id{"", "add"},      container_push<HashMap>},
+            {Id{"", "push"},      container_push_back<HashMap>},
             {Id{"", "pop"},      container_pop_key<HashMap>},
             {Id{"", "pop_at"},   container_pop_key<HashMap>},
             {Id{"", "clear"},    container_clear<HashMap>},
@@ -188,10 +209,23 @@ namespace pups::library::builtins::containers {
             {Id{"", "get_size"}, container_size<HashMap>},
             {Id{"", "get_keys"}, container_get_keys<HashMap>},
     };
+    const ContainerCoreMap<Deque> deque_cores = {
+            {Id{"", "push_back"},  container_push_back<Deque>},
+            {Id{"", "push_front"}, container_push_front<Deque>},
+            {Id{"", "pop_back"},   container_pop_back<Deque>},
+            {Id{"", "pop_front"},  container_pop_front<Deque>},
+            {Id{"", "clear"},      container_clear<Deque>},
+            {Id{"", "at"},         container_at_index<Deque, false>},
+            {Id{"", "at_ref"},     container_at_index<Deque, true>},
+            {Id{"", "get"},        container_at_index<Deque, false>},
+            {Id{"", "get_ref"},    container_at_index<Deque, true>},
+            {Id{"", "get_size"},   container_size<Deque>}
+    };
 
     void init(Constants &constants) {
         constants.add(id_arrayInit, std::make_shared<ArrayInit>());
         constants.add(id_pairInit, std::make_shared<PairInit>());
         constants.add(id_hashmapInit, std::make_shared<HashMapInit>());
+        constants.add(id_dequeInit, std::make_shared<DequeInit>());
     }
 }

@@ -321,4 +321,8 @@ namespace pups::library {
         out << std::hex << ptr;
         return out.str();
     }
+
+    Id spec_name_of(const std::string &name) {
+        return Id{"", "__spec_" + name};
+    }
 }

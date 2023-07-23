@@ -1,0 +1,49 @@
+/* In this file, we take a look at something easy: Syntacic Sugar in Puppyscript.
+In case you don't know what syntactic sugar is, it's basically a feature that makes the code easier to read and write.*/
+
+
+/* First, the "use" keyword.
+The "use" keyword makes it clearer when you create aliases for variables.*/
+map Math:
+    func plus:
+        param x y
+        ret x.add y
+    func minus:
+        param x y
+        ret x.sub y
+// To use the function in the outer map, do so:
+use Math.plus
+// Now, you can just write the used function's name instead of the whole path.
+print (plus 2 4)
+// You may also customize the alias:
+use Math.minus as subtract
+// Now, you can use the alias instead of the whole path.
+print (subtract 2 4)
+
+
+
+// You can also use the "use" keyword to import files, like so:
+use import "module.pups"
+// Now, you can use the functions in the imported file, without having to write the whole path.
+moduleFunc
+
+
+
+/* Next, array indexes with a pair of brackets.
+Normally, you use ".at" or ".at_ref" to access an array's element.
+But, you can also use a pair of brackets to access an array's element.*/
+arr = array 1 2 3 4 5
+
+// This is the normal way to access an array's element.
+print (arr.at 2)
+// This is the another way to access an array's element.
+print arr[2]
+
+// This is the normal way to access an array's element by reference.
+(arr.at_ref 1).data = 10
+// This is the another way to access an array's element by reference.
+arr[2] = 10
+
+print arr
+
+// Isn't that much easier?

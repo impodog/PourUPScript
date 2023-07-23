@@ -33,7 +33,7 @@ namespace pups::library::builtins::typing {
     public:
         explicit Type(Map *parent);
 
-        ObjectPtr &find(const Id &name, Map *map) override;
+        ObjectPtr &source_find(const Id &name, Map *map) override;
 
         std::string str() const noexcept override;
 
@@ -68,7 +68,9 @@ namespace pups::library::builtins::typing {
 
         ObjectPtr end_of_line(Map *map) override;
 
-        ObjectPtr &find(const Id &name, Map *map) override;
+        ObjectPtr &source_find_non_get(const Id &name, Map *map);
+
+        ObjectPtr &source_find(const Id &name, Map *map) override;
 
         std::string type_name() const noexcept override;
 

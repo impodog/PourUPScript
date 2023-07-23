@@ -46,7 +46,7 @@ namespace pups::modules::sutil {
         return pending;
     }
 
-    Id id_sutil{"", "sutil"};
+    Id id_sutil = pups_std::get_std_lib_name("sutil");
     Id id_to_int{"", "stoi"}, id_to_float{"", "stof"}, id_to_char{"", "stoc"}, id_from_char{"", "ctos"};
 
     void init(Constants &constants) {

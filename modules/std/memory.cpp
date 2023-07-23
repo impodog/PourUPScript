@@ -31,7 +31,7 @@ namespace pups::modules::memory {
         return pending;
     }
 
-    Id id_memory{"", "memory"};
+    Id id_memory = pups_std::get_std_lib_name("memory");
     Id id_memory_swap{"", "swap"}, id_memory_same{"", "same"};
 
     void init(pups::Constants &constants) {

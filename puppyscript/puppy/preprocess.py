@@ -127,22 +127,28 @@ class Preprocess:
                 for name in tmp.group(1).split(" "):
                     if len(name) > 0 and not name.isspace():
                         sets.remove(name)
-            elif line.startswith("#ifset") and env:
-                tmp = re.fullmatch(r"#ifset\s*(.*)", line)
-                if tmp is None:
-                    raise RuntimeError("#ifset command got incorrect args")
-                for name in tmp.group(1).split(" "):
-                    if len(name) > 0 and not name.isspace():
-                        stack.append(name in sets)
-                        env = env and stack[-1]
-            elif line.startswith("#ifnset") and env:
-                tmp = re.fullmatch(r"#ifnset\s*(.*)", line)
-                if tmp is None:
-                    raise RuntimeError("#ifnset command got incorrect args")
-                for name in tmp.group(1).split(" "):
-                    if len(name) > 0 and not name.isspace():
-                        stack.append(name not in sets)
-                        env = env and stack[-1]
+            elif line.startswith("#ifset"):
+                if env:
+                    tmp = re.fullmatch(r"#ifset\s*(.*)", line)
+                    if tmp is None:
+                        raise RuntimeError("#ifset command got incorrect args")
+                    for name in tmp.group(1).split(" "):
+                        if len(name) > 0 and not name.isspace():
+                            stack.append(name in sets)
+                            env = env and stack[-1]
+                else:
+                    stack.append(False)
+            elif line.startswith("#ifnset"):
+                if env:
+                    tmp = re.fullmatch(r"#ifnset\s*(.*)", line)
+                    if tmp is None:
+                        raise RuntimeError("#ifnset command got incorrect args")
+                    for name in tmp.group(1).split(" "):
+                        if len(name) > 0 and not name.isspace():
+                            stack.append(name not in sets)
+                            env = env and stack[-1]
+                else:
+                    stack.append(False)
             elif line.startswith("#end"):
                 stack.pop()
                 env = all(stack)

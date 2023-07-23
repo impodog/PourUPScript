@@ -1,6 +1,6 @@
 import re
 
-from .ids import next_name, with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, ret, WORD, word_last
+from .ids import next_name, with_cmd, break_cmd, firsts, with_stmt_line, stmt_add_brc, WORD
 
 
 class Structure:
@@ -28,7 +28,7 @@ class Structure:
 
     def scan_for(self):
         result = list()
-        for_name: tuple[str, str, str, str | None] = None
+        for_name: tuple[str, str, str, str] | None = None
         outer_indent = inner_indent = None
         succeeded = False
         for line in self.content.split("\n"):
@@ -109,83 +109,10 @@ class Structure:
         while self.scan_while():
             ...
 
-    def scan_extern(self):
-        result = list()
-        indent = -1
-        externals = list()
-        succeeded = False
-        pub_all = False
-        for line in self.content.split("\n"):
-            if indent != -1:
-                cur_indent = len(firsts(line))
-                if cur_indent < indent:
-                    indent = -1
-                    externals.clear()
-                    pub_all = False
-                elif pub_all or cur_indent == indent:
-                    for name in externals:
-                        line = re.sub(r"([^\w.&])%s(\b)" % name, r"\1&%s\2" % name, line)
-                result.append(line)
-            else:
-                tmp = re.match(r"(\s*)pub(_all)?\s+(.*)", line)
-                if tmp is None:
-                    result.append(line)
-                else:
-                    indent = tmp.group(1)
-                    if tmp.group(2):
-                        pub_all = True
-                    for name in tmp.group(3).split(" "):
-                        if len(name) > 0 and not name.isspace():
-                            externals.append(name)
-                    indent = len(indent)
-                    succeeded = True
-        self.content = "\n".join(result)
-        return succeeded
-
-    def scan_all_extern(self):
-        self.content = re.sub(rf"(\s*)pub\s+({WORD})\s*=\s*(.+)", r"\1pub \2\1\2 = \3", self.content)
-        while self.scan_extern():
-            ...
-
-    def scan_returns(self):
-        result = list()
-        for line in self.content.split("\n"):
-            tmp = re.match(rf"(\s*){ret}\s+(.+)", line)
-            if tmp is None:
-                result.append(line)
-            else:
-                result.append("%s %s" % (tmp.group(1) + with_cmd,
-                                         stmt_add_brc(tmp.group(2))))
-                result.append(tmp.group(1) + ret)
-        self.content = "\n".join(result)
-
-    def break_shortcuts(self):
-        self.content = re.sub(
-            r"break(\s*\n)", break_cmd + r" false\1", self.content)
-        self.content = re.sub(
-            r"conti(\s*\n)", break_cmd + r" true\1", self.content)
-
-    def use_statements(self):
-        result = list()
-        for line in self.content.split("\n"):
-            tmp = re.match(rf"(\s*)use\s*({WORD})(\s+as\s+({WORD}))?\s*", line)
-            if tmp is None:
-                result.append(line)
-            else:
-                if tmp.group(4) is None:
-                    result.append(tmp.group(1) + word_last(tmp.group(2)) + " = " + tmp.group(2))
-                else:
-                    result.append(tmp.group(1) + tmp.group(4) + " = " + tmp.group(2))
-        self.content = "\n".join(result)
-
     def work(self, output_name: str) -> str:
         self.scan_if()
         self.scan_all_for()
         self.scan_all_while()
-        self.scan_all_extern()
-        self.scan_returns()
-        self.break_shortcuts()
-        self.use_statements()
         output = output_name + ".struct"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)

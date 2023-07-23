@@ -31,7 +31,7 @@
 		},
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(with|enter|param|pack|ret|pub|pub_all|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|imp|as|puts|del|pop|for|in|call|exit|catch|new|tid|inh|throw|pass|use)\\b"
+			"match": "\\b(with|enter|param|pack|ret|pub|pub_all|if|elif|if_not|elif_not|else|while|break|conti|true|false|print|inputs|import|as|puts|del|pop|for|in|call|exit|catch|new|tid|inh|throw|pass|use|unmap)\\b"
 		},
 		"variables": {
 			"name": "entity.name.variable",
@@ -39,7 +39,7 @@
 		},
 		"types": {
 			"name": "entity.name.type",
-			"match": "\\b(map|func|proc|range|array|pair|hashmap|type|class|attr|mth|link)\\b"
+			"match": "\\b(map|func|proc|range|array|pair|hashmap|deque|type|class|attr|mth|link|spec)\\b"
 		},
 		"strings": {
 			"name": "string.quoted.double.puppyscript",

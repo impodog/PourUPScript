@@ -1,0 +1,81 @@
+/* In this file, we learn how to customize the PUPS output by using macros in Puppyscript. */
+/* First, what are macros?
+Macros are ways to operate the Puppyscript source.
+They always evaluate first, then the result is used in the rest of the program.*/
+
+
+
+/* Let's start with a macro you've seen before: #include.
+#include is a macro that takes a name of a file and inserts the contents of that file into the current file.
+This is useful for splitting up your code into multiple files, or for including libraries.
+But pay attention! This doesn't check how many times you've included a file, so if you include a file twice, you'll get two copies of the file in your program.
+We'll learn how to fix this later. */
+
+// include macros work on puppy source, instead of PUPS.
+#include hello.puppy
+
+/* Another two macros are #define and #undef.
+#define takes a name and a value, and replaces all instances of that name with that value.
+#undef takes a name, and marks that the #define for that name ends here, and can only be used before it.
+
+Also, #define name can also be regular expressions. You may also need to know how regular expressions work.
+*/
+#define NAME = "Puppy"
+print "My name is " NAME "!"
+#undef NAME
+// Now we can't use NAME anymore.
+
+/* Now it comes to the "set" family of macros.
+These macros are used to conditionally choose what code to compile.
+They are #set, #ifset, #ifnset, #end, and #unset.
+
+#set is used to set some flags. It takes names, and sets them to true.
+#ifset is used to check if a flag is set. It takes names, and if all of them are set, it compiles the code in between #ifset and #end.
+#ifnset is used to check if a flag is not set. It takes names, and if all of them are not set, it compiles the code in between #ifnset and #end.
+#end is used to mark the end of a #ifset or #ifnset block.
+#unset is used to unset flags. It takes names, and unsets them, so they will be false in #ifset.
+
+
+
+*/
+#set DONT_PRINT
+#define NAME "Puppy"
+
+#ifnset DONT_PRINT
+print "My name is " NAME "!"
+#end
+ 
+#ifset DONT_PRINT
+print "I'm not printing my name!"
+#end
+
+#unset DONT_PRINT
+
+#ifset DONT_PRINT
+print "I'm not printing my name!"
+#end
+
+
+
+/* The "set" macros are especially useful for including files.
+For example, you can use them to make sure a file is only included once.
+*/
+// In file: hello.puppy
+// Check if the file has been included before.
+#ifnset INCLUDE_HELLO
+
+// If it hasn't, set the flag, and include the file.
+#set INCLUDE_HELLO
+
+print "Hello!"
+
+#end
+
+
+
+/* Now, for the final macro: #rule.
+#rule is useful for customizing Puppyscript compiler behaviours.
+It takes a name, and a value, and sets the rule with that name to that value.
+
+For more reference on #rule, see the Puppyscript rules documentation.
+*/

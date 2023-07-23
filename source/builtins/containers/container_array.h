@@ -22,7 +22,7 @@ namespace pups::library::builtins::containers {
 
         [[nodiscard]] std::string str() const noexcept override;
 
-        void push_args(FunctionArgs &args);
+        void push_back_args(FunctionArgs &args);
 
         [[nodiscard]] bool empty() const noexcept;
 

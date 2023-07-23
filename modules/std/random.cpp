@@ -124,7 +124,7 @@ namespace pups::modules::random {
         return pending;
     }
 
-    Id id_random{"", "random"};
+    Id id_random = pups_std::get_std_lib_name("random");
     Id id_random_int{"", "rand_int"}, id_random_float{"", "rand_float"},
             id_random_choose_from{"", "choose_from"}, id_random_choice{"", "choice"},
             id_random_shuffle{"", "shuffle"};

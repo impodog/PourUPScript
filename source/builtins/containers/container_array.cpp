@@ -6,7 +6,7 @@
 
 namespace pups::library::builtins::containers {
     Array::Array(FunctionArgs &args) {
-        push_args(args);
+        push_back_args(args);
     }
 
     Array::Array(std::vector<ObjectPtr> args) : data(std::move(args)) {}
@@ -25,7 +25,7 @@ namespace pups::library::builtins::containers {
         return result;
     }
 
-    void Array::push_args(FunctionArgs &args) {
+    void Array::push_back_args(FunctionArgs &args) {
         while (!args.empty()) {
             data.push_back(*args.front());
             args.pop_front();

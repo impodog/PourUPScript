@@ -1,0 +1,15 @@
+#include std/std.puppy
+#include std/condition.puppy
+#include std/ios.puppy
+#include std/math.puppy
+#include std/memory.puppy
+#include std/random.puppy
+#include std/scode.puppy
+#include std/sutil.puppy
+#include std/sys.puppy
+#include std/tpjudge.puppy
+#include std/type_wrap.puppy
+
+#ifset STD_INCLUDE_DEPRECATED
+#include std/convert.puppy
+#end

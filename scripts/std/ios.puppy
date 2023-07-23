@@ -2,7 +2,7 @@
 #set STD_IOS
 
 #include std/std.puppy
-#define CPP_IOS_LIB = ios
+#define CPP_IOS_LIB = __std_ios
 #define STD_IOS_LIB = ios
 
 enter std:

@@ -315,7 +315,7 @@ namespace pups::modules::ios {
         }) {}
     };
 
-    Id id_ios{"", "ios"};
+    Id id_ios = pups_std::get_std_lib_name("ios");
     Id id_fileInit{"", "open"};
     Id id_fileRead{"", "read"}, id_fileReadall{"", "readall"},
             id_fileWrite{"", "write"}, id_fileFlush{"", "flush"}, id_fileEndl{"", "endl"},

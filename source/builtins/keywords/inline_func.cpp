@@ -15,7 +15,8 @@ namespace pups::library::builtins::inline_func {
 
     ObjectPtr Arguments::put(ObjectPtr &object, Map *map) {
         if (args.empty())
-            map->throw_error(std::make_shared<ArgumentError>("Not enough arguments given in a function call."));
+            map->throw_error(
+                    std::make_shared<ArgumentError>("Not enough arguments given in a function call."));
         else {
             if (object.get() == sym_packet.get())
                 packet_mode = true;
@@ -67,7 +68,7 @@ namespace pups::library::builtins::inline_func {
         InlineFunc_Init() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
             if (args.empty() || !args.back()->get()->is_long_str()) {
                 map->throw_error(std::make_shared<ArgumentError>(
-                        "Inline Func restart should receive one long str argument in the back."));
+                        "Inline Func initialization should receive one long str argument in the back."));
                 return pending;
             }
             auto func = std::make_shared<InlineFunc>(

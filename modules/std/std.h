@@ -13,6 +13,8 @@ namespace pups::modules::pups_std {
     void init(Constants &constants);
 
     Id get_std_func_name(const std::string &name);
+
+    Id get_std_lib_name(const std::string &name);
 }
 
 #endif //PUPS_LIB_STD_H

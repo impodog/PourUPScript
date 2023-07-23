@@ -2,7 +2,7 @@
 #set STD_MATH
 
 #include std/std.puppy
-#define CPP_MATH_LIB = math
+#define CPP_MATH_LIB = __std_math
 #define STD_MATH_LIB = math
 
 enter std:

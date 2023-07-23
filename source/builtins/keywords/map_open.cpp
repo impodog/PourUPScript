@@ -149,7 +149,7 @@ namespace pups::library::builtins::map_open {
     }) {}
 
 
-    Id id_mapOpen{"", "map"}, id_moduleOpen{"", "imp"}, id_mapEnter{"", "enter"}, id_catch{"", "catch"};
+    Id id_mapOpen{"", "map"}, id_moduleOpen{"", "import"}, id_mapEnter{"", "enter"}, id_catch{"", "catch"};
 
     void init(Constants &constants) {
         constants.add(id_mapOpen, std::make_shared<MapOpen>());

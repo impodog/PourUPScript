@@ -1,6 +1,6 @@
 import re
 
-from .ids import WORD, firsts, next_name
+from .ids import WORD, FLAGS, firsts, next_name
 
 
 class TypeFormat:
@@ -41,9 +41,9 @@ class TypeFormat:
                 result.append(cur_indent + "param self")
                 is_begin_line = False
             elif len(cur_indent) == len(indent):
-                tmp = re.fullmatch(rf"(\s*)(func|proc)\s*({WORD})\s*:\s*", line)
+                tmp = re.fullmatch(rf"(\s*){FLAGS}(func|proc)\s*({WORD})\s*:\s*", line)
                 if tmp is not None:
-                    result.append(cur_indent + "mth " + self.create_string(tmp.group(3)))
+                    result.append(cur_indent + "mth " + self.create_string(tmp.group(4)))
                     is_begin_line = True
             result.append(line)
         return "\n".join(result)

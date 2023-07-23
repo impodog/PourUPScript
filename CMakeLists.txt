@@ -27,7 +27,7 @@ set(source_files source/const.h
         source/builtins/containers/container_hashmap.cpp source/builtins/containers/container_hashmap.h
         source/builtins/ranges/ranges.cpp source/builtins/ranges/ranges.h
         source/builtins/types/typing.cpp source/builtins/types/typing.h
-        modules/modules.h source/builtins/keywords/inline_typing.cpp source/builtins/keywords/inline_typing.h)
+        modules/modules.h source/builtins/keywords/inline_typing.cpp source/builtins/keywords/inline_typing.h source/builtins/containers/container_deque.cpp source/builtins/containers/container_deque.h)
 
 set(std_files modules/std/std.h modules/std/std.cpp
         modules/std/random.cpp modules/std/random.h

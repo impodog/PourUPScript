@@ -3,10 +3,12 @@ from .preprocess import Preprocess
 from .extract import Extract
 from .mid_process import MidProcess
 from .operators import Operators
-from .assignment import Assignment
+from .syntactic import Syntactic
 from .type_format import TypeFormat
 from .structure import Structure
+from .assignment import Assignment
 from .brackets import Brackets
+from .expr_optim import ExprOptim
 from .formatting import Formatting
 import os
 
@@ -27,6 +29,8 @@ def script(file: str, output_name: str, keep_temp: bool):
     delete_temp()
     file = Operators(file).work(output_name)
     delete_temp()
+    file = Syntactic(file).work(output_name)
+    delete_temp()
     file = TypeFormat(file).work(output_name)
     delete_temp()
     file = Structure(file).work(output_name)
@@ -34,6 +38,8 @@ def script(file: str, output_name: str, keep_temp: bool):
     file = Assignment(file).work(output_name)
     delete_temp()
     file = Brackets(file).work(output_name, 0)
+    delete_temp()
+    file = ExprOptim(file).work(output_name)
     delete_temp()
     file = Formatting(file).work(output_name)
     delete_temp()

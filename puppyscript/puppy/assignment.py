@@ -31,11 +31,11 @@ class Assignment:
     def scan_import(self):
         result = list()
         for line in self.content.split("\n"):
-            tmp = re.fullmatch(rf"(\s*)imp\s+({WORD})\s+as\s+({WORD})", line)
+            tmp = re.fullmatch(rf"(\s*)import\s+({WORD})\s+as\s+({WORD})", line)
             if tmp is None:
                 result.append(line)
             else:
-                result.append("%s %s" % (tmp.group(1) + "imp", tmp.group(2)))
+                result.append("%s %s" % (tmp.group(1) + "import", tmp.group(2)))
                 result.append("%s %s" % (tmp.group(1) + moveTo, tmp.group(3)))
         self.content = "\n".join(result)
 

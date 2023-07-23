@@ -36,7 +36,7 @@ namespace pups::library::builtins::function {
         ObjectMap used_functions;
 
     public:
-        ObjectPtr &find(const Id &name, Map *map) override;
+        ObjectPtr &source_find(const Id &name, Map *map) override;
 
         virtual FunctionCore get_method(const Id &name) = 0;
     };

@@ -21,7 +21,7 @@ namespace pups::modules::type_judge {
         return pending;
     }
 
-    Id id_tpjudge{"", "tpjudge"};
+    Id id_tpjudge = pups_std::get_std_lib_name("tpjudge");
     Id id_is_int{"", "is_int"}, id_is_float{"", "is_float"}, id_is_str{"", "is_str"};
 
     void init(Constants &constants) {

@@ -27,4 +27,8 @@ namespace pups::modules::pups_std {
     Id get_std_func_name(const std::string &name) {
         return Id{"", STD_NAME + name + "_load"};
     }
+
+    Id get_std_lib_name(const std::string &name) {
+        return Id{"", STD_NAME + name};
+    }
 }

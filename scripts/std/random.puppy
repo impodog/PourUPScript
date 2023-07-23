@@ -2,7 +2,7 @@
 #set STD_RANDOM
 
 #include std/std.puppy
-#define CPP_RANDOM_LIB = random
+#define CPP_RANDOM_LIB = __std_random
 #define STD_RANDOM_LIB = random
 
 enter std:

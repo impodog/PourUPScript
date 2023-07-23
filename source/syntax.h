@@ -126,6 +126,8 @@ namespace pups::library {
     Id generate_id();
 
     std::string to_string(const void *ptr);
+
+    Id spec_name_of(const std::string &name);
 }
 
 #endif //PUPS_EZN_SYNTAX_H

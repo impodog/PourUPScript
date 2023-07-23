@@ -21,11 +21,11 @@ moduleFunc
 
 
 /* The second way of creating a module is using the compiled PUPS file.
-This requires you to compile the file first, and then "import" it by using "imp" keyword.
+This requires you to compile the file first, and then "import" it by using "import" keyword.
 Let's assume you have already compiled "module.puppy" into "module.pups".
 */
 // This is how we import a compiled PUPS file. The path is relative to where the program is executed.
-imp "module.pups" as module  // "as" keyword is almost always used when importing a module(not linked), since you need to give it a name.
+import "module.pups" as module  // "as" keyword is almost always used when importing a module(not linked), since you need to give it a name.
 // Also, the file must be a string, so you need to put it in quotes, unlike the "include" keyword.
 print module.moduleVar // To access modules, we use the dot operator.
 module.moduleFunc

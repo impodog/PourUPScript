@@ -1,3 +1,14 @@
+v0.13.0
+- For modules, change "imp" to "import", add "use" keyword
+- Add [] for array indexes
+- Add new container deque
+- Two more tutorials
+- Split the finding method into "source_find" and "find"
+- Give std libraries not-so-obvious names, however, you can still use scripts
+- Better functions, macros
+- Better typing methods, the concept "special functions" is used
+- Some other minor fixes
+
 v0.12.0
 - Add std scripts for wrapping the std module
 - Better including and preprocessing syntax

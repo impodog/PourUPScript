@@ -1,5 +1,5 @@
 import re
-from .ids import next_name, firsts, temp_id, with_cmd, moveTo, del_cmd
+from .ids import next_name, firsts, moveTo, WORD
 
 
 class Brackets:
@@ -47,15 +47,18 @@ class Brackets:
                     count -= 1
             if begin != -1:
                 if count == 0:
-                    tmp = s[begin + 1:i]
-                    name = next_name("FAC")
-                    self.to_delete.append(name)
-                    self.scan_bracket(tmp, indent)
-                    self.put_line("%s %s" % (indent + moveTo, name))
-                    tmp = s[:begin] + name + s[i + 1:]
-                    if tmp.strip() != name:
+                    if begin > 0 and re.fullmatch(rf".+{WORD}", s[:begin]):
+                        begin = -1
+                    else:
+                        tmp = s[begin + 1:i]
+                        name = next_name("FAC")
+                        self.to_delete.append(name)
                         self.scan_bracket(tmp, indent)
-                    return indent
+                        self.put_line("%s %s" % (indent + moveTo, name))
+                        tmp = s[:begin] + name + s[i + 1:]
+                        if tmp.strip() != name:
+                            self.scan_bracket(tmp, indent)
+                        return indent
             i += 1
         self.put_line(indent + s)
 

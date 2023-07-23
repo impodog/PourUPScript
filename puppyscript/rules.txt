@@ -1,0 +1,9 @@
+#rule allow-no-colon = true / false / default(=false)
+    This rule allows you to skip colons on properly used blocks, with extra indent on lines.
+    The compiler adds colon automatically.
+
+
+#rule module = true / false / default(=true)
+    This rule defines whether this file should be compiled as a module.
+    The module mode defines the constant names with the file stem mixed into it, so it would not mix up with others.
+    It is better not to change this unless the file is not used as modules, and needs very quick interpretation.

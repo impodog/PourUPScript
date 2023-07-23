@@ -9,6 +9,7 @@
 #include "container_array.h"
 #include "container_pair.h"
 #include "container_hashmap.h"
+#include "container_deque.h"
 
 namespace pups::library::builtins::containers {
     void init(Constants &constants);

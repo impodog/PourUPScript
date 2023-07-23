@@ -18,7 +18,7 @@ namespace pups::library::builtins::containers {
 
         [[nodiscard]] std::string str() const noexcept override;
 
-        ObjectPtr &find(const Id &name, Map *map) override;
+        ObjectPtr &source_find(const Id &name, Map *map) override;
 
         FunctionCore get_method(const Id &name) override;
     };

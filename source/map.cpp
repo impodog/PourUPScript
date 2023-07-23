@@ -136,7 +136,7 @@ namespace pups::library {
             return m_upsearch_map->staged_find(parts, this);
     }
 
-    ObjectPtr &Map::find(const Id &name, Map *map) {
+    ObjectPtr &Map::source_find(const Id &name, Map *map) {
         //std::cout << "FINDING " << name.str() << std::endl;
         return m_deepest->map_find(name, map);
     }
@@ -296,9 +296,18 @@ namespace pups::library {
         return map->m_temp;
     }
 
+    ObjectPtr &Object::source_find(const Id &name, Map *map) {
+        throw FindError(this, name);
+    }
+
     ObjectPtr &Object::find(const Id &name, Map *map) {
-        map->throw_error(std::make_shared<IdError>("Object " + repr() + " cannot find name \"" + name.str() + "\"."));
-        return pending;
+        try {
+            return source_find(name, map);
+        } catch (const FindError &err) {
+            map->throw_error(std::make_shared<IdError>(
+                    "Object " + err.sender->repr() + " cannot find name \"" + err.id.str() + "\"."));
+            return pending;
+        }
     }
 
     void Map::Signs::set_break_sign(ObjectPtr object) {

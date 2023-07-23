@@ -2,7 +2,7 @@
 #set STD_MEMORY
 
 #include std/std.puppy
-#define CPP_MEMORY_LIB = memory
+#define CPP_MEMORY_LIB = __std_memory
 #define STD_MEMORY_LIB = memory
 
 enter std:

@@ -27,6 +27,7 @@ def firsts(s: str, sub: str = "\t ") -> str:
 
 
 WORD = r"[\w.&$~]+"
+FLAGS = r"([\w\s]*\s+)?"
 INDENT = r"[^\S\n]*"
 
 
@@ -34,14 +35,22 @@ def is_word(s: str) -> bool:
     return re.fullmatch(rf"{WORD}", s) is not None
 
 
+def is_word_wider(s: str) -> bool:
+    index = s.rfind(")")
+    if index == -1:
+        return is_word(s)
+    else:
+        return is_word(s[index+1:])
+
+
 def stmt_add_brc(s: str) -> str:
-    if is_word(s):
+    if is_word_wider(s):
         return s
     return f"({s})"
 
 
 def with_stmt_line(indent: str, var: str) -> str:
-    if is_word(var):
+    if is_word_wider(var):
         return indent + with_cmd + " " + var
     else:
         return indent + var
@@ -56,6 +65,10 @@ def set_module_name(name: str):
     module_name = name
 
 
+def spec_name_of(name: str):
+    return "__spec_" + name
+
+
 temp_id = "_R_TMP"
 with_cmd = "with"
 moveTo = "mov"
@@ -66,7 +79,8 @@ del_cmd = "del"
 remove_cmd = "rm"
 
 default_rules = {
-    "module": True
+    "allow-no-colon": False,
+    "module": True,
 }
 rules = default_rules.copy()
 module_name = ""

@@ -37,7 +37,7 @@ namespace pups::modules::string_code {
         return std::make_shared<String>(result);
     }
 
-    Id id_scode{"", "scode"};
+    Id id_scode = pups_std::get_std_lib_name("scode");
     Id id_find{"", "find"}, id_find_ref{"", "find_ref"}
         , id_format{"", "format"}, id_format_all{"", "format_all"};
 

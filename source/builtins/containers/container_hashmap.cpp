@@ -7,7 +7,7 @@
 namespace pups::library::builtins::containers {
 
     HashMap::HashMap(FunctionArgs &args) {
-        push_args(args);
+        push_back_args(args);
     }
 
     std::string HashMap::type_name() const noexcept {
@@ -23,7 +23,7 @@ namespace pups::library::builtins::containers {
         return result + "}";
     }
 
-    void HashMap::push_args(FunctionArgs &args) {
+    void HashMap::push_back_args(FunctionArgs &args) {
         while (!args.empty()) {
             auto ptr = cast<Pair>(*args.front());
             if (ptr)

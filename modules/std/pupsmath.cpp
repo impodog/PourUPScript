@@ -85,7 +85,7 @@ namespace pups::modules::math {
     }
 
 
-    Id id_math{"", "math"};
+    Id id_math = pups_std::get_std_lib_name("math");
     Id id_pi{"", "pi"}, id_e{"", "e"},
             id_ftoi{"", "ftoi"}, id_itof{"", "itof"}, id_round{"", "round"},
             id_sin{"", "sin"}, id_cos{"", "cos"}, id_tan{"", "tan"},

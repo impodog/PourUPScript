@@ -7,7 +7,8 @@
 #include <utility>
 
 namespace pups::library::builtins::typing {
-    Id id_call{"", "called"}, id_init_func{"", "init"}, id_substitute{"", "__substitute"};
+    Id id_call = spec_name_of("called"), id_init_func = spec_name_of("init"), id_get_func = spec_name_of("get"),
+            id_quit_func = spec_name_of("quit");
 
     size_t Type::hash::operator()(const TypePtr &type) const noexcept {
         return std::hash<std::string>()(type->m_name);
@@ -15,15 +16,18 @@ namespace pups::library::builtins::typing {
 
     Type::Type(Map *parent) : Map(parent, false) {}
 
-    ObjectPtr &Type::find(const Id &name, Map *map) {
+    ObjectPtr &Type::source_find(const Id &name, Map *map) {
         try {
             return m_methods.at(name);
         } catch (const std::out_of_range &) {
-            auto &result = Map::find(name, map);
-            if (!is_pending(result))
-                return result;
+            try {
+                auto &result = Map::source_find(name, map);
+                if (!is_pending(result))
+                    return result;
+            } catch (const FindError &) {}
+
         }
-        return Map::find(id_substitute, map)->find(name, map);
+        return Map::source_find(name, map);
     }
 
     std::string Type::str() const noexcept {
@@ -78,10 +82,16 @@ namespace pups::library::builtins::typing {
                         }
                 )});
         }
-        auto init_func = cast<Function>(find(id_init_func, map));
-        if (init_func)
-            init_func->get_core()(args, map);
-        else if (!args.empty())
+        bool init_success = false;
+        try {
+            auto init_func = cast<Function>(source_find(id_init_func, map));
+            if (init_func) {
+                init_func->get_core()(args, map);
+                init_success = true;
+            }
+        } catch (const FindError &) {}
+
+        if (!init_success && !args.empty())
             map->throw_error(std::make_shared<ArgumentError>(
                     "No method \"" + id_init_func.str() + "\" found when initializing instance " + repr() +
                     ", but " + std::to_string(args.size()) + " arguments are given."));
@@ -95,14 +105,27 @@ namespace pups::library::builtins::typing {
         return find(id_call, map)->end_of_line(map);
     }
 
-    ObjectPtr &Instance::find(const Id &name, Map *map) {
+    ObjectPtr &Instance::source_find_non_get(const Id &name, Map *map) {
         try {
             return m_attr.at(name);
         } catch (const std::out_of_range &) {}
         auto &result = m_type->map_find(name, map);
         if (!is_pending(result))
             return result;
-        return Object::find(name, map);
+        return Object::source_find(name, map);
+    }
+
+    ObjectPtr &Instance::source_find(const Id &name, Map *map) {
+        try {
+            return source_find_non_get(name, map);
+        } catch (const FindError &) {}
+        try {
+            auto ptr = cast<Function>(source_find_non_get(id_get_func, map));
+            if (ptr) {
+                return ptr->end_of_line(map)->source_find(name, map);
+            }
+        } catch (const FindError &) {}
+        return Object::source_find(name, map);
     }
 
     std::string Instance::type_name() const noexcept {

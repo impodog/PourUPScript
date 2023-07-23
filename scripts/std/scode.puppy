@@ -2,7 +2,7 @@
 #set STD_SCODE
 
 #include std/std.puppy
-#define CPP_SCODE_LIB = scode
+#define CPP_SCODE_LIB = __std_scode
 #define STD_SCODE_LIB = scode
 
 enter std:

@@ -19,6 +19,14 @@ namespace pups::library {
 
     using Arguments = std::queue<ObjectPtr &>;
 
+    class FindError : public std::exception {
+    public:
+        const Object *sender;
+        Id id;
+
+        FindError(const Object *sender, Id id);
+    };
+
     class Object {
     protected:
         static size_t static_count;
@@ -33,8 +41,11 @@ namespace pups::library {
         // Most of the time, you would want to return nullptr for not switching base.
         virtual ObjectPtr put(ObjectPtr &object, Map *map) = 0;
 
+        // Get an object from this, but this may throw an error, and is overridable
+        virtual ObjectPtr &source_find(const Id &name, Map *map);
+
         // Get an object from this as in "[this].name"
-        virtual ObjectPtr &find(const Id &name, Map *map);
+        ObjectPtr &find(const Id &name, Map *map);
 
         // Mark an end of this line. The return value is stored in Map::m_temp.
         virtual ObjectPtr end_of_line(Map *map);

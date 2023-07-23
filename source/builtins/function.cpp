@@ -41,7 +41,7 @@ namespace pups::library::builtins::function {
         return m_core;
     }
 
-    ObjectPtr &HasMethods::find(const Id &name, Map *map) {
+    ObjectPtr &HasMethods::source_find(const Id &name, Map *map) {
         try {
             return used_functions.at(name);
         } catch (const std::out_of_range &) {
@@ -50,7 +50,7 @@ namespace pups::library::builtins::function {
                 used_functions.insert({name, func});
                 return used_functions.at(name);
             } catch (const std::out_of_range &) {
-                return Object::find(name, map);
+                return Object::source_find(name, map);
             }
         }
     }

@@ -1,6 +1,6 @@
 import re
 
-from .ids import firsts
+from .ids import firsts, rules
 
 
 class MidProcess:
@@ -36,9 +36,22 @@ class MidProcess:
                 result.extend(statements)
         self.content = "\n".join(result)
 
+    def fix_line_no_colon(self):
+        if rules["allow-no-colon"]:
+            result = [""]
+            prev = ""
+            for line in self.content.split("\n"):
+                cur = firsts(line)
+                if len(cur) > len(prev):
+                    result[-1] += ":"
+                result.append(line)
+                prev = cur
+            self.content = "\n".join(result[1:])
+
     def work(self, output_name: str) -> str:
         self.fix_inline_block()
         self.fix_line_multi_statement()
+        self.fix_line_no_colon()
         output = output_name + ".midp"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)

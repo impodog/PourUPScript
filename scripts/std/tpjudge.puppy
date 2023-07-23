@@ -2,7 +2,7 @@
 #set STD_TPJUDGE
 
 #include std/std.puppy
-#define CPP_TPJUDGE_LIB = tpjudge
+#define CPP_TPJUDGE_LIB = __std_tpjudge
 #define STD_TPJUDGE_LIB = tpjudge
 
 enter std:

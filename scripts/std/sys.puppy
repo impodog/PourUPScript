@@ -2,7 +2,7 @@
 #set STD_SYS
 
 #include std/std.puppy
-#define CPP_SYS_LIB = sys
+#define CPP_SYS_LIB = __std_sys
 #define STD_SYS_LIB = sys
 
 enter std:
@@ -13,9 +13,9 @@ enter std:
         ret
 
 #ifnset STD_NO_ALIAS
-    use STR_SYS_LIB.version
-    use STR_SYS_LIB.is_toplevel
-    use STR_SYS_LIB.ver_cmp
+    use STD_SYS_LIB.version
+    use STD_SYS_LIB.is_toplevel
+    use STD_SYS_LIB.ver_cmp
 #end
 
 #end

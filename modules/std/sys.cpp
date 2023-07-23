@@ -71,7 +71,7 @@ namespace pups::modules::sys {
         return pending;
     }
 
-    Id id_sys{"", "sys"};
+    Id id_sys = pups_std::get_std_lib_name("sys");
     Id id_is_toplevel{"", "is_toplevel"}, id_version{"", "version"}, id_version_compare{"", "ver_cmp"};
 
     void init(pups::Constants &constants) {

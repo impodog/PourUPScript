@@ -6,11 +6,13 @@
 class Vehicle:
     attr speed color
 
-    func init:
+    spec func init:
         param speed, color
         self.speed = speed
         self.color = color
-    func called: // This is a method that is called implicitly when the object is used as if it is a function.
+    // This is a method that is called implicitly when the object is used as if it is a function.
+    // However, it is still a special method, so you must add "spec" keyword.
+    spec func called:
         print "I am a vehicle."
  
 /* Now, we have a vehicle. But how do we specify what kind of vehicle it is?
@@ -18,7 +20,7 @@ That's where inheritance comes in. It can be used to create a new class based on
 class Car inh Vehicle: // This is how you inherit a class. You can inherit multiple classes as well.
     attr brand
 
-    func init: // Pay attention!! When you use the same name for a method, you "override" it. This means that the method in the parent class will not be used.
+    spec func init: // Pay attention!! When you use the same name for a method, you "override" it. This means that the method in the parent class will not be used.
         pub Vehicle // Also use "pub" to find "Vehicle"
         param speed, color, brand
         Vehicle.init self speed color // You'll need to call the init method of the parent class.
@@ -44,6 +46,6 @@ print "Is Vehicle a subtype of Car? " (is_subtype Vehicle Car) // Now, this is f
 
 /* And one final tip: classes can be changed at runtime.*/
 enter class Car:
-    func called:
+    spec func called:
         print "I am a car."
 myCar // This will call the "called" method of the Car class.

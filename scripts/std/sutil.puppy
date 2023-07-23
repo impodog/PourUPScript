@@ -2,7 +2,7 @@
 #set STD_SUTIL
 
 #include std/std.puppy
-#define CPP_SUTIL_LIB = sutil
+#define CPP_SUTIL_LIB = __std_sutil
 #define STD_SUTIL_LIB = sutil
 
 enter std:
@@ -13,10 +13,10 @@ enter std:
         ret
 
 #ifnset STD_NO_ALIAS
-    use STR_SUTIL_LIB.stoi
-    use STR_SUTIL_LIB.stof
-    use STR_SUTIL_LIB.stoc
-    use STR_SUTIL_LIB.ctos
+    use STD_SUTIL_LIB.stoi
+    use STD_SUTIL_LIB.stof
+    use STD_SUTIL_LIB.stoc
+    use STD_SUTIL_LIB.ctos
 #end
 
 #end

@@ -15,7 +15,7 @@ namespace pups::library::builtins::containers {
         return type_name() + "{" + left->str() + ", " + right->str() + "}";
     }
 
-    ObjectPtr &Pair::find(const Id &name, Map *map) {
+    ObjectPtr &Pair::source_find(const Id &name, Map *map) {
         if (name == "left")
             return left;
         if (name == "right")

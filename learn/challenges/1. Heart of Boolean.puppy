@@ -37,5 +37,5 @@ args = call array
 for i in range RANDOM:
     value = RANDOM
     print "value is " value
-    args.add (value.gt 2)
+    args.push (value.gt 2)
 print "All values are greater than 2 is " (all %args)

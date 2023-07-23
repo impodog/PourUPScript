@@ -19,10 +19,10 @@ namespace pups::library::builtins::reference {
         return pending;
     }
 
-    ObjectPtr &Reference::find(const Id &name, Map *map) {
+    ObjectPtr &Reference::source_find(const Id &name, Map *map) {
         if (name == "data")
             return *m_ref;
-        return Object::find(name, map);
+        return Object::source_find(name, map);
     }
 
     std::string Reference::type_name() const noexcept {

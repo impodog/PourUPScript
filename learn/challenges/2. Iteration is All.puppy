@@ -22,7 +22,7 @@ func iter_print:
 
 arr = call array
 for i in range RANDOM_SECOND:
-    arr.add RANDOM_SECOND
+    arr.push RANDOM_SECOND
 iter arr iter_print
 iter arr iter_example
 print "Now array is " arr
@@ -34,9 +34,9 @@ print "Now array is " arr
 hm = call hashmap
 func oldest:
     // Code here!
-hm.add "A"::RANDOM_THIRD
-hm.add "B"::RANDOM_THIRD
-hm.add "C"::RANDOM_THIRD
-hm.add "D"::RANDOM_THIRD
-hm.add "E"::RANDOM_THIRD
+hm.push "A"::RANDOM_THIRD
+hm.push "B"::RANDOM_THIRD
+hm.push "C"::RANDOM_THIRD
+hm.push "D"::RANDOM_THIRD
+hm.push "E"::RANDOM_THIRD
 print "Of all the people in " hm ", the oldest is " (call oldest) "."

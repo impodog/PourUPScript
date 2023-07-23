@@ -4,28 +4,33 @@
 #set STD_TYPE_WRAP
 
 #include std/std.puppy
+#include std/tpjudge.puppy
+#define STD_TYPE_WRAP_LIB = type_wrap
+
 enter std:
-    map type_wrap:
+    map STD_TYPE_WRAP_LIB:
         proc __initialize_failure:
             param tp val
             throw "Instance of " (repr_of tp) " initialization failed with argument " (repr_of val) "."
         proc __set_failure:
             param tp val
             throw "Setting value for instance of " (repr_of tp) " failed with argument " (repr_of val) "."
+        
+        use &tpjudge
 
         class Int:
             attr val
             
-            func init:
+            spec func init:
                 param val
-                if tpjudge.is_int val:
+                if &tpjudge.is_int val:
                     self.val = val
                 else:
                     &__initialize_failure &Int val
             
             func set:
                 param val
-                if tpjudge.is_int val:
+                if &tpjudge.is_int val:
                     self.val = val
                 else:
                     &__set_failure &Int val
@@ -33,16 +38,16 @@ enter std:
         class Float:
             attr val
             
-            func init:
+            spec func init:
                 param val
-                if tpjudge.is_float val:
+                if &tpjudge.is_float val:
                     self.val = val
                 else:
                     &__initialize_failure &Float val
             
             func set:
                 param val
-                if tpjudge.is_float val:
+                if &tpjudge.is_float val:
                     self.val = val
                 else:
                     &__set_failure &Float val
@@ -50,24 +55,24 @@ enter std:
         class String:
             attr val
             
-            func init:
+            spec func init:
                 param val
-                if tpjudge.is_str val:
+                if &tpjudge.is_str val:
                     self.val = val
                 else:
                     &__initialize_failure &String val
             
             func set:
                 param val
-                if tpjudge.is_str val:
+                if &tpjudge.is_str val:
                     self.val = val
                 else:
                     &__set_failure &String val
 
 #ifnset STD_NO_ALIAS
-    use type_wrap.Int
-    use type_wrap.Float
-    use type_wrap.String
+    use STD_TYPE_WRAP_LIB.Int
+    use STD_TYPE_WRAP_LIB.Float
+    use STD_TYPE_WRAP_LIB.String
 #end
 
 #end

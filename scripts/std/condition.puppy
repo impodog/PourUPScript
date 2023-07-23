@@ -1,0 +1,81 @@
+#ifnset STD_CONDITION
+#set STD_CONDITION
+
+#include std/std.puppy
+#define STD_CONDITION_LIB condition
+
+enter std:
+    map STD_CONDITION_LIB:
+        func __to_cond:
+            param cond
+            if cond:
+                ret true
+            ret false
+
+        func __not:
+            param cond
+            if cond:
+                ret false
+            else:
+                ret true
+        
+        func __and:
+            param x y
+            if x:
+                if y:
+                    ret true
+            ret false
+        
+        func __or:
+            param x y
+            if x:
+                ret true
+            if y:
+                ret true
+            ret false
+        
+        func __xor:
+            param x y
+            if x:
+                if y:
+                    ret false
+                ret true
+            if y:
+                ret true
+            ret false
+
+        class Condition:
+            attr cond
+
+            spec func init:
+                param cond
+                self.cond = &__to_cond cond
+            
+            func set:
+                param cond
+                self.cond = &__to_cond cond
+            
+            func not:
+                ret new &Condition (&__not self.cond)
+            
+            func and:
+                param other
+                ret new &Condition (&__and self.cond other.cond)
+            
+            func or:
+                param other
+                ret new &Condition (&__or self.cond other.cond)
+            
+            func xor:
+                param other
+                ret new &Condition (&__xor self.cond other.cond)
+        
+        
+
+
+#ifnset STD_NO_ALIAS
+    use STD_CONDITION_LIB.Condition
+    use Condition as Cond
+#end
+
+#end

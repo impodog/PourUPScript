@@ -2,7 +2,7 @@
 #set STD_CONVERT
 
 #include std/std.puppy
-#define CPP_CONVERT_LIB = convert
+#define CPP_CONVERT_LIB = __std_convert
 #define STD_CONVERT_LIB = convert
 
 enter std:
