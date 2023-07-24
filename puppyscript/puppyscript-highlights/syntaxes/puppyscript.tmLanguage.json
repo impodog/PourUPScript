@@ -39,7 +39,7 @@
 		},
 		"types": {
 			"name": "entity.name.type",
-			"match": "\\b(map|func|proc|range|array|pair|hashmap|deque|type|class|attr|mth|link|spec)\\b"
+			"match": "\\b(map|func|proc|ref|range|array|pair|hashmap|deque|type|class|attr|mth|link|spec)\\b"
 		},
 		"strings": {
 			"name": "string.quoted.double.puppyscript",

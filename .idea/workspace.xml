@@ -23,57 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.12.0&#10;- Add std scripts for wrapping the std module&#10;- Better including and preprocessing syntax&#10;- Now there is a &quot;quit&quot; function. Use it when you exit the pups environment&#10;- Fix some problems in tutorials, docs, and others">
-      <change afterPath="$PROJECT_DIR$/puppyscript/puppy/expr_optim.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/puppyscript/puppy/syntactic.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/std/condition.puppy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/std_bits.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn/7. Modules.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/learn/7. Modules.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/ios.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/ios.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/memory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/memory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/pupsmath.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/pupsmath.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/random.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/random.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/std.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/std.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/std.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/std.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/string_code.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/string_code.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/sutil.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/sutil.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/sys.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/sys.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/type_judge.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/type_judge.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/assignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/assignment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/brackets.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/brackets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/ids.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/ids.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/structure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/type_format.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/type_format.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/convert.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/convert.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/ios.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/ios.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/math.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/math.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/memory.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/memory.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/random.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/random.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/scode.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/scode.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/sutil.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/sutil.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/sys.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/sys.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/tpjudge.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/tpjudge.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/std/type_wrap.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/std/type_wrap.puppy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_pair.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_pair.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_pair.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_pair.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/function.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_func.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/map_open.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/map_open.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/types/reference.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/types/reference.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/types/reference.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/types/reference.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/types/typing.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/types/typing.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/types/typing.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/types/typing.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/syntax.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn/12. Advanced Classes.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/learn/12. Advanced Classes.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn/14. Macros.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/learn/14. Macros.puppy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,6 +193,7 @@
       <workItem from="1690090217846" duration="526000" />
       <workItem from="1690097796353" duration="4122000" />
       <workItem from="1690102354367" duration="2473000" />
+      <workItem from="1690121008252" duration="1608000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>

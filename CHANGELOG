@@ -1,3 +1,9 @@
+v0.13.1
+- Add special function get for std types
+- Add support for names with numbers
+- Fix some bugs in the tutorial code
+- Update CMakeLists.txt
+
 v0.13.0
 - For modules, change "imp" to "import", add "use" keyword
 - Add [] for array indexes

@@ -214,7 +214,6 @@ namespace pups::library {
         std::string id;
         bool is_space = true;
         char c;
-        int status = 0;
         const auto add_id = [&result, &id]() {
             if (!id.empty())
                 result.add_id(std::make_shared<Id>(id));
@@ -225,7 +224,6 @@ namespace pups::library {
             if (c == EOF)
                 break;
             else if (c == ':') {
-                status = 0;
                 is_space = true;
                 add_id();
                 auto tmp = read_block(func, peek);
@@ -234,7 +232,6 @@ namespace pups::library {
                 continue;
             } else if (isspace(c)) {
                 if (!is_space) {
-                    status = 0;
                     is_space = false;
 
                     if (!id.empty())

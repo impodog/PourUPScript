@@ -7,7 +7,7 @@ class Vehicle:
     attr speed color
 
     spec func init:
-        param speed, color
+        param speed color
         self.speed = speed
         self.color = color
     // This is a method that is called implicitly when the object is used as if it is a function.
@@ -22,7 +22,7 @@ class Car inh Vehicle: // This is how you inherit a class. You can inherit multi
 
     spec func init: // Pay attention!! When you use the same name for a method, you "override" it. This means that the method in the parent class will not be used.
         pub Vehicle // Also use "pub" to find "Vehicle"
-        param speed, color, brand
+        param speed color brand
         Vehicle.init self speed color // You'll need to call the init method of the parent class.
         self.brand = brand
 

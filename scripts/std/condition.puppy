@@ -51,6 +51,9 @@ enter std:
                 param cond
                 self.cond = &__to_cond cond
             
+            spec func get:
+                ret self.cond
+            
             func set:
                 param cond
                 self.cond = &__to_cond cond

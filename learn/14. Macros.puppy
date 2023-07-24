@@ -39,7 +39,7 @@ They are #set, #ifset, #ifnset, #end, and #unset.
 
 */
 #set DONT_PRINT
-#define NAME "Puppy"
+#define NAME = "Puppy"
 
 #ifnset DONT_PRINT
 print "My name is " NAME "!"

@@ -26,7 +26,7 @@ def firsts(s: str, sub: str = "\t ") -> str:
     return result
 
 
-WORD = r"[\w.&$~]+"
+WORD = r"[\w\d.&$~]+"
 FLAGS = r"([\w\s]*\s+)?"
 INDENT = r"[^\S\n]*"
 

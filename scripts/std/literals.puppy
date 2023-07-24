@@ -1,14 +1,14 @@
 // This script wraps int, float, and string into Puppy classes.
 // It is recommended to use these for basic types if references to them is required.
-#ifnset STD_TYPE_WRAP
-#set STD_TYPE_WRAP
+#ifnset STD_LITERALS
+#set STD_LITERALS
 
 #include std/std.puppy
 #include std/tpjudge.puppy
-#define STD_TYPE_WRAP_LIB = type_wrap
+#define STD_LITERALS_LIB = literals
 
 enter std:
-    map STD_TYPE_WRAP_LIB:
+    map STD_LITERALS_LIB:
         proc __initialize_failure:
             param tp val
             throw "Instance of " (repr_of tp) " initialization failed with argument " (repr_of val) "."
@@ -28,6 +28,9 @@ enter std:
                 else:
                     &__initialize_failure &Int val
             
+            spec func get:
+                ret self.val
+            
             func set:
                 param val
                 if &tpjudge.is_int val:
@@ -44,6 +47,9 @@ enter std:
                     self.val = val
                 else:
                     &__initialize_failure &Float val
+            
+            spec func get:
+                ret self.val
             
             func set:
                 param val
@@ -62,6 +68,9 @@ enter std:
                 else:
                     &__initialize_failure &String val
             
+            spec func get:
+                ret self.val
+            
             func set:
                 param val
                 if &tpjudge.is_str val:
@@ -70,9 +79,9 @@ enter std:
                     &__set_failure &String val
 
 #ifnset STD_NO_ALIAS
-    use STD_TYPE_WRAP_LIB.Int
-    use STD_TYPE_WRAP_LIB.Float
-    use STD_TYPE_WRAP_LIB.String
+    use STD_LITERALS_LIB.Int
+    use STD_LITERALS_LIB.Float
+    use STD_LITERALS_LIB.String
 #end
 
 #end

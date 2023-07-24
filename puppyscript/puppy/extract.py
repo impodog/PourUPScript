@@ -30,8 +30,8 @@ class Extract:
 
     def extract_number(self):
         while True:
-            result = re.search(r"(.)(\d+)(\.\d+)?\b", self.content)
-            if result is None or result.group(1).isalnum():
+            result = re.search(r"([-\n\t ])(\d+)(\.\d+)?\b", self.content)
+            if result is None:
                 break
             name = next_name("NUM")
             if result.group(3) is None:
