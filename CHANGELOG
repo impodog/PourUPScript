@@ -1,3 +1,6 @@
+v0.14.1
+- Fix the compiling problem about the cmath library caused by pupsmath.cpp
+
 v0.14.0
 - Add a new compiler feature: macro rules
 - Add a std library: reference

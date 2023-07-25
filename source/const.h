@@ -5,6 +5,9 @@
 #ifndef PUPS_CONST_H
 #define PUPS_CONST_H
 
+
+#include <math.h> // NOLINT(modernize-deprecated-headers)
+#include <cmath>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -28,7 +31,7 @@ namespace pups::library {
     using cstr = const char *;
 
     constexpr cstr
-            PUPS_LIB_VERSION = "0.14.0",
+            PUPS_LIB_VERSION = "0.14.1",
             RESERVED = "_R_",
             MODULE_LINK = "_ML_";
     constexpr const char remove_symbol = '~', public_symbol = '&', unpack_symbol = '%';

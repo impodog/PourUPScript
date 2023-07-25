@@ -84,6 +84,18 @@ namespace pups::modules::math {
         return x * 180 / M_PI;
     }
 
+    library::pups_float float_sin(library::pups_float x) {
+        return sin(x);
+    }
+
+    library::pups_float float_cos(library::pups_float x) {
+        return cos(x);
+    }
+
+    library::pups_float float_tan(library::pups_float x) {
+        return tan(x);
+    }
+
 
     Id id_math = pups_std::get_std_lib_name("math");
     Id id_pi{"", "pi"}, id_e{"", "e"},
@@ -98,9 +110,9 @@ namespace pups::modules::math {
         math.add(id_ftoi, std::make_shared<Function>(convert_int));
         math.add(id_itof, std::make_shared<Function>(convert_float));
         math.add(id_round, std::make_shared<Function>(round_int));
-        math.add(id_sin, get_float_func(sin));
-        math.add(id_cos, get_float_func(cos));
-        math.add(id_tan, get_float_func(tan));
+        math.add(id_sin, get_float_func(float_sin));
+        math.add(id_tan, get_float_func(float_tan));
+        math.add(id_cos, get_float_func(float_cos));
         math.add(id_radians, get_float_func(radians));
         math.add(id_degrees, get_float_func(degrees));
     }
