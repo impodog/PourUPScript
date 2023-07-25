@@ -1,1 +1,0 @@
-#define (\b)MAKE_SPECIAL\(\s*(\w+)\s*\) = \1__spec_\2

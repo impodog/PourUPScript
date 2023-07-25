@@ -1,0 +1,71 @@
+/* In this file, we learn about one complicated feature: macro rules. */
+/* Macro rules are a way to define a pattern that can be matched against
+an expression, and then replaced with some other expressions. */
+/* To make one of those, we use the keyword "macro", followed by the name, and then the patterns, or "forms" */
+
+// This is a macro that prints a hello message to the user.
+// Macro names should end with a "!" to indicate that they are macros.
+macro myMacro!:
+    // When the macro is called, it will match against the following forms:
+
+    // First, the form "name", when a name is given:
+    form name:
+        print "Hello, " name "!"
+    // Second, the form "name age", when a name and an age are given:
+    form name age:
+        print "Hello, " name "! You are " age " years old!"
+
+// To use a macro, we use this format:
+// myMacro!<...>
+// Where the "..." is the arguments to the macro.
+// For example:
+myMacro!<"Dogs">
+myMacro!<"Cats" 5>
+
+
+
+/* A macro can take different numbers of values without any problems.
+But, they can also take uncertain numbers of values, or no values at all. */
+// To do this, we use the "..." symbol.
+macro myUncertainMacro!:
+    // This macro will match against the following forms:
+
+    // First, the form "name ...", when a name and any number of values are given:
+    form args...:
+        print "Hello, " args "!"
+    // Second, the form, when no values are given:
+    form:
+        print "Hello, world! There are no arguments."
+myUncertainMacro!<"Dogs" "Cats">
+myUncertainMacro!<>
+
+
+
+/* A macro can also mix certain and uncertain values. */
+macro myMixedMacro!:
+    // Macros willl always match the first form that they can.
+    // That is to say, the higher forms have higher priority.
+    // So, this macro will match against the following forms:
+
+    // First, the form "name", when a name is given without any other values:
+    form name:
+        print "Hello, " name "! There are no arguments."
+    // Second, the form "name ...", when a name and any number of values are given:
+    form name args...:
+        print "Hello, " name "! You gave " args "."
+myMixedMacro!<"Dogs">
+myMixedMacro!<"Cats" "Dogs" "Cats">
+
+// The macros are powerful for processing code.
+// See this example, and try to work out what it does:
+macro discard!:
+    form NAME:
+        // Another tip: macro parameters with "#" symbol in the body stands for conjunctions.
+        // So, the argument "NAME" with "#" symbol in the body will be replaced with the argument "NAME".
+        ~#NAME
+    
+    form REST... NAME:
+        // Here, the macro is called recursively.
+        // Each time, the first argument is discarded, and the rest are passed to the next call.
+        discard!<REST>
+        discard!<NAME>

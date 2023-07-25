@@ -1,6 +1,7 @@
-import re, os
+import os
+import re
 
-from .ids import is_word, firsts, rules, default_rules
+from .ids import is_word, rules, default_rules
 
 
 class Command:
@@ -64,18 +65,24 @@ class Preprocess:
                     result.append(line)
                 else:
                     end_scanning = False
-                    file = tmp.group(1)
+                    linked_file = file = tmp.group(1)
                     try:
                         with open(file, "r", encoding="utf-8") as f:
                             content = f.read()
                     except:
                         try:
-                            with open("./include/" + file, "r", encoding="utf-8") as f:
+                            linked_file = "./include/" + file
+                            with open(linked_file, "r", encoding="utf-8") as f:
                                 content = f.read()
+                            file = linked_file
                         except:
-                            with open(os.path.join(os.path.split(__file__)[0], "../../scripts/") + file, "r", encoding="utf-8") as f:
+                            linked_file = os.path.join(os.path.split(__file__)[0], "../../scripts/") + file
+                            with open(linked_file, "r", encoding="utf-8") as f:
                                 content = f.read()
+                            file = linked_file
+                    result.append("#define FILE_DIR = %s" % os.path.dirname(os.path.abspath(linked_file)))
                     result.append(content)
+                    result.append("#undef FILE_DIR")
             self.content = "\n".join(result)
             if end_scanning:
                 break

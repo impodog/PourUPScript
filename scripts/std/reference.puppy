@@ -1,0 +1,88 @@
+// This library packs the unsafe references to make them safer to operate
+#ifnset STD_REFERENCE
+#set STD_REFERENCE
+
+#include std/std.puppy
+#include std/syntax.puppy
+#define STD_REFERENCE_LIB = reference
+
+macro ptr!:
+    form __NAME:
+        (ref __NAME)
+
+enter std:
+    map STD_REFERENCE_LIB:
+        // References operates a REAL pointer.
+        // If the pointer is not needed, use "Box" instead
+        class Ref:
+            attr val ref_val
+            
+            spec func init:
+                param val
+                self.val = val
+                self.ref_val = ptr!<self.val>
+            
+            spec func called:
+                param pack args
+                self.val %args
+            
+            spec func get:
+                ret self.ref_val
+            
+            func set:
+                param val
+                self.val = val
+                self.ref_val = ptr!<self.val>
+        
+        // This is a typical compound type.
+        // By putting the value in, you may easily copy, set the value by this safe reference.
+        class Box:
+            attr val
+
+            spec func init:
+                param val
+                self.val = val
+            
+            spec func called:
+                param pack args
+                self.val %args
+            
+            spec func get:
+                ret self.val
+            
+            func set:
+                param val
+                self.val = val
+
+#ifnset STD_NO_ALIAS
+    use STD_REFERENCE_LIB.Ref
+    use STD_REFERENCE_LIB.Box
+#end
+
+
+// Moves a name to another name containing its std.Ref
+// For example:
+//  a = 1
+//  move_to_ref!<b a>
+//  print b.data
+macro move_to_ref!:
+    form __NAME __VAL:
+        __NAME = new std.STD_REFERENCE_LIB.Ref __VAL
+        discard!<__VAL>
+    form __ARGS...:
+        (new std.STD_REFERENCE_LIB.Ref (__ARGS))
+
+
+// Moves a name to another name containing its std.Box
+// For example:
+//  a = 3
+//  move_to_box!<b a>
+//  print b.val
+macro move_to_box!:
+    form __NAME __VAL:
+        __NAME = new std.STD_REFERENCE_LIB.Box __VAL
+        discard!<__VAL>
+    form __ARGS...:
+        (new std.STD_REFERENCE_LIB.Box (__ARGS))
+
+#end

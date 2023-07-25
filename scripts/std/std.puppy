@@ -14,5 +14,6 @@ map std:
 
     func __deprecated_warning:
         param file
-        print "WARNING from std library : File \"" file "\" is deprecrated. You should not include this file."
+        print "WARNING from std library : File \"" file "\" is deprecated. You should not include this file."
+
 #end

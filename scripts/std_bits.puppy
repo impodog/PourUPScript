@@ -4,11 +4,13 @@
 #include std/math.puppy
 #include std/memory.puppy
 #include std/random.puppy
+#include std/reference.puppy
 #include std/scode.puppy
 #include std/sutil.puppy
+#include std/syntax.puppy
 #include std/sys.puppy
 #include std/tpjudge.puppy
-#include std/type_wrap.puppy
+#include std/literals.puppy
 
 #ifset STD_INCLUDE_DEPRECATED
 #include std/convert.puppy

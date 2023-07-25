@@ -1,0 +1,47 @@
+macro special!:
+    form __NAME:
+        __spec_#__NAME
+
+    form __QUA... __NAME:
+        __QUA __spec_#__NAME
+
+
+macro private!:
+    form __NAME:
+        __private_#__NAME
+    
+    form __QUA... __NAME:
+        __QUA __private_#__NAME
+
+
+macro public!:
+    form __NAME:
+        __NAME
+    
+    form __QUA... __NAME:
+        __QUA __NAME
+
+
+macro member!:
+    form __NAME:
+        M_#__NAME
+    
+    form __QUA... __NAME:
+        __QUA M_#__NAME
+
+
+macro extern!:
+    form __NAME:
+        &#__NAME
+    
+    form __QUA... __NAME:
+        __QUA &#__NAME
+
+
+macro discard!:
+    form __NAME:
+        ~#__NAME
+    
+    form __REST... __NAME:
+        discard!<__REST>
+        discard!<__NAME>

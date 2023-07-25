@@ -1,3 +1,8 @@
+v0.14.0
+- Add a new compiler feature: macro rules
+- Add a std library: reference
+- Add a tutorial for macro rules
+
 v0.13.1
 - Add special function get for std types
 - Add support for names with numbers
