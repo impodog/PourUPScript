@@ -6,6 +6,7 @@
 #define PUPS_CONST_H
 
 
+#define _USE_MATH_DEFINES
 #include <math.h> // NOLINT(modernize-deprecated-headers)
 #include <cmath>
 #include <string>
