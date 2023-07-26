@@ -48,6 +48,8 @@ namespace pups::library {
 
         Constants &new_sub_const(const Id &id);
     };
+
+    path get_constants_path(const path &path);
 }
 
 #endif //PUPS_LIB_CONSTANTS_H

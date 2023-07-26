@@ -13,8 +13,17 @@ def main():
     output: str | None = args.output
     keep_temp = args.keep_temp
     debug_mode = args.debug
+
+    if not os.path.exists(file):
+        raise FileNotFoundError("File not found: %s" % file)
+    if not file.endswith(".puppy"):
+        file += ".puppy"
+
     if output is None:
         output = ".".join(file.split(".")[:-1])
+    else:
+        if output.endswith(".pups"):
+            output = output[:-5]
     puppy.script(file, output, keep_temp, debug_mode)
 
 

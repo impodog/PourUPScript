@@ -1,3 +1,7 @@
+v0.15.2
+- Add more details to getting the path that should be used
+- Modified pups.h aliases
+
 v0.15.1
 - Finally, add support for changing the directory of "import" and "#include" statements
 

@@ -62,7 +62,7 @@ namespace pups::library::builtins::map_open {
         } catch (const std::out_of_range &) {}
 
         if (std::filesystem::exists(p)) {
-            path const_path = p.parent_path().append(p.stem().string() + ".con");
+            path const_path = get_constants_path(p);
             Constants constants(const_path);
             Control control(p, constants, map->get_global(), false);
             control.run();

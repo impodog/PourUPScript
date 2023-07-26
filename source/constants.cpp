@@ -12,6 +12,10 @@ namespace pups::library {
     ObjectPtr sym_assign = std::make_shared<Symbol>(sym_name_assign),
             sym_dynamic = std::make_shared<Symbol>(sym_name_dynamic);
 
+    path get_constants_path(const path &path) {
+        return path.parent_path().string() + "/" + path.stem().string() + ".con";
+    }
+
     void to_lower(std::string &s) {
         for (auto &c: s)
             c = static_cast<char>(tolower(c));

@@ -35,6 +35,8 @@ namespace pups::library {
 
         void restart(MapPtr sub_map);
     };
+
+    using ControlPtr = std::shared_ptr<Control>;
 }
 
 #endif //PUPS_LIB_CONTROL_H
