@@ -21,5 +21,6 @@ namespace pups::library::builtins {
         ranges::init(constants);
         typing::init(constants);
         inline_typing::init(constants);
+        debug_info::init(constants);
     }
 }

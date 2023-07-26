@@ -12,6 +12,8 @@ namespace pups::library {
     protected:
         std::string m_error;
 
+        friend class Map;
+
     public:
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 

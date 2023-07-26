@@ -1,7 +1,7 @@
 import os
 import re
 
-from .ids import is_word, rules, default_rules
+from .ids import is_word, rules, default_rules, firsts
 
 
 class Command:
@@ -39,14 +39,33 @@ class Command:
                 return re.sub(self.src, self.target, s)
 
 
+def add_debug_info(content: str, file: str) -> str:
+    result = list()
+    index = 0
+    file = file.replace("\\", "\\\\").replace("\n", "")
+    prev_line = ""
+    for line in content.split("\n"):
+        index += 1
+        if len(line) > 0 and not line.isspace() and not line.lstrip().startswith("#") \
+                and not prev_line.rstrip().endswith("\\"):
+            result.append(firsts(line) + "DEBUG_INFO \"FILE \\\"%s\\\", LINE %d\"" % (file, index))
+        prev_line = line
+        result.append(line)
+    return "\n".join(result)
+
+
 class Preprocess:
     commands: dict[str, Command]
     content: str
+    debug_mode: bool
 
-    def __init__(self, file: str):
+    def __init__(self, file: str, debug_mode: bool):
         self.commands = dict()
         with open(file, "r", encoding="utf-8") as f:
             self.content = f.read()
+        self.debug_mode = debug_mode
+        if self.debug_mode:
+            self.content = add_debug_info(self.content, file)
 
     def content_replace(self, old: str, new: str):
         while True:
@@ -80,7 +99,10 @@ class Preprocess:
                             with open(linked_file, "r", encoding="utf-8") as f:
                                 content = f.read()
                             file = linked_file
-                    result.append("#define FILE_DIR = %s" % os.path.dirname(os.path.abspath(linked_file)))
+                    linked_file = os.path.abspath(linked_file)
+                    result.append("#define FILE_DIR = %s" % os.path.dirname(linked_file))
+                    if self.debug_mode:
+                        content = add_debug_info(content, linked_file)
                     result.append(content)
                     result.append("#undef FILE_DIR")
             self.content = "\n".join(result)

@@ -1,3 +1,8 @@
+v0.15.0
+- Add new compiler option : "--debug" for generating extra debug info in the source code
+- Add support for debug messages
+- Add a new library: debug.puppy
+
 v0.14.1
 - Fix the compiling problem about the cmath library caused by pupsmath.cpp
 

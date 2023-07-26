@@ -19,6 +19,8 @@ namespace pups::library {
         std::string m_execute_string;
         std::queue<ObjectPtr *> m_unpacked;
 
+        std::string m_debug_info;
+
         using MapBarePtr = Map *;
 
         MapBarePtr m_sub_map = nullptr, m_parent_map = nullptr, m_restore_map = nullptr,
@@ -102,6 +104,8 @@ namespace pups::library {
         void push_up_errs();
 
         void copy_objects_from(Map *map);
+
+        void change_debug_info(std::string info);
 
         size_t count_depth() const noexcept;
 

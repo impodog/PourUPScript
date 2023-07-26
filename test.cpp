@@ -15,7 +15,7 @@ constexpr const char *test_folder = "./test/";
 constexpr const char *desired_suffix = ".puppy";
 constexpr const size_t suffix_len = 6;
 
-int main() {
+int main(int argc, char **argv) {
     /* Example of running a simple program using PUPS
      * Each PUPS program is made up of two parts: Constants and PUPS code.
      * By using the simple class Constants, you may load desired constants.

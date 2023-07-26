@@ -32,9 +32,9 @@ namespace pups::library::builtins::strings {
 
         [[nodiscard]] std::string type_name() const noexcept override;
 
-        [[nodiscard]] size_t hash() const noexcept override;
+        [[nodiscard]] size_t hash() noexcept override;
 
-        [[nodiscard]] size_t equal(const ObjectPtr &object) const noexcept override;
+        [[nodiscard]] bool equal(ObjectPtr &object) noexcept override;
     };
 
     using StringFuncCore = std::function<ObjectPtr(String &, FunctionArgs &, Map *)>;

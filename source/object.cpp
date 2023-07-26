@@ -39,19 +39,19 @@ namespace pups::library {
         return "object";
     }
 
-    size_t Object::hash() const noexcept {
+    size_t Object::hash() noexcept {
         return std::hash<const void *>()(reinterpret_cast<const void *>(this));
     }
 
-    size_t Object::equal(const ObjectPtr &object) const noexcept {
+    bool Object::equal(ObjectPtr &object) noexcept {
         return this == object.get();
     }
 
-    size_t ObjectHash::operator()(const ObjectPtr &object) const {
+    size_t ObjectHash::operator()(const ObjectPtr &object) const noexcept {
         return object->hash();
     }
 
-    size_t ObjectEqual::operator()(const ObjectPtr &lhs, const ObjectPtr &rhs) const {
+    bool ObjectEqual::operator()(const ObjectPtr &lhs, ObjectPtr rhs) const noexcept {
         return lhs->equal(rhs);
     }
 

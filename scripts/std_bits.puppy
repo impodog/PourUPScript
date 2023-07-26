@@ -1,5 +1,7 @@
 #include std/std.puppy
+
 #include std/condition.puppy
+#include std/debug.puppy
 #include std/ios.puppy
 #include std/math.puppy
 #include std/memory.puppy

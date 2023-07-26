@@ -51,11 +51,11 @@ namespace pups::library::builtins::strings {
         return name_string;
     }
 
-    size_t String::hash() const noexcept {
+    size_t String::hash() noexcept {
         return std::hash<std::string>()(m_data);
     }
 
-    size_t String::equal(const ObjectPtr &object) const noexcept {
+    bool String::equal(ObjectPtr &object) noexcept {
         auto ptr = cast<String>(object);
         return ptr && m_data == ptr->m_data;
     }

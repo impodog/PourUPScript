@@ -18,6 +18,7 @@
 #include "ranges/ranges.h"
 #include "types/typing.h"
 #include "keywords/inline_typing.h"
+#include "debugger/debug_info.h"
 
 
 namespace pups::library::builtins {

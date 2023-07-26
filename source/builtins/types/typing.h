@@ -30,6 +30,7 @@ namespace pups::library::builtins::typing {
         IdSet m_attr;
         MethodMap m_methods;
         std::string m_name;
+
     public:
         explicit Type(Map *parent);
 
@@ -67,6 +68,12 @@ namespace pups::library::builtins::typing {
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
         ObjectPtr end_of_line(Map *map) override;
+
+        /* Deserted. See the CPP file for more info.
+        size_t hash() noexcept override;
+
+        bool equal(ObjectPtr &object) noexcept override;
+         */
 
         ObjectPtr &source_find_non_get(const Id &name, Map *map);
 

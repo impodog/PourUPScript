@@ -15,7 +15,7 @@ from .syntactic import Syntactic
 from .type_format import TypeFormat
 
 
-def script(file: str, output_name: str, keep_temp: bool):
+def script(file: str, output_name: str, keep_temp: bool, debug_mode: bool):
     prev_msg = 0
 
     def show_progress(msg: str):
@@ -38,7 +38,7 @@ def script(file: str, output_name: str, keep_temp: bool):
     set_module_name("_" + os.path.split(output_name)[1].replace(".", "_") + "_")
 
     show_progress("Preprocessing...")
-    tmp = file = Preprocess(file).work(output_name)
+    tmp = file = Preprocess(file, debug_mode).work(output_name)
     show_progress("Extracting literals...")
     file = Extract(file).work(output_name)
     delete_temp()
@@ -67,7 +67,7 @@ def script(file: str, output_name: str, keep_temp: bool):
     file = Brackets(file).work(output_name, 0)
     delete_temp()
     show_progress("Optimizing expressions...")
-    file = ExprOptim(file).work(output_name)
+    file = ExprOptim(file, debug_mode).work(output_name)
     delete_temp()
     show_progress("Formatting short structures...")
     file = Formatting(file).work(output_name)

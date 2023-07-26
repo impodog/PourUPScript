@@ -68,6 +68,9 @@ def set_module_name(name: str):
 def spec_name_of(name: str):
     return "__spec_" + name
 
+def is_debug_info(line:str):
+    return line.lstrip().startswith("DEBUG_INFO ")
+
 
 temp_id = "_R_TMP"
 with_cmd = "with"

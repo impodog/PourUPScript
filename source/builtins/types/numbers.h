@@ -60,11 +60,11 @@ namespace pups::library::builtins::numbers {
                 return value != 0;
         }
 
-        [[nodiscard]] size_t hash() const noexcept override {
+        [[nodiscard]] size_t hash() noexcept override {
             return std::hash<Arithmetic>()(value);
         }
 
-        [[nodiscard]] size_t equal(const ObjectPtr &object) const noexcept override {
+        [[nodiscard]] bool equal(ObjectPtr &object) noexcept override {
             auto ptr = cast<Number>(object);
             return ptr && value == ptr->value;
         }

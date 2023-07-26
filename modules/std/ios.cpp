@@ -138,11 +138,11 @@ namespace pups::modules::ios {
             return "\"" + m_path.string() + "\"";
         }
 
-        size_t hash() const noexcept override {
+        size_t hash() noexcept override {
             return std::hash<std::string>()(std::filesystem::absolute(m_path).string());
         }
 
-        size_t equal(const ObjectPtr &object) const noexcept override {
+        bool equal(ObjectPtr &object) noexcept override {
             auto ptr = cast<Path>(object);
             return ptr && m_path == ptr->m_path;
         }

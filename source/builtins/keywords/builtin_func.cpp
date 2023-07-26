@@ -82,9 +82,9 @@ namespace pups::library::builtins::builtin_func {
         if (args.size() != 2)
             map->throw_error(std::make_shared<ArgumentError>("Equal check requires two only arguments."));
         else {
-            const auto &lhs = *args.front();
+            auto &lhs = *args.front();
             args.pop_front();
-            const auto &rhs = *args.front();
+            auto &rhs = *args.front();
             args.pop_front();
             return lhs->equal(rhs) ? numbers::True : numbers::False;
         }

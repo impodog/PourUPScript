@@ -1,0 +1,24 @@
+#ifnset STD_DEBUG
+#set STD_DEBUG
+
+#include std/std.puppy
+#define STD_DEBUG_LIB = debug
+
+enter std:
+    map STD_DEBUG_LIB:
+        // This is an alias for DEBUG_INFO, to avoid mixing up the intended use of DEBUG_INFO and generated info
+        use DEBUG_INFO as __debug_info
+
+/* This macro is used to add debug info.
+To make it work under debug compiler mode, you must put this in the same line as the code you want to debug.
+*/
+macro debug_info!:
+    form args...:
+        &std.STD_DEBUG_LIB.__debug_info args
+
+/* This macro throws some message. It is better used with debug mode on. */
+macro debug_msg!:
+    form args...:
+        throw args
+
+#end

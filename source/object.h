@@ -64,19 +64,19 @@ namespace pups::library {
 
         [[nodiscard]] virtual std::string type_name() const noexcept;
 
-        [[nodiscard]] virtual size_t hash() const noexcept;
+        [[nodiscard]] virtual size_t hash() noexcept;
 
-        virtual size_t equal(const ObjectPtr &object) const noexcept;
+        virtual bool equal(ObjectPtr &object) noexcept;
     };
 
     using ObjectMap = Object::ObjectMap;
 
     struct ObjectHash {
-        size_t operator()(const ObjectPtr &object) const;
+        size_t operator()(const ObjectPtr &object) const noexcept;
     };
 
     struct ObjectEqual {
-        size_t operator()(const ObjectPtr &lhs, const ObjectPtr &rhs) const;
+        bool operator()(const ObjectPtr &lhs, ObjectPtr rhs) const noexcept;
     };
 
     class Pending final : public Object {

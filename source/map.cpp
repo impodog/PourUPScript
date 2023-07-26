@@ -142,6 +142,9 @@ namespace pups::library {
     }
 
     void Map::throw_error(const ErrorPtr &error) {
+        if (!m_debug_info.empty()) {
+            error->m_error = m_debug_info + ":\n\t" + error->m_error;
+        }
         m_errors.push_back(error);
     }
 
@@ -259,12 +262,16 @@ namespace pups::library {
         }
     }
 
+    void Map::change_debug_info(std::string info) {
+        m_debug_info = std::move(info);
+    }
+
     size_t Map::count_depth() const noexcept {
         const Map *map = this;
         size_t result = 1;
         while (map) {
             result++;
-            map = map->m_sub_map;
+            map = map->m_parent_map;
         }
         return result;
     }

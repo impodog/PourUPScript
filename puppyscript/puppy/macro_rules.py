@@ -1,7 +1,7 @@
 import re
 import warnings
 
-from .ids import firsts
+from .ids import firsts, is_debug_info
 
 
 def ellipsis_name_re(name: str):
@@ -130,7 +130,7 @@ class MacroRules:
         forms: list[Form] = list()
 
         def test_next_macro():
-            nonlocal name, macro_outer
+            nonlocal result, name, macro_outer
             tmp = re.fullmatch(r"\s*macro\s+(\w+(!?))\s*:\s*", line)
             if tmp is None:
                 result.append(line)
@@ -152,9 +152,10 @@ class MacroRules:
             nonlocal form_outer, form_args, form_body
             tmp = re.fullmatch(r"\s*form(\s+(\w[\w\s.]*))?\s*:\s*", line)
             if tmp is None:
-                warnings.warn(
-                    UserWarning("Stray line in macro forms: \"%s\"." % line)
-                )
+                if not is_debug_info(line):
+                    warnings.warn(
+                        UserWarning("Stray line in macro forms: \"%s\"." % line)
+                    )
             else:
                 form_outer = cur_indent
                 if tmp.group(1) is None:
@@ -180,7 +181,7 @@ class MacroRules:
                         name = form_args = None
                         forms.clear()
                         test_next_macro()
-                    else:
+                    elif not is_debug_info(line):
                         form_body.append(line)
         self.content = "\n".join(result)
 

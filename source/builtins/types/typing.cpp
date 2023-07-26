@@ -8,7 +8,8 @@
 
 namespace pups::library::builtins::typing {
     Id id_call = spec_name_of("called"), id_init_func = spec_name_of("init"), id_get_func = spec_name_of("get"),
-            id_quit_func = spec_name_of("quit");
+            id_quit_func = spec_name_of("quit"), id_hash_func = spec_name_of("hash"),
+            id_equal_func = spec_name_of("equal");
 
     size_t Type::hash::operator()(const TypePtr &type) const noexcept {
         return std::hash<std::string>()(type->m_name);
@@ -104,6 +105,31 @@ namespace pups::library::builtins::typing {
     ObjectPtr Instance::end_of_line(Map *map) {
         return find(id_call, map)->end_of_line(map);
     }
+
+    /*
+     * These two are just too buggy to keep.
+     * The main reason is that no operation map is given, so when we use "m_type" as the map, it causes quite a lot of chaos.
+    size_t Instance::hash() noexcept {
+        try {
+            auto ptr = cast<Function>(source_find_non_get(id_hash_func, m_type.get()));
+            if (ptr) {
+                return ptr->end_of_line(m_type.get())->hash();
+            }
+        } catch (const FindError &) {}
+        return Object::hash();
+    }
+
+    bool Instance::equal(ObjectPtr &object) noexcept {
+        try {
+            auto ptr = cast<Function>(source_find_non_get(id_equal_func, m_type.get()));
+            if (ptr) {
+                ptr->put(object, m_type.get());
+                return ptr->end_of_line(m_type.get())->condition();
+            }
+        } catch (const FindError &) {}
+        return Object::equal(object);
+    }
+    */
 
     ObjectPtr &Instance::source_find_non_get(const Id &name, Map *map) {
         try {
