@@ -117,7 +117,7 @@ namespace pups::library::builtins::containers {
                         return std::make_shared<reference::Reference>(&container.data.at(ptr->value));
                     else
                         return container.data.at(ptr->value);
-                } catch (const std::out_of_range &exc) {
+                } catch (const std::out_of_range &) {
                     map->throw_error(
                             std::make_shared<OutOfBoundError>(
                                     "Container.at out of bounds with value " + ptr->repr() + "."));
@@ -141,7 +141,7 @@ namespace pups::library::builtins::containers {
                     return std::make_shared<reference::Reference>(&container.data.at(ptr));
                 else
                     return container.data.at(ptr);
-            } catch (const std::out_of_range &exc) {
+            } catch (const std::out_of_range &) {
                 map->throw_error(
                         std::make_shared<OutOfBoundError>("Container.at out of bounds with key " + ptr->repr() + "."));
             }
