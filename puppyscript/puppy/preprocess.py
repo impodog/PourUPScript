@@ -58,12 +58,14 @@ class Preprocess:
     commands: dict[str, Command]
     content: str
     debug_mode: bool
+    file_dir: str
 
     def __init__(self, file: str, debug_mode: bool):
         self.commands = dict()
         with open(file, "r", encoding="utf-8") as f:
             self.content = f.read()
         self.debug_mode = debug_mode
+        self.file_dir = os.path.dirname(file)
         if self.debug_mode:
             self.content = add_debug_info(self.content, file)
 
@@ -84,18 +86,19 @@ class Preprocess:
                     result.append(line)
                 else:
                     end_scanning = False
-                    linked_file = file = tmp.group(1)
+                    file = tmp.group(1)
                     try:
-                        with open(file, "r", encoding="utf-8") as f:
+                        linked_file = os.path.join(self.file_dir, file)
+                        with open(linked_file, "r", encoding="utf-8") as f:
                             content = f.read()
-                    except:
+                    except FileNotFoundError:
                         try:
-                            linked_file = "./include/" + file
+                            linked_file = os.path.join(self.file_dir, "include", file)
                             with open(linked_file, "r", encoding="utf-8") as f:
                                 content = f.read()
                             file = linked_file
-                        except:
-                            linked_file = os.path.join(os.path.split(__file__)[0], "../../scripts/") + file
+                        except FileNotFoundError:
+                            linked_file = os.path.join(os.path.split(__file__)[0], "../../scripts/", file)
                             with open(linked_file, "r", encoding="utf-8") as f:
                                 content = f.read()
                             file = linked_file

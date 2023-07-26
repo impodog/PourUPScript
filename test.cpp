@@ -38,6 +38,7 @@ int main(int argc, char **argv) {
     std::cout << "Running..." << std::endl;
 
     //  Run the program
+    pups::set_module_path("test");
     pups::Constants constants(const_path); // Load necessary constants from the file
     pups::init(constants); // Init built-ins by adding them to constants
     pups::modules::pups_std::init(constants); // Init standard modules

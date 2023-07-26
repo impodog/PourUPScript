@@ -33,6 +33,8 @@ namespace pups::library::builtins::map_open {
     void init(Constants &constants);
 
     void quit();
+
+    void set_module_path(path path);
 }
 
 #endif //PUPS_LIB_MAP_OPEN_H

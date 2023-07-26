@@ -17,6 +17,7 @@ namespace pups {
     using library::builtins::function::HasMethods;
     using library::pending;
     using library::builtins::init, library::module_link_name, library::PUPS_LIB_VERSION;
+    using library::builtins::map_open::set_module_path;
     using library::cast;
 
     inline void quit() {

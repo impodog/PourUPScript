@@ -1,3 +1,6 @@
+v0.15.1
+- Finally, add support for changing the directory of "import" and "#include" statements
+
 v0.15.0
 - Add new compiler option : "--debug" for generating extra debug info in the source code
 - Add support for debug messages

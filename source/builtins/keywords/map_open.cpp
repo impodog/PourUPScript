@@ -7,6 +7,7 @@
 
 namespace pups::library::builtins::map_open {
     std::unordered_map<std::string, MapPtr> opened_modules;
+    path module_path = ".";
 
     MapOpen::MapOpen() : Function(
             [](FunctionArgs &args, Map *map) -> ObjectPtr {
@@ -53,7 +54,9 @@ namespace pups::library::builtins::map_open {
     }
 
     ObjectPtr open_file(const std::string &name, Map *map) {
-        path p = name;
+        path p = module_path;
+        p /= name;
+        p = std::filesystem::absolute(p);
         try {
             return opened_modules.at(name);
         } catch (const std::out_of_range &) {}
@@ -63,10 +66,10 @@ namespace pups::library::builtins::map_open {
             Constants constants(const_path);
             Control control(p, constants, map->get_global(), false);
             control.run();
-            opened_modules.insert({std::filesystem::absolute(p).string(), control.map});
+            opened_modules.insert({p.string(), control.map});
             return control.map;
         } else {
-            map->throw_error(std::make_shared<FileNotFoundError>("File \"" + name + "\" is not found."));
+            map->throw_error(std::make_shared<FileNotFoundError>("When opening file, \"" + name + "\" is not found."));
             return pending;
         }
     }
@@ -160,6 +163,10 @@ namespace pups::library::builtins::map_open {
 
     void quit() {
         opened_modules.clear();
+    }
+
+    void set_module_path(path path) {
+        module_path = std::move(path);
     }
 
 }
