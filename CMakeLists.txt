@@ -37,7 +37,8 @@ set(source_files
         ${PUPS_SOURCE}/builtins/ranges/ranges.cpp ${PUPS_SOURCE}/builtins/ranges/ranges.h
         ${PUPS_SOURCE}/builtins/types/typing.cpp ${PUPS_SOURCE}/builtins/types/typing.h
         ${PUPS_SOURCE}/builtins/keywords/inline_typing.cpp ${PUPS_SOURCE}/builtins/keywords/inline_typing.h
-        ${PUPS_SOURCE}/builtins/containers/container_deque.cpp ${PUPS_SOURCE}/builtins/containers/container_deque.h source/builtins/debugger/debug_info.cpp source/builtins/debugger/debug_info.h)
+        ${PUPS_SOURCE}/builtins/containers/container_deque.cpp ${PUPS_SOURCE}/builtins/containers/container_deque.h
+        ${PUPS_SOURCE}/builtins/debugger/debug_info.cpp ${PUPS_SOURCE}/builtins/debugger/debug_info.h)
 
 set(std_files ${PUPS_MODULES}/std/std.h ${PUPS_MODULES}/std/std.cpp
         ${PUPS_MODULES}/std/random.cpp ${PUPS_MODULES}/std/random.h
