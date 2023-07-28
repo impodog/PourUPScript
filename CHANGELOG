@@ -1,3 +1,7 @@
+v0.16.2
+- Add more aliases to use in pups.h
+- Minor changes to puppyscript
+
 v0.16.1
 - Change the name of "while" to "loop", however "while" is still supported and recommended
 - Add a few more operators to integers and booleans
@@ -14,7 +18,7 @@ v0.15.2
 v0.15.1
 - Finally, add support for changing the directory of "import" and "#include" statements
 
-v0.15.0
+v0.15.0:
 - Add new compiler option : "--debug" for generating extra debug info in the source code
 - Add support for debug messages
 - Add a new library: debug.puppy
