@@ -7,11 +7,9 @@ if(NOT DEFINED ${PUPS_WORKING_DIRECTORY})
 endif()
 
 set(PUPS_SOURCE ${PUPS_WORKING_DIRECTORY}/source)
-set(PUPS_MODULES ${PUPS_WORKING_DIRECTORY}/modules)
 
 set(source_files
         ${PUPS_WORKING_DIRECTORY}/pups.h
-        ${PUPS_MODULES}/modules.h
         ${PUPS_SOURCE}/const.h
         ${PUPS_SOURCE}/syntax.cpp ${PUPS_SOURCE}/syntax.h
         ${PUPS_SOURCE}/object.cpp ${PUPS_SOURCE}/object.h
@@ -39,19 +37,7 @@ set(source_files
         ${PUPS_SOURCE}/builtins/keywords/inline_typing.cpp ${PUPS_SOURCE}/builtins/keywords/inline_typing.h
         ${PUPS_SOURCE}/builtins/containers/container_deque.cpp ${PUPS_SOURCE}/builtins/containers/container_deque.h
         ${PUPS_SOURCE}/builtins/debugger/debug_info.cpp ${PUPS_SOURCE}/builtins/debugger/debug_info.h
-        source/package/package.cpp
-        source/package/package.cpp
-        source/package/package.h)
-
-set(std_files ${PUPS_MODULES}/std/std.h ${PUPS_MODULES}/std/std.cpp
-        ${PUPS_MODULES}/std/random.cpp ${PUPS_MODULES}/std/random.h
-        ${PUPS_MODULES}/std/string_code.cpp ${PUPS_MODULES}/std/string_code.h
-        ${PUPS_MODULES}/std/type_judge.cpp ${PUPS_MODULES}/std/type_judge.h
-        ${PUPS_MODULES}/std/memory.cpp ${PUPS_MODULES}/std/memory.h
-        ${PUPS_MODULES}/std/sys.cpp ${PUPS_MODULES}/std/sys.h
-        ${PUPS_MODULES}/std/ios.cpp ${PUPS_MODULES}/std/ios.h
-        ${PUPS_MODULES}/std/sutil.cpp ${PUPS_MODULES}/std/sutil.h
-        ${PUPS_MODULES}/std/pupsmath.cpp ${PUPS_MODULES}/std/pupsmath.h)
+        ${PUPS_SOURCE}/package/package.cpp ${PUPS_SOURCE}/package/package.h)
 
 project(pups_Lib)
 
