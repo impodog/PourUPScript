@@ -1,6 +1,3 @@
-v0.16.2
-- Add more aliases to use in pups.h
-
 v0.16.1
 - Change the name of "while" to "loop", however "while" is still supported and recommended
 - Add a few more operators to integers and booleans

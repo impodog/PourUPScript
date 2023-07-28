@@ -1,6 +1,6 @@
 import re
 
-from .ids import with_cmd, break_cmd, firsts, stmt_add_brc, ret, WORD, FLAGS, word_last, spec_name_of, moveTo
+from .ids import with_cmd, break_cmd, firsts, stmt_add_brc, ret, WORD, FLAGS, word_last, spec_name_of
 
 
 class Syntactic:
@@ -37,16 +37,6 @@ class Syntactic:
             else:
                 result.append(tmp.group(1) + "import " + tmp.group(3))
                 result.append(tmp.group(1) + "unmap")
-        self.content = "\n".join(result)
-    def scan_import_sth_as(self):
-        result = list()
-        for line in self.content.split("\n"):
-            tmp = re.fullmatch(rf"(\s*)import\s+({WORD})\s+as\s+({WORD})", line)
-            if tmp is None:
-                result.append(line)
-            else:
-                result.append("%s %s" % (tmp.group(1) + "import", tmp.group(2)))
-                result.append("%s %s" % (tmp.group(1) + moveTo, tmp.group(3)))
         self.content = "\n".join(result)
 
     def use_statements(self):
@@ -132,7 +122,6 @@ class Syntactic:
         self.scan_returns()
         self.break_shortcuts()
         self.unmap_import()
-        self.scan_import_sth_as()
         self.use_statements()
         self.special_functions()
         self.all_array_indexes()
