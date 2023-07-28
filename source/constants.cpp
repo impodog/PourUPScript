@@ -103,18 +103,15 @@ namespace pups::library {
         }
     }
 
-    Constants::Constants() :
-            constants{
-                    {Id{"", "="},              sym_assign},
-                    {Id{"", sym_name_dynamic}, sym_dynamic}
-            } {
+    MapPtr Constants::make_sub_map(Map *map) {
+        return std::make_shared<Map>(map, false);
     }
 
-    Constants::Constants(const path &path) : Constants() {
+    Constants::Constants(const path &path) {
         load_from(path);
     }
 
-    Constants::Constants(std::initializer_list<path> path) : Constants() {
+    Constants::Constants(std::initializer_list<path> path) {
         for (const auto &p: path)
             load_from(p);
     }
@@ -135,7 +132,7 @@ namespace pups::library {
             map->add_object(constant.first, constant.second);
         }
         for (auto &sub_const: sub_consts) {
-            MapPtr sub_map = std::make_shared<Map>(map, false);
+            MapPtr sub_map = make_sub_map(map);
             map->set_child(nullptr);
             sub_const.second->export_to(sub_map.get());
             map->add_object(sub_const.first, sub_map);

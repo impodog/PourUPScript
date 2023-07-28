@@ -2,8 +2,8 @@
 // Created by impodog on 7/23/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_CONTAINER_DEQUE_H
-#define PUPS_LIB_TESTS_CONTAINER_DEQUE_H
+#ifndef PUPS_LIB_CONTAINER_DEQUE_H
+#define PUPS_LIB_CONTAINER_DEQUE_H
 
 #include "container_base.h"
 
@@ -51,4 +51,4 @@ namespace pups::library::builtins::containers {
     extern const ContainerCoreMap<Deque> deque_cores;
 }
 
-#endif //PUPS_LIB_TESTS_CONTAINER_DEQUE_H
+#endif //PUPS_LIB_CONTAINER_DEQUE_H

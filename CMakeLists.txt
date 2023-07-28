@@ -38,7 +38,10 @@ set(source_files
         ${PUPS_SOURCE}/builtins/types/typing.cpp ${PUPS_SOURCE}/builtins/types/typing.h
         ${PUPS_SOURCE}/builtins/keywords/inline_typing.cpp ${PUPS_SOURCE}/builtins/keywords/inline_typing.h
         ${PUPS_SOURCE}/builtins/containers/container_deque.cpp ${PUPS_SOURCE}/builtins/containers/container_deque.h
-        ${PUPS_SOURCE}/builtins/debugger/debug_info.cpp ${PUPS_SOURCE}/builtins/debugger/debug_info.h)
+        ${PUPS_SOURCE}/builtins/debugger/debug_info.cpp ${PUPS_SOURCE}/builtins/debugger/debug_info.h
+        source/package/package.cpp
+        source/package/package.cpp
+        source/package/package.h)
 
 set(std_files ${PUPS_MODULES}/std/std.h ${PUPS_MODULES}/std/std.cpp
         ${PUPS_MODULES}/std/random.cpp ${PUPS_MODULES}/std/random.h
@@ -52,8 +55,8 @@ set(std_files ${PUPS_MODULES}/std/std.h ${PUPS_MODULES}/std/std.cpp
 
 project(pups_Lib)
 
-add_library(pups_Lib ${source_files})
+add_library(pups_Lib SHARED ${source_files})
 
 project(pups_Lib_Tests)
 
-add_executable(pups_Lib_Tests test.cpp ${source_files} ${std_files})
+add_executable(pups_Lib_Tests test.cpp ${source_files})

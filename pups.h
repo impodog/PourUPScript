@@ -7,6 +7,7 @@
 
 #include "source/control.h"
 #include "source/builtins/builtins.h"
+#include "source/package/package.h"
 
 namespace pups {
     // Link commonly used classes and functions
@@ -16,13 +17,21 @@ namespace pups {
     using library::builtins::numbers::Number, library::builtins::strings::String;
     using library::builtins::containers::Array, library::builtins::containers::Pair, library::builtins::containers::HashMap;
     using library::builtins::function::HasMethods;
+    using library::builtins::function::FunctionArgs, library::builtins::function::FunctionCore;
+    using library::package::PackageHandler;
     using library::pending;
-    using library::builtins::init, library::module_link_name, library::PUPS_LIB_VERSION;
+    using library::module_link_name, library::PUPS_LIB_VERSION;
     using library::builtins::map_open::set_module_path;
     using library::cast;
 
+    inline void init(Constants &constants) {
+        library::builtins::init(constants);
+        library::package::init(constants);
+    }
+
     inline void quit() {
         library::builtins::map_open::quit();
+        library::package::quit();
     }
 }
 

@@ -33,8 +33,10 @@ namespace pups::library {
 
         void analyze_line(const std::string &line);
 
+        virtual MapPtr make_sub_map(Map *map);
+
     public:
-        Constants();
+        Constants() = default;
 
         explicit Constants(const path &path);
 

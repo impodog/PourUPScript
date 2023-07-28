@@ -2,8 +2,8 @@
 // Created by impodog on 7/25/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_DEBUG_INFO_H
-#define PUPS_LIB_TESTS_DEBUG_INFO_H
+#ifndef PUPS_LIB_DEBUG_INFO_H
+#define PUPS_LIB_DEBUG_INFO_H
 
 #include "../function.h"
 #include "../types/strings.h"
@@ -19,4 +19,4 @@ namespace pups::library::builtins::debug_info {
     void init(Constants &constants);
 }
 
-#endif //PUPS_LIB_TESTS_DEBUG_INFO_H
+#endif //PUPS_LIB_DEBUG_INFO_H

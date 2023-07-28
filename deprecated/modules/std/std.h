@@ -17,4 +17,6 @@ namespace pups::modules::pups_std {
     Id get_std_lib_name(const std::string &name);
 }
 
+extern "C" void PUPS_Init_pups_std(pups::PackageHandler &handler);
+
 #endif //PUPS_LIB_STD_H

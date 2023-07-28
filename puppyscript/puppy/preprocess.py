@@ -98,7 +98,7 @@ class Preprocess:
                                 content = f.read()
                             file = linked_file
                         except FileNotFoundError:
-                            linked_file = os.path.join(os.path.split(__file__)[0], "../../scripts/", file)
+                            linked_file = os.path.join(os.path.split(__file__)[0], "../scripts/", file)
                             with open(linked_file, "r", encoding="utf-8") as f:
                                 content = f.read()
                             file = linked_file

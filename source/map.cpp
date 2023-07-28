@@ -94,6 +94,26 @@ namespace pups::library {
             m_memory_stack.pop();
     }
 
+    Map::Map(path path) : m_path(std::move(path)) {
+
+    }
+
+    Map::Map(Map *parent_map, const path &path, bool allow_upsearch) :
+            m_parent_map(parent_map), m_global(parent_map->m_global), m_path(path) {
+        if (allow_upsearch)
+            // The default upsearch map is m_parent_map unless it's changed
+            m_upsearch_map = m_parent_map->m_upsearch_map;
+        m_parent_map->set_child(this);
+    }
+
+    Map::Map(Map *parent_map, bool allow_upsearch) :
+            Map(parent_map, parent_map->m_path, allow_upsearch) {
+    }
+
+    Map::Map(Map *parent_map, Map *restore_map, bool allow_upsearch) :
+            Map(parent_map, allow_upsearch) {
+        m_restore_map = restore_map;
+    }
 
     Map::~Map() {
         if (m_parent_map) {
@@ -101,19 +121,6 @@ namespace pups::library {
             push_up_errs();
         } else
             report_errs();
-    }
-
-    Map::Map(Map *parent_map, bool allow_upsearch) :
-            m_parent_map(parent_map), m_global(parent_map->m_global) {
-        if (allow_upsearch)
-            // The default upsearch map is m_parent_map unless it's changed
-            m_upsearch_map = m_parent_map->m_upsearch_map;
-        m_parent_map->set_child(this);
-    }
-
-    Map::Map(Map *parent_map, Map *restore_map, bool allow_upsearch) :
-            Map(parent_map, allow_upsearch) {
-        m_restore_map = restore_map;
     }
 
     ObjectPtr Map::put(ObjectPtr &object, Map *map) {
@@ -297,6 +304,10 @@ namespace pups::library {
             m_errors.pop_back();
         }
         return false;
+    }
+
+    const path &Map::get_path() {
+        return m_path;
     }
 
     ObjectPtr Object::end_of_line(Map *map) {

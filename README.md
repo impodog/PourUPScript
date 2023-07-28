@@ -28,3 +28,6 @@ A Puppyscript compiler is given under ./puppyscript, just simply run "python mai
 
 To learn more, see ./learn under the root library (just open those files with your favortite text editor).
 
+## For more
+
+Please go to **./learn** for details

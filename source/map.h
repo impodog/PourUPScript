@@ -20,6 +20,7 @@ namespace pups::library {
         std::queue<ObjectPtr *> m_unpacked;
 
         std::string m_debug_info;
+        path m_path;
 
         using MapBarePtr = Map *;
 
@@ -54,9 +55,11 @@ namespace pups::library {
             void set_break_sign(ObjectPtr object);
         } signs;
 
-        Map() = default;
+        explicit Map(path path);
 
         ~Map() override;
+
+        Map(Map *parent_map, const path &path, bool allow_upsearch);
 
         Map(Map *parent_map, bool allow_upsearch);
 
@@ -116,6 +119,8 @@ namespace pups::library {
         const ObjectMap &get_all_objects() const noexcept;
 
         bool catch_by(CatchRequirements &required);
+
+        const path &get_path();
     };
 
     // This saves the number of errors reported. Can be freely set to 0.

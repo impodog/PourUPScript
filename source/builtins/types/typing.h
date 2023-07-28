@@ -2,8 +2,8 @@
 // Created by impodog on 7/1/2023.
 //
 
-#ifndef PUPS_LIB_TESTS_TYPING_H
-#define PUPS_LIB_TESTS_TYPING_H
+#ifndef PUPS_LIB_TYPING_H
+#define PUPS_LIB_TYPING_H
 
 #include "../function.h"
 
@@ -92,4 +92,4 @@ namespace pups::library::builtins::typing {
     void init(Constants &constants);
 }
 
-#endif //PUPS_LIB_TESTS_TYPING_H
+#endif //PUPS_LIB_TYPING_H

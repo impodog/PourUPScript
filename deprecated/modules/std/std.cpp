@@ -32,3 +32,8 @@ namespace pups::modules::pups_std {
         return Id{"", STD_NAME + name};
     }
 }
+
+extern "C" void PUPS_Init_pups_std(pups::PackageHandler &handler) {
+    // PackageHandler is Constants? This is not intended to be used like this.
+    pups::modules::pups_std::init(handler);
+}

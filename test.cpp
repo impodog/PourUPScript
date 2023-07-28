@@ -2,7 +2,6 @@
 // Created by Dogs-Cute on 5/27/2023.
 //
 #include "pups.h"
-#include "modules/std/std.h"
 #include <cstring>
 #include <iostream>
 #include <filesystem>
@@ -41,9 +40,10 @@ int main(int argc, char **argv) {
     pups::set_module_path("test");
     pups::Constants constants(const_path); // Load necessary constants from the file
     pups::init(constants); // Init built-ins by adding them to constants
-    pups::modules::pups_std::init(constants); // Init standard modules
-    pups::Control control(pups_path, constants); // Creating the main file control by using the constants
-    control.run(); // Run the whole file
+    // Creating the main file control by using the constants
+    pups::ControlPtr control = std::make_unique<pups::Control>(pups_path, constants);
+    control->run(); // Run the whole file
+    control.reset(); // Erase the toplevel, then global map
 
     pups::quit(); // This is necessary for erasing global variables
     return 0;

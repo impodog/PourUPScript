@@ -22,7 +22,24 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="Merging change of numbers.h" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.15.2&#10;- Add more details to getting the path that should be used&#10;- Modified pups.h aliases">
+      <change afterPath="$PROJECT_DIR$/source/package/package.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/package/package.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/modules.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/modules.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/std/ios.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/ios.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/std/pupsmath.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/pupsmath.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/std/sutil.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/sutil.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/language-configuration.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/language-configuration.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pups.h" beforeDir="false" afterPath="$PROJECT_DIR$/pups.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_deque.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_deque.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/debugger/debug_info.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/debugger/debug_info.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/types/typing.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/types/typing.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,6 +70,10 @@
     <option name="majorVersion" value="2023" />
     <option name="minorVersion" value="1.3" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2QL2WKnSI9Iy3TC9BoIBkuokHgh" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -61,33 +82,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "development",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/workspace/Cpp/Tool/PourUPScript",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/workspace/Cpp/Tool/PourUPScript&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "ObjectiveC"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;ObjectiveC&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\workspace\Cpp\Tool\PourUPScript\source\builtins\keywords" />
@@ -97,27 +118,27 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
+    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="pups_Lib" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="pups_Lib_Tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib_Tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib_Tests">
+    <configuration name="pups_Lib" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="scratch.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="scratch.cpp" CONFIG_NAME="scratch.cpp">
+    <configuration name="pups_Lib_Tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib_Tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib_Tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="scratch.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="scratch.cpp" CONFIG_NAME="scratch.cpp">
       <option name="sourceFile" value="C:\Users\impodog\AppData\Roaming\JetBrains\CLion2023.1\scratches\scratch.cpp" />
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
@@ -199,6 +220,9 @@
       <workItem from="1690157015748" duration="12744000" />
       <workItem from="1690244226627" duration="10110000" />
       <workItem from="1690329855441" duration="12137000" />
+      <workItem from="1690353130550" duration="7198000" />
+      <workItem from="1690416828435" duration="650000" />
+      <workItem from="1690460932122" duration="5741000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -414,7 +438,31 @@
       <option name="project" value="LOCAL" />
       <updated>1690341660469</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Update CMakeLists.txt">
+      <option name="closed" value="true" />
+      <created>1690353259445</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1690353259445</updated>
+    </task>
+    <task id="LOCAL-00031" summary="v0.15.1&#10;- Finally, add support for changing the directory of &quot;import&quot; and &quot;#include&quot; statements">
+      <option name="closed" value="true" />
+      <created>1690367197893</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1690367197893</updated>
+    </task>
+    <task id="LOCAL-00032" summary="v0.15.2&#10;- Add more details to getting the path that should be used&#10;- Modified pups.h aliases">
+      <option name="closed" value="true" />
+      <created>1690370819182</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1690370819182</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,9 +487,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="v0.1.2&#10;Add modules and map-open series" />
-    <MESSAGE value="v0.1.3&#10;Add puppyscript(not complete, testing)" />
-    <MESSAGE value="v0.2.0&#10;Puppy and PUPS fixes, better grammar" />
     <MESSAGE value="v0.3.0&#10;Add references, better while loop, better puppy grammar, more keywords" />
     <MESSAGE value="v0.4.0&#10;Add and fix if-elif-else statements.&#10;Add four learning files for puppyscript" />
     <MESSAGE value="v0.4.1&#10;Add more complete README and other guides.&#10;Add some string-related functions" />
@@ -464,7 +509,10 @@
     <MESSAGE value="v0.14.1&#10;- Fix the compiling problem about the cmath library caused by pupsmath.cpp" />
     <MESSAGE value="v0.15.0&#10;- Add new compiler option : &quot;--debug&quot; for generating extra debug info in the source code&#10;- Add support for debug messages&#10;- Add a new library: debug.puppy" />
     <MESSAGE value="Merging change of numbers.h" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merging change of numbers.h" />
+    <MESSAGE value="Update CMakeLists.txt" />
+    <MESSAGE value="v0.15.1&#10;- Finally, add support for changing the directory of &quot;import&quot; and &quot;#include&quot; statements" />
+    <MESSAGE value="v0.15.2&#10;- Add more details to getting the path that should be used&#10;- Modified pups.h aliases" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.15.2&#10;- Add more details to getting the path that should be used&#10;- Modified pups.h aliases" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

@@ -5,33 +5,33 @@
 #include "control.h"
 
 #include <utility>
+#include <vector>
 
 namespace pups::library {
+    std::vector<MapPtr> global_maps;
+
     Control::Control(const IdFile &idFile, MapPtr map) :
             idFile(idFile), cur_id(&idFile.get_id()), map(std::move(map)) {
 
     }
 
-    Control::Control(IdFile idFile, Constants &constants) :
-            idFile(std::move(idFile)), cur_id(&this->idFile.get_id()),
-            global_map(std::make_shared<Map>()), map(std::make_shared<Map>(global_map.get(), false)) {
-        constants.export_to(global_map.get());
-    }
-
     Control::Control(const path &path, Constants &constants) :
             idFile(read_file(path)), cur_id(&idFile.get_id()),
-            global_map(std::make_shared<Map>()), map(std::make_shared<Map>(global_map.get(), false)) {
+            global_map(std::make_shared<Map>(path.parent_path())), map(std::make_shared<Map>(global_map.get(), false)) {
+        global_maps.push_back(global_map);
         constants.export_to(global_map.get());
     }
 
     Control::Control(const path &path, Constants &constants, Map *map, bool allow_upsearch) :
-            idFile(read_file(path)), cur_id(&idFile.get_id()), map(std::make_shared<Map>(map, allow_upsearch)) {
+            idFile(read_file(path)), cur_id(&idFile.get_id()),
+            map(std::make_shared<Map>(map, path.parent_path(), allow_upsearch)) {
         constants.export_to(this->map->get_global());
     }
 
     Control::~Control() {
         map->restore();
         map->push_up_errs();
+        map.reset();
     }
 
     bool Control::next_id() {
@@ -66,5 +66,4 @@ namespace pups::library {
         idFile.restart();
         cur_id = &idFile.get_id();
     }
-
 }

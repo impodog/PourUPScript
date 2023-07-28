@@ -54,7 +54,7 @@ namespace pups::library::builtins::map_open {
     }
 
     ObjectPtr open_file(const std::string &name, Map *map) {
-        path p = module_path;
+        path p = map->get_path();
         p /= name;
         p = std::filesystem::absolute(p);
         try {
