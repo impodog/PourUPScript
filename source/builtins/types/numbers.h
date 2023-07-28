@@ -122,6 +122,10 @@ namespace pups::library::builtins::numbers {
             {Id{"", "sub"}, OP_FUNC(pups_int, -)},
             {Id{"", "mul"}, OP_FUNC(pups_int, *)},
             {Id{"", "div"}, OP_FUNC(pups_int, /)},
+            {Id{"", "mod"}, OP_FUNC(pups_int, %)},
+            {Id{"", "and"}, OP_FUNC(pups_int, &)},
+            {Id{"", "or"},  OP_FUNC(pups_int, |)},
+            {Id{"", "xor"}, OP_FUNC(pups_int, ^)},
             {Id{"", "pow"}, BIN_FUNC(pups_int, pow)},
             {Id{"", "log"}, BIN_FUNC(pups_int, log)},
             {Id{"", "gt"},  OP_FUNC_CMP(pups_int, >)},
@@ -158,7 +162,9 @@ namespace pups::library::builtins::numbers {
     };
 
     inline const NumTypes<pups_bool>::OperatorMap OperatorTypes<pups_bool>::operators = {
-
+            {Id{"", "and"}, OP_FUNC(pups_bool, &&)},
+            {Id{"", "or"}, OP_FUNC(pups_bool, ||)},
+            {Id{"", "xor"}, OP_FUNC(pups_bool, ^)},
     };
 
     template<typename Arithmetic>

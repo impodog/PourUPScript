@@ -27,7 +27,7 @@ But in loop, it checks by using the "break" statement WITH arguments. You heard 
 No break statements means to continue it endlessly.
 */
 a = random.rand_int 100
-while:
+loop:
     print "a is now " a
     a = a.sub 1
     break (a.gt 0) // This means to continue the loop if a is greater than 0

@@ -40,12 +40,12 @@ namespace pups::library::builtins::keyword_func {
                 return result ? numbers::True : numbers::False;
             }) {}
 
-    While::While(bool require_false) : Function([require_false](FunctionArgs &args, Map *map) -> ObjectPtr {
+    Loop::Loop(bool require_false) : Function([require_false](FunctionArgs &args, Map *map) -> ObjectPtr {
         MapPtr sub_map;
         if (args.size() != 1 || !args.front()->get()->is_long_str())
             map->throw_error(
                     std::make_shared<ArgumentError>(
-                            "Incorrect argument for keyword while. One long string is required."));
+                            "Incorrect argument for keyword loop. One long string is required."));
         else {
             ObjectPtr break_v = pending;
             sub_map = std::make_shared<Map>(map, true);
@@ -136,7 +136,7 @@ namespace pups::library::builtins::keyword_func {
     }) {}
 
     Id id_moveTo{"", "mov"}, id_if{"", "if"}, id_elif{"", "elif"}, id_if_not{"", "if_not"}, id_elif_not{"", "elif_not"},
-            id_whileTrue{"", "while"}, id_whileFalse{"", "while_not"}, id_return{"", "ret"},
+            id_loop{"", "loop"}, id_loop_not{"", "loop_not"}, id_return{"", "ret"},
             id_with{"", "with"}, id_pop{"", "pop_back"}, id_delete{"", "del"},
             id_break{"", "break"}, id_unmap{"", "unmap"}, id_exit{"", "exit"}, id_throw{"","throw"};
 
@@ -146,8 +146,8 @@ namespace pups::library::builtins::keyword_func {
         constants.add(id_elif, std::make_shared<IfNoArg>(false, false));
         constants.add(id_if_not, std::make_shared<IfNoArg>(true, true));
         constants.add(id_elif_not, std::make_shared<IfNoArg>(true, false));
-        constants.add(id_whileTrue, std::make_shared<While>(false));
-        constants.add(id_whileFalse, std::make_shared<While>(true));
+        constants.add(id_loop, std::make_shared<Loop>(false));
+        constants.add(id_loop_not, std::make_shared<Loop>(true));
         constants.add(id_return, std::make_shared<Return>());
         constants.add(id_with, std::make_shared<With>());
         constants.add(id_pop, std::make_shared<Pop>());

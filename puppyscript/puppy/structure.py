@@ -94,13 +94,16 @@ class Structure:
                     result.append(line)
                     while_name = False
             else:
-                tmp = re.match(r"(\s*)while\s+(.+):", line)
+                tmp = re.match(r"(\s*)while(_not)?\s+(.+):", line)
                 if tmp is None:
                     result.append(line)
                 else:
-                    while_name = tmp.group(2)
+                    while_name = tmp.group(3)
                     outer_indent = tmp.group(1)
-                    stack = [outer_indent + "while:"]
+                    if tmp.group(2) is None:
+                        stack = [outer_indent + "loop:"]
+                    else:
+                        stack = [outer_indent + "loop_not:"]
 
         self.content = "\n".join(result)
         return while_name is not None

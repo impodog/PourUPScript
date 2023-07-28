@@ -20,9 +20,9 @@ namespace pups::library::builtins::keyword_func {
         explicit IfNoArg(bool require_false, bool is_direct);
     };
 
-    class While : public Function {
+    class Loop : public Function {
     public:
-        explicit While(bool require_false);
+        explicit Loop(bool require_false);
     };
 
     class Return : public Function {

@@ -1,3 +1,7 @@
+v0.16.1
+- Change the name of "while" to "loop", however "while" is still supported and recommended
+- Add a few more operators to integers and booleans
+
 v0.16.0
 - BIG UPDATE: Add dynamic linking support and the tutorial
 - Add path recording feature to maps, so you can now import modules directly from relative paths
