@@ -28,20 +28,8 @@ class Assignment:
                     result.append(tmp.group(1) + "~" + new_name)
         self.content = "\n".join(result[1:])
 
-    def scan_import(self):
-        result = list()
-        for line in self.content.split("\n"):
-            tmp = re.fullmatch(rf"(\s*)import\s+({WORD})\s+as\s+({WORD})", line)
-            if tmp is None:
-                result.append(line)
-            else:
-                result.append("%s %s" % (tmp.group(1) + "import", tmp.group(2)))
-                result.append("%s %s" % (tmp.group(1) + moveTo, tmp.group(3)))
-        self.content = "\n".join(result)
-
     def work(self, output_name: str) -> str:
         self.scan_assign()
-        self.scan_import()
         output = output_name + ".no_assign"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)

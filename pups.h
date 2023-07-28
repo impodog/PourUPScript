@@ -19,7 +19,8 @@ namespace pups {
     using library::builtins::function::HasMethods;
     using library::builtins::function::FunctionArgs, library::builtins::function::FunctionCore;
     using library::package::PackageHandler;
-    using library::pending;
+    using library::pending, library::builtins::function::empty_func;
+    using library::builtins::numbers::True, library::builtins::numbers::False;
     using library::module_link_name, library::PUPS_LIB_VERSION;
     using library::builtins::map_open::set_module_path;
     using library::cast;
