@@ -22,23 +22,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.15.2&#10;- Add more details to getting the path that should be used&#10;- Modified pups.h aliases">
-      <change afterPath="$PROJECT_DIR$/source/package/package.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/package/package.h" afterDir="false" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.16.2&#10;- Add more aliases to use in pups.h&#10;- Minor changes to puppyscript">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/modules.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/modules.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/ios.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/ios.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/pupsmath.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/pupsmath.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/std/sutil.h" beforeDir="false" afterPath="$PROJECT_DIR$/modules/std/sutil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/language-configuration.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/language-configuration.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pups.h" beforeDir="false" afterPath="$PROJECT_DIR$/pups.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/containers/container_deque.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/containers/container_deque.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/debugger/debug_info.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/debugger/debug_info.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/types/typing.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/types/typing.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/package/package.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/package/package.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,47 +68,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/workspace/Cpp/Tool/PourUPScript&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "development",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/workspace/Cpp/Tool/PourUPScript",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "structure.view.defaults.are.configured": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;ObjectiveC&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "ObjectiveC"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\Cpp\Tool\PourUPScript\puppyscript" />
+      <recent name="D:\workspace\Cpp\Tool\PourUPScript\deprecated" />
       <recent name="D:\workspace\Cpp\Tool\PourUPScript\source\builtins\keywords" />
       <recent name="D:\workspace\Cpp\Tool\PourUPScript\source\builtins\types" />
       <recent name="D:\workspace\Cpp\Tool\PourUPScript\source\builtins" />
-      <recent name="D:\workspace\Cpp\Tool\PourUPScript\source\builtins\containers" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
-    <configuration name="PUPS_EzN" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="PUPS_EzN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="PUPS_EzN">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -146,7 +129,6 @@
     </configuration>
     <list>
       <item itemvalue="C/C++ File.scratch.cpp" />
-      <item itemvalue="CMake Application.PUPS_EzN" />
       <item itemvalue="CMake Application.pups_Lib" />
       <item itemvalue="CMake Application.pups_Lib_Tests" />
     </list>
@@ -223,6 +205,8 @@
       <workItem from="1690353130550" duration="7198000" />
       <workItem from="1690416828435" duration="650000" />
       <workItem from="1690460932122" duration="5741000" />
+      <workItem from="1690499155001" duration="23186000" />
+      <workItem from="1690608039490" duration="331000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -462,7 +446,47 @@
       <option name="project" value="LOCAL" />
       <updated>1690370819182</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="v0.16.0&#10;- BIG UPDATE: Add dynamic linking support and the tutorial&#10;- Add path recording feature to maps, so you can now import modules directly from relative paths&#10;- Deprecate the old and not-so-good std library(but a new one is coming soon)">
+      <option name="closed" value="true" />
+      <created>1690511030552</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1690511030552</updated>
+    </task>
+    <task id="LOCAL-00034" summary="v0.16.1&#10;- Change the name of &quot;while&quot; to &quot;loop&quot;, however &quot;while&quot; is still supported and recommended&#10;- Add a few more operators to integers and booleans">
+      <option name="closed" value="true" />
+      <created>1690527333909</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1690527333909</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Update CMakeLists.txt">
+      <option name="closed" value="true" />
+      <created>1690531205395</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1690531205395</updated>
+    </task>
+    <task id="LOCAL-00036" summary="v0.16.2&#10;- Add more aliases to use in pups.h">
+      <option name="closed" value="true" />
+      <created>1690536780435</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1690536780435</updated>
+    </task>
+    <task id="LOCAL-00037" summary="v0.16.2&#10;- Add more aliases to use in pups.h&#10;- Minor changes to puppyscript">
+      <option name="closed" value="true" />
+      <created>1690537021482</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1690537021482</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -487,10 +511,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="v0.3.0&#10;Add references, better while loop, better puppy grammar, more keywords" />
-    <MESSAGE value="v0.4.0&#10;Add and fix if-elif-else statements.&#10;Add four learning files for puppyscript" />
-    <MESSAGE value="v0.4.1&#10;Add more complete README and other guides.&#10;Add some string-related functions" />
-    <MESSAGE value="v0.4.3&#10;Fix the inline function &quot;cannot find map&quot; problem&#10;Add local findings to make better logic" />
     <MESSAGE value="v0.5.0&#10;Better finding logic(extern, auto upfind)" />
     <MESSAGE value="Upload cmake config" />
     <MESSAGE value="v0.6.0&#10;Add data structures as well as their tutorial" />
@@ -509,17 +529,14 @@
     <MESSAGE value="v0.14.1&#10;- Fix the compiling problem about the cmath library caused by pupsmath.cpp" />
     <MESSAGE value="v0.15.0&#10;- Add new compiler option : &quot;--debug&quot; for generating extra debug info in the source code&#10;- Add support for debug messages&#10;- Add a new library: debug.puppy" />
     <MESSAGE value="Merging change of numbers.h" />
-    <MESSAGE value="Update CMakeLists.txt" />
     <MESSAGE value="v0.15.1&#10;- Finally, add support for changing the directory of &quot;import&quot; and &quot;#include&quot; statements" />
     <MESSAGE value="v0.15.2&#10;- Add more details to getting the path that should be used&#10;- Modified pups.h aliases" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.15.2&#10;- Add more details to getting the path that should be used&#10;- Modified pups.h aliases" />
-  </component>
-  <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="CMakeRunConfiguration">
-        <watch expression="count_depth()" language="ObjectiveC" />
-      </configuration>
-    </watches-manager>
+    <MESSAGE value="v0.16.0&#10;- BIG UPDATE: Add dynamic linking support and the tutorial&#10;- Add path recording feature to maps, so you can now import modules directly from relative paths&#10;- Deprecate the old and not-so-good std library(but a new one is coming soon)" />
+    <MESSAGE value="v0.16.1&#10;- Change the name of &quot;while&quot; to &quot;loop&quot;, however &quot;while&quot; is still supported and recommended&#10;- Add a few more operators to integers and booleans" />
+    <MESSAGE value="Update CMakeLists.txt" />
+    <MESSAGE value="v0.16.2&#10;- Add more aliases to use in pups.h" />
+    <MESSAGE value="v0.16.2&#10;- Add more aliases to use in pups.h&#10;- Minor changes to puppyscript" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.16.2&#10;- Add more aliases to use in pups.h&#10;- Minor changes to puppyscript" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

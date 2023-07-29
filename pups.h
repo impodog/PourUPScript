@@ -25,6 +25,10 @@ namespace pups {
     using library::builtins::map_open::set_module_path;
     using library::cast;
 
+    using Int = Number<library::pups_int>;
+    using Float = Number<library::pups_float>;
+    using Bool = Number<library::pups_bool>;
+
     inline void init(Constants &constants) {
         library::builtins::init(constants);
         library::package::init(constants);
@@ -32,6 +36,7 @@ namespace pups {
 
     inline void quit() {
         library::builtins::map_open::quit();
+        library::quit_global();
         library::package::quit();
     }
 }

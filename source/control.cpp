@@ -66,4 +66,8 @@ namespace pups::library {
         idFile.restart();
         cur_id = &idFile.get_id();
     }
+
+    void quit_global() {
+        global_maps.clear();
+    }
 }

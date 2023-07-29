@@ -29,6 +29,8 @@
 /*This part defines different dynamic library extensions*/
 #ifdef __WIN32
 #define LIB_EXT ".dll"
+#elifdef __APPLE__
+#define LIB_EXT ".dylib"
 #else
 #define LIB_EXT ".so"
 #endif

@@ -35,6 +35,8 @@ namespace pups::library {
     };
 
     using ControlPtr = std::shared_ptr<Control>;
+
+    void quit_global();
 }
 
 #endif //PUPS_LIB_CONTROL_H
