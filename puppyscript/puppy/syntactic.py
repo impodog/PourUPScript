@@ -91,6 +91,16 @@ class Syntactic:
         while self.array_indexes():
             ...
 
+    def scan_link_to(self):
+        result = list()
+        for line in self.content.split("\n"):
+            tmp = re.fullmatch(rf"(\s*)link\s+({WORD})\s+to\s+({WORD})\s*", line)
+            if tmp is None:
+                result.append(line)
+            else:
+                result.append(tmp.group(1) + tmp.group(3) + "." + tmp.group(2).lstrip("&") + " = " + tmp.group(2))
+        self.content = "\n".join(result)
+
     def scan_extern(self):
         result = list()
         indent = -1
@@ -137,6 +147,7 @@ class Syntactic:
         self.use_statements()
         self.special_functions()
         self.all_array_indexes()
+        self.scan_link_to()
         self.scan_all_extern()
         output = output_name + ".syn"
         with open(output, "w", encoding="utf-8") as f:

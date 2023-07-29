@@ -1,3 +1,6 @@
+v0.16.4
+- Add "link ... to ..." statement
+
 v0.16.3
 - Fix the problem that some global maps(in control.cpp) saved are not freed properly
 - Add support for apple ".dylib" files
