@@ -16,6 +16,7 @@ namespace pups {
     using library::builtins::function::Function, library::builtins::reference::Reference;
     using library::builtins::numbers::Number, library::builtins::strings::String;
     using library::builtins::containers::Array, library::builtins::containers::Pair, library::builtins::containers::HashMap;
+    using library::builtins::containers::Deque;
     using library::builtins::function::HasMethods;
     using library::builtins::function::FunctionArgs, library::builtins::function::FunctionCore;
     using library::package::PackageHandler;

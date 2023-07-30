@@ -98,7 +98,7 @@ class Syntactic:
             if tmp is None:
                 result.append(line)
             else:
-                result.append(tmp.group(1) + tmp.group(3) + "." + tmp.group(2).lstrip("&") + " = " + tmp.group(2))
+                result.append(tmp.group(1) + tmp.group(3) + "." + word_last( tmp.group(2)) + " = " + tmp.group(2))
         self.content = "\n".join(result)
 
     def scan_extern(self):

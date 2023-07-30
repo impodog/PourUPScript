@@ -6,14 +6,25 @@
 
 namespace pups::library {
     void Map::unpack_array(ObjectPtr &object) {
-        auto ptr = cast<builtins::containers::Array>(object);
-        if (ptr) {
-            for (auto &element: ptr->data)
-                m_unpacked.push(&element);
-        } else
-            throw_error(
-                    std::make_shared<TypeError>(
-                            "Cannot unpack object " + object->repr() + " since it's not an array."));
+        {
+            auto ptr = cast<builtins::containers::Array>(object);
+            if (ptr) {
+                for (auto &element: ptr->data)
+                    m_unpacked.push(&element);
+                return;
+            }
+        }
+        {
+            auto ptr = cast<builtins::containers::Deque>(object);
+            if (ptr) {
+                for (auto &element: ptr->data)
+                    m_unpacked.push(&element);
+                return;
+            }
+        }
+        throw_error(
+                std::make_shared<TypeError>(
+                        "Cannot unpack object " + object->repr() + " since it's not an array."));
     }
 }
 namespace pups::library::builtins::containers {
@@ -186,7 +197,7 @@ namespace pups::library::builtins::containers {
     Id id_arrayInit{"", "array"}, id_pairInit{"", "pair"}, id_hashmapInit{"", "hashmap"}, id_dequeInit{"", "deque"};
 
     const ContainerCoreMap<Array> array_cores = {
-            {Id{"", "push"},      container_push_back<Array>},
+            {Id{"", "push"},     container_push_back<Array>},
             {Id{"", "pop"},      container_pop_back<Array>},
             {Id{"", "pop_at"},   container_pop_at<Array>},
             {Id{"", "clear"},    container_clear<Array>},
@@ -198,7 +209,7 @@ namespace pups::library::builtins::containers {
             {Id{"", "insert"},   container_insert<Array>},
     };
     const ContainerCoreMap<HashMap> hashmap_cores = {
-            {Id{"", "push"},      container_push_back<HashMap>},
+            {Id{"", "push"},     container_push_back<HashMap>},
             {Id{"", "pop"},      container_pop_key<HashMap>},
             {Id{"", "pop_at"},   container_pop_key<HashMap>},
             {Id{"", "clear"},    container_clear<HashMap>},

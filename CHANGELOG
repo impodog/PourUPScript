@@ -1,3 +1,7 @@
+v0.16.5
+- Add alias to Deque type, and support for unpacking Deque
+- Change link statement naming method
+
 v0.16.4
 - Add "link ... to ..." statement
 
