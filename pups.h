@@ -16,6 +16,9 @@ namespace pups {
     using library::ObjectPtr, library::MapPtr, library::ControlPtr;
     using library::builtins::function::Function, library::builtins::reference::Reference;
     using library::builtins::numbers::Number, library::builtins::strings::String;
+    using library::builtins::compare::Lower, library::builtins::compare::LowerEqual,
+            library::builtins::compare::Greater, library::builtins::compare::GreaterEqual,
+            library::builtins::compare::Equal, library::builtins::compare::NotEqual;
     using library::builtins::containers::Array, library::builtins::containers::Pair, library::builtins::containers::HashMap;
     using library::builtins::containers::Deque;
     using library::builtins::function::HasMethods;
@@ -27,9 +30,9 @@ namespace pups {
     using library::builtins::map_open::set_module_path;
     using library::cast;
 
-    using Int = Number<library::pups_int>;
-    using Float = Number<library::pups_float>;
-    using Bool = Number<library::pups_bool>;
+    using Int = library::builtins::numbers::IntType;
+    using Float = library::builtins::numbers::FloatType;
+    using Bool = library::builtins::numbers::BoolType;
 
     inline void init(Constants &constants) {
         library::builtins::init(constants);

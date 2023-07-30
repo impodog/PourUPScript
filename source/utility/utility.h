@@ -6,5 +6,6 @@
 #define PUPS_LIB_UTILITY_H
 
 #include "iterable.h"
+#include "objects.h"
 
 #endif //PUPS_LIB_UTILITY_H

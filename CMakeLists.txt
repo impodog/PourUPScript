@@ -26,6 +26,7 @@ set(source_files
         ${PUPS_SOURCE}/builtins/keywords/qualifiers.cpp ${PUPS_SOURCE}/builtins/keywords/qualifiers.h
         ${PUPS_SOURCE}/builtins/keywords/map_open.cpp ${PUPS_SOURCE}/builtins/keywords/map_open.h
         ${PUPS_SOURCE}/builtins/keywords/builtin_func.cpp ${PUPS_SOURCE}/builtins/keywords/builtin_func.h
+        ${PUPS_SOURCE}/builtins/keywords/compare.cpp ${PUPS_SOURCE}/builtins/keywords/compare.h
         ${PUPS_SOURCE}/builtins/types/reference.cpp ${PUPS_SOURCE}/builtins/types/reference.h
         ${PUPS_SOURCE}/builtins/containers/containers.cpp ${PUPS_SOURCE}/builtins/containers/containers.h
         ${PUPS_SOURCE}/builtins/containers/container_array.cpp ${PUPS_SOURCE}/builtins/containers/container_array.h
@@ -38,8 +39,11 @@ set(source_files
         ${PUPS_SOURCE}/builtins/containers/container_deque.cpp ${PUPS_SOURCE}/builtins/containers/container_deque.h
         ${PUPS_SOURCE}/builtins/debugger/debug_info.cpp ${PUPS_SOURCE}/builtins/debugger/debug_info.h
         ${PUPS_SOURCE}/package/package.cpp ${PUPS_SOURCE}/package/package.h
+        ${PUPS_SOURCE}/utility/const.h
         ${PUPS_SOURCE}/utility/utility.h
-        ${PUPS_SOURCE}/utility/iterable.cpp ${PUPS_SOURCE}/utility/iterable.h)
+        ${PUPS_SOURCE}/utility/iterable.cpp ${PUPS_SOURCE}/utility/iterable.h
+        ${PUPS_SOURCE}/utility/objects.cpp ${PUPS_SOURCE}/utility/objects.h
+        )
 
 project(pups_Lib)
 

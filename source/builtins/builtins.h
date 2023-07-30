@@ -13,6 +13,7 @@
 #include "keywords/map_open.h"
 #include "keywords/qualifiers.h"
 #include "keywords/builtin_func.h"
+#include "keywords/compare.h"
 #include "types/reference.h"
 #include "containers/containers.h"
 #include "ranges/ranges.h"

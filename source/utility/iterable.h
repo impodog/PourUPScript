@@ -5,8 +5,7 @@
 #ifndef PUPS_LIB_ITERABLE_H
 #define PUPS_LIB_ITERABLE_H
 
-#include "../control.h"
-#include "../builtins/builtins.h"
+#include "const.h"
 
 namespace pups::library::utility {
     using namespace builtins;
