@@ -8,6 +8,7 @@
 
 namespace pups::library {
     size_t Object::static_count = 0;
+    const Id Object::id_compare = spec_name_of("cmp");
 
     FindError::FindError(const Object *sender, Id id) : sender(sender), id(std::move(id)) {}
 

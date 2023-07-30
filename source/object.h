@@ -34,6 +34,8 @@ namespace pups::library {
     public:
         using ObjectMap = IdMap<ObjectPtr>;
         size_t m_count;
+        static const Id id_compare;
+        static constexpr int compare_failure = std::numeric_limits<int>::max();
 
         Object();
 
@@ -67,6 +69,8 @@ namespace pups::library {
         [[nodiscard]] virtual size_t hash() noexcept;
 
         virtual bool equal(ObjectPtr &object) noexcept;
+
+        virtual int compare(ObjectPtr &object, Map *map) noexcept;
     };
 
     using ObjectMap = Object::ObjectMap;

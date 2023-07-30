@@ -328,6 +328,18 @@ namespace pups::library {
         }
     }
 
+    int Object::compare(ObjectPtr &object, Map *map) noexcept {
+        try {
+            auto func = source_find(id_compare, map);
+            func->put(object, map);
+            return func->end_of_line(map)->condition();
+        } catch (const FindError &) {
+            map->throw_error(std::make_shared<IdError>(
+                    "Object " + repr() + " does not support comparing, however, compare is called."));
+        }
+        return compare_failure;
+    }
+
     void Map::Signs::set_break_sign(ObjectPtr object) {
         if (!break_sign || !object)
             break_sign = std::move(object);

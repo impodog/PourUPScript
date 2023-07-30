@@ -45,6 +45,11 @@ namespace pups::library::builtins::builtin_func {
         Equal();
     };
 
+    class Compare: public Function {
+    public:
+        Compare();
+    };
+
     void init(Constants &constants);
 }
 

@@ -69,6 +69,23 @@ namespace pups::library::builtins::numbers {
             auto ptr = cast<Number>(object);
             return ptr && value == ptr->value;
         }
+
+        int compare(ObjectPtr &object, Map *map) noexcept override {
+            auto ptr = cast<Number>(object);
+            if (!ptr) {
+                map->throw_error(std::make_shared<TypeError>(
+                        "Cannot compare number " + repr() + " with " + object->repr() +
+                        " that has type different than " +
+                        type_name_of_arith<Arithmetic>() + "."));
+                return compare_failure;
+            }
+            if (value < ptr->value)
+                return -1;
+            else if (value > ptr->value)
+                return 1;
+            else
+                return 0;
+        }
     };
 
     template<typename Arithmetic>
@@ -163,7 +180,7 @@ namespace pups::library::builtins::numbers {
 
     inline const NumTypes<pups_bool>::OperatorMap OperatorTypes<pups_bool>::operators = {
             {Id{"", "and"}, OP_FUNC(pups_bool, &&)},
-            {Id{"", "or"}, OP_FUNC(pups_bool, ||)},
+            {Id{"", "or"},  OP_FUNC(pups_bool, ||)},
             {Id{"", "xor"}, OP_FUNC(pups_bool, ^)},
     };
 

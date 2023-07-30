@@ -31,13 +31,13 @@ namespace pups::library::utility {
         }
     }
 
-    template<typename IterType, typename DataType>
-    DataType &get_data(IterType &iter) {
+    template<typename IterType>
+    auto &get_data(IterType &iter) {
         return iter.data;
     }
 
     template<>
-    inline std::string &get_data<strings::String, std::string>(strings::String &iter) {
+    inline auto &get_data<strings::String>(strings::String &iter) {
         return iter.data();
     }
 }

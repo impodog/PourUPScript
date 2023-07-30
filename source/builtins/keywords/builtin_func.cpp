@@ -64,7 +64,7 @@ namespace pups::library::builtins::builtin_func {
 
     TypenameCheck::TypenameCheck() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
         if (args.size() != 2)
-            map->throw_error(std::make_shared<ArgumentError>("TypenameCheck requires two only arguments."));
+            map->throw_error(std::make_shared<ArgumentError>("Typename check requires two only arguments."));
         else {
             const auto &first = *args.front();
             args.pop_front();
@@ -73,7 +73,8 @@ namespace pups::library::builtins::builtin_func {
             if (name)
                 return first->type_name() == name->data() ? numbers::True : numbers::False;
             else
-                map->throw_error(std::make_shared<TypeError>("TypenameCheck requires a string as the second argument."));
+                map->throw_error(
+                        std::make_shared<TypeError>("Typename check requires a string as the second argument."));
         }
         return numbers::False;
     }) {}
@@ -91,8 +92,21 @@ namespace pups::library::builtins::builtin_func {
         return numbers::False;
     }) {}
 
+    Compare::Compare() : Function([](FunctionArgs &args, Map *map) -> ObjectPtr {
+        if (args.size() != 2)
+            map->throw_error(std::make_shared<ArgumentError>("Compare check requires two only arguments."));
+        else {
+            auto &lhs = *args.front();
+            args.pop_front();
+            auto &rhs = *args.front();
+            args.pop_front();
+            return std::make_shared<numbers::IntType>(lhs->compare(rhs, map));
+        }
+        return numbers::False;
+    }) {}
+
     Id id_inputs{"", "inputs"}, id_print{"", "print"}, id_puts{"", "puts"}, id_call{"", "call"},
-            id_isDefined{"", "is_def"}, id_typenameCheck{"", "tpchk"}, id_equal{"", "equal"};
+            id_isDefined{"", "is_def"}, id_typenameCheck{"", "tpchk"}, id_equal{"", "equal"}, id_compare{"", "cmp"};
 
     void init(Constants &constants) {
         constants.add(id_inputs, std::make_shared<Inputs>());
@@ -102,5 +116,6 @@ namespace pups::library::builtins::builtin_func {
         constants.add(id_isDefined, std::make_shared<IsDefined>());
         constants.add(id_typenameCheck, std::make_shared<TypenameCheck>());
         constants.add(id_equal, std::make_shared<Equal>());
+        constants.add(id_compare, std::make_shared<Compare>());
     }
 }

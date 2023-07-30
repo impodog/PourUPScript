@@ -60,6 +60,18 @@ namespace pups::library::builtins::strings {
         return ptr && m_data == ptr->m_data;
     }
 
+    int String::compare(ObjectPtr &object, Map *map) noexcept {
+        auto ptr = cast<String>(object);
+        if (ptr)
+            return m_data.compare(ptr->m_data);
+        else {
+            map->throw_error(
+                    std::make_shared<TypeError>(
+                            "Cannot compare string " + repr() + " with non-string " + object->repr() + "."));
+            return compare_failure;
+        }
+    }
+
     using StringCompare = std::function<bool(std::string &, std::string &)>;
 
     StringFuncCore str_cmp(const StringCompare &cmp) {

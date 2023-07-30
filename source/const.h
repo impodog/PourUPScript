@@ -32,7 +32,7 @@ namespace pups::library {
     using cstr = const char *;
 
     constexpr cstr
-            PUPS_LIB_VERSION = "0.16.6",
+            PUPS_LIB_VERSION = "0.17.0",
             RESERVED = "_R_",
             MODULE_LINK = "_ML_";
     constexpr const char remove_symbol = '~', public_symbol = '&', unpack_symbol = '%';

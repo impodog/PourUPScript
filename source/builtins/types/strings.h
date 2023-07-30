@@ -35,6 +35,8 @@ namespace pups::library::builtins::strings {
         [[nodiscard]] size_t hash() noexcept override;
 
         [[nodiscard]] bool equal(ObjectPtr &object) noexcept override;
+
+        int compare(ObjectPtr &object, Map *map) noexcept override;
     };
 
     using StringFuncCore = std::function<ObjectPtr(String &, FunctionArgs &, Map *)>;

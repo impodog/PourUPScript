@@ -1,3 +1,7 @@
+v0.17.0
+- Add compare function to objects, and script function "cmp"
+- Fix utility get_data problem
+
 v0.16.6
 - Add iterable utility
 
