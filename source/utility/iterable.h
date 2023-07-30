@@ -10,6 +10,7 @@
 namespace pups::library::utility {
     using namespace builtins;
     using namespace function;
+    using containers::Deque;
 
     template<typename ParserType>
     ObjectPtr work_with_iter(FunctionArgs &args, Map *map) {
@@ -38,6 +39,21 @@ namespace pups::library::utility {
     template<>
     inline auto &get_data<strings::String>(strings::String &iter) {
         return iter.data();
+    }
+
+    template<typename IterType>
+    using data_type_of = std::remove_reference_t<decltype(get_data(std::declval<IterType &>()))>;
+
+    template<typename IterType>
+    data_type_of<IterType> create_sized(size_t size) {
+        return data_type_of<IterType>(size);
+    }
+
+    template<>
+    inline data_type_of<Deque> create_sized<Deque>(size_t size) {
+        data_type_of<Deque> result;
+        result.resize(size);
+        return result;
     }
 }
 

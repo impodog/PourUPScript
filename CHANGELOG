@@ -1,3 +1,7 @@
+v0.17.2
+- Add utility: data_type_of and create_sized
+- Add get_compare(in compare.h)
+
 v0.17.1
 - Add compare function functors, and script functions: "lt", "le", "gt", "ge", "eq", "ne"
 

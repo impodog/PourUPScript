@@ -59,6 +59,10 @@ namespace pups::library::builtins::compare {
         bool operator()(const ObjectPtr &lhs, ObjectPtr rhs) const;
     };
 
+    using CompareFunc = std::function<bool(ObjectPtr, ObjectPtr)>;
+
+    CompareFunc get_compare(const std::shared_ptr<Function> &func, Map *map);
+
     void init(Constants &constants);
 }
 

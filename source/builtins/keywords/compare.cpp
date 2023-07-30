@@ -57,6 +57,14 @@ namespace pups::library::builtins::compare {
         }) {}
     };
 
+    CompareFunc get_compare(const std::shared_ptr<Function> &func, Map *map) {
+        return [func, map](ObjectPtr lhs, ObjectPtr rhs) -> bool {
+            func->put(lhs, map);
+            func->put(rhs, map);
+            return cast<numbers::BoolType>(func->end_of_line(map))->value;
+        };
+    }
+
     Id id_lower{"", "lt"}, id_lowerEqual{"", "le"},
             id_greater{"", "gt"}, id_greaterEqual{"", "ge"},
             id_equal{"", "eq"}, id_notEqual{"", "ne"};
