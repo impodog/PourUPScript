@@ -37,7 +37,9 @@ set(source_files
         ${PUPS_SOURCE}/builtins/keywords/inline_typing.cpp ${PUPS_SOURCE}/builtins/keywords/inline_typing.h
         ${PUPS_SOURCE}/builtins/containers/container_deque.cpp ${PUPS_SOURCE}/builtins/containers/container_deque.h
         ${PUPS_SOURCE}/builtins/debugger/debug_info.cpp ${PUPS_SOURCE}/builtins/debugger/debug_info.h
-        ${PUPS_SOURCE}/package/package.cpp ${PUPS_SOURCE}/package/package.h)
+        ${PUPS_SOURCE}/package/package.cpp ${PUPS_SOURCE}/package/package.h
+        ${PUPS_SOURCE}/utility/utility.h
+        ${PUPS_SOURCE}/utility/iterable.cpp ${PUPS_SOURCE}/utility/iterable.h)
 
 project(pups_Lib)
 

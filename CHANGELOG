@@ -1,3 +1,6 @@
+v0.16.6
+- Add iterable utility
+
 v0.16.5
 - Add alias to Deque type, and support for unpacking Deque
 - Change link statement naming method

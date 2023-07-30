@@ -8,6 +8,7 @@
 #include "source/control.h"
 #include "source/builtins/builtins.h"
 #include "source/package/package.h"
+#include "source/utility/utility.h"
 
 namespace pups {
     // Link commonly used classes and functions
