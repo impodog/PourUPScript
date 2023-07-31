@@ -138,7 +138,7 @@ namespace pups::library {
     }
 
     bool IdFile::next_cursor() {
-        if (m_cursor.second + 1 < m_file.at(m_cursor.first).size()) {
+        if (m_cursor.second + 1 < m_file->at(m_cursor.first).size()) {
             m_cursor.second++;
             return false;
         } else {
@@ -149,10 +149,10 @@ namespace pups::library {
     }
 
     const IdFactor &IdFile::get_id() const {
-        if (m_cursor.first == m_file.size())
+        if (m_cursor.first == m_file->size())
             return empty_factor;
         try {
-            return m_file.at(m_cursor.first).at(m_cursor.second);
+            return m_file->at(m_cursor.first).at(m_cursor.second);
         } catch (const std::out_of_range &) {
             return empty_factor;
         }
@@ -163,24 +163,29 @@ namespace pups::library {
         return get_id();
     }
 
+    IdFile::IdFile() {
+        m_file = std::make_shared<IdFile::File>();
+        m_file->emplace_back();
+    }
+
     void IdFile::add_id(const IdPtr &id) {
-        m_file.back().emplace_back(id);
+        m_file->back().emplace_back(id);
     }
 
     void IdFile::add_idFile(const IdFilePtr &idFile) {
-        m_file.back().emplace_back(idFile);
+        m_file->back().emplace_back(idFile);
     }
 
     void IdFile::new_line() {
-        m_file.emplace_back();
+        m_file->emplace_back();
     }
 
     bool IdFile::empty() const noexcept {
-        return m_file.empty() || (m_file.size() == 1 && m_file.front().empty());
+        return m_file->empty() || (m_file->size() == 1 && m_file->front().empty());
     }
 
     void IdFile::clear() noexcept {
-        m_file.clear();
+        m_file->clear();
     }
 
     void IdFile::restart() noexcept {
@@ -189,7 +194,7 @@ namespace pups::library {
 
     IdFile::Line IdFile::all() const noexcept {
         Line result;
-        for (auto &line: m_file) {
+        for (auto &line: *m_file) {
             for (auto &id: line)
                 result.push_back(id);
         }
@@ -199,7 +204,7 @@ namespace pups::library {
     std::string IdFile::str() const noexcept {
         std::string result;
         result.append("{\n");
-        for (auto &line: m_file) {
+        for (auto &line: *m_file) {
             for (auto &id: line) {
                 result.append(id.str()).push_back(' ');
             }

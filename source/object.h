@@ -96,13 +96,13 @@ namespace pups::library {
 
     class LongStr : public Object {
     protected:
-        IdFilePtr m_idFile;
+        IdFile m_idFile;
     public:
-        explicit LongStr(IdFilePtr idFile);
+        explicit LongStr(IdFile idFile);
 
         ObjectPtr put(ObjectPtr &object, Map *map) override;
 
-        [[nodiscard]] const IdFilePtr &ids() const noexcept;
+        [[nodiscard]] const IdFile &ids() const noexcept;
 
         [[nodiscard]] bool is_long_str() const noexcept final;
     };

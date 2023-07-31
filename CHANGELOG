@@ -1,3 +1,6 @@
+v0.19.1
+- Fix the problem caused by sharing cursors among IdFile
+
 v0.19.0
 - Add enumeration and match-case statements as well as compiler support
 - Add a new tutorial for enumeration and match-case

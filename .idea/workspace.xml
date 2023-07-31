@@ -22,35 +22,21 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="Update LICENSE and README.md">
-      <change afterPath="$PROJECT_DIR$/source/builtins/structural/enumerate.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/structural/enumerate.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/structural/match_case.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/builtins/structural/match_case.h" afterDir="false" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.19.0&#10;- Add enumeration and match-case statements as well as compiler support&#10;- Add a new tutorial for enumeration and match-case&#10;- Faster LongStr copies by using pointers&#10;- Add cpp-puppy header file. Now you can use cpp-puppy as a library">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn/Puppyscript/7. Modules.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/learn/Puppyscript/7. Modules.puppy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/processor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/processor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/structure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/structure.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/structure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/puppyscript-highlights-0.0.1.vsix" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppyscript-highlights/syntaxes/puppyscript.tmLanguage.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/builtins.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/builtins.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/builtins/function.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/function.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/keywords/inline_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_func.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/keywords/inline_func.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_func.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/inline_typing.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/builtins/keywords/keyword_func.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/keyword_func.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/builtins/keywords/map_open.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/builtins/keywords/map_open.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/control.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/control.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/control.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/syntax.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/syntax.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/syntax.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -238,7 +224,7 @@
       <workItem from="1690608039490" duration="331000" />
       <workItem from="1690608748780" duration="10300000" />
       <workItem from="1690766613535" duration="506000" />
-      <workItem from="1690767141540" duration="18718000" />
+      <workItem from="1690767141540" duration="24284000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -590,7 +576,15 @@
       <option name="project" value="LOCAL" />
       <updated>1690788601589</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="v0.19.0&#10;- Add enumeration and match-case statements as well as compiler support&#10;- Add a new tutorial for enumeration and match-case&#10;- Faster LongStr copies by using pointers&#10;- Add cpp-puppy header file. Now you can use cpp-puppy as a library">
+      <option name="closed" value="true" />
+      <created>1690798094766</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1690798094766</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -618,7 +612,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/puppyscript/cpp-puppy" />
     </ignored-roots>
-    <MESSAGE value="v0.10.1&#10;- Add listing for files and directories in ios&#10;- Add string utilities - sutil&#10;- Add a math library" />
     <MESSAGE value="v0.11.0&#10;- Add types and typing, and the corresponding compiler utility &quot;class&quot;&#10;- Add a new tutorial for types and classes&#10;- Fix the problem where inline functions switch maps incorrectly" />
     <MESSAGE value="v0.11.1&#10;- Add type inheritance, and subtype judgement.&#10;- Add 3 new tutorials.&#10;- Better typing syntax(new, inh)." />
     <MESSAGE value="v0.11.2&#10;- Now compiler will not repeat the type name when entering class&#10;- Add Path.create" />
@@ -643,7 +636,8 @@
     <MESSAGE value="v0.18.2&#10;- Add back support for &quot;::&quot; pairs in cpp-puppy&#10;- Change tutorials to use the new compiler&#10;- Fix cpp-puppy not removing blank lines&#10;- Removed support for loop_not and while_not" />
     <MESSAGE value="v0.18.4&#10;- Now import_lib will not terminate the program when the library is not found&#10;- Better info provided in cpp-puppy command line" />
     <MESSAGE value="Update LICENSE and README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update LICENSE and README.md" />
+    <MESSAGE value="v0.19.0&#10;- Add enumeration and match-case statements as well as compiler support&#10;- Add a new tutorial for enumeration and match-case&#10;- Faster LongStr copies by using pointers&#10;- Add cpp-puppy header file. Now you can use cpp-puppy as a library" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.19.0&#10;- Add enumeration and match-case statements as well as compiler support&#10;- Add a new tutorial for enumeration and match-case&#10;- Faster LongStr copies by using pointers&#10;- Add cpp-puppy header file. Now you can use cpp-puppy as a library" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -41,7 +41,7 @@ namespace pups::library::builtins::inline_func {
         map->add_object(id_arg_catch, std::make_shared<Arguments>(args));
     }
 
-    InlineFunc::InlineFunc(IdFilePtr idFile, Map *m_static_link) :
+    InlineFunc::InlineFunc(IdFile idFile, Map *m_static_link) :
             m_idFile(std::move(idFile)), m_static_link(m_static_link),
             Function([this](const FunctionArgs &args, Map *map) -> ObjectPtr {
                 MapPtr sub_map;

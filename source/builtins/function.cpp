@@ -26,7 +26,7 @@ namespace pups::library::builtins::function {
         try {
             result = m_core(m_args.at(map), map);
             m_args.erase(map);
-        } catch (const std::out_of_range &) {
+        } catch (const std::out_of_range &err) {
             FunctionArgs args;
             result = m_core(args, map);
         }

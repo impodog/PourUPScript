@@ -122,6 +122,8 @@ namespace pups::library {
 
         bool catch_by(CatchRequirements &required);
 
+        bool is_child_of(Map *map);
+
         const path &get_path();
     };
 

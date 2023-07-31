@@ -144,7 +144,7 @@ namespace pups::library {
     }
 
     ObjectPtr &Map::source_find(const Id &name, Map *map) {
-        //std::cout << "FINDING " << name.str() << std::endl;
+        //std::cout << "FIND " << name.str() << " IN " << to_string(map) << std::endl;
         return m_deepest->map_find(name, map);
     }
 
@@ -210,6 +210,7 @@ namespace pups::library {
 
 
     void Map::set_child(Map *sub_map) noexcept {
+        //std::cout << "LINK " << to_string(this) << " TO " << to_string(sub_map) << std::endl;
         bool is_null = sub_map == nullptr;
         Map *map = is_null ? this : sub_map, *deepest;
         if (is_null) {
@@ -306,6 +307,16 @@ namespace pups::library {
                 return true;
             }
             m_errors.pop_back();
+        }
+        return false;
+    }
+
+    bool Map::is_child_of(Map *map) {
+        Map *parent = m_parent_map;
+        while (parent) {
+            if (parent == map)
+                return true;
+            parent = parent->m_parent_map;
         }
         return false;
     }

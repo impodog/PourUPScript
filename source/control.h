@@ -11,7 +11,7 @@ namespace pups::library {
     class Control {
     public:
         MapPtr global_map = nullptr, map;
-        IdFilePtr idFile;
+        IdFile idFile;
         const IdFactor *cur_id;
         bool is_new_line = false;
 
@@ -19,7 +19,7 @@ namespace pups::library {
 
         explicit Control(const path &path, Constants &constants, Map *map, bool allow_upsearch);
 
-        explicit Control(IdFilePtr idFile, MapPtr map);
+        explicit Control(IdFile idFile, MapPtr map);
 
         ~Control();
 

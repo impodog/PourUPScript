@@ -23,13 +23,13 @@ namespace pups::library::builtins::inline_func {
 
     class InlineFunc : public Function {
     protected:
-        IdFilePtr m_idFile;
+        IdFile m_idFile;
         Map *m_static_link;
 
         static void add_arguments(MapPtr &map, const FunctionArgs &args);
 
     public:
-        InlineFunc(IdFilePtr idFile, Map *m_static_link);
+        InlineFunc(IdFile idFile, Map *m_static_link);
 
         bool is_process() const noexcept;
     };

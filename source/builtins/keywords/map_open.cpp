@@ -64,7 +64,7 @@ namespace pups::library::builtins::map_open {
         if (std::filesystem::exists(p)) {
             path const_path = get_constants_path(p);
             Constants constants(const_path);
-            Control control(p, constants, map->get_global(), false);
+            Control control(p, constants, map, false);
             control.run();
             opened_modules.insert({p.string(), control.map});
             return control.map;

@@ -81,13 +81,14 @@ namespace pups::library {
     protected:
         using Line = std::vector<IdFactor>;
         using File = std::vector<Line>;
-        File m_file = {{}};
+        using FilePtr = std::shared_ptr<File>;
+        FilePtr m_file;
         std::pair<size_t, size_t> m_cursor = {0, 0};
 
         bool next_cursor();
 
     public:
-        IdFile() = default;
+        IdFile();
 
         [[nodiscard]] const IdFactor &get_id() const;
 

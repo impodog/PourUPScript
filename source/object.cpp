@@ -66,11 +66,11 @@ namespace pups::library {
 
     ObjectPtr pending = std::make_shared<Pending>();
 
-    LongStr::LongStr(IdFilePtr idFile) : m_idFile(std::move(idFile)) {
+    LongStr::LongStr(IdFile idFile) : m_idFile(std::move(idFile)) {
 
     }
 
-    const IdFilePtr &LongStr::ids() const noexcept {
+    const IdFile &LongStr::ids() const noexcept {
         return m_idFile;
     }
 
