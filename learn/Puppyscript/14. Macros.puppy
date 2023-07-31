@@ -1,4 +1,5 @@
 /* In this file, we learn how to customize the PUPS output by using macros in Puppyscript. */
+// MOST OF THE MACROS ARE NOT AVAILABLE IN CPP-PUPPY, except for #include, #define, and #undef
 /* First, what are macros?
 Macros are ways to operate the Puppyscript source.
 They always evaluate first, then the result is used in the rest of the program.*/

@@ -51,7 +51,7 @@ for l in range 4 20 7:
     print "Now l is " l
 
 
-
+// NOTE : Range symbols are NOT AVAILABLE IN CPP-PUPPY
 /* One last thing for pretty code lovers, ranges, like pair, also have their special symbol:
 To define a default-step range, you can use (begin)->(end)
 To add steps to it, you can use (begin)->(end)|(step)

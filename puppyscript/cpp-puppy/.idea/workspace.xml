@@ -23,11 +23,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6c33e45c-2c2b-4a71-8875-ce438c844c62" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CHANGELOG" beforeDir="false" afterPath="$PROJECT_DIR$/../../CHANGELOG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../learn/Puppyscript/1. Statements, Expressions.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/../../learn/Puppyscript/1. Statements, Expressions.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../learn/Puppyscript/14. Macros.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/../../learn/Puppyscript/14. Macros.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../learn/Puppyscript/3. Conditional Blocks.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/../../learn/Puppyscript/3. Conditional Blocks.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../learn/Puppyscript/5. Containers.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/../../learn/Puppyscript/5. Containers.puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../learn/Puppyscript/8. For Loops.puppy" beforeDir="false" afterPath="$PROJECT_DIR$/../../learn/Puppyscript/8. For Loops.puppy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extract.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/extract.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/processor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shortcuts.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/shortcuts.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +111,7 @@
       <workItem from="1690705613704" duration="9337000" />
       <workItem from="1690715463131" duration="14608000" />
       <workItem from="1690761886735" duration="5087000" />
-      <workItem from="1690770153539" duration="1335000" />
+      <workItem from="1690770153539" duration="2990000" />
     </task>
     <servers />
   </component>
@@ -133,6 +136,11 @@
           <url>file://$PROJECT_DIR$/structure.cpp</url>
           <line>123</line>
           <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/preprocess.cpp</url>
+          <line>143</line>
+          <option name="timeStamp" value="41" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

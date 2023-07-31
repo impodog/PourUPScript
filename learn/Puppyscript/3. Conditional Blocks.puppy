@@ -53,7 +53,7 @@ As you can see, the statement can be a little messed up if the condition is alwa
 The break statement jumps out of the smallest enclosing while loop.*/
 print "Let me show you something *really* majestic:"
 i = 1
-while true:    // "while true" stands for "do this infinitely!"
+loop:    // "loop" stands for "do this infinitely!"
     print i
     i = i.add i
     if i.gt 1000:
@@ -62,11 +62,11 @@ while true:    // "while true" stands for "do this infinitely!"
 
 
 
-/*The while loop can also be a little more flexible.
+/*The loop can also be a little more flexible.
 By using "conti" statement, you can skip the rest of the block and do the whole thing again.*/
 print "Let me show you something *absolutely* majestic:"
 i = 3
-while true:
+loop:
     i = i.mul i
     if i.lt 1000:
         conti

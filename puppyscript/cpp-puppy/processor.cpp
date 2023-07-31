@@ -55,9 +55,11 @@ string_list split(const std::string &s, const char delimiter) {
     string_list result;
     std::string temp;
     for (char c: s) {
-        if (c == delimiter && !temp.empty()) {
-            result.push_back(temp);
-            temp.clear();
+        if (c == delimiter) {
+            if (!temp.empty()) {
+                result.push_back(temp);
+                temp.clear();
+            }
         } else {
             temp.push_back(c);
         }

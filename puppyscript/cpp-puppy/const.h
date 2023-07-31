@@ -5,7 +5,7 @@
 #ifndef CPP_PUPPY_CONST_H
 #define CPP_PUPPY_CONST_H
 
-#define PUPPY_VERSION "0.0.1"
+#define PUPPY_VERSION "0.0.2"
 
 #include <string>
 #include <filesystem>

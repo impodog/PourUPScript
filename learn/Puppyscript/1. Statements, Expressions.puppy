@@ -53,6 +53,7 @@ c = 5.mul (a.sub b)
 
 
 
+// NOT AVAILABLE IN CPP-PUPPY
 /*Sometimes, the expression can get too annoying to write. So, we have a special replacement:
 This is a expression, which is the simplified form of basic calculations. To use it, just use this syntax:
 "{expr ...}", and it will be automatically replaced with the method-call form.*/
@@ -60,6 +61,7 @@ d = {expr (5*(a-b)+8)*c}
 
 
 
+// NOT AVAILABLE IN CPP-PUPPY
 /*Calculations can take time. So why not just do the calculation before the program runs?
 This is a constant expression, which stands for some numbers or strings that are constant. To use it, just use this syntax:
 "{constexpr ...}", and it will be automatically replaced with the constant value.*/

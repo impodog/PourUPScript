@@ -1,3 +1,9 @@
+v0.18.2
+- Add back support for "::" pairs in cpp-puppy
+- Change tutorials to use the new compiler
+- Fix cpp-puppy not removing blank lines
+- Removed support for loop_not and while_not
+
 v0.18.1
 - Fix cpp-puppy's problem for not renaming the outputted file, and not extracting multiple literals in one line
 

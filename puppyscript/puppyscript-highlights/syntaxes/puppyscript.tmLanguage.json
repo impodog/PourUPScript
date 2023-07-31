@@ -31,7 +31,7 @@
 		},
 		"keywords": {
 			"name": "keyword.control.puppyscript",
-			"match": "\\b(with|enter|param|pack|ret|pub|pub_all|if|elif|if_not|elif_not|else|while|while_not|loop|loop_not|break|conti|true|false|print|inputs|import|import_lib|as|puts|del|pop|for|in|call|exit|catch|new|tid|inh|throw|pass|use|unmap|spec|macro|form|link|to)\\b"
+			"match": "\\b(with|enter|param|pack|ret|pub|pub_all|if|elif|if_not|elif_not|else|while|loop|break|conti|true|false|print|inputs|import|import_lib|as|puts|del|pop|for|in|call|exit|catch|new|tid|inh|throw|pass|use|unmap|spec|macro|form|link|to)\\b"
 		},
 		"variables": {
 			"name": "entity.name.variable",

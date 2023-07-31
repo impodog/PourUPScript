@@ -71,7 +71,7 @@ size = call hashm.get_size
 keys = call hashm.get_keys // Gets all the keys of the hashmap to be iterated
 print "Keys are: " keys
 print "Values are..."
-while true:
+loop:
     value = hashm.at (keys.at i) // Get the value of the pair with the key at index i
     puts value
     i = i.add 1

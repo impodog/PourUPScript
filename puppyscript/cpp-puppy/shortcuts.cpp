@@ -10,11 +10,11 @@ std::regex RE_PAIR("(" WORD ")\\s*::\\s*(" WORD ")"),
 class Shortcuts {
     std::string content;
 
-    /* DEPRECATED
     void scan_pairs() {
         content = std::regex_replace(content, RE_PAIR, "(pair $1 $2)");
     }
 
+/* DEPRECATED
     void scan_ranges() {
         content = std::regex_replace(content, RE_RANGE_STEP, "(range $1 $2 $3)");
         content = std::regex_replace(content, RE_RANGE_NO_STEP, "(range $1 $2)");
@@ -27,6 +27,7 @@ public:
     }
 
     std::string work(const std::string &output_name) {
+        scan_pairs();
 
         std::string output = output_name + ".shortcuts.puppy";
         write(output, content);
