@@ -1,3 +1,8 @@
+v0.18.3
+- Change cpp-puppy naming style
+- Fix the accidental deletion of a RE in the python implementation
+- Fix cpp-puppy float extraction problem
+
 v0.18.2
 - Add back support for "::" pairs in cpp-puppy
 - Change tutorials to use the new compiler

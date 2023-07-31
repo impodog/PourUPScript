@@ -187,9 +187,9 @@ std::string Globals::next_name(std::string identifier) {
         value /= 26;
     }
     if (rules.at(MODULE)) {
-        return "_a" + file_name.stem().string() + "_" + identifier;
+        return "_pp_" + file_name.stem().string() + "_" + identifier;
     } else {
-        return "_a" + identifier;
+        return "_pp_" + identifier;
     }
 }
 

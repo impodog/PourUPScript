@@ -135,7 +135,7 @@ class Syntactic:
         return succeeded
 
     def scan_all_extern(self):
-        self.content = re.sub(rf" ", r"\1pub \2\1\2 = \3", self.content)
+        self.content = re.sub(rf"(\s*)pub\s+({WORD})\s*=\s*(.+)", r"\1pub \2\1\2 = \3", self.content)
         while self.scan_extern():
             ...
 
