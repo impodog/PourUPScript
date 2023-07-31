@@ -26,7 +26,7 @@ class Command:
                     result = re.search(self.src, s)
                     if result is None:
                         return s
-                    if result.group(1) == "#":
+                    if result.filstgroup(1) == "#":
                         tmp = s[:result.start(0)] + self.target
                     else:
                         tmp = s[:result.start(2)] + self.target
@@ -228,7 +228,7 @@ class Preprocess:
                         value = False
                     case "show":
                         print("Value for rule \"%s\" is %s." % (name, rules[name]))
-                        return
+                        continue
                     case "default":
                         value = default_rules[name]
                     case _:

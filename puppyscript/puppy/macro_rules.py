@@ -17,7 +17,7 @@ class Form:
         for arg in args.split(" "):
             if len(arg) > 0 and not arg.isspace():
                 self.args.append(arg)
-        base_indent = len(firsts(body))
+        base_indent  = len(firsts(body))
         self.body = list()
         for line in body.split("\n"):
             self.body.append(line[base_indent:])

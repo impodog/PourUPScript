@@ -81,7 +81,7 @@ class Syntactic:
             if tmp is not None:
                 success = True
                 line = line[:tmp.start(1)] + \
-                       "(%s.at_ref %s).data " % (tmp.group(1), tmp.group(2)) + \
+                       "(%s.at_ref %s).data" % (tmp.group(1), tmp.group(2)) + \
                        line[tmp.end(2) + 1:]
             result.append(line)
         self.content = "\n".join(result)
@@ -135,7 +135,7 @@ class Syntactic:
         return succeeded
 
     def scan_all_extern(self):
-        self.content = re.sub(rf"(\s*)pub\s+({WORD})\s*=\s*(.+)", r"\1pub \2\1\2 = \3", self.content)
+        self.content = re.sub(rf" ", r"\1pub \2\1\2 = \3", self.content)
         while self.scan_extern():
             ...
 

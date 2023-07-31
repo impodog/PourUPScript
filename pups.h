@@ -19,6 +19,7 @@ namespace pups {
     using library::builtins::compare::Lower, library::builtins::compare::LowerEqual,
             library::builtins::compare::Greater, library::builtins::compare::GreaterEqual,
             library::builtins::compare::Equal, library::builtins::compare::NotEqual;
+    using library::builtins::compare::get_compare;
     using library::builtins::containers::Array, library::builtins::containers::Pair, library::builtins::containers::HashMap;
     using library::builtins::containers::Deque;
     using library::builtins::function::HasMethods;
