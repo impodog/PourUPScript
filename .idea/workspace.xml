@@ -22,7 +22,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.16.4&#10;- Add &quot;link ... to ...&quot; statement" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.18.0&#10;- Add a alternative compiler written in C++(experimental)&#10;- Add compare::get_compare into pups.h">
+      <change afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,41 +61,41 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2QL2WKnSI9Iy3TC9BoIBkuokHgh" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "development",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/workspace/Cpp/Tool/PourUPScript/test",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/workspace/Cpp/Tool/PourUPScript&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "ObjectiveC"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;ObjectiveC&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\workspace\Cpp\Tool\PourUPScript\test" />
@@ -106,6 +109,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.pups_Lib_Tests">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="pups_Lib" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pups_Lib_Tests" TARGET_NAME="pups_Lib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pups_Lib_Tests" RUN_TARGET_NAME="pups_Lib">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -203,6 +211,8 @@
       <workItem from="1690499155001" duration="23186000" />
       <workItem from="1690608039490" duration="331000" />
       <workItem from="1690608748780" duration="10300000" />
+      <workItem from="1690766613535" duration="506000" />
+      <workItem from="1690767141540" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -498,7 +508,15 @@
       <option name="project" value="LOCAL" />
       <updated>1690623784970</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="v0.18.0&#10;- Add a alternative compiler written in C++(experimental)&#10;- Add compare::get_compare into pups.h">
+      <option name="closed" value="true" />
+      <created>1690766830501</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1690766830501</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +541,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="v0.6.0&#10;Add data structures as well as their tutorial" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/puppyscript/cpp-puppy" />
+    </ignored-roots>
     <MESSAGE value="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!" />
     <MESSAGE value="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions" />
     <MESSAGE value="v0.6.4&#10;Fix a problem where broken or returned maps can still find variables." />
@@ -548,7 +568,8 @@
     <MESSAGE value="v0.16.2&#10;- Add more aliases to use in pups.h&#10;- Minor changes to puppyscript" />
     <MESSAGE value="v0.16.3&#10;- Fix the problem that some global maps(in control.cpp) saved are not freed properly&#10;- Add support for apple &quot;.dylib&quot; files&#10;- Add number type aliases" />
     <MESSAGE value="v0.16.4&#10;- Add &quot;link ... to ...&quot; statement" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.16.4&#10;- Add &quot;link ... to ...&quot; statement" />
+    <MESSAGE value="v0.18.0&#10;- Add a alternative compiler written in C++(experimental)&#10;- Add compare::get_compare into pups.h" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.18.0&#10;- Add a alternative compiler written in C++(experimental)&#10;- Add compare::get_compare into pups.h" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
