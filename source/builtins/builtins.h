@@ -20,6 +20,8 @@
 #include "types/typing.h"
 #include "keywords/inline_typing.h"
 #include "debugger/debug_info.h"
+#include "structural/enumerate.h"
+#include "structural/match_case.h"
 
 
 namespace pups::library::builtins {

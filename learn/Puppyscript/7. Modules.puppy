@@ -32,9 +32,15 @@ module.moduleFunc
 
 
 
-/* There are also standard libraries to choose from. Here we use the "random" and "convert" library as an example.*/
-// A standard library can be used when initialized in CPP code.
-// Note that when importing standard libraries, we don't really care about the file path, but the "module link" it gives.
-f = random.rand_float 3.0 8.0 // Now we can use the functions in the library.
-print f
-print (convert.round f)
+/* The third way of creating a module is by writting dynamic libraries.
+This is the most complicated way, but it is also the most powerful way.
+To make it, you may see the introduction to dynamic libraries under learn/The Library/How to write an extension.md
+
+But, to import it, you just need to use the "import_lib" keyword.
+For example, let's assume you have already compiled "libmodule.dll" under directory "myModule".
+You may write like this:
+*/
+import_lib "myModule" "module"
+// The first string is the path to the library, and the second string is the name of the module.
+// The module name extension depends on the platform. For example, on Windows, it is ".dll", on Linux, it is ".so", and on Mac, it is ".dylib".
+// But you don't need to write the extension, since the compiler will automatically add it.

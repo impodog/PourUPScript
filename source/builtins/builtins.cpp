@@ -23,5 +23,7 @@ namespace pups::library::builtins {
         typing::init(constants);
         inline_typing::init(constants);
         debug_info::init(constants);
+        enumerate::init(constants);
+        match_case::init(constants);
     }
 }

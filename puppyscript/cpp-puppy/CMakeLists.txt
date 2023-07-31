@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.26)
-project(cpp_puppy)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(cpp_puppy main.cpp
+set(source
         const.h
         processor.h
         processor.cpp
@@ -18,4 +17,10 @@ add_executable(cpp_puppy main.cpp
         brackets.cpp
         expr_optim.cpp
         shortcuts.cpp
-)
+        export.h)
+
+project(cpp_puppy)
+add_executable(cpp_puppy main.cpp ${source})
+
+project(cpp_puppy_library)
+add_library(cpp_puppy_library SHARED ${source})

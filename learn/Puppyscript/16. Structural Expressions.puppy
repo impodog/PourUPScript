@@ -1,0 +1,68 @@
+/* In this file, we are learning the two types of structures in PuppyScript: enumeration and match-case. */
+
+
+
+/* Enumeration
+An enumeration is a fixed set of values. For example, an enumeration "Color" can have one of the values "Red", "Green", or "Blue".
+In PuppyScript, an enumeration is defined using the "enum" keyword. The values of the enumeration are listed in a fake code block, separated by blanks
+
+The following code defines an enumeration called "Color" with the values "Red", "Green", and "Blue".
+*/
+enum Color:
+    Red
+    Green
+    Blue
+// Then, the enumeration values can be used in the code. For example, the following code defines a variable "color" and assigns it the value "Red".
+color = Color.Red
+// Now, if we print the value of "color", what will we get?
+print color
+// The output may be surprising, but it is correct.
+// This is because the values of an enumeration are actually numbers. The first value is 0, the second value is 1, and so on. So, "Red" is 0, "Green" is 1, and "Blue" is 2.
+
+
+
+/* Match-case
+Because we define enumerations, we need a way to judge which value an enumeration variable has. This is done using the "match" keyword.
+The "match" keyword is followed by a variable name, then a code block. Inside the code block, we can use the "case" keyword to check the value of the variable.
+When the given value matches the case, the code block is executed. Otherwise, the code block is skipped. After matching a case, the match-case statement ends.
+*/
+match color:
+    case Color.Red:
+        print "The color is red."
+    case Color.Green:
+        print "The color is green."
+    case Color.Blue:
+        print "The color is blue."
+
+// In the above code, the value of "color" is checked. If it is "Red", the first case is matched and the first code block is executed.
+
+
+
+/* Default case
+If none of the cases match, the code block is skipped. However, we can add a default case to the end of the match-case statement.
+The default case is matched when none of the other cases match. You should always put the default case at the end of a match-case statement.
+*/
+color = Color.Green
+match color:
+    case Color.Red:
+        print "The color is red."
+    case Color.Green:
+        print "The color is green."
+    default:
+        print "The color is not red nor green."
+
+
+
+/* Fall-through
+In PuppyScript, the match-case statement does not fall through. This means that after a case is matched, the match-case statement ends.
+But, we can still force to do it by using a long keyword "fall_through". The keyword means to directly enter the next case without ending the match-case statement.
+By falling through, you may extend the code block of the previous case. And the next case will not be checked, but directly executed.
+*/
+color = Color.Blue
+match color:
+    case Color.Red:
+        print "I don't like this color."
+    case Color.Blue:
+        fall_through // This directly enters the next case "Color.Green"
+    case Color.Green:
+        print "I like this color."

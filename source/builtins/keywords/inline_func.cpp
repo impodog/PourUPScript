@@ -41,7 +41,7 @@ namespace pups::library::builtins::inline_func {
         map->add_object(id_arg_catch, std::make_shared<Arguments>(args));
     }
 
-    InlineFunc::InlineFunc(IdFile idFile, Map *m_static_link) :
+    InlineFunc::InlineFunc(IdFilePtr idFile, Map *m_static_link) :
             m_idFile(std::move(idFile)), m_static_link(m_static_link),
             Function([this](const FunctionArgs &args, Map *map) -> ObjectPtr {
                 MapPtr sub_map;
@@ -72,7 +72,7 @@ namespace pups::library::builtins::inline_func {
                 return pending;
             }
             auto func = std::make_shared<InlineFunc>(
-                    *std::static_pointer_cast<LongStr>(*args.back())->ids(),
+                    std::static_pointer_cast<LongStr>(*args.back())->ids(),
                     is_process ? nullptr : map);
             while (args.size() != 1) {
                 *args.front() = func;

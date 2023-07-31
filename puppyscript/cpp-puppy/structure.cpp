@@ -3,11 +3,12 @@
 //
 #include "processor.h"
 
-std::regex RE_ELSE(R"(\s*else\s*:)");
-std::regex RE_IF(R"((\s*)((if|elif)(_not)?)\s+(.+):)");
-std::regex RE_FOR_BASIC(R"((\s*)for\s+(.+?)\s*,\s*(.+?)\s*,\s*(.+?)\s*:\s*)");
-std::regex RE_FOR_RANGE("(\\s*)for\\s+(" WORD ")\\s+in\\s+(.+?):\\s*");
-std::regex RE_WHILE(R"((\s*)while\s+(.+):)");
+std::regex RE_ELSE(R"(\s*else\s*:)"),
+        RE_IF(R"((\s*)((if|elif)(_not)?)\s+(.+):)"),
+        RE_FOR_BASIC(R"((\s*)for\s+(.+?)\s*,\s*(.+?)\s*,\s*(.+?)\s*:\s*)"),
+        RE_FOR_RANGE("(\\s*)for\\s+(" WORD ")\\s+in\\s+(.+?):\\s*"),
+        RE_WHILE(R"((\s*)while\s+(.+):)"),
+        RE_MATCH_CASE(R"((\s*)(match|case)\s+(.+):\s*)");
 
 class Structure {
 public:
@@ -139,10 +140,26 @@ public:
         while (scan_while());
     }
 
+    void scan_match_case() {
+        string_list result;
+        auto lines = split(content, '\n');
+        for (const auto &line: lines) {
+            std::smatch results;
+            if (std::regex_match(line, results, RE_MATCH_CASE)) {
+                result.push_back(add_with(results[1].str(), results[3].str()));
+                result.push_back(results[1].str() + results[2].str() + ":");
+            } else {
+                result.push_back(line);
+            }
+        }
+        content = join(result, '\n');
+    }
+
     std::string work(const std::string &output_name) {
         scan_if();
         scan_all_for();
         scan_all_while();
+        scan_match_case();
 
         std::string output = output_name + ".struct.puppy";
         write(output, content);

@@ -93,6 +93,8 @@ namespace pups::library {
 
         Map *get_global() noexcept;
 
+        Map *get_upsearch() noexcept;
+
         // Pass nullptr to unset the sub map, or a new map to set it.
         void set_child(Map *sub_map) noexcept;
 

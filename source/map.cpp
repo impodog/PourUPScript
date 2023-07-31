@@ -204,6 +204,10 @@ namespace pups::library {
         return m_global;
     }
 
+    Map *Map::get_upsearch() noexcept {
+        return m_upsearch_map;
+    }
+
 
     void Map::set_child(Map *sub_map) noexcept {
         bool is_null = sub_map == nullptr;

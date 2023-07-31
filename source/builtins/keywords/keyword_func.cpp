@@ -28,7 +28,7 @@ namespace pups::library::builtins::keyword_func {
                     else {
                         if (map->get_temp()->condition() ^ require_false) {
                             sub_map = std::make_shared<Map>(map, true);
-                            Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
+                            Control control(std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
                             control.run();
                             result = true;
                             map->signs.else_sign = false;
@@ -49,7 +49,7 @@ namespace pups::library::builtins::keyword_func {
         else {
             ObjectPtr break_v = pending;
             sub_map = std::make_shared<Map>(map, true);
-            Control control(*std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
+            Control control(std::static_pointer_cast<LongStr>(*args.front())->ids(), sub_map);
             while (is_pending(break_v) || (break_v->condition() ^ require_false)) {
                 control.run();
                 break_v = sub_map->signs.break_sign;

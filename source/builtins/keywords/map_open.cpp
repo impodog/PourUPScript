@@ -18,7 +18,7 @@ namespace pups::library::builtins::map_open {
                     return pending;
                 }
                 MapPtr sub_map = std::make_shared<Map>(map, false);
-                Control control(*std::static_pointer_cast<LongStr>(*args.back())->ids(), sub_map);
+                Control control(std::static_pointer_cast<LongStr>(*args.back())->ids(), sub_map);
                 control.run();
                 while (args.size() != 1) {
                     *args.front() = sub_map;
@@ -107,7 +107,7 @@ namespace pups::library::builtins::map_open {
         args.pop_front();
         if (sub_map && ids) {
             sub_map->get_parent()->set_child(sub_map.get());
-            Control control(*ids->ids(), sub_map);
+            Control control(ids->ids(), sub_map);
             control.run();
             return sub_map;
             // Naturally the child would be cleaned up by Control
@@ -140,7 +140,7 @@ namespace pups::library::builtins::map_open {
                 }
                 if (map->catch_by(required)) {
                     MapPtr sub_map = std::make_shared<Map>(map, true);
-                    Control control(*ids->ids(), sub_map);
+                    Control control(ids->ids(), sub_map);
                     control.run();
                     return sub_map;
                 }

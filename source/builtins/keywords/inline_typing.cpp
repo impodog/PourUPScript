@@ -14,7 +14,7 @@ namespace pups::library::builtins::inline_typing {
             if (ids) {
                 auto new_type = std::make_shared<Type>(map);
                 {
-                    Control control(*ids->ids(), new_type);
+                    Control control(ids->ids(), new_type);
                     control.run();
                 }
                 while (!args.empty()) {

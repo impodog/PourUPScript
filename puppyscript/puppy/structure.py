@@ -112,10 +112,22 @@ class Structure:
         while self.scan_while():
             ...
 
+    def scan_match_case(self):
+        result = list()
+        for line in self.content.split("\n"):
+            tmp = re.fullmatch(r"(\s*)(match|case)\s+(.+?)\s*:\s*", line)
+            if tmp is None:
+                result.append(line)
+            else:
+                result.append(with_stmt_line(tmp.group(1), tmp.group(3)))
+                result.append(tmp.group(1) + tmp.group(2) + ":")
+        self.content = "\n".join(result)
+
     def work(self, output_name: str) -> str:
         self.scan_if()
         self.scan_all_for()
         self.scan_all_while()
+        self.scan_match_case()
         output = output_name + ".struct"
         with open(output, "w", encoding="utf-8") as f:
             f.write(self.content)
