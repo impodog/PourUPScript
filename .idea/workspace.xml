@@ -22,9 +22,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.18.0&#10;- Add a alternative compiler written in C++(experimental)&#10;- Add compare::get_compare into pups.h">
-      <change afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy" afterDir="false" />
+    <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.18.0 updating fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/extract.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/extract.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +216,7 @@
       <workItem from="1690608039490" duration="331000" />
       <workItem from="1690608748780" duration="10300000" />
       <workItem from="1690766613535" duration="506000" />
-      <workItem from="1690767141540" duration="1000" />
+      <workItem from="1690767141540" duration="1752000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -516,7 +520,15 @@
       <option name="project" value="LOCAL" />
       <updated>1690766830501</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="v0.18.0 updating fix">
+      <option name="closed" value="true" />
+      <created>1690767250279</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1690767250279</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,7 +556,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/puppyscript/cpp-puppy" />
     </ignored-roots>
-    <MESSAGE value="v0.6.2&#10;Make all the method finding return a new function instead. Which means, goodbye m_pending_put, and goodbye reput this!" />
     <MESSAGE value="v0.6.3&#10;Fix if-ret problem, allow complex statements on the lhs of &quot;=&quot;, add more string functions" />
     <MESSAGE value="v0.6.4&#10;Fix a problem where broken or returned maps can still find variables." />
     <MESSAGE value="v0.7.0&#10;Add including libraries and std_random" />
@@ -569,7 +580,8 @@
     <MESSAGE value="v0.16.3&#10;- Fix the problem that some global maps(in control.cpp) saved are not freed properly&#10;- Add support for apple &quot;.dylib&quot; files&#10;- Add number type aliases" />
     <MESSAGE value="v0.16.4&#10;- Add &quot;link ... to ...&quot; statement" />
     <MESSAGE value="v0.18.0&#10;- Add a alternative compiler written in C++(experimental)&#10;- Add compare::get_compare into pups.h" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.18.0&#10;- Add a alternative compiler written in C++(experimental)&#10;- Add compare::get_compare into pups.h" />
+    <MESSAGE value="v0.18.0 updating fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.18.0 updating fix" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

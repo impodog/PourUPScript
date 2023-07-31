@@ -44,6 +44,11 @@ void script(path file, const path &output, bool keep_temp, bool debug) {
 
     file = shortcuts(file, debug, output_name);
     move_on();
+
+    file = brackets_review(file, debug, output_name);
+    move_on();
+
+    std::filesystem::rename(file, output);
 }
 
 int main(int argc, char **argv) {

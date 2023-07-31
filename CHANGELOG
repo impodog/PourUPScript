@@ -1,3 +1,6 @@
+v0.18.1
+- Fix cpp-puppy's problem for not renaming the outputted file, and not extracting multiple literals in one line
+
 v0.18.0
 - Add a alternative compiler written in C++(experimental)
 - Add compare::get_compare into pups.h

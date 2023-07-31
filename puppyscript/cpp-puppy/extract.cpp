@@ -25,18 +25,22 @@ class Extract {
         string_list result;
         auto lines = split(content, '\n');
         for (auto line: lines) {
-            std::smatch results;
-            if (std::regex_search(line, results, RE_INT)) {
-                auto name = globals->next_name("INT");
-                bool negative = results[1].str() == "-";
-                INT value = std::stoi(results[2].str());
-                if (negative) {
-                    ints.insert({name, -value});
-                    line = results.prefix().str() + name + results.suffix().str();
+            while (true) {
+                std::smatch results;
+                if (std::regex_search(line, results, RE_INT)) {
+                    auto name = globals->next_name("INT");
+                    bool negative = results[1].str() == "-";
+                    INT value = std::stoi(results[2].str());
+                    if (negative) {
+                        ints.insert({name, -value});
+                        line = results.prefix().str() + name + results.suffix().str();
+                    } else {
+                        ints.insert({name, value});
+                        line = results.prefix().str() + results[1].str()
+                               + name + results.suffix().str();
+                    }
                 } else {
-                    ints.insert({name, value});
-                    line = results.prefix().str() + results[1].str()
-                           + name + results.suffix().str();
+                    break;
                 }
             }
             result.push_back(line);
@@ -48,18 +52,22 @@ class Extract {
         string_list result;
         auto lines = split(content, '\n');
         for (auto line: lines) {
-            std::smatch results;
-            if (std::regex_search(line, results, RE_FLOAT)) {
-                auto name = globals->next_name("FLOAT");
-                bool negative = results[1].str() == "-";
-                FLOAT value = std::stod(results[2].str());
-                if (negative) {
-                    floats.insert({name, -value});
-                    line = results.prefix().str() + name + results.suffix().str();
+            while (true) {
+                std::smatch results;
+                if (std::regex_search(line, results, RE_FLOAT)) {
+                    auto name = globals->next_name("FLOAT");
+                    bool negative = results[1].str() == "-";
+                    FLOAT value = std::stod(results[2].str());
+                    if (negative) {
+                        floats.insert({name, -value});
+                        line = results.prefix().str() + name + results.suffix().str();
+                    } else {
+                        floats.insert({name, value});
+                        line = results.prefix().str() + results[1].str()
+                               + name + results.suffix().str();
+                    }
                 } else {
-                    floats.insert({name, value});
-                    line = results.prefix().str() + results[1].str()
-                           + name + results.suffix().str();
+                    break;
                 }
             }
             result.push_back(line);
@@ -71,24 +79,28 @@ class Extract {
         string_list result;
         auto lines = split(content, '\n');
         for (auto line: lines) {
-            std::smatch results;
-            if (std::regex_search(line, results, RE_STRING)) {
-                auto name = globals->next_name("STR");
-                auto value = results[2].str();
-                if (requires_backslash(value.back())) {
-                    value.push_back('\\');
+            while (true) {
+                std::smatch results;
+                if (std::regex_search(line, results, RE_STRING)) {
+                    auto name = globals->next_name("STR");
+                    auto value = results[2].str();
+                    if (requires_backslash(value.back())) {
+                        value.push_back('\\');
+                    }
+                    if (requires_backslash(value.front())) {
+                        value = "\\" + value;
+                    }
+                    strings.insert({name, value});
+                    line = results.prefix().str() + results[1].str()
+                           + name + results.suffix().str();
+                } else if (std::regex_search(line, results, RE_EMPTY_STRING)) {
+                    auto name = globals->next_name("STR");
+                    strings.insert({name, ""});
+                    line = results.prefix().str() + results[1].str()
+                           + name + results.suffix().str();
+                } else {
+                    break;
                 }
-                if (requires_backslash(value.front())) {
-                    value = "\\" + value;
-                }
-                strings.insert({name, value});
-                line = results.prefix().str() + results[1].str()
-                       + name + results.suffix().str();
-            } else if (std::regex_search(line, results, RE_EMPTY_STRING)) {
-                auto name = globals->next_name("STR");
-                strings.insert({name, ""});
-                line = results.prefix().str() + results[1].str()
-                       + name + results.suffix().str();
             }
             result.push_back(line);
         }
