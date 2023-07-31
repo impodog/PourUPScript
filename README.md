@@ -18,13 +18,17 @@ We provide **CMakeLists.txt** and **test.cpp** for reference. Read the twos file
 
 To tell if the library works, build *pups_Lib_Tests* using CMake and run the executable.
 
-## Using Puppyscript
+## Using PuppyScript
 
-Puppyscript is a extension to PourUPScript and is much easier to use.
+PuppyScript is a extension to PourUPScript and is much easier to use.
 
-To use Puppyscript, you'll need Python(tested on 3.11, need to be at least 3.10)
+To use PuppyScript, you'll need Python(tested on 3.11, need to be at least 3.10)
 
-A Puppyscript compiler is given under ./puppyscript, just simply run "python main.py (file) [--output, -o output_path]" to compile Puppyscript
+A PuppyScript compiler is given under ./puppyscript, just simply run "python main.py (file) [--output, -o output_path]" to compile Puppyscript
+
+Also, an alternative to PuppyScript is given under ./puppyscript/cpp-puppy, which is a C++ implementation of PuppyScript.
+
+You may compile it with CMake and use it in (almost) the same way as the Python version.
 
 To learn more, see ./learn under the root library (just open those files with your favortite text editor).
 
