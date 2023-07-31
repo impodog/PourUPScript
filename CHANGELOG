@@ -1,3 +1,7 @@
+v0.18.4
+- Now import_lib will not terminate the program when the library is not found
+- Better info provided in cpp-puppy command line
+
 v0.18.3
 - Change cpp-puppy naming style
 - Fix the accidental deletion of a RE in the python implementation

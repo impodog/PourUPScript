@@ -52,18 +52,18 @@ void script(path file, const path &output, bool keep_temp, bool debug) {
 }
 
 int main(int argc, char **argv) {
-    argparse::ArgumentParser program("cpp-puppy");
+    argparse::ArgumentParser program("cpp-puppy", PUPPY_VERSION);
     program.add_argument("file")
-            .help("the file to be compiled");
+            .help("the puppyscript file to be compiled");
     program.add_argument("-o", "--output")
-            .help("output file(.pups)");
+            .help("the output file, ending with \".pups\" automatically");
     program.add_argument("--keep-temp")
-            .help("keep temporary files")
+            .help("whether to keep temporary files")
             .nargs(0)
             .implicit_value(true)
             .default_value(false);
     program.add_argument("--debug")
-            .help("turn on debug mode")
+            .help("whether to generate debug info lines")
             .nargs(0)
             .implicit_value(true)
             .default_value(false);

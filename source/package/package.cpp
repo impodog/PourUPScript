@@ -83,7 +83,11 @@ namespace pups::library::package {
             auto second = cast<strings::String>(*args.front());
             args.pop_front();
             if (first && second) {
-                pkg_load_export(map->get_path() / first->data(), second->data(), map);
+                try {
+                    pkg_load_export(map->get_path() / first->data(), second->data(), map);
+                } catch (const std::runtime_error &err) {
+                    map->throw_error(std::make_shared<FileNotFoundError>(err.what()));
+                }
             } else {
                 map->throw_error(std::make_shared<TypeError>("import_lib requires two string arguments."));
             }

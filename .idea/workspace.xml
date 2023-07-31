@@ -24,12 +24,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a6a02d7f-efc3-455d-9051-a01f30aa2ebc" name="Changes" comment="v0.18.2&#10;- Add back support for &quot;::&quot; pairs in cpp-puppy&#10;- Change tutorials to use the new compiler&#10;- Fix cpp-puppy not removing blank lines&#10;- Removed support for loop_not and while_not">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/extract.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/extract.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/processor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/processor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/puppyscript/puppy/syntactic.py" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/puppy/syntactic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/const.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/puppyscript/cpp-puppy/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/puppyscript/cpp-puppy/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/package/package.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/package/package.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +214,7 @@
       <workItem from="1690608039490" duration="331000" />
       <workItem from="1690608748780" duration="10300000" />
       <workItem from="1690766613535" duration="506000" />
-      <workItem from="1690767141540" duration="6711000" />
+      <workItem from="1690767141540" duration="8313000" />
     </task>
     <task id="LOCAL-00001" summary="v0.0.1&#10;Saturday work save">
       <created>1685195418653</created>
@@ -545,7 +542,15 @@
       <option name="project" value="LOCAL" />
       <updated>1690780313306</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="v0.18.2&#10;- Add back support for &quot;::&quot; pairs in cpp-puppy&#10;- Change tutorials to use the new compiler&#10;- Fix cpp-puppy not removing blank lines&#10;- Removed support for loop_not and while_not">
+      <option name="closed" value="true" />
+      <created>1690783151516</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1690783151516</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

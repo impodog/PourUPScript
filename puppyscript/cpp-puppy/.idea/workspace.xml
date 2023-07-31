@@ -23,12 +23,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6c33e45c-2c2b-4a71-8875-ce438c844c62" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CHANGELOG" beforeDir="false" afterPath="$PROJECT_DIR$/../../CHANGELOG" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extract.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/extract.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/processor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../puppy/syntactic.py" beforeDir="false" afterPath="$PROJECT_DIR$/../puppy/syntactic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../source/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../source/const.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../source/package/package.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../source/package/package.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +106,7 @@
       <workItem from="1690705613704" duration="9337000" />
       <workItem from="1690715463131" duration="14608000" />
       <workItem from="1690761886735" duration="5087000" />
-      <workItem from="1690770153539" duration="5169000" />
+      <workItem from="1690770153539" duration="6653000" />
     </task>
     <servers />
   </component>
