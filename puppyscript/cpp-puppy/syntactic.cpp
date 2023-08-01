@@ -8,7 +8,7 @@ std::regex RE_RETURN(R"((\s*)ret\s+(.+?)\s*)"),
         RE_CONTINUE(R"((\s*)conti\s*)"),
         RE_UNMAP_IMPORT(R"((\s*)(use|unmap)\s+import\s+(.+))"),
         RE_IMPORT_AS(R"((\s*)import\s+()" WORD R"()\s+as\s+()" WORD R"())"),
-        RE_USE_AS(R"((\s*)use\s+()" WORD R"()\s+as\s+()" WORD R"())"),
+        RE_USE_AS("(\\s*)use\\s*(" WORD ")(\\s+as\\s+(" WORD "))?\\s*"),
         RE_SPECIAL_FUNCTION("(\\s*)spec\\s+" FLAGS "(func|proc)\\s+(" WORD ")\\s*:\\s*"),
         RE_LINK_TO("(\\s*)link\\s+(" WORD ")\\s+to\\s+(" WORD ")\\s*"),
         RE_EXTERN(R"((\s*)pub(_all)?\s+(.*))"),
@@ -87,7 +87,6 @@ class Syntactic {
                 if (results[4].matched) {
                     result.push_back(results[1].str() + "mov " + results[3].str());
                 } else {
-                    result.push_back(add_with(results[1].str(), results[2].str()));
                     result.push_back(results[1].str() + "mov " + word_base(results[2].str()));
                 }
             } else {

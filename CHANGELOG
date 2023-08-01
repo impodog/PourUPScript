@@ -1,3 +1,6 @@
+v0.19.2
+- Fix that cpp-puppy translates "else" and "use" statements incorrectly
+
 v0.19.1
 - Fix the problem caused by sharing cursors among IdFile
 

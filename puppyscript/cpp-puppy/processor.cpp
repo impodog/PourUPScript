@@ -151,7 +151,14 @@ std::string add_special(const std::string &name) {
 }
 
 std::string word_base(const std::string &word) {
-    return word.substr(std::max(word.rfind('.'), word.rfind('&')) + 1);
+    size_t index = word.size() - 1;
+    do {
+        char c = word[index];
+        if (c == '.' || c == '&') {
+            return word.substr(index + 1);
+        }
+    } while (index--);
+    return word;
 }
 
 bool is_debug_info(const std::string &line) {

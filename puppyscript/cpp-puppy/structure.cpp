@@ -3,7 +3,7 @@
 //
 #include "processor.h"
 
-std::regex RE_ELSE(R"(\s*else\s*:)"),
+std::regex RE_ELSE(R"((\s*)else\s*:)"),
         RE_IF(R"((\s*)((if|elif)(_not)?)\s+(.+):)"),
         RE_FOR_BASIC(R"((\s*)for\s+(.+?)\s*,\s*(.+?)\s*,\s*(.+?)\s*:\s*)"),
         RE_FOR_RANGE("(\\s*)for\\s+(" WORD ")\\s+in\\s+(.+?):\\s*"),
