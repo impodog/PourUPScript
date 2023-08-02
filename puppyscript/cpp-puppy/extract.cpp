@@ -130,9 +130,9 @@ public:
     }
 
     path work(const std::string &output_name) {
+        extract_string();
         extract_float(); // Float must be extracted before int to avoid conflict
         extract_int();
-        extract_string();
         output_extraction(output_name + CONST_SUFFIX);
 
         path output = output_name + ".extract.puppy";

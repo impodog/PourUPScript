@@ -85,7 +85,7 @@ class Syntactic {
             if (std::regex_match(line, results, RE_USE_AS)) {
                 result.push_back(add_with(results[1].str(), results[2].str()));
                 if (results[4].matched) {
-                    result.push_back(results[1].str() + "mov " + results[3].str());
+                    result.push_back(results[1].str() + "mov " + results[4].str());
                 } else {
                     result.push_back(results[1].str() + "mov " + word_base(results[2].str()));
                 }

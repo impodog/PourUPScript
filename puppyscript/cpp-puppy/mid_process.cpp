@@ -33,7 +33,7 @@ class MidProcess {
                 result.push_back(line);
             } else {
                 auto indent = indent_of(right_strip(statements[0]));
-                result.push_back(indent + statements[0]);
+                result.push_back(statements[0]);
                 for (auto it = ++statements.begin(); it != statements.end(); it++) {
                     result.push_back(indent + *it);
                 }

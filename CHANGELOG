@@ -1,3 +1,8 @@
+v0.19.3
+- Fix cpp-puppy problems: cannot deal one-name brackets properly;
+extracting numbers before strings; too much indent in lines with semicolons;
+compiling use-as statements incorrectly
+
 v0.19.2
 - Fix that cpp-puppy translates "else" and "use" statements incorrectly
 

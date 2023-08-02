@@ -17,7 +17,7 @@ class Brackets {
         for (const auto &line: lines) {
             std::smatch results;
             if (std::regex_match(line, results, RE_REDUNDANT)) {
-                result.push_back(results[1].str() + results[2].str());
+                result.push_back(add_with(results[1].str(), results[2].str()));
             } else {
                 result.push_back(line);
             }
@@ -37,7 +37,7 @@ class Brackets {
         }
     }
 
-    void scan_bracket(std::string s, const std::string &indent) {
+    void scan_bracket(std::string s, const std::string &indent, bool is_top=true) {
         s = strip(s);
 
         size_t depth = 0, start = NPOS;
@@ -64,7 +64,7 @@ class Brackets {
                     auto part = s.substr(start + 1, i - start - 1);
                     auto name = globals->next_name("FAC");
                     temporary.push(name);
-                    scan_bracket(part, indent);
+                    scan_bracket(part, indent, false);
                     push_line(indent + "mov " + name);
 
                     auto prefix = s.substr(0, start),
@@ -73,14 +73,17 @@ class Brackets {
                     part.append(name).append(suffix);
 
                     if (!is_spaces(prefix) || !is_spaces(suffix)) {
-                        scan_bracket(part, indent);
+                        scan_bracket(part, indent, false);
                     }
                     return;
                 }
             }
         }
 
-        push_line(indent + s);
+        if (is_top)
+            push_line(indent + s);
+        else
+            push_line(add_with(indent, s));
     }
 
     void scan_brackets() {
